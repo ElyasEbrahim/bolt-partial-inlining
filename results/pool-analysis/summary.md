@@ -1,0 +1,14 @@
+metric: user time (s), rounds: 15; speedup = paired median over rounds of t(bolt)/t(variant)
+
+| workload | variant | median | stdev | speedup vs bolt [95% CI] | p (Wilcoxon) |
+|---|---|---:|---:|---|---:|
+| pool | bolt | 0.3745 | 0.0010 | - | - |
+| pool | bolt-copy | 0.3739 | 0.0009 | 1.002 [1.000, 1.004] | 0.12 |
+| pool | bolt-pi | 0.3905 | 0.0023 | 0.959 [0.956, 0.961] | 6.1e-05 |
+| pool | pa-only-alloc | 0.3665 | 0.0010 | 1.021 [1.020, 1.024] | 6.1e-05 |
+| pool | pa-only-free | 0.3641 | 0.0310 | 1.030 [1.023, 1.031] | 0.083 |
+| pool | pa-norb-bolt | 0.3743 | 0.0018 | 1.001 [0.997, 1.003] | 0.76 |
+| pool | pa-norb-pi | 0.3302 | 0.0017 | 1.134 [1.129, 1.137] | 6.1e-05 |
+| pool | pa-cache-bolt | 0.3743 | 0.0130 | 1.000 [0.997, 1.002] | 0.89 |
+| pool | pa-cache-pi | 0.3634 | 0.0017 | 1.030 [1.025, 1.034] | 6.1e-05 |
+| pool | pa-lto | 0.3297 | 0.0008 | 1.134 [1.132, 1.139] | 6.1e-05 |

@@ -1,0 +1,1853 @@
+BOLT-WARNING: specifying numeric value "1" for option -icf is deprecated
+BOLT-INFO: shared object or position-independent executable detected
+BOLT-INFO: Target architecture: aarch64
+BOLT-INFO: BOLT version: 0a0e65b2e8ff6043d85ab07c4d23ea18bf0b9b7d
+BOLT-INFO: first alloc address is 0x0
+BOLT-INFO: creating new program header table at address 0x200000, offset 0x200000
+BOLT-INFO: marking .fini_array as GNU_RELRO
+BOLT-INFO: marking .init_array as GNU_RELRO
+BOLT-INFO: marking .data.rel.ro as GNU_RELRO
+BOLT-INFO: marking .dynamic as GNU_RELRO
+BOLT-INFO: marking .got as GNU_RELRO
+BOLT-INFO: marking .relro_padding as GNU_RELRO
+BOLT-INFO: enabling relocation mode
+BOLT-INFO: enabling lite mode
+BOLT-INFO: setting size of function _init/1(*2) to 24 (was 0)
+BOLT-INFO: setting size of function _fini/1(*2) to 20 (was 0)
+BOLT-INFO: setting size of function __BOLT_PSEUDO_.plt to 32 (was 0)
+BOLT-INFO: setting size of function abort@PLT to 16 (was 0)
+BOLT-INFO: setting size of function __libc_start_main@PLT to 16 (was 0)
+BOLT-INFO: setting size of function __gmon_start__@PLT to 16 (was 0)
+BOLT-INFO: setting size of function __cxa_finalize@PLT to 16 (was 0)
+BOLT-INFO: setting size of function memcpy@PLT to 16 (was 0)
+BOLT-INFO: setting size of function memset@PLT to 16 (was 0)
+BOLT-INFO: setting size of function malloc@PLT to 16 (was 0)
+BOLT-INFO: setting size of function free@PLT to 16 (was 0)
+BOLT-INFO: setting size of function memmove@PLT to 16 (was 0)
+BOLT-INFO: setting size of function calloc@PLT to 16 (was 0)
+BOLT-INFO: setting size of function fprintf@PLT to 16 (was 0)
+BOLT-INFO: setting size of function fflush@PLT to 16 (was 0)
+BOLT-INFO: setting size of function fwrite@PLT to 16 (was 0)
+BOLT-INFO: setting size of function qsort_r@PLT to 16 (was 0)
+BOLT-INFO: setting size of function clock@PLT to 16 (was 0)
+BOLT-INFO: setting size of function memcmp@PLT to 16 (was 0)
+BOLT-INFO: setting size of function __assert_fail@PLT to 16 (was 0)
+BOLT-INFO: setting size of function fputc@PLT to 16 (was 0)
+BOLT-INFO: setting size of function strlen@PLT to 16 (was 0)
+BOLT-INFO: setting size of function strrchr@PLT to 16 (was 0)
+BOLT-INFO: setting size of function setpriority@PLT to 16 (was 0)
+BOLT-INFO: setting size of function __errno_location@PLT to 16 (was 0)
+BOLT-INFO: setting size of function strerror@PLT to 16 (was 0)
+BOLT-INFO: setting size of function fopen@PLT to 16 (was 0)
+BOLT-INFO: setting size of function fread@PLT to 16 (was 0)
+BOLT-INFO: setting size of function fclose@PLT to 16 (was 0)
+BOLT-INFO: setting size of function exit@PLT to 16 (was 0)
+BOLT-INFO: setting size of function perror@PLT to 16 (was 0)
+BOLT-INFO: setting size of function __sysv_signal@PLT to 16 (was 0)
+BOLT-INFO: setting size of function backtrace@PLT to 16 (was 0)
+BOLT-INFO: setting size of function backtrace_symbols@PLT to 16 (was 0)
+BOLT-INFO: setting size of function raise@PLT to 16 (was 0)
+BOLT-INFO: setting size of function strcmp@PLT to 16 (was 0)
+BOLT-INFO: setting size of function qsort@PLT to 16 (was 0)
+BOLT-INFO: setting size of function fputs@PLT to 16 (was 0)
+BOLT-INFO: setting size of function munmap@PLT to 16 (was 0)
+BOLT-INFO: setting size of function remove@PLT to 16 (was 0)
+BOLT-INFO: setting size of function fileno@PLT to 16 (was 0)
+BOLT-INFO: setting size of function open@PLT to 16 (was 0)
+BOLT-INFO: setting size of function fdopen@PLT to 16 (was 0)
+BOLT-INFO: setting size of function setvbuf@PLT to 16 (was 0)
+BOLT-INFO: setting size of function strcpy@PLT to 16 (was 0)
+BOLT-INFO: setting size of function feof@PLT to 16 (was 0)
+BOLT-INFO: setting size of function ftell@PLT to 16 (was 0)
+BOLT-INFO: setting size of function fseek@PLT to 16 (was 0)
+BOLT-INFO: setting size of function mmap@PLT to 16 (was 0)
+BOLT-INFO: setting size of function close@PLT to 16 (was 0)
+BOLT-INFO: setting size of function ferror@PLT to 16 (was 0)
+BOLT-INFO: setting size of function clock_gettime@PLT to 16 (was 0)
+BOLT-INFO: setting size of function getc@PLT to 16 (was 0)
+BOLT-INFO: setting size of function strchr@PLT to 16 (was 0)
+BOLT-INFO: setting size of function fstat@PLT to 16 (was 0)
+BOLT-INFO: setting size of function stat@PLT to 16 (was 0)
+BOLT-INFO: setting size of function fchmod@PLT to 16 (was 0)
+BOLT-INFO: setting size of function chmod@PLT to 16 (was 0)
+BOLT-INFO: setting size of function utimensat@PLT to 16 (was 0)
+BOLT-INFO: setting size of function fchown@PLT to 16 (was 0)
+BOLT-INFO: setting size of function chown@PLT to 16 (was 0)
+BOLT-INFO: setting size of function lstat@PLT to 16 (was 0)
+BOLT-INFO: setting size of function isatty@PLT to 16 (was 0)
+BOLT-INFO: setting size of function fgets@PLT to 16 (was 0)
+BOLT-INFO: setting size of function strstr@PLT to 16 (was 0)
+BOLT-INFO: setting size of function strdup@PLT to 16 (was 0)
+BOLT-INFO: setting size of function mkdir@PLT to 16 (was 0)
+BOLT-INFO: setting size of function strncmp@PLT to 16 (was 0)
+BOLT-INFO: setting size of function realloc@PLT to 16 (was 0)
+BOLT-INFO: setting size of function opendir@PLT to 16 (was 0)
+BOLT-INFO: setting size of function readdir@PLT to 16 (was 0)
+BOLT-INFO: setting size of function closedir@PLT to 16 (was 0)
+BOLT-INFO: setting size of function sysconf@PLT to 16 (was 0)
+BOLT-INFO: setting size of function strtol@PLT to 16 (was 0)
+BOLT-INFO: setting size of function getenv@PLT to 16 (was 0)
+BOLT-INFO: pre-processing profile using branch profile reader
+BOLT-INFO: skipping processing FSE_versionNumber per user request
+BOLT-INFO: skipping processing FSE_isError per user request
+BOLT-INFO: skipping processing FSE_getErrorName per user request
+BOLT-INFO: skipping processing HUF_isError per user request
+BOLT-INFO: skipping processing HUF_getErrorName per user request
+BOLT-INFO: skipping processing HUF_readStats per user request
+BOLT-INFO: skipping processing ERR_getErrorString per user request
+BOLT-INFO: skipping processing FSE_buildDTable_wksp per user request
+BOLT-INFO: skipping processing POOL_create per user request
+BOLT-INFO: skipping processing POOL_create_advanced per user request
+BOLT-INFO: skipping processing POOL_free per user request
+BOLT-INFO: skipping processing POOL_joinJobs per user request
+BOLT-INFO: skipping processing POOL_resize per user request
+BOLT-INFO: skipping processing POOL_add per user request
+BOLT-INFO: skipping processing POOL_tryAdd per user request
+BOLT-INFO: skipping processing POOL_sizeof per user request
+BOLT-INFO: skipping processing ZSTD_XXH_versionNumber per user request
+BOLT-INFO: skipping processing ZSTD_XXH32 per user request
+BOLT-INFO: skipping processing ZSTD_XXH32_createState per user request
+BOLT-INFO: skipping processing ZSTD_XXH32_freeState per user request
+BOLT-INFO: skipping processing ZSTD_XXH32_copyState per user request
+BOLT-INFO: skipping processing ZSTD_XXH32_reset per user request
+BOLT-INFO: skipping processing ZSTD_XXH32_update per user request
+BOLT-INFO: skipping processing ZSTD_XXH32_digest per user request
+BOLT-INFO: skipping processing ZSTD_XXH32_canonicalFromHash per user request
+BOLT-INFO: skipping processing ZSTD_XXH32_hashFromCanonical per user request
+BOLT-INFO: skipping processing ZSTD_XXH64 per user request
+BOLT-INFO: skipping processing ZSTD_XXH64_createState per user request
+BOLT-INFO: skipping processing ZSTD_XXH64_freeState per user request
+BOLT-INFO: skipping processing ZSTD_XXH64_copyState per user request
+BOLT-INFO: skipping processing ZSTD_XXH64_canonicalFromHash per user request
+BOLT-INFO: skipping processing ZSTD_XXH64_hashFromCanonical per user request
+BOLT-INFO: skipping processing ZSTD_versionNumber per user request
+BOLT-INFO: skipping processing ZSTD_getErrorName per user request
+BOLT-INFO: skipping processing ZSTD_getErrorCode per user request
+BOLT-INFO: skipping processing ZSTD_getErrorString per user request
+BOLT-INFO: skipping processing FSE_buildCTable_wksp per user request
+BOLT-INFO: skipping processing FSE_NCountWriteBound per user request
+BOLT-INFO: skipping processing FSE_writeNCount per user request
+BOLT-INFO: skipping processing FSE_writeNCount_generic/1(*2) per user request
+BOLT-INFO: skipping processing FSE_optimalTableLog_internal per user request
+BOLT-INFO: skipping processing FSE_optimalTableLog per user request
+BOLT-INFO: skipping processing FSE_normalizeCount per user request
+BOLT-INFO: skipping processing FSE_buildCTable_rle per user request
+BOLT-INFO: skipping processing FSE_compress_usingCTable per user request
+BOLT-INFO: skipping processing FSE_compress_usingCTable_generic/1(*2) per user request
+BOLT-INFO: skipping processing FSE_compressBound per user request
+BOLT-INFO: skipping processing HIST_isError per user request
+BOLT-INFO: skipping processing HIST_add per user request
+BOLT-INFO: skipping processing HIST_count_simple per user request
+BOLT-INFO: skipping processing HIST_countFast_wksp per user request
+BOLT-INFO: skipping processing HIST_count_parallel_wksp/1(*2) per user request
+BOLT-INFO: skipping processing HIST_count_wksp per user request
+BOLT-INFO: skipping processing HIST_countFast per user request
+BOLT-INFO: skipping processing HIST_count per user request
+BOLT-INFO: skipping processing HUF_readCTableHeader per user request
+BOLT-INFO: skipping processing HUF_writeCTable_wksp per user request
+BOLT-INFO: skipping processing HUF_readCTable per user request
+BOLT-INFO: skipping processing HUF_getNbBitsFromCTable per user request
+BOLT-INFO: skipping processing HUF_buildCTable_wksp per user request
+BOLT-INFO: skipping processing HUF_estimateCompressedSize per user request
+BOLT-INFO: skipping processing HUF_validateCTable per user request
+BOLT-INFO: skipping processing HUF_compressBound per user request
+BOLT-INFO: skipping processing HUF_compress1X_usingCTable per user request
+BOLT-INFO: skipping processing HUF_compress1X_usingCTable_internal/1(*2) per user request
+BOLT-INFO: skipping processing HUF_compress4X_usingCTable per user request
+BOLT-INFO: skipping processing HUF_compress4X_usingCTable_internal/1(*2) per user request
+BOLT-INFO: skipping processing HUF_cardinality per user request
+BOLT-INFO: skipping processing HUF_minTableLog per user request
+BOLT-INFO: skipping processing HUF_optimalTableLog per user request
+BOLT-INFO: skipping processing HUF_compress1X_repeat per user request
+BOLT-INFO: skipping processing HUF_compress_internal/1(*2) per user request
+BOLT-INFO: skipping processing HUF_compress4X_repeat per user request
+BOLT-INFO: skipping processing HUF_simpleQuickSort/1(*2) per user request
+BOLT-INFO: skipping processing HUF_compressCTable_internal/1(*2) per user request
+BOLT-INFO: skipping processing ZSTD_compressBound per user request
+BOLT-INFO: skipping processing ZSTD_createCCtx per user request
+BOLT-INFO: skipping processing ZSTD_createCCtx_advanced per user request
+BOLT-INFO: skipping processing ZSTD_initStaticCCtx per user request
+BOLT-INFO: skipping processing ZSTD_freeCCtx per user request
+BOLT-INFO: skipping processing ZSTD_sizeof_CCtx per user request
+BOLT-INFO: skipping processing ZSTD_sizeof_CStream per user request
+BOLT-INFO: skipping processing ZSTD_getSeqStore per user request
+BOLT-INFO: skipping processing ZSTD_createCCtxParams per user request
+BOLT-INFO: skipping processing ZSTD_freeCCtxParams per user request
+BOLT-INFO: skipping processing ZSTD_CCtxParams_reset per user request
+BOLT-INFO: skipping processing ZSTD_CCtxParams_init per user request
+BOLT-INFO: skipping processing ZSTD_CCtxParams_init_advanced per user request
+BOLT-INFO: skipping processing ZSTD_checkCParams per user request
+BOLT-INFO: skipping processing ZSTD_cParam_getBounds per user request
+BOLT-INFO: skipping processing ZSTD_CCtx_setParameter per user request
+BOLT-INFO: skipping processing ZSTD_CCtxParams_setParameter per user request
+BOLT-INFO: skipping processing ZSTD_CCtx_getParameter per user request
+BOLT-INFO: skipping processing ZSTD_CCtxParams_getParameter per user request
+BOLT-INFO: skipping processing ZSTD_CCtx_setParametersUsingCCtxParams per user request
+BOLT-INFO: skipping processing ZSTD_CCtx_setCParams per user request
+BOLT-INFO: skipping processing ZSTD_CCtx_setFParams per user request
+BOLT-INFO: skipping processing ZSTD_CCtx_setParams per user request
+BOLT-INFO: skipping processing ZSTD_CCtx_setPledgedSrcSize per user request
+BOLT-INFO: skipping processing ZSTD_CCtx_loadDictionary_advanced per user request
+BOLT-INFO: skipping processing ZSTD_clearAllDicts/1(*2) per user request
+BOLT-INFO: skipping processing ZSTD_CCtx_loadDictionary_byReference per user request
+BOLT-INFO: skipping processing ZSTD_CCtx_loadDictionary per user request
+BOLT-INFO: skipping processing ZSTD_CCtx_refCDict per user request
+BOLT-INFO: skipping processing ZSTD_CCtx_refThreadPool per user request
+BOLT-INFO: skipping processing ZSTD_CCtx_refPrefix per user request
+BOLT-INFO: skipping processing ZSTD_CCtx_refPrefix_advanced per user request
+BOLT-INFO: skipping processing ZSTD_CCtx_reset per user request
+BOLT-INFO: skipping processing ZSTD_cycleLog per user request
+BOLT-INFO: skipping processing ZSTD_adjustCParams per user request
+BOLT-INFO: skipping processing ZSTD_adjustCParams_internal/1(*2) per user request
+BOLT-INFO: skipping processing ZSTD_getCParamsFromCCtxParams per user request
+BOLT-INFO: skipping processing ZSTD_estimateCCtxSize_usingCCtxParams per user request
+BOLT-INFO: skipping processing ZSTD_estimateCCtxSize_usingCCtxParams_internal/1(*2) per user request
+BOLT-INFO: skipping processing ZSTD_estimateCCtxSize_usingCParams per user request
+BOLT-INFO: skipping processing ZSTD_estimateCCtxSize per user request
+BOLT-INFO: skipping processing ZSTD_estimateCStreamSize_usingCCtxParams per user request
+BOLT-INFO: skipping processing ZSTD_estimateCStreamSize_usingCParams per user request
+BOLT-INFO: skipping processing ZSTD_estimateCStreamSize per user request
+BOLT-INFO: skipping processing ZSTD_getFrameProgression per user request
+BOLT-INFO: skipping processing ZSTD_toFlushNow per user request
+BOLT-INFO: skipping processing ZSTD_reset_compressedBlockState per user request
+BOLT-INFO: skipping processing ZSTD_invalidateRepCodes per user request
+BOLT-INFO: skipping processing ZSTD_copyCCtx per user request
+BOLT-INFO: skipping processing ZSTD_seqToCodes per user request
+BOLT-INFO: skipping processing ZSTD_selectBlockCompressor per user request
+BOLT-INFO: skipping processing ZSTD_resetSeqStore per user request
+BOLT-INFO: skipping processing ZSTD_sequenceBound per user request
+BOLT-INFO: skipping processing ZSTD_generateSequences per user request
+BOLT-INFO: skipping processing ZSTD_compress2 per user request
+BOLT-INFO: skipping processing ZSTD_mergeBlockDelimiters per user request
+BOLT-INFO: skipping processing ZSTD_buildBlockEntropyStats per user request
+BOLT-INFO: skipping processing ZSTD_writeSkippableFrame per user request
+BOLT-INFO: skipping processing ZSTD_writeLastEmptyBlock per user request
+BOLT-INFO: skipping processing ZSTD_referenceExternalSequences per user request
+BOLT-INFO: skipping processing ZSTD_compressContinue_public per user request
+BOLT-INFO: skipping processing ZSTD_compressContinue_internal/1(*2) per user request
+BOLT-INFO: skipping processing ZSTD_compressContinue per user request
+BOLT-INFO: skipping processing ZSTD_getBlockSize per user request
+BOLT-INFO: skipping processing ZSTD_compressBlock_deprecated per user request
+BOLT-INFO: skipping processing ZSTD_compressBlock per user request
+BOLT-INFO: skipping processing ZSTD_loadCEntropy per user request
+BOLT-INFO: skipping processing ZSTD_compressBegin_advanced_internal per user request
+BOLT-INFO: skipping processing ZSTD_compressBegin_internal/1(*2) per user request
+BOLT-INFO: skipping processing ZSTD_compressBegin_advanced per user request
+BOLT-INFO: skipping processing ZSTD_compressBegin_usingDict per user request
+BOLT-INFO: skipping processing ZSTD_compressBegin_usingDict_deprecated/1(*2) per user request
+BOLT-INFO: skipping processing ZSTD_compressBegin per user request
+BOLT-INFO: skipping processing ZSTD_CCtx_trace per user request
+BOLT-INFO: skipping processing ZSTD_compressEnd_public per user request
+BOLT-INFO: skipping processing ZSTD_compressEnd per user request
+BOLT-INFO: skipping processing ZSTD_compress_advanced per user request
+BOLT-INFO: skipping processing ZSTD_compress_advanced_internal per user request
+BOLT-INFO: skipping processing ZSTD_compress_usingDict per user request
+BOLT-INFO: skipping processing ZSTD_compressCCtx per user request
+BOLT-INFO: skipping processing ZSTD_compress per user request
+BOLT-INFO: skipping processing ZSTD_estimateCDictSize_advanced per user request
+BOLT-INFO: skipping processing ZSTD_estimateCDictSize per user request
+BOLT-INFO: skipping processing ZSTD_sizeof_CDict per user request
+BOLT-INFO: skipping processing ZSTD_createCDict_advanced per user request
+BOLT-INFO: skipping processing ZSTD_createCDict_advanced2 per user request
+BOLT-INFO: skipping processing ZSTD_initCDict_internal/1(*2) per user request
+BOLT-INFO: skipping processing ZSTD_freeCDict per user request
+BOLT-INFO: skipping processing ZSTD_createCDict per user request
+BOLT-INFO: skipping processing ZSTD_createCDict_byReference per user request
+BOLT-INFO: skipping processing ZSTD_initStaticCDict per user request
+BOLT-INFO: skipping processing ZSTD_getCParamsFromCDict per user request
+BOLT-INFO: skipping processing ZSTD_getDictID_fromCDict per user request
+BOLT-INFO: skipping processing ZSTD_compressBegin_usingCDict_advanced per user request
+BOLT-INFO: skipping processing ZSTD_compressBegin_usingCDict_internal/1(*2) per user request
+BOLT-INFO: skipping processing ZSTD_compressBegin_usingCDict_deprecated per user request
+BOLT-INFO: skipping processing ZSTD_compressBegin_usingCDict per user request
+BOLT-INFO: skipping processing ZSTD_compress_usingCDict_advanced per user request
+BOLT-INFO: skipping processing ZSTD_compress_usingCDict per user request
+BOLT-INFO: skipping processing ZSTD_createCStream per user request
+BOLT-INFO: skipping processing ZSTD_createCStream_advanced per user request
+BOLT-INFO: skipping processing ZSTD_initStaticCStream per user request
+BOLT-INFO: skipping processing ZSTD_freeCStream per user request
+BOLT-INFO: skipping processing ZSTD_CStreamInSize per user request
+BOLT-INFO: skipping processing ZSTD_CStreamOutSize per user request
+BOLT-INFO: skipping processing ZSTD_resetCStream per user request
+BOLT-INFO: skipping processing ZSTD_initCStream_internal per user request
+BOLT-INFO: skipping processing ZSTD_initCStream_usingCDict_advanced per user request
+BOLT-INFO: skipping processing ZSTD_initCStream_usingCDict per user request
+BOLT-INFO: skipping processing ZSTD_initCStream_advanced per user request
+BOLT-INFO: skipping processing ZSTD_initCStream_usingDict per user request
+BOLT-INFO: skipping processing ZSTD_initCStream_srcSize per user request
+BOLT-INFO: skipping processing ZSTD_initCStream per user request
+BOLT-INFO: skipping processing ZSTD_compressStream per user request
+BOLT-INFO: skipping processing ZSTD_compressStream2 per user request
+BOLT-INFO: skipping processing ZSTD_CCtx_init_compressStream2/1(*2) per user request
+BOLT-INFO: skipping processing ZSTD_compressStream2_simpleArgs per user request
+BOLT-INFO: skipping processing ZSTD_compressSequences per user request
+BOLT-INFO: skipping processing ZSTD_writeFrameHeader/1(*2) per user request
+BOLT-INFO: skipping processing ZSTD_convertBlockSequences per user request
+BOLT-INFO: skipping processing ZSTD_get1BlockSummary per user request
+BOLT-INFO: skipping processing ZSTD_compressSequencesAndLiterals per user request
+BOLT-INFO: skipping processing ZSTD_compressSequencesAndLiterals_internal/1(*2) per user request
+BOLT-INFO: skipping processing ZSTD_flushStream per user request
+BOLT-INFO: skipping processing ZSTD_endStream per user request
+BOLT-INFO: skipping processing ZSTD_defaultCLevel per user request
+BOLT-INFO: skipping processing ZSTD_getCParams per user request
+BOLT-INFO: skipping processing ZSTD_getParams per user request
+BOLT-INFO: skipping processing ZSTD_registerSequenceProducer per user request
+BOLT-INFO: skipping processing ZSTD_CCtxParams_registerSequenceProducer per user request
+BOLT-INFO: skipping processing ZSTD_resetCCtx_internal/1(*2) per user request
+BOLT-INFO: skipping processing ZSTD_reset_matchState/1(*2) per user request
+BOLT-INFO: skipping processing ZSTD_buildSequencesStatistics/1(*2) per user request
+BOLT-INFO: skipping processing ZSTD_overflowCorrectIfNeeded/1(*2) per user request
+BOLT-INFO: skipping processing ZSTD_compressBlock_internal/1(*2) per user request
+BOLT-INFO: skipping processing ZSTD_reduceTable/1(*2) per user request
+BOLT-INFO: skipping processing ZSTD_buildSeqStore/1(*2) per user request
+BOLT-INFO: skipping processing ZSTD_transferSequences_wBlockDelim/1(*2) per user request
+BOLT-INFO: skipping processing ZSTD_isRLE/1(*2) per user request
+BOLT-INFO: skipping processing ZSTD_compressSeqStore_singleBlock/1(*2) per user request
+BOLT-INFO: skipping processing ZSTD_deriveSeqStoreChunk/1(*2) per user request
+BOLT-INFO: skipping processing ZSTD_deriveBlockSplitsHelper/1(*2) per user request
+BOLT-INFO: skipping processing ZSTD_buildEntropyStatisticsAndEstimateSubBlockSize/1(*2) per user request
+BOLT-INFO: skipping processing ZSTD_copyBlockSequences/1(*2) per user request
+BOLT-INFO: skipping processing ZSTD_entropyCompressSeqStore_internal/1(*2) per user request
+BOLT-INFO: skipping processing ZSTD_compress_insertDictionary/1(*2) per user request
+BOLT-INFO: skipping processing ZSTD_loadDictionaryContent/1(*2) per user request
+BOLT-INFO: skipping processing ZSTD_transferSequences_noDelim/1(*2) per user request
+BOLT-INFO: skipping processing ZSTD_noCompressLiterals per user request
+BOLT-INFO: skipping processing ZSTD_compressRleLiteralsBlock per user request
+BOLT-INFO: skipping processing ZSTD_compressLiterals per user request
+BOLT-INFO: skipping processing ZSTD_fseBitCost per user request
+BOLT-INFO: skipping processing ZSTD_crossEntropyCost per user request
+BOLT-INFO: skipping processing ZSTD_selectEncodingType per user request
+BOLT-INFO: skipping processing ZSTD_buildCTable per user request
+BOLT-INFO: skipping processing ZSTD_encodeSequences per user request
+BOLT-INFO: skipping processing ZSTD_compressSuperBlock per user request
+BOLT-INFO: skipping processing ZSTD_compressSubBlock/1(*2) per user request
+BOLT-INFO: skipping processing ZSTD_fillDoubleHashTable per user request
+BOLT-INFO: skipping processing ZSTD_compressBlock_doubleFast per user request
+BOLT-INFO: skipping processing ZSTD_compressBlock_doubleFast_dictMatchState per user request
+BOLT-INFO: skipping processing ZSTD_compressBlock_doubleFast_extDict per user request
+BOLT-INFO: skipping processing ZSTD_count_2segments/1(*2) per user request
+BOLT-INFO: skipping processing ZSTD_compressBlock_doubleFast_extDict_generic/1(*2) per user request
+BOLT-INFO: skipping processing ZSTD_fillHashTable per user request
+BOLT-INFO: skipping processing ZSTD_compressBlock_fast per user request
+BOLT-INFO: skipping processing ZSTD_compressBlock_fast_dictMatchState per user request
+BOLT-INFO: skipping processing ZSTD_compressBlock_fast_extDict per user request
+BOLT-INFO: skipping processing ZSTD_count_2segments/2(*2) per user request
+BOLT-INFO: skipping processing ZSTD_compressBlock_fast_extDict_generic/1(*2) per user request
+BOLT-INFO: skipping processing ZSTD_dedicatedDictSearch_lazy_loadDictionary per user request
+BOLT-INFO: skipping processing ZSTD_insertAndFindFirstIndex per user request
+BOLT-INFO: skipping processing ZSTD_row_update per user request
+BOLT-INFO: skipping processing ZSTD_compressBlock_greedy per user request
+BOLT-INFO: skipping processing ZSTD_compressBlock_greedy_dictMatchState per user request
+BOLT-INFO: skipping processing ZSTD_compressBlock_greedy_dedicatedDictSearch per user request
+BOLT-INFO: skipping processing ZSTD_compressBlock_greedy_row per user request
+BOLT-INFO: skipping processing ZSTD_compressBlock_greedy_dictMatchState_row per user request
+BOLT-INFO: skipping processing ZSTD_compressBlock_greedy_dedicatedDictSearch_row per user request
+BOLT-INFO: skipping processing ZSTD_compressBlock_lazy per user request
+BOLT-INFO: skipping processing ZSTD_compressBlock_lazy_dictMatchState per user request
+BOLT-INFO: skipping processing ZSTD_compressBlock_lazy_dedicatedDictSearch per user request
+BOLT-INFO: skipping processing ZSTD_compressBlock_lazy_row per user request
+BOLT-INFO: skipping processing ZSTD_compressBlock_lazy_dictMatchState_row per user request
+BOLT-INFO: skipping processing ZSTD_compressBlock_lazy_dedicatedDictSearch_row per user request
+BOLT-INFO: skipping processing ZSTD_compressBlock_lazy2 per user request
+BOLT-INFO: skipping processing ZSTD_compressBlock_lazy2_dictMatchState per user request
+BOLT-INFO: skipping processing ZSTD_compressBlock_lazy2_dedicatedDictSearch per user request
+BOLT-INFO: skipping processing ZSTD_compressBlock_lazy2_row per user request
+BOLT-INFO: skipping processing ZSTD_compressBlock_lazy2_dictMatchState_row per user request
+BOLT-INFO: skipping processing ZSTD_compressBlock_lazy2_dedicatedDictSearch_row per user request
+BOLT-INFO: skipping processing ZSTD_compressBlock_btlazy2 per user request
+BOLT-INFO: skipping processing ZSTD_compressBlock_btlazy2_dictMatchState per user request
+BOLT-INFO: skipping processing ZSTD_compressBlock_greedy_extDict per user request
+BOLT-INFO: skipping processing ZSTD_compressBlock_greedy_extDict_row per user request
+BOLT-INFO: skipping processing ZSTD_compressBlock_lazy_extDict per user request
+BOLT-INFO: skipping processing ZSTD_compressBlock_lazy_extDict_row per user request
+BOLT-INFO: skipping processing ZSTD_compressBlock_lazy2_extDict per user request
+BOLT-INFO: skipping processing ZSTD_compressBlock_lazy2_extDict_row per user request
+BOLT-INFO: skipping processing ZSTD_compressBlock_btlazy2_extDict per user request
+BOLT-INFO: skipping processing ZSTD_count_2segments/3(*2) per user request
+BOLT-INFO: skipping processing ZSTD_HcFindBestMatch_noDict_4/1(*2) per user request
+BOLT-INFO: skipping processing ZSTD_HcFindBestMatch_noDict_5/1(*2) per user request
+BOLT-INFO: skipping processing ZSTD_HcFindBestMatch_noDict_6/1(*2) per user request
+BOLT-INFO: skipping processing ZSTD_BtFindBestMatch_noDict_4/1(*2) per user request
+BOLT-INFO: skipping processing ZSTD_BtFindBestMatch_noDict_5/1(*2) per user request
+BOLT-INFO: skipping processing ZSTD_BtFindBestMatch_noDict_6/1(*2) per user request
+BOLT-INFO: skipping processing ZSTD_RowFindBestMatch_noDict_4_4/1(*2) per user request
+BOLT-INFO: skipping processing ZSTD_RowFindBestMatch_noDict_4_5/1(*2) per user request
+BOLT-INFO: skipping processing ZSTD_RowFindBestMatch_noDict_4_6/1(*2) per user request
+BOLT-INFO: skipping processing ZSTD_RowFindBestMatch_noDict_5_4/1(*2) per user request
+BOLT-INFO: skipping processing ZSTD_RowFindBestMatch_noDict_5_5/1(*2) per user request
+BOLT-INFO: skipping processing ZSTD_RowFindBestMatch_noDict_5_6/1(*2) per user request
+BOLT-INFO: skipping processing ZSTD_RowFindBestMatch_noDict_6_4/1(*2) per user request
+BOLT-INFO: skipping processing ZSTD_RowFindBestMatch_noDict_6_5/1(*2) per user request
+BOLT-INFO: skipping processing ZSTD_RowFindBestMatch_noDict_6_6/1(*2) per user request
+BOLT-INFO: skipping processing ZSTD_HcFindBestMatch_extDict_4/1(*2) per user request
+BOLT-INFO: skipping processing ZSTD_HcFindBestMatch_extDict_5/1(*2) per user request
+BOLT-INFO: skipping processing ZSTD_HcFindBestMatch_extDict_6/1(*2) per user request
+BOLT-INFO: skipping processing ZSTD_BtFindBestMatch_extDict_4/1(*2) per user request
+BOLT-INFO: skipping processing ZSTD_BtFindBestMatch_extDict_5/1(*2) per user request
+BOLT-INFO: skipping processing ZSTD_BtFindBestMatch_extDict_6/1(*2) per user request
+BOLT-INFO: skipping processing ZSTD_RowFindBestMatch_extDict_4_4/1(*2) per user request
+BOLT-INFO: skipping processing ZSTD_RowFindBestMatch_extDict_4_5/1(*2) per user request
+BOLT-INFO: skipping processing ZSTD_RowFindBestMatch_extDict_4_6/1(*2) per user request
+BOLT-INFO: skipping processing ZSTD_RowFindBestMatch_extDict_5_4/1(*2) per user request
+BOLT-INFO: skipping processing ZSTD_RowFindBestMatch_extDict_5_5/1(*2) per user request
+BOLT-INFO: skipping processing ZSTD_RowFindBestMatch_extDict_5_6/1(*2) per user request
+BOLT-INFO: skipping processing ZSTD_RowFindBestMatch_extDict_6_4/1(*2) per user request
+BOLT-INFO: skipping processing ZSTD_RowFindBestMatch_extDict_6_5/1(*2) per user request
+BOLT-INFO: skipping processing ZSTD_RowFindBestMatch_extDict_6_6/1(*2) per user request
+BOLT-INFO: skipping processing ZSTD_HcFindBestMatch_dictMatchState_4/1(*2) per user request
+BOLT-INFO: skipping processing ZSTD_HcFindBestMatch_dictMatchState_5/1(*2) per user request
+BOLT-INFO: skipping processing ZSTD_HcFindBestMatch_dictMatchState_6/1(*2) per user request
+BOLT-INFO: skipping processing ZSTD_BtFindBestMatch_dictMatchState_4/1(*2) per user request
+BOLT-INFO: skipping processing ZSTD_BtFindBestMatch_dictMatchState_5/1(*2) per user request
+BOLT-INFO: skipping processing ZSTD_BtFindBestMatch_dictMatchState_6/1(*2) per user request
+BOLT-INFO: skipping processing ZSTD_RowFindBestMatch_dictMatchState_4_4/1(*2) per user request
+BOLT-INFO: skipping processing ZSTD_RowFindBestMatch_dictMatchState_4_5/1(*2) per user request
+BOLT-INFO: skipping processing ZSTD_RowFindBestMatch_dictMatchState_4_6/1(*2) per user request
+BOLT-INFO: skipping processing ZSTD_RowFindBestMatch_dictMatchState_5_4/1(*2) per user request
+BOLT-INFO: skipping processing ZSTD_RowFindBestMatch_dictMatchState_5_5/1(*2) per user request
+BOLT-INFO: skipping processing ZSTD_RowFindBestMatch_dictMatchState_5_6/1(*2) per user request
+BOLT-INFO: skipping processing ZSTD_RowFindBestMatch_dictMatchState_6_4/1(*2) per user request
+BOLT-INFO: skipping processing ZSTD_RowFindBestMatch_dictMatchState_6_5/1(*2) per user request
+BOLT-INFO: skipping processing ZSTD_RowFindBestMatch_dictMatchState_6_6/1(*2) per user request
+BOLT-INFO: skipping processing ZSTD_HcFindBestMatch_dedicatedDictSearch_4/1(*2) per user request
+BOLT-INFO: skipping processing ZSTD_HcFindBestMatch_dedicatedDictSearch_5/1(*2) per user request
+BOLT-INFO: skipping processing ZSTD_HcFindBestMatch_dedicatedDictSearch_6/1(*2) per user request
+BOLT-INFO: skipping processing ZSTD_RowFindBestMatch_dedicatedDictSearch_4_4/1(*2) per user request
+BOLT-INFO: skipping processing ZSTD_RowFindBestMatch_dedicatedDictSearch_4_5/1(*2) per user request
+BOLT-INFO: skipping processing ZSTD_RowFindBestMatch_dedicatedDictSearch_4_6/1(*2) per user request
+BOLT-INFO: skipping processing ZSTD_RowFindBestMatch_dedicatedDictSearch_5_4/1(*2) per user request
+BOLT-INFO: skipping processing ZSTD_RowFindBestMatch_dedicatedDictSearch_5_5/1(*2) per user request
+BOLT-INFO: skipping processing ZSTD_RowFindBestMatch_dedicatedDictSearch_5_6/1(*2) per user request
+BOLT-INFO: skipping processing ZSTD_RowFindBestMatch_dedicatedDictSearch_6_4/1(*2) per user request
+BOLT-INFO: skipping processing ZSTD_RowFindBestMatch_dedicatedDictSearch_6_5/1(*2) per user request
+BOLT-INFO: skipping processing ZSTD_RowFindBestMatch_dedicatedDictSearch_6_6/1(*2) per user request
+BOLT-INFO: skipping processing ZSTD_DUBT_findBestMatch/1(*2) per user request
+BOLT-INFO: skipping processing ZSTD_ldm_adjustParameters per user request
+BOLT-INFO: skipping processing ZSTD_ldm_getTableSize per user request
+BOLT-INFO: skipping processing ZSTD_ldm_getMaxNbSeq per user request
+BOLT-INFO: skipping processing ZSTD_ldm_fillHashTable per user request
+BOLT-INFO: skipping processing ZSTD_ldm_gear_feed/1(*2) per user request
+BOLT-INFO: skipping processing ZSTD_ldm_generateSequences per user request
+BOLT-INFO: skipping processing ZSTD_ldm_skipSequences per user request
+BOLT-INFO: skipping processing ZSTD_ldm_skipRawSeqStoreBytes per user request
+BOLT-INFO: skipping processing ZSTD_ldm_blockCompress per user request
+BOLT-INFO: skipping processing ZSTD_updateTree per user request
+BOLT-INFO: skipping processing ZSTD_compressBlock_btopt per user request
+BOLT-INFO: skipping processing ZSTD_compressBlock_opt0/1(*2) per user request
+BOLT-INFO: skipping processing ZSTD_compressBlock_btultra per user request
+BOLT-INFO: skipping processing ZSTD_compressBlock_opt2/1(*2) per user request
+BOLT-INFO: skipping processing ZSTD_compressBlock_btultra2 per user request
+BOLT-INFO: skipping processing ZSTD_compressBlock_btopt_dictMatchState per user request
+BOLT-INFO: skipping processing ZSTD_compressBlock_btopt_extDict per user request
+BOLT-INFO: skipping processing ZSTD_compressBlock_btultra_dictMatchState per user request
+BOLT-INFO: skipping processing ZSTD_compressBlock_btultra_extDict per user request
+BOLT-INFO: skipping processing ZSTD_insertBt1/1(*2) per user request
+BOLT-INFO: skipping processing ZSTD_count_2segments/4(*2) per user request
+BOLT-INFO: skipping processing ZSTD_opt_getNextMatchAndUpdateSeqStore/1(*2) per user request
+BOLT-INFO: skipping processing ZSTD_rescaleFreqs/1(*2) per user request
+BOLT-INFO: skipping processing ZSTD_optLdm_processMatchCandidate/1(*2) per user request
+BOLT-INFO: skipping processing ZSTD_btGetAllMatches_noDict_3/1(*2) per user request
+BOLT-INFO: skipping processing ZSTD_btGetAllMatches_noDict_4/1(*2) per user request
+BOLT-INFO: skipping processing ZSTD_btGetAllMatches_noDict_5/1(*2) per user request
+BOLT-INFO: skipping processing ZSTD_btGetAllMatches_noDict_6/1(*2) per user request
+BOLT-INFO: skipping processing ZSTD_btGetAllMatches_extDict_3/1(*2) per user request
+BOLT-INFO: skipping processing ZSTD_btGetAllMatches_extDict_4/1(*2) per user request
+BOLT-INFO: skipping processing ZSTD_btGetAllMatches_extDict_5/1(*2) per user request
+BOLT-INFO: skipping processing ZSTD_btGetAllMatches_extDict_6/1(*2) per user request
+BOLT-INFO: skipping processing ZSTD_btGetAllMatches_dictMatchState_3/1(*2) per user request
+BOLT-INFO: skipping processing ZSTD_btGetAllMatches_dictMatchState_4/1(*2) per user request
+BOLT-INFO: skipping processing ZSTD_btGetAllMatches_dictMatchState_5/1(*2) per user request
+BOLT-INFO: skipping processing ZSTD_btGetAllMatches_dictMatchState_6/1(*2) per user request
+BOLT-INFO: skipping processing ZSTD_splitBlock per user request
+BOLT-INFO: skipping processing ZSTDMT_createCCtx_advanced per user request
+BOLT-INFO: skipping processing ZSTDMT_freeCCtx per user request
+BOLT-INFO: skipping processing ZSTDMT_freeBufferPool/1(*2) per user request
+BOLT-INFO: skipping processing ZSTDMT_sizeof_CCtx per user request
+BOLT-INFO: skipping processing ZSTDMT_updateCParams_whileCompressing per user request
+BOLT-INFO: skipping processing ZSTDMT_getFrameProgression per user request
+BOLT-INFO: skipping processing ZSTDMT_toFlushNow per user request
+BOLT-INFO: skipping processing ZSTDMT_initCStream_internal per user request
+BOLT-INFO: skipping processing ZSTDMT_nextInputSizeHint per user request
+BOLT-INFO: skipping processing ZSTDMT_compressStream_generic per user request
+BOLT-INFO: skipping processing ZSTDMT_expandBufferPool/1(*2) per user request
+BOLT-INFO: skipping processing ZSTDMT_compressionJob/1(*2) per user request
+BOLT-INFO: skipping processing HUF_decompress1X2_DCtx_wksp per user request
+BOLT-INFO: skipping processing HUF_decompress1X2_usingDTable_internal/1(*2) per user request
+BOLT-INFO: skipping processing HUF_selectDecoder per user request
+BOLT-INFO: skipping processing HUF_decompress1X_DCtx_wksp per user request
+BOLT-INFO: skipping processing BIT_initDStream/2(*2) per user request
+BOLT-INFO: skipping processing ZSTD_DDict_dictContent per user request
+BOLT-INFO: skipping processing ZSTD_DDict_dictSize per user request
+BOLT-INFO: skipping processing ZSTD_copyDDictParameters per user request
+BOLT-INFO: skipping processing ZSTD_createDDict_advanced per user request
+BOLT-INFO: skipping processing ZSTD_createDDict per user request
+BOLT-INFO: skipping processing ZSTD_createDDict_byReference per user request
+BOLT-INFO: skipping processing ZSTD_initStaticDDict per user request
+BOLT-INFO: skipping processing ZSTD_estimateDDictSize per user request
+BOLT-INFO: skipping processing ZSTD_sizeof_DDict per user request
+BOLT-INFO: skipping processing ZSTD_getDictID_fromDDict per user request
+BOLT-INFO: skipping processing ZSTD_sizeof_DCtx per user request
+BOLT-INFO: skipping processing ZSTD_estimateDCtxSize per user request
+BOLT-INFO: skipping processing ZSTD_initStaticDCtx per user request
+BOLT-INFO: skipping processing ZSTD_createDCtx_advanced per user request
+BOLT-INFO: skipping processing ZSTD_createDCtx per user request
+BOLT-INFO: skipping processing ZSTD_copyDCtx per user request
+BOLT-INFO: skipping processing ZSTD_isSkippableFrame per user request
+BOLT-INFO: skipping processing ZSTD_frameHeaderSize per user request
+BOLT-INFO: skipping processing ZSTD_getFrameHeader per user request
+BOLT-INFO: skipping processing ZSTD_getFrameContentSize per user request
+BOLT-INFO: skipping processing ZSTD_readSkippableFrame per user request
+BOLT-INFO: skipping processing ZSTD_findDecompressedSize per user request
+BOLT-INFO: skipping processing ZSTD_findFrameCompressedSize per user request
+BOLT-INFO: skipping processing ZSTD_getDecompressedSize per user request
+BOLT-INFO: skipping processing ZSTD_decompressBound per user request
+BOLT-INFO: skipping processing ZSTD_findFrameSizeInfo/1(*2) per user request
+BOLT-INFO: skipping processing ZSTD_decompressionMargin per user request
+BOLT-INFO: skipping processing ZSTD_insertBlock per user request
+BOLT-INFO: skipping processing ZSTD_decompress_usingDict per user request
+BOLT-INFO: skipping processing ZSTD_decompressMultiFrame/1(*2) per user request
+BOLT-INFO: skipping processing ZSTD_decompressDCtx per user request
+BOLT-INFO: skipping processing ZSTD_decompress_usingDDict per user request
+BOLT-INFO: skipping processing ZSTD_getDDict/1(*2) per user request
+BOLT-INFO: skipping processing ZSTD_decompress per user request
+BOLT-INFO: skipping processing ZSTD_nextSrcSizeToDecompress per user request
+BOLT-INFO: skipping processing ZSTD_DCtx_trace_end/1(*2) per user request
+BOLT-INFO: skipping processing ZSTD_loadDEntropy per user request
+BOLT-INFO: skipping processing ZSTD_decompressBegin per user request
+BOLT-INFO: skipping processing ZSTD_decompressBegin_usingDict per user request
+BOLT-INFO: skipping processing ZSTD_decompressBegin_usingDDict per user request
+BOLT-INFO: skipping processing ZSTD_getDictID_fromDict per user request
+BOLT-INFO: skipping processing ZSTD_getDictID_fromFrame per user request
+BOLT-INFO: skipping processing ZSTD_initStaticDStream per user request
+BOLT-INFO: skipping processing ZSTD_createDStream_advanced per user request
+BOLT-INFO: skipping processing ZSTD_DCtx_loadDictionary_advanced per user request
+BOLT-INFO: skipping processing ZSTD_DCtx_loadDictionary per user request
+BOLT-INFO: skipping processing ZSTD_DCtx_refPrefix_advanced per user request
+BOLT-INFO: skipping processing ZSTD_DCtx_refPrefix per user request
+BOLT-INFO: skipping processing ZSTD_initDStream_usingDict per user request
+BOLT-INFO: skipping processing ZSTD_initDStream per user request
+BOLT-INFO: skipping processing ZSTD_DCtx_refDDict per user request
+BOLT-INFO: skipping processing ZSTD_initDStream_usingDDict per user request
+BOLT-INFO: skipping processing ZSTD_resetDStream per user request
+BOLT-INFO: skipping processing ZSTD_dParam_getBounds per user request
+BOLT-INFO: skipping processing ZSTD_DCtx_setFormat per user request
+BOLT-INFO: skipping processing ZSTD_DCtx_getParameter per user request
+BOLT-INFO: skipping processing ZSTD_sizeof_DStream per user request
+BOLT-INFO: skipping processing ZSTD_decodingBufferSize_min per user request
+BOLT-INFO: skipping processing ZSTD_estimateDStreamSize per user request
+BOLT-INFO: skipping processing ZSTD_estimateDStreamSize_fromFrame per user request
+BOLT-INFO: skipping processing ZSTD_decompressLegacyStream/1(*2) per user request
+BOLT-INFO: skipping processing ZSTD_decompressStream_simpleArgs per user request
+BOLT-INFO: skipping processing ZSTD_decodeLiteralsBlock_wrapper per user request
+BOLT-INFO: skipping processing ZSTD_decompressSequencesLong/1(*2) per user request
+BOLT-INFO: skipping processing ZSTD_decompressSequencesSplitLitBuffer/1(*2) per user request
+BOLT-INFO: skipping processing ZSTD_decompressBlock_deprecated per user request
+BOLT-INFO: skipping processing ZSTD_decompressBlock per user request
+BOLT-INFO: skipping processing ZSTD_execSequenceEnd/1(*2) per user request
+BOLT-INFO: skipping processing ZSTD_safecopy/1(*2) per user request
+BOLT-INFO: skipping processing ZSTD_execSequenceEndSplitLitBuffer/1(*2) per user request
+BOLT-INFO: skipping processing COVER_sum per user request
+BOLT-INFO: skipping processing COVER_warnOnSmallCorpus per user request
+BOLT-INFO: skipping processing COVER_computeEpochs per user request
+BOLT-INFO: skipping processing ZDICT_trainFromBuffer_cover per user request
+BOLT-INFO: skipping processing COVER_ctx_init/1(*2) per user request
+BOLT-INFO: skipping processing COVER_buildDictionary/1(*2) per user request
+BOLT-INFO: skipping processing COVER_checkTotalCompressedSize per user request
+BOLT-INFO: skipping processing COVER_best_init per user request
+BOLT-INFO: skipping processing COVER_best_wait per user request
+BOLT-INFO: skipping processing COVER_best_destroy per user request
+BOLT-INFO: skipping processing COVER_best_start per user request
+BOLT-INFO: skipping processing COVER_best_finish per user request
+BOLT-INFO: skipping processing COVER_dictSelectionError per user request
+BOLT-INFO: skipping processing COVER_dictSelectionIsError per user request
+BOLT-INFO: skipping processing COVER_dictSelectionFree per user request
+BOLT-INFO: skipping processing COVER_selectDict per user request
+BOLT-INFO: skipping processing ZDICT_optimizeTrainFromBuffer_cover per user request
+BOLT-INFO: skipping processing COVER_tryParameters/1(*2) per user request
+BOLT-INFO: skipping processing COVER_cmp8/1(*2) per user request
+BOLT-INFO: skipping processing COVER_cmp/1(*2) per user request
+BOLT-INFO: skipping processing COVER_strict_cmp8/1(*2) per user request
+BOLT-INFO: skipping processing COVER_strict_cmp/1(*2) per user request
+BOLT-INFO: skipping processing divsufsort per user request
+BOLT-INFO: skipping processing sort_typeBstar/1(*2) per user request
+BOLT-INFO: skipping processing divbwt per user request
+BOLT-INFO: skipping processing ss_mintrosort/1(*2) per user request
+BOLT-INFO: skipping processing ss_swapmerge/1(*2) per user request
+BOLT-INFO: skipping processing ZDICT_trainFromBuffer_fastCover per user request
+BOLT-INFO: skipping processing FASTCOVER_ctx_init/1(*2) per user request
+BOLT-INFO: skipping processing FASTCOVER_buildDictionary/1(*2) per user request
+BOLT-INFO: skipping processing ZDICT_optimizeTrainFromBuffer_fastCover per user request
+BOLT-INFO: skipping processing FASTCOVER_tryParameters/1(*2) per user request
+BOLT-INFO: skipping processing ZDICT_isError per user request
+BOLT-INFO: skipping processing ZDICT_getErrorName per user request
+BOLT-INFO: skipping processing ZDICT_getDictID per user request
+BOLT-INFO: skipping processing ZDICT_getDictHeaderSize per user request
+BOLT-INFO: skipping processing ZDICT_finalizeDictionary per user request
+BOLT-INFO: skipping processing ZDICT_analyzeEntropy/1(*2) per user request
+BOLT-INFO: skipping processing ZDICT_trainFromBuffer_legacy per user request
+BOLT-INFO: skipping processing ZDICT_trainFromBuffer per user request
+BOLT-INFO: skipping processing ZDICT_addEntropyTablesFromBuffer per user request
+BOLT-INFO: skipping processing ZDICT_addEntropyTablesFromBuffer_advanced/1(*2) per user request
+BOLT-INFO: skipping processing ZDICT_tryMerge/1(*2) per user request
+BOLT-INFO: skipping processing FSEv05_createDTable per user request
+BOLT-INFO: skipping processing FSEv05_freeDTable per user request
+BOLT-INFO: skipping processing FSEv05_buildDTable per user request
+BOLT-INFO: skipping processing FSEv05_isError per user request
+BOLT-INFO: skipping processing FSEv05_getErrorName per user request
+BOLT-INFO: skipping processing FSEv05_readNCount per user request
+BOLT-INFO: skipping processing FSEv05_buildDTable_rle per user request
+BOLT-INFO: skipping processing FSEv05_buildDTable_raw per user request
+BOLT-INFO: skipping processing FSEv05_decompress_usingDTable per user request
+BOLT-INFO: skipping processing FSEv05_decompress per user request
+BOLT-INFO: skipping processing HUFv05_isError per user request
+BOLT-INFO: skipping processing HUFv05_getErrorName per user request
+BOLT-INFO: skipping processing HUFv05_readDTableX2 per user request
+BOLT-INFO: skipping processing HUFv05_readStats/1(*2) per user request
+BOLT-INFO: skipping processing HUFv05_decompress1X2_usingDTable per user request
+BOLT-INFO: skipping processing BITv05_initDStream/1(*2) per user request
+BOLT-INFO: skipping processing HUFv05_decodeStreamX2/1(*2) per user request
+BOLT-INFO: skipping processing HUFv05_decompress1X2 per user request
+BOLT-INFO: skipping processing HUFv05_decompress4X2_usingDTable per user request
+BOLT-INFO: skipping processing BITv05_reloadDStream/1(*2) per user request
+BOLT-INFO: skipping processing HUFv05_decompress4X2 per user request
+BOLT-INFO: skipping processing HUFv05_readDTableX4 per user request
+BOLT-INFO: skipping processing HUFv05_decompress1X4_usingDTable per user request
+BOLT-INFO: skipping processing HUFv05_decodeStreamX4/1(*2) per user request
+BOLT-INFO: skipping processing HUFv05_decompress1X4 per user request
+BOLT-INFO: skipping processing HUFv05_decompress4X4_usingDTable per user request
+BOLT-INFO: skipping processing HUFv05_decompress4X4 per user request
+BOLT-INFO: skipping processing HUFv05_decompress per user request
+BOLT-INFO: skipping processing ZSTDv05_isError per user request
+BOLT-INFO: skipping processing ZSTDv05_getErrorName per user request
+BOLT-INFO: skipping processing ZSTDv05_sizeofDCtx per user request
+BOLT-INFO: skipping processing ZSTDv05_decompressBegin per user request
+BOLT-INFO: skipping processing ZSTDv05_createDCtx per user request
+BOLT-INFO: skipping processing ZSTDv05_freeDCtx per user request
+BOLT-INFO: skipping processing ZSTDv05_copyDCtx per user request
+BOLT-INFO: skipping processing ZSTDv05_getFrameParams per user request
+BOLT-INFO: skipping processing ZSTDv05_decompressBlock per user request
+BOLT-INFO: skipping processing ZSTDv05_decompressBlock_internal/1(*2) per user request
+BOLT-INFO: skipping processing ZSTDv05_decompress_usingPreparedDCtx per user request
+BOLT-INFO: skipping processing ZSTDv05_decompress_continueDCtx/1(*2) per user request
+BOLT-INFO: skipping processing ZSTDv05_decompress_usingDict per user request
+BOLT-INFO: skipping processing ZSTDv05_decompressBegin_usingDict per user request
+BOLT-INFO: skipping processing ZSTDv05_decompressDCtx per user request
+BOLT-INFO: skipping processing ZSTDv05_decompress per user request
+BOLT-INFO: skipping processing ZSTDv05_findFrameSizeInfoLegacy per user request
+BOLT-INFO: skipping processing ZSTDv05_nextSrcSizeToDecompress per user request
+BOLT-INFO: skipping processing ZSTDv05_decompressContinue per user request
+BOLT-INFO: skipping processing ZBUFFv05_createDCtx per user request
+BOLT-INFO: skipping processing ZBUFFv05_freeDCtx per user request
+BOLT-INFO: skipping processing ZBUFFv05_decompressInitDictionary per user request
+BOLT-INFO: skipping processing ZBUFFv05_decompressInit per user request
+BOLT-INFO: skipping processing ZBUFFv05_decompressContinue per user request
+BOLT-INFO: skipping processing ZBUFFv05_isError per user request
+BOLT-INFO: skipping processing ZBUFFv05_getErrorName per user request
+BOLT-INFO: skipping processing ZBUFFv05_recommendedDInSize per user request
+BOLT-INFO: skipping processing ZBUFFv05_recommendedDOutSize per user request
+BOLT-INFO: skipping processing FSEv06_isError per user request
+BOLT-INFO: skipping processing FSEv06_getErrorName per user request
+BOLT-INFO: skipping processing FSEv06_readNCount per user request
+BOLT-INFO: skipping processing FSEv06_createDTable per user request
+BOLT-INFO: skipping processing FSEv06_freeDTable per user request
+BOLT-INFO: skipping processing FSEv06_buildDTable per user request
+BOLT-INFO: skipping processing FSEv06_buildDTable_rle per user request
+BOLT-INFO: skipping processing FSEv06_buildDTable_raw per user request
+BOLT-INFO: skipping processing FSEv06_decompress_usingDTable per user request
+BOLT-INFO: skipping processing FSEv06_decompress per user request
+BOLT-INFO: skipping processing HUFv06_readDTableX2 per user request
+BOLT-INFO: skipping processing HUFv06_readStats/1(*2) per user request
+BOLT-INFO: skipping processing HUFv06_decompress1X2_usingDTable per user request
+BOLT-INFO: skipping processing BITv06_initDStream/1(*2) per user request
+BOLT-INFO: skipping processing HUFv06_decodeStreamX2/1(*2) per user request
+BOLT-INFO: skipping processing HUFv06_decompress1X2 per user request
+BOLT-INFO: skipping processing HUFv06_decompress4X2_usingDTable per user request
+BOLT-INFO: skipping processing BITv06_reloadDStream/1(*2) per user request
+BOLT-INFO: skipping processing HUFv06_decompress4X2 per user request
+BOLT-INFO: skipping processing HUFv06_readDTableX4 per user request
+BOLT-INFO: skipping processing HUFv06_decompress1X4_usingDTable per user request
+BOLT-INFO: skipping processing HUFv06_decodeStreamX4/1(*2) per user request
+BOLT-INFO: skipping processing HUFv06_decompress1X4 per user request
+BOLT-INFO: skipping processing HUFv06_decompress4X4_usingDTable per user request
+BOLT-INFO: skipping processing HUFv06_decompress4X4 per user request
+BOLT-INFO: skipping processing HUFv06_decompress per user request
+BOLT-INFO: skipping processing ZSTDv06_isError per user request
+BOLT-INFO: skipping processing ZSTDv06_getErrorName per user request
+BOLT-INFO: skipping processing ZBUFFv06_isError per user request
+BOLT-INFO: skipping processing ZBUFFv06_getErrorName per user request
+BOLT-INFO: skipping processing ZSTDv06_sizeofDCtx per user request
+BOLT-INFO: skipping processing ZSTDv06_decompressBegin per user request
+BOLT-INFO: skipping processing ZSTDv06_createDCtx per user request
+BOLT-INFO: skipping processing ZSTDv06_freeDCtx per user request
+BOLT-INFO: skipping processing ZSTDv06_copyDCtx per user request
+BOLT-INFO: skipping processing ZSTDv06_getFrameParams per user request
+BOLT-INFO: skipping processing ZSTDv06_decompressBlock per user request
+BOLT-INFO: skipping processing ZSTDv06_decompressBlock_internal/1(*2) per user request
+BOLT-INFO: skipping processing ZSTDv06_decompress_usingPreparedDCtx per user request
+BOLT-INFO: skipping processing ZSTDv06_decompressFrame/1(*2) per user request
+BOLT-INFO: skipping processing ZSTDv06_decompress_usingDict per user request
+BOLT-INFO: skipping processing ZSTDv06_decompressBegin_usingDict per user request
+BOLT-INFO: skipping processing ZSTDv06_decompressDCtx per user request
+BOLT-INFO: skipping processing ZSTDv06_decompress per user request
+BOLT-INFO: skipping processing ZSTDv06_findFrameSizeInfoLegacy per user request
+BOLT-INFO: skipping processing ZSTDv06_nextSrcSizeToDecompress per user request
+BOLT-INFO: skipping processing ZSTDv06_decompressContinue per user request
+BOLT-INFO: skipping processing ZBUFFv06_createDCtx per user request
+BOLT-INFO: skipping processing ZBUFFv06_freeDCtx per user request
+BOLT-INFO: skipping processing ZBUFFv06_decompressInitDictionary per user request
+BOLT-INFO: skipping processing ZBUFFv06_decompressInit per user request
+BOLT-INFO: skipping processing ZBUFFv06_decompressContinue per user request
+BOLT-INFO: skipping processing ZBUFFv06_recommendedDInSize per user request
+BOLT-INFO: skipping processing ZBUFFv06_recommendedDOutSize per user request
+BOLT-INFO: skipping processing ZSTDv06_buildSeqTable/1(*2) per user request
+BOLT-INFO: skipping processing FSEv07_isError per user request
+BOLT-INFO: skipping processing FSEv07_getErrorName per user request
+BOLT-INFO: skipping processing HUFv07_isError per user request
+BOLT-INFO: skipping processing HUFv07_getErrorName per user request
+BOLT-INFO: skipping processing FSEv07_readNCount per user request
+BOLT-INFO: skipping processing HUFv07_readStats per user request
+BOLT-INFO: skipping processing FSEv07_decompress per user request
+BOLT-INFO: skipping processing FSEv07_createDTable per user request
+BOLT-INFO: skipping processing FSEv07_freeDTable per user request
+BOLT-INFO: skipping processing FSEv07_buildDTable per user request
+BOLT-INFO: skipping processing FSEv07_buildDTable_rle per user request
+BOLT-INFO: skipping processing FSEv07_buildDTable_raw per user request
+BOLT-INFO: skipping processing FSEv07_decompress_usingDTable per user request
+BOLT-INFO: skipping processing HUFv07_readDTableX2 per user request
+BOLT-INFO: skipping processing HUFv07_decompress1X2_usingDTable per user request
+BOLT-INFO: skipping processing HUFv07_decompress1X2_usingDTable_internal/1(*2) per user request
+BOLT-INFO: skipping processing HUFv07_decompress1X2_DCtx per user request
+BOLT-INFO: skipping processing HUFv07_decompress1X2 per user request
+BOLT-INFO: skipping processing HUFv07_decompress4X2_usingDTable per user request
+BOLT-INFO: skipping processing HUFv07_decompress4X2_usingDTable_internal/1(*2) per user request
+BOLT-INFO: skipping processing HUFv07_decompress4X2_DCtx per user request
+BOLT-INFO: skipping processing HUFv07_decompress4X2 per user request
+BOLT-INFO: skipping processing HUFv07_readDTableX4 per user request
+BOLT-INFO: skipping processing HUFv07_decompress1X4_usingDTable per user request
+BOLT-INFO: skipping processing HUFv07_decompress1X4_usingDTable_internal/1(*2) per user request
+BOLT-INFO: skipping processing HUFv07_decompress1X4_DCtx per user request
+BOLT-INFO: skipping processing HUFv07_decompress1X4 per user request
+BOLT-INFO: skipping processing HUFv07_decompress4X4_usingDTable per user request
+BOLT-INFO: skipping processing HUFv07_decompress4X4_usingDTable_internal/1(*2) per user request
+BOLT-INFO: skipping processing HUFv07_decompress4X4_DCtx per user request
+BOLT-INFO: skipping processing HUFv07_decompress4X4 per user request
+BOLT-INFO: skipping processing HUFv07_decompress1X_usingDTable per user request
+BOLT-INFO: skipping processing HUFv07_decompress4X_usingDTable per user request
+BOLT-INFO: skipping processing HUFv07_selectDecoder per user request
+BOLT-INFO: skipping processing HUFv07_decompress per user request
+BOLT-INFO: skipping processing HUFv07_decompress4X_DCtx per user request
+BOLT-INFO: skipping processing HUFv07_decompress4X_hufOnly per user request
+BOLT-INFO: skipping processing HUFv07_decompress1X_DCtx per user request
+BOLT-INFO: skipping processing ZSTDv07_isError per user request
+BOLT-INFO: skipping processing ZSTDv07_getErrorName per user request
+BOLT-INFO: skipping processing ZBUFFv07_isError per user request
+BOLT-INFO: skipping processing ZBUFFv07_getErrorName per user request
+BOLT-INFO: skipping processing ZSTDv07_sizeofDCtx per user request
+BOLT-INFO: skipping processing ZSTDv07_estimateDCtxSize per user request
+BOLT-INFO: skipping processing ZSTDv07_decompressBegin per user request
+BOLT-INFO: skipping processing ZSTDv07_createDCtx_advanced per user request
+BOLT-INFO: skipping processing ZSTDv07_createDCtx per user request
+BOLT-INFO: skipping processing ZSTDv07_freeDCtx per user request
+BOLT-INFO: skipping processing ZSTDv07_copyDCtx per user request
+BOLT-INFO: skipping processing ZSTDv07_getFrameParams per user request
+BOLT-INFO: skipping processing ZSTDv07_getDecompressedSize per user request
+BOLT-INFO: skipping processing ZSTDv07_decompressBlock per user request
+BOLT-INFO: skipping processing ZSTDv07_decompressBlock_internal/1(*2) per user request
+BOLT-INFO: skipping processing ZSTDv07_insertBlock per user request
+BOLT-INFO: skipping processing ZSTDv07_decompress_usingDict per user request
+BOLT-INFO: skipping processing ZSTDv07_decompressBegin_usingDict per user request
+BOLT-INFO: skipping processing ZSTDv07_decompressFrame/1(*2) per user request
+BOLT-INFO: skipping processing ZSTDv07_decompressDCtx per user request
+BOLT-INFO: skipping processing ZSTDv07_decompress per user request
+BOLT-INFO: skipping processing ZSTDv07_findFrameSizeInfoLegacy per user request
+BOLT-INFO: skipping processing ZSTDv07_nextSrcSizeToDecompress per user request
+BOLT-INFO: skipping processing ZSTDv07_isSkipFrame per user request
+BOLT-INFO: skipping processing ZSTDv07_decompressContinue per user request
+BOLT-INFO: skipping processing ZSTDv07_createDDict per user request
+BOLT-INFO: skipping processing ZSTDv07_freeDDict per user request
+BOLT-INFO: skipping processing ZSTDv07_decompress_usingDDict per user request
+BOLT-INFO: skipping processing ZBUFFv07_createDCtx per user request
+BOLT-INFO: skipping processing ZBUFFv07_createDCtx_advanced per user request
+BOLT-INFO: skipping processing ZBUFFv07_freeDCtx per user request
+BOLT-INFO: skipping processing ZBUFFv07_decompressInitDictionary per user request
+BOLT-INFO: skipping processing ZBUFFv07_decompressInit per user request
+BOLT-INFO: skipping processing ZBUFFv07_decompressContinue per user request
+BOLT-INFO: skipping processing ZBUFFv07_recommendedDInSize per user request
+BOLT-INFO: skipping processing ZBUFFv07_recommendedDOutSize per user request
+BOLT-INFO: skipping processing BITv07_initDStream/1(*2) per user request
+BOLT-INFO: skipping processing BITv07_reloadDStream/1(*2) per user request
+BOLT-INFO: skipping processing HUFv07_decodeStreamX2/1(*2) per user request
+BOLT-INFO: skipping processing HUFv07_decodeStreamX4/1(*2) per user request
+BOLT-INFO: skipping processing ZSTDv07_defaultAllocFunction/1(*2) per user request
+BOLT-INFO: skipping processing ZSTDv07_defaultFreeFunction/1(*2) per user request
+BOLT-INFO: skipping processing ZSTDv07_buildSeqTable/1(*2) per user request
+BOLT-INFO: skipping processing BMK_isSuccessful_runOutcome per user request
+BOLT-INFO: skipping processing BMK_extract_runTime per user request
+BOLT-INFO: skipping processing BMK_extract_errorResult per user request
+BOLT-INFO: skipping processing BMK_benchFunction per user request
+BOLT-INFO: skipping processing BMK_createTimedFnState per user request
+BOLT-INFO: skipping processing BMK_resetTimedFnState per user request
+BOLT-INFO: skipping processing BMK_freeTimedFnState per user request
+BOLT-INFO: skipping processing BMK_initStatic_timedFnState per user request
+BOLT-INFO: skipping processing BMK_isCompleted_TimedFn per user request
+BOLT-INFO: skipping processing BMK_benchTimedFn per user request
+BOLT-INFO: skipping processing BMK_isSuccessful_benchOutcome per user request
+BOLT-INFO: skipping processing BMK_extract_benchResult per user request
+BOLT-INFO: skipping processing BMK_benchMemAdvanced per user request
+BOLT-INFO: skipping processing BMK_benchMem per user request
+BOLT-INFO: skipping processing BMK_syntheticTest per user request
+BOLT-INFO: skipping processing formatString_u/1(*2) per user request
+BOLT-INFO: skipping processing BMK_benchCLevels/1(*2) per user request
+BOLT-INFO: skipping processing BMK_benchFilesAdvanced per user request
+BOLT-INFO: skipping processing BMK_loadFiles/1(*2) per user request
+BOLT-INFO: skipping processing BMK_benchFiles per user request
+BOLT-INFO: skipping processing XXH_INLINE_XXH64/1(*2) per user request
+BOLT-INFO: skipping processing local_defaultCompress/1(*2) per user request
+BOLT-INFO: skipping processing local_initCCtx/1(*2) per user request
+BOLT-INFO: skipping processing local_defaultDecompress/1(*2) per user request
+BOLT-INFO: skipping processing local_initDCtx/1(*2) per user request
+BOLT-INFO: skipping processing RDG_genBuffer per user request
+BOLT-INFO: skipping processing RDG_genBlock/1(*2) per user request
+BOLT-INFO: skipping processing RDG_genStdout per user request
+BOLT-INFO: skipping processing DiB_trainFromFiles per user request
+BOLT-INFO: skipping processing FIO_zlibVersion per user request
+BOLT-INFO: skipping processing FIO_lz4Version per user request
+BOLT-INFO: skipping processing FIO_lzmaVersion per user request
+BOLT-INFO: skipping processing ABRThandler/1(*2) per user request
+BOLT-INFO: skipping processing FIO_setCompressionType per user request
+BOLT-INFO: skipping processing FIO_overwriteMode per user request
+BOLT-INFO: skipping processing FIO_setSparseWrite per user request
+BOLT-INFO: skipping processing FIO_setDictIDFlag per user request
+BOLT-INFO: skipping processing FIO_setChecksumFlag per user request
+BOLT-INFO: skipping processing FIO_setNbWorkers per user request
+BOLT-INFO: skipping processing FIO_setExcludeCompressedFile per user request
+BOLT-INFO: skipping processing FIO_setBlockSize per user request
+BOLT-INFO: skipping processing FIO_setOverlapLog per user request
+BOLT-INFO: skipping processing FIO_setAdaptiveMode per user request
+BOLT-INFO: skipping processing FIO_setUseRowMatchFinder per user request
+BOLT-INFO: skipping processing FIO_setRsyncable per user request
+BOLT-INFO: skipping processing FIO_setStreamSrcSize per user request
+BOLT-INFO: skipping processing FIO_setTargetCBlockSize per user request
+BOLT-INFO: skipping processing FIO_setSrcSizeHint per user request
+BOLT-INFO: skipping processing FIO_setTestMode per user request
+BOLT-INFO: skipping processing FIO_setLiteralCompressionMode per user request
+BOLT-INFO: skipping processing FIO_setAdaptMin per user request
+BOLT-INFO: skipping processing FIO_setAdaptMax per user request
+BOLT-INFO: skipping processing FIO_setLdmFlag per user request
+BOLT-INFO: skipping processing FIO_setLdmHashLog per user request
+BOLT-INFO: skipping processing FIO_setLdmMinMatch per user request
+BOLT-INFO: skipping processing FIO_setLdmBucketSizeLog per user request
+BOLT-INFO: skipping processing FIO_setLdmHashRateLog per user request
+BOLT-INFO: skipping processing FIO_setContentSize per user request
+BOLT-INFO: skipping processing FIO_setAsyncIOFlag per user request
+BOLT-INFO: skipping processing FIO_setPassThroughFlag per user request
+BOLT-INFO: skipping processing FIO_checkFilenameCollisions per user request
+BOLT-INFO: skipping processing FIO_displayCompressionParameters per user request
+BOLT-INFO: skipping processing FIO_compressFilename per user request
+BOLT-INFO: skipping processing FIO_createCResources/1(*2) per user request
+BOLT-INFO: skipping processing FIO_compressFilename_srcFile/1(*2) per user request
+BOLT-INFO: skipping processing FIO_compressMultipleFilenames per user request
+BOLT-INFO: skipping processing FIO_multiFilesConcatWarning/1(*2) per user request
+BOLT-INFO: skipping processing FIO_determineCompressedName/1(*2) per user request
+BOLT-INFO: skipping processing FIO_decompressMultipleFilenames per user request
+BOLT-INFO: skipping processing FIO_determineDstName/1(*2) per user request
+BOLT-INFO: skipping processing FIO_listMultipleFiles per user request
+BOLT-INFO: skipping processing FIO_adjustMemLimitForPatchFromMode/1(*2) per user request
+BOLT-INFO: skipping processing FIO_compressFilename_internal/1(*2) per user request
+BOLT-INFO: skipping processing INThandler/1(*2) per user request
+BOLT-INFO: skipping processing FIO_createFilename_fromOutDir/1(*2) per user request
+BOLT-INFO: skipping processing FIO_passThrough/1(*2) per user request
+BOLT-INFO: skipping processing AIO_ReadPool_getFile per user request
+BOLT-INFO: skipping processing AIO_ReadPool_closeFile per user request
+BOLT-INFO: skipping processing AIO_ReadPool_consumeAndRefill per user request
+BOLT-INFO: skipping processing LOREM_genBlock per user request
+BOLT-INFO: skipping processing LOREM_genBuffer per user request
+BOLT-INFO: skipping processing generateWord/1(*2) per user request
+BOLT-INFO: skipping processing UTIL_getTime per user request
+BOLT-INFO: skipping processing UTIL_getSpanTimeNano per user request
+BOLT-INFO: skipping processing UTIL_getSpanTimeMicro per user request
+BOLT-INFO: skipping processing UTIL_clockSpanMicro per user request
+BOLT-INFO: skipping processing UTIL_clockSpanNano per user request
+BOLT-INFO: skipping processing UTIL_waitForNextTick per user request
+BOLT-INFO: skipping processing UTIL_support_MT_measurements per user request
+BOLT-INFO: skipping processing UTIL_traceFileStat per user request
+BOLT-INFO: skipping processing UTIL_chmod per user request
+BOLT-INFO: skipping processing UTIL_fchmod per user request
+BOLT-INFO: skipping processing UTIL_utime per user request
+BOLT-INFO: skipping processing UTIL_setFileStat per user request
+BOLT-INFO: skipping processing UTIL_setFDStat per user request
+BOLT-INFO: skipping processing UTIL_compareStr per user request
+BOLT-INFO: skipping processing UTIL_isSameFile per user request
+BOLT-INFO: skipping processing UTIL_isSameFileStat per user request
+BOLT-INFO: skipping processing UTIL_isFIFO per user request
+BOLT-INFO: skipping processing UTIL_isFIFOStat per user request
+BOLT-INFO: skipping processing UTIL_isBlockDevStat per user request
+BOLT-INFO: skipping processing UTIL_fakeStdinIsConsole per user request
+BOLT-INFO: skipping processing UTIL_fakeStdoutIsConsole per user request
+BOLT-INFO: skipping processing UTIL_fakeStderrIsConsole per user request
+BOLT-INFO: skipping processing UTIL_getFileSize per user request
+BOLT-INFO: skipping processing UTIL_getTotalFileSize per user request
+BOLT-INFO: skipping processing UTIL_createFileNamesTable_fromFileName per user request
+BOLT-INFO: skipping processing UTIL_assembleFileNamesTable per user request
+BOLT-INFO: skipping processing UTIL_mergeFileNamesTable per user request
+BOLT-INFO: skipping processing UTIL_isCompressedFile per user request
+BOLT-INFO: skipping processing UTIL_getFileExtension per user request
+BOLT-INFO: skipping processing UTIL_createMirroredDestDirName per user request
+BOLT-INFO: skipping processing mallocAndJoin2Dir/1(*2) per user request
+BOLT-INFO: skipping processing UTIL_mirrorSourceFilesDirectories per user request
+BOLT-INFO: skipping processing UTIL_createExpandedFNT per user request
+BOLT-INFO: skipping processing UTIL_prepareFileList/1(*2) per user request
+BOLT-INFO: skipping processing UTIL_expandFNT per user request
+BOLT-INFO: skipping processing UTIL_createFNT_fromROTable per user request
+BOLT-INFO: skipping processing UTIL_countCores per user request
+BOLT-INFO: skipping processing UTIL_countPhysicalCores per user request
+BOLT-INFO: skipping processing UTIL_countLogicalCores per user request
+BOLT-INFO: skipping processing compareDir/1(*2) per user request
+BOLT-INFO: skipping processing mirrorSrcDir/1(*2) per user request
+BOLT-INFO: skipping processing UTIL_requireUserConfirmation per user request
+BOLT-INFO: skipping processing main per user request
+BOLT-INFO: skipping processing printVersion/1(*2) per user request
+BOLT-INFO: skipping processing usageAdvanced/1(*2) per user request
+BOLT-INFO: skipping processing longCommandWArg/1(*2) per user request
+BOLT-INFO: skipping processing parseAdaptParameters/1(*2) per user request
+BOLT-INFO: skipping processing badUsage/1(*2) per user request
+BOLT-INFO: skipping processing parseCoverParameters/1(*2) per user request
+BOLT-INFO: skipping processing parseFastCoverParameters/1(*2) per user request
+BOLT-INFO: skipping processing parseLegacyParameters/1(*2) per user request
+BOLT-INFO: skipping processing readU32FromChar/1(*2) per user request
+BOLT-INFO: skipping processing readSizeTFromChar/1(*2) per user request
+BOLT-INFO: skipping processing parseCompressionParameters/1(*2) per user request
+BOLT-INFO: skipping processing usage/1(*2) per user request
+BOLT-INFO: skipping processing errorOut/1(*2) per user request
+BOLT-INFO: skipping processing waitEnter/1(*2) per user request
+BOLT-INFO: skipping processing TRACE_enable per user request
+BOLT-INFO: skipping processing ZSTD_trace_compress_begin per user request
+BOLT-INFO: skipping processing ZSTD_trace_compress_end per user request
+BOLT-INFO: skipping processing TRACE_log/1(*2) per user request
+BOLT-INFO: skipping processing ZSTD_trace_decompress_end per user request
+BOLT-WARNING: failed to post-process indirect branches for deregister_tm_clones/1(*2)
+BOLT-WARNING: failed to post-process indirect branches for register_tm_clones/1(*2)
+BOLT-INFO: Starting pass: pointer-auth-cfi-analyzer
+BOLT-INFO: PointerAuthCFIAnalyzer ran on 1 functions. Ignored 0 functions (0.00%) because of CFI inconsistencies
+BOLT-INFO: Finished pass: pointer-auth-cfi-analyzer
+BOLT-INFO: Starting pass: estimate-edge-counts
+BOLT-INFO: Finished pass: estimate-edge-counts
+BOLT-INFO: Starting pass: set dyno-stats before optimizations
+BOLT-INFO: Finished pass: set dyno-stats before optimizations
+BOLT-INFO: Starting pass: fix-relaxations
+BOLT-INFO: Finished pass: fix-relaxations
+BOLT-INFO: Starting pass: veneer-elimination
+BOLT-INFO: number of removed linker-inserted veneers: 0
+BOLT-INFO: Finished pass: veneer-elimination
+BOLT-INFO: Starting pass: print-stats
+BOLT-INFO: 116 out of 956 functions in the binary (12.1%) have non-empty execution profile
+BOLT-INFO: 2 functions with profile could not be optimized
+BOLT-INFO: profile for 1 objects was ignored
+BOLT-INFO: top called functions are:
+  FSE_readNCount_bmi2 : 573
+  ZSTD_buildFSETable : 438
+  FSE_readNCount : 438
+  ZSTD_buildSeqTable/1(*2) : 438
+  ZSTD_decompressContinue : 293
+  ZSTD_checkContinuity : 293
+  FSE_initDState/1(*2) : 270
+  ZSTD_getcBlockSize : 146
+  ZSTD_decodeLiteralsBlock/1(*2) : 146
+  ZSTD_decodeSeqHeaders : 146
+  ZSTD_decompressBlock_internal : 146
+  ZSTD_decompressSequences/1(*2) : 146
+  ZSTD_XXH64_update : 146
+  HUF_DecompressFastArgs_init/1(*2) : 143
+  ZSTD_isError : 137
+  HUF_decompress4X1_usingDTable_internal/1(*2) : 136
+  FSE_decompress_wksp_bmi2 : 135
+  FSE_buildDTable_internal/1(*2) : 135
+  HUF_readStats_wksp : 135
+  HUF_decompress4X_hufOnly_wksp : 133
+  AIO_ReadPool_consumeBytes : 132
+  ZSTD_DStreamInSize : 132
+  UTIL_makeHumanReadableSize : 132
+  AIO_WritePool_executeWriteJob/1(*2) : 132
+  ZSTD_decompressStream : 132
+  AIO_WritePool_enqueueAndReacquireWriteJob : 132
+  ZSTD_nextInputType : 131
+  HUF_readDTableX1_wksp : 128
+  AIO_ReadPool_enqueueRead/1(*2) : 30
+  AIO_ReadPool_fillBuffer : 30
+  AIO_ReadPool_executeReadJob/1(*2) : 30
+  BIT_initDStream/1(*2) : 19
+  HUF_decompress4X_usingDTable : 10
+  HUF_readDTableX2_wksp : 7
+  HUF_decompress4X2_usingDTable_internal/1(*2) : 7
+  ZSTD_getFrameHeader_advanced : 4
+  UTIL_fstat : 3
+  HUF_decompress1X1_usingDTable_internal/1(*2) : 3
+  ZSTD_freeDDict : 3
+  AIO_IOPool_init/1(*2) : 2
+  ZSTD_DCtx_reset : 2
+  AIO_IOPool_destroy/1(*2) : 2
+  AIO_ReadPool_setFile : 2
+  UTIL_freeFileNamesTable : 2
+  HUF_decompress1X1_DCtx_wksp : 2
+  UTIL_isConsole : 2
+  UTIL_allocateFileNamesTable : 2
+  ZSTD_minCLevel : 2
+  AIO_WritePool_sparseWriteEnd : 2
+  FIO_setNotificationLevel : 1
+  AIO_WritePool_acquireJob : 1
+  AIO_WritePool_setAsync : 1
+  AIO_supported : 1
+  AIO_WritePool_setFile : 1
+  AIO_WritePool_getFile : 1
+  AIO_WritePool_free : 1
+  AIO_WritePool_create : 1
+  AIO_WritePool_closeFile : 1
+  AIO_WritePool_releaseIoJob : 1
+  AIO_ReadPool_create : 1
+  AIO_ReadPool_free : 1
+  AIO_ReadPool_setAsync : 1
+  UTIL_stat : 1
+  UTIL_isRegularFile : 1
+  UTIL_isRegularFileStat : 1
+  UTIL_isDirectory : 1
+  UTIL_isDirectoryStat : 1
+  UTIL_isLink : 1
+  UTIL_getFileSizeStat : 1
+  UTIL_searchFileNamesTable : 1
+  UTIL_refFilename : 1
+  TRACE_finish : 1
+  ZSTD_trace_decompress_begin : 1
+  _init/1(*2) : 1
+  _fini/1(*2) : 1
+  ZSTD_isFrame : 1
+  FIO_createPreferences : 1
+  FIO_addAbortHandler : 1
+  BMK_initAdvancedParams : 1
+  ZSTD_DCtx_setParameter : 1
+  ZSTD_DCtx_setMaxWindowSize : 1
+  ZSTD_DCtx_loadDictionary_byReference : 1
+  ZSTD_DStreamOutSize : 1
+  ZSTD_freeDStream : 1
+  ZSTD_createDStream : 1
+  ZSTD_decodeFrameHeader/1(*2) : 1
+  FIO_createContext : 1
+  ZSTD_freeDCtx : 1
+  HUF_decompress1X_usingDTable : 1
+  ZSTD_maxCLevel : 1
+  ZSTD_versionString : 1
+  ZSTD_XXH64_digest : 1
+  ZSTD_XXH64_reset : 1
+  frame_dummy/1(*2) : 1
+  __do_global_dtors_aux/1(*2) : 1
+  call_weak_fn/1 : 1
+  FIO_setHasStdoutOutput : 1
+  FIO_initDict/1(*2) : 1
+  FIO_getDictFileStat/1(*2) : 1
+  FIO_freeDResources/1(*2) : 1
+BOLT-INFO: Finished pass: print-stats
+BOLT-INFO: Starting pass: profile-quality-stats
+BOLT-INFO: profile quality metrics for the hottest 116 functions (reporting top 5% values): function CFG discontinuity 0.00%; 
+abbreviations: EC = execution count, POS BBs = positive EC BBs
+distribution of NUM(unreachable POS BBs) per function
+  Length     : 116
+  MAX        : 0
+  TOP 1%     : 0
+  TOP 5%     : 0
+  TOP 10%    : 0
+  TOP 20%    : 0
+  TOP 50%    : 0
+  TOP 80%    : 0
+  MIN        : 0
+distribution of SUM_EC(unreachable POS BBs) per function
+  Length     : 116
+  MAX        : 0
+  TOP 1%     : 0
+  TOP 5%     : 0
+  TOP 10%    : 0
+  TOP 20%    : 0
+  TOP 50%    : 0
+  TOP 80%    : 0
+  MIN        : 0
+distribution of [(SUM_EC(unreachable POS BBs) / SUM_EC(all POS BBs))] per function
+  Length     : 116
+  MAX        : 0.00%
+  TOP 1%     : 0.00%
+  TOP 5%     : 0.00%
+  TOP 10%    : 0.00%
+  TOP 20%    : 0.00%
+  TOP 50%    : 0.00%
+  TOP 80%    : 0.00%
+  MIN        : 0.00%
+call graph flow conservation gap 0.00%; 
+distribution of function entry flow conservation gaps
+  Length     : 116
+  MAX        : 0.00%
+  TOP 1%     : 0.00%
+  TOP 5%     : 0.00%
+  TOP 10%    : 0.00%
+  TOP 20%    : 0.00%
+  TOP 50%    : 0.00%
+  TOP 80%    : 0.00%
+  MIN        : 0.00%
+CFG flow conservation gap 0.00% (weighted) 0.00% (worst); distribution of weighted CFG flow conservation gaps
+  Length     : 116
+  MAX        : 9.67%
+  TOP 1%     : 0.00%
+  TOP 5%     : 0.00%
+  TOP 10%    : 0.00%
+  TOP 20%    : 0.00%
+  TOP 50%    : 0.00%
+  TOP 80%    : 0.00%
+  MIN        : 0.00%
+Consider only blocks with execution counts > 500:
+distribution of worst block flow conservation gap per function 
+  Length     : 116
+  MAX        : 0.00%
+  TOP 1%     : 0.00%
+  TOP 5%     : 0.00%
+  TOP 10%    : 0.00%
+  TOP 20%    : 0.00%
+  TOP 50%    : 0.00%
+  TOP 80%    : 0.00%
+  MIN        : 0.00%
+distribution of worst block flow conservation gap (absolute value) per function
+  Length     : 116
+  MAX        : 0
+  TOP 1%     : 0
+  TOP 5%     : 0
+  TOP 10%    : 0
+  TOP 20%    : 0
+  TOP 50%    : 0
+  TOP 80%    : 0
+  MIN        : 0
+exception handling usage 0.00% (of total BBEC) 0.00% (of total InvokeEC)
+distribution of exception handling usage as a fraction of total BBEC of each function
+  Length     : 116
+  MAX        : 0.00%
+  TOP 1%     : 0.00%
+  TOP 5%     : 0.00%
+  TOP 10%    : 0.00%
+  TOP 20%    : 0.00%
+  TOP 50%    : 0.00%
+  TOP 80%    : 0.00%
+  MIN        : 0.00%
+distribution of exception handling usage as a fraction of total InvokeEC of each function
+  Length     : 116
+  MAX        : 0.00%
+  TOP 1%     : 0.00%
+  TOP 5%     : 0.00%
+  TOP 10%    : 0.00%
+  TOP 20%    : 0.00%
+  TOP 50%    : 0.00%
+  TOP 80%    : 0.00%
+  MIN        : 0.00%
+Detailed stats for 5 buckets, each with  23 functions:
+----------------
+|   Bucket 1:  |
+----------------
+execution counts of the 23 functions in the bucket: 132-573
+function CFG discontinuity 0.00%; 
+abbreviations: EC = execution count, POS BBs = positive EC BBs
+distribution of NUM(unreachable POS BBs) per function
+  Length     : 23
+  MAX        : 0
+  TOP 1%     : 0
+  TOP 5%     : 0
+  TOP 10%    : 0
+  TOP 20%    : 0
+  TOP 50%    : 0
+  TOP 80%    : 0
+  MIN        : 0
+distribution of SUM_EC(unreachable POS BBs) per function
+  Length     : 23
+  MAX        : 0
+  TOP 1%     : 0
+  TOP 5%     : 0
+  TOP 10%    : 0
+  TOP 20%    : 0
+  TOP 50%    : 0
+  TOP 80%    : 0
+  MIN        : 0
+distribution of [(SUM_EC(unreachable POS BBs) / SUM_EC(all POS BBs))] per function
+  Length     : 23
+  MAX        : 0.00%
+  TOP 1%     : 0.00%
+  TOP 5%     : 0.00%
+  TOP 10%    : 0.00%
+  TOP 20%    : 0.00%
+  TOP 50%    : 0.00%
+  TOP 80%    : 0.00%
+  MIN        : 0.00%
+call graph flow conservation gap 0.00%; 
+distribution of function entry flow conservation gaps
+  Length     : 23
+  MAX        : 0.00%
+  TOP 1%     : 0.00%
+  TOP 5%     : 0.00%
+  TOP 10%    : 0.00%
+  TOP 20%    : 0.00%
+  TOP 50%    : 0.00%
+  TOP 80%    : 0.00%
+  MIN        : 0.00%
+CFG flow conservation gap 0.00% (weighted) 0.00% (worst); distribution of weighted CFG flow conservation gaps
+  Length     : 23
+  MAX        : 0.00%
+  TOP 1%     : 0.00%
+  TOP 5%     : 0.00%
+  TOP 10%    : 0.00%
+  TOP 20%    : 0.00%
+  TOP 50%    : 0.00%
+  TOP 80%    : 0.00%
+  MIN        : 0.00%
+Consider only blocks with execution counts > 500:
+distribution of worst block flow conservation gap per function 
+  Length     : 23
+  MAX        : 0.00%
+  TOP 1%     : 0.00%
+  TOP 5%     : 0.00%
+  TOP 10%    : 0.00%
+  TOP 20%    : 0.00%
+  TOP 50%    : 0.00%
+  TOP 80%    : 0.00%
+  MIN        : 0.00%
+distribution of worst block flow conservation gap (absolute value) per function
+  Length     : 23
+  MAX        : 0
+  TOP 1%     : 0
+  TOP 5%     : 0
+  TOP 10%    : 0
+  TOP 20%    : 0
+  TOP 50%    : 0
+  TOP 80%    : 0
+  MIN        : 0
+exception handling usage 0.00% (of total BBEC) 0.00% (of total InvokeEC)
+distribution of exception handling usage as a fraction of total BBEC of each function
+  Length     : 23
+  MAX        : 0.00%
+  TOP 1%     : 0.00%
+  TOP 5%     : 0.00%
+  TOP 10%    : 0.00%
+  TOP 20%    : 0.00%
+  TOP 50%    : 0.00%
+  TOP 80%    : 0.00%
+  MIN        : 0.00%
+distribution of exception handling usage as a fraction of total InvokeEC of each function
+  Length     : 23
+  MAX        : 0.00%
+  TOP 1%     : 0.00%
+  TOP 5%     : 0.00%
+  TOP 10%    : 0.00%
+  TOP 20%    : 0.00%
+  TOP 50%    : 0.00%
+  TOP 80%    : 0.00%
+  MIN        : 0.00%
+----------------
+|   Bucket 2:  |
+----------------
+execution counts of the 23 functions in the bucket: 2-132
+function CFG discontinuity 0.00%; 
+abbreviations: EC = execution count, POS BBs = positive EC BBs
+distribution of NUM(unreachable POS BBs) per function
+  Length     : 23
+  MAX        : 0
+  TOP 1%     : 0
+  TOP 5%     : 0
+  TOP 10%    : 0
+  TOP 20%    : 0
+  TOP 50%    : 0
+  TOP 80%    : 0
+  MIN        : 0
+distribution of SUM_EC(unreachable POS BBs) per function
+  Length     : 23
+  MAX        : 0
+  TOP 1%     : 0
+  TOP 5%     : 0
+  TOP 10%    : 0
+  TOP 20%    : 0
+  TOP 50%    : 0
+  TOP 80%    : 0
+  MIN        : 0
+distribution of [(SUM_EC(unreachable POS BBs) / SUM_EC(all POS BBs))] per function
+  Length     : 23
+  MAX        : 0.00%
+  TOP 1%     : 0.00%
+  TOP 5%     : 0.00%
+  TOP 10%    : 0.00%
+  TOP 20%    : 0.00%
+  TOP 50%    : 0.00%
+  TOP 80%    : 0.00%
+  MIN        : 0.00%
+call graph flow conservation gap 0.00%; 
+distribution of function entry flow conservation gaps
+  Length     : 23
+  MAX        : 0.00%
+  TOP 1%     : 0.00%
+  TOP 5%     : 0.00%
+  TOP 10%    : 0.00%
+  TOP 20%    : 0.00%
+  TOP 50%    : 0.00%
+  TOP 80%    : 0.00%
+  MIN        : 0.00%
+CFG flow conservation gap 0.00% (weighted) 0.00% (worst); distribution of weighted CFG flow conservation gaps
+  Length     : 23
+  MAX        : 9.67%
+  TOP 1%     : 9.67%
+  TOP 5%     : 0.00%
+  TOP 10%    : 0.00%
+  TOP 20%    : 0.00%
+  TOP 50%    : 0.00%
+  TOP 80%    : 0.00%
+  MIN        : 0.00%
+Consider only blocks with execution counts > 500:
+distribution of worst block flow conservation gap per function 
+  Length     : 23
+  MAX        : 0.00%
+  TOP 1%     : 0.00%
+  TOP 5%     : 0.00%
+  TOP 10%    : 0.00%
+  TOP 20%    : 0.00%
+  TOP 50%    : 0.00%
+  TOP 80%    : 0.00%
+  MIN        : 0.00%
+distribution of worst block flow conservation gap (absolute value) per function
+  Length     : 23
+  MAX        : 0
+  TOP 1%     : 0
+  TOP 5%     : 0
+  TOP 10%    : 0
+  TOP 20%    : 0
+  TOP 50%    : 0
+  TOP 80%    : 0
+  MIN        : 0
+exception handling usage 0.00% (of total BBEC) 0.00% (of total InvokeEC)
+distribution of exception handling usage as a fraction of total BBEC of each function
+  Length     : 23
+  MAX        : 0.00%
+  TOP 1%     : 0.00%
+  TOP 5%     : 0.00%
+  TOP 10%    : 0.00%
+  TOP 20%    : 0.00%
+  TOP 50%    : 0.00%
+  TOP 80%    : 0.00%
+  MIN        : 0.00%
+distribution of exception handling usage as a fraction of total InvokeEC of each function
+  Length     : 23
+  MAX        : 0.00%
+  TOP 1%     : 0.00%
+  TOP 5%     : 0.00%
+  TOP 10%    : 0.00%
+  TOP 20%    : 0.00%
+  TOP 50%    : 0.00%
+  TOP 80%    : 0.00%
+  MIN        : 0.00%
+----------------
+|   Bucket 3:  |
+----------------
+execution counts of the 23 functions in the bucket: 1-2
+function CFG discontinuity 0.00%; 
+abbreviations: EC = execution count, POS BBs = positive EC BBs
+distribution of NUM(unreachable POS BBs) per function
+  Length     : 23
+  MAX        : 0
+  TOP 1%     : 0
+  TOP 5%     : 0
+  TOP 10%    : 0
+  TOP 20%    : 0
+  TOP 50%    : 0
+  TOP 80%    : 0
+  MIN        : 0
+distribution of SUM_EC(unreachable POS BBs) per function
+  Length     : 23
+  MAX        : 0
+  TOP 1%     : 0
+  TOP 5%     : 0
+  TOP 10%    : 0
+  TOP 20%    : 0
+  TOP 50%    : 0
+  TOP 80%    : 0
+  MIN        : 0
+distribution of [(SUM_EC(unreachable POS BBs) / SUM_EC(all POS BBs))] per function
+  Length     : 23
+  MAX        : 0.00%
+  TOP 1%     : 0.00%
+  TOP 5%     : 0.00%
+  TOP 10%    : 0.00%
+  TOP 20%    : 0.00%
+  TOP 50%    : 0.00%
+  TOP 80%    : 0.00%
+  MIN        : 0.00%
+call graph flow conservation gap 0.00%; 
+distribution of function entry flow conservation gaps
+  Length     : 23
+  MAX        : 0.00%
+  TOP 1%     : 0.00%
+  TOP 5%     : 0.00%
+  TOP 10%    : 0.00%
+  TOP 20%    : 0.00%
+  TOP 50%    : 0.00%
+  TOP 80%    : 0.00%
+  MIN        : 0.00%
+CFG flow conservation gap 0.00% (weighted) 0.00% (worst); distribution of weighted CFG flow conservation gaps
+  Length     : 23
+  MAX        : 0.00%
+  TOP 1%     : 0.00%
+  TOP 5%     : 0.00%
+  TOP 10%    : 0.00%
+  TOP 20%    : 0.00%
+  TOP 50%    : 0.00%
+  TOP 80%    : 0.00%
+  MIN        : 0.00%
+Consider only blocks with execution counts > 500:
+distribution of worst block flow conservation gap per function 
+  Length     : 23
+  MAX        : 0.00%
+  TOP 1%     : 0.00%
+  TOP 5%     : 0.00%
+  TOP 10%    : 0.00%
+  TOP 20%    : 0.00%
+  TOP 50%    : 0.00%
+  TOP 80%    : 0.00%
+  MIN        : 0.00%
+distribution of worst block flow conservation gap (absolute value) per function
+  Length     : 23
+  MAX        : 0
+  TOP 1%     : 0
+  TOP 5%     : 0
+  TOP 10%    : 0
+  TOP 20%    : 0
+  TOP 50%    : 0
+  TOP 80%    : 0
+  MIN        : 0
+exception handling usage 0.00% (of total BBEC) 0.00% (of total InvokeEC)
+distribution of exception handling usage as a fraction of total BBEC of each function
+  Length     : 23
+  MAX        : 0.00%
+  TOP 1%     : 0.00%
+  TOP 5%     : 0.00%
+  TOP 10%    : 0.00%
+  TOP 20%    : 0.00%
+  TOP 50%    : 0.00%
+  TOP 80%    : 0.00%
+  MIN        : 0.00%
+distribution of exception handling usage as a fraction of total InvokeEC of each function
+  Length     : 23
+  MAX        : 0.00%
+  TOP 1%     : 0.00%
+  TOP 5%     : 0.00%
+  TOP 10%    : 0.00%
+  TOP 20%    : 0.00%
+  TOP 50%    : 0.00%
+  TOP 80%    : 0.00%
+  MIN        : 0.00%
+----------------
+|   Bucket 4:  |
+----------------
+execution counts of the 23 functions in the bucket: 1-1
+function CFG discontinuity 0.00%; 
+abbreviations: EC = execution count, POS BBs = positive EC BBs
+distribution of NUM(unreachable POS BBs) per function
+  Length     : 23
+  MAX        : 0
+  TOP 1%     : 0
+  TOP 5%     : 0
+  TOP 10%    : 0
+  TOP 20%    : 0
+  TOP 50%    : 0
+  TOP 80%    : 0
+  MIN        : 0
+distribution of SUM_EC(unreachable POS BBs) per function
+  Length     : 23
+  MAX        : 0
+  TOP 1%     : 0
+  TOP 5%     : 0
+  TOP 10%    : 0
+  TOP 20%    : 0
+  TOP 50%    : 0
+  TOP 80%    : 0
+  MIN        : 0
+distribution of [(SUM_EC(unreachable POS BBs) / SUM_EC(all POS BBs))] per function
+  Length     : 23
+  MAX        : 0.00%
+  TOP 1%     : 0.00%
+  TOP 5%     : 0.00%
+  TOP 10%    : 0.00%
+  TOP 20%    : 0.00%
+  TOP 50%    : 0.00%
+  TOP 80%    : 0.00%
+  MIN        : 0.00%
+call graph flow conservation gap 0.00%; 
+distribution of function entry flow conservation gaps
+  Length     : 23
+  MAX        : 0.00%
+  TOP 1%     : 0.00%
+  TOP 5%     : 0.00%
+  TOP 10%    : 0.00%
+  TOP 20%    : 0.00%
+  TOP 50%    : 0.00%
+  TOP 80%    : 0.00%
+  MIN        : 0.00%
+CFG flow conservation gap 0.00% (weighted) 0.00% (worst); distribution of weighted CFG flow conservation gaps
+  Length     : 23
+  MAX        : 0.00%
+  TOP 1%     : 0.00%
+  TOP 5%     : 0.00%
+  TOP 10%    : 0.00%
+  TOP 20%    : 0.00%
+  TOP 50%    : 0.00%
+  TOP 80%    : 0.00%
+  MIN        : 0.00%
+Consider only blocks with execution counts > 500:
+distribution of worst block flow conservation gap per function 
+  Length     : 23
+  MAX        : 0.00%
+  TOP 1%     : 0.00%
+  TOP 5%     : 0.00%
+  TOP 10%    : 0.00%
+  TOP 20%    : 0.00%
+  TOP 50%    : 0.00%
+  TOP 80%    : 0.00%
+  MIN        : 0.00%
+distribution of worst block flow conservation gap (absolute value) per function
+  Length     : 23
+  MAX        : 0
+  TOP 1%     : 0
+  TOP 5%     : 0
+  TOP 10%    : 0
+  TOP 20%    : 0
+  TOP 50%    : 0
+  TOP 80%    : 0
+  MIN        : 0
+exception handling usage 0.00% (of total BBEC) 0.00% (of total InvokeEC)
+distribution of exception handling usage as a fraction of total BBEC of each function
+  Length     : 23
+  MAX        : 0.00%
+  TOP 1%     : 0.00%
+  TOP 5%     : 0.00%
+  TOP 10%    : 0.00%
+  TOP 20%    : 0.00%
+  TOP 50%    : 0.00%
+  TOP 80%    : 0.00%
+  MIN        : 0.00%
+distribution of exception handling usage as a fraction of total InvokeEC of each function
+  Length     : 23
+  MAX        : 0.00%
+  TOP 1%     : 0.00%
+  TOP 5%     : 0.00%
+  TOP 10%    : 0.00%
+  TOP 20%    : 0.00%
+  TOP 50%    : 0.00%
+  TOP 80%    : 0.00%
+  MIN        : 0.00%
+----------------
+|   Bucket 5:  |
+----------------
+execution counts of the 23 functions in the bucket: 1-1
+function CFG discontinuity 0.00%; 
+abbreviations: EC = execution count, POS BBs = positive EC BBs
+distribution of NUM(unreachable POS BBs) per function
+  Length     : 23
+  MAX        : 0
+  TOP 1%     : 0
+  TOP 5%     : 0
+  TOP 10%    : 0
+  TOP 20%    : 0
+  TOP 50%    : 0
+  TOP 80%    : 0
+  MIN        : 0
+distribution of SUM_EC(unreachable POS BBs) per function
+  Length     : 23
+  MAX        : 0
+  TOP 1%     : 0
+  TOP 5%     : 0
+  TOP 10%    : 0
+  TOP 20%    : 0
+  TOP 50%    : 0
+  TOP 80%    : 0
+  MIN        : 0
+distribution of [(SUM_EC(unreachable POS BBs) / SUM_EC(all POS BBs))] per function
+  Length     : 23
+  MAX        : 0.00%
+  TOP 1%     : 0.00%
+  TOP 5%     : 0.00%
+  TOP 10%    : 0.00%
+  TOP 20%    : 0.00%
+  TOP 50%    : 0.00%
+  TOP 80%    : 0.00%
+  MIN        : 0.00%
+call graph flow conservation gap 0.00%; 
+distribution of function entry flow conservation gaps
+  Length     : 23
+  MAX        : 0.00%
+  TOP 1%     : 0.00%
+  TOP 5%     : 0.00%
+  TOP 10%    : 0.00%
+  TOP 20%    : 0.00%
+  TOP 50%    : 0.00%
+  TOP 80%    : 0.00%
+  MIN        : 0.00%
+CFG flow conservation gap 0.00% (weighted) 0.00% (worst); distribution of weighted CFG flow conservation gaps
+  Length     : 23
+  MAX        : 0.00%
+  TOP 1%     : 0.00%
+  TOP 5%     : 0.00%
+  TOP 10%    : 0.00%
+  TOP 20%    : 0.00%
+  TOP 50%    : 0.00%
+  TOP 80%    : 0.00%
+  MIN        : 0.00%
+Consider only blocks with execution counts > 500:
+distribution of worst block flow conservation gap per function 
+  Length     : 23
+  MAX        : 0.00%
+  TOP 1%     : 0.00%
+  TOP 5%     : 0.00%
+  TOP 10%    : 0.00%
+  TOP 20%    : 0.00%
+  TOP 50%    : 0.00%
+  TOP 80%    : 0.00%
+  MIN        : 0.00%
+distribution of worst block flow conservation gap (absolute value) per function
+  Length     : 23
+  MAX        : 0
+  TOP 1%     : 0
+  TOP 5%     : 0
+  TOP 10%    : 0
+  TOP 20%    : 0
+  TOP 50%    : 0
+  TOP 80%    : 0
+  MIN        : 0
+exception handling usage 0.00% (of total BBEC) 0.00% (of total InvokeEC)
+distribution of exception handling usage as a fraction of total BBEC of each function
+  Length     : 23
+  MAX        : 0.00%
+  TOP 1%     : 0.00%
+  TOP 5%     : 0.00%
+  TOP 10%    : 0.00%
+  TOP 20%    : 0.00%
+  TOP 50%    : 0.00%
+  TOP 80%    : 0.00%
+  MIN        : 0.00%
+distribution of exception handling usage as a fraction of total InvokeEC of each function
+  Length     : 23
+  MAX        : 0.00%
+  TOP 1%     : 0.00%
+  TOP 5%     : 0.00%
+  TOP 10%    : 0.00%
+  TOP 20%    : 0.00%
+  TOP 50%    : 0.00%
+  TOP 80%    : 0.00%
+  MIN        : 0.00%
+BOLT-INFO: Finished pass: profile-quality-stats
+BOLT-INFO: Starting pass: validate-internal-calls
+BOLT-INFO: Finished pass: validate-internal-calls
+BOLT-INFO: Starting pass: validate-mem-refs
+BOLT-INFO: Finished pass: validate-mem-refs
+BOLT-INFO: Starting pass: shorten-instructions
+BOLT-INFO: Finished pass: shorten-instructions
+BOLT-INFO: Starting pass: remove-nops
+BOLT-INFO: Finished pass: remove-nops
+BOLT-INFO: Starting pass: normalize CFG
+BOLT-INFO: Finished pass: normalize CFG
+BOLT-INFO: Starting pass: identical-code-folding
+BOLT-INFO: ICF folded 2 out of 1028 functions in 3 passes. 0 functions had jump tables.
+BOLT-INFO: Removing all identical functions will save 0.15 KB of code space. Folded functions were called 4 times based on profile.
+BOLT-INFO: Finished pass: identical-code-folding
+BOLT-INFO: Starting pass: indirect-call-promotion
+BOLT-INFO: Finished pass: indirect-call-promotion
+BOLT-INFO: Starting pass: inlining
+BOLT-INFO: inlined 2442 calls at 55 call sites in 3 iteration(s). Change in binary size: 7072 bytes.
+BOLT-INFO: Finished pass: inlining
+BOLT-INFO: Starting pass: identical-code-folding
+BOLT-INFO: Finished pass: identical-code-folding
+BOLT-INFO: Starting pass: partial-inlining
+BOLT-INFO: partial inlining: AIO_ReadPool_consumeBytes into FIO_decompressSrcFile/1(*2) (count 132, p(fast) 1.000 callee, 1.000 site, 6 insns, 0 renamed regs)
+BOLT-INFO: partial inlining: 1 callees with a fast region (0 with frame elision); inlined 1 call sites (0 with frame elision, 0 tail calls), 6 instructions copied, 0 registers renamed
+BOLT-INFO: partial inlining: estimated 132 calls avoided on fast paths (0.21% of profiled direct calls), 0 slow-path calls re-execute the copied region
+BOLT-INFO: partial inlining: callees without a usable fast region: not-simple=5 no-fast-exit=16 cold-fast-path=1
+BOLT-INFO: Finished pass: partial-inlining
+BOLT-INFO: Starting pass: plt-call-optimization
+BOLT-INFO: Finished pass: plt-call-optimization
+BOLT-INFO: Starting pass: reorder-blocks
+BOLT-INFO: basic block reordering modified layout of 57 functions (49.14% of profiled, 5.54% of total)
+BOLT-INFO: Finished pass: reorder-blocks
+BOLT-INFO: Starting pass: eliminate-unreachable
+BOLT-INFO: removed 1 dead basic block(s) accounting for 0 bytes in function HUF_decompress1X1_DCtx_wksp
+BOLT-INFO: UCE removed 1 blocks and 0 bytes of code
+BOLT-INFO: Finished pass: eliminate-unreachable
+BOLT-INFO: Starting pass: split-functions
+BOLT-INFO: Finished pass: split-functions
+BOLT-INFO: Starting pass: loop-inversion-opt
+BOLT-INFO: 0 Functions were reordered by LoopInversionPass
+BOLT-INFO: Finished pass: loop-inversion-opt
+BOLT-INFO: Starting pass: tail-duplication
+BOLT-INFO: Finished pass: tail-duplication
+BOLT-INFO: Starting pass: fix-branches
+BOLT-INFO: Finished pass: fix-branches
+BOLT-INFO: Starting pass: reorder-functions
+BOLT-INFO: buildCallGraph: 116 nodes, 147 callsites (0 recursive), density = 0.005425, 66 callsites not processed, 0 callsites with invalid profile, used perf data for 0 stale functions.
+BOLT-INFO: Function reordering stats
+BOLT-INFO:  Number of hot functions: 86
+BOLT-INFO:  Number of clusters: 1
+BOLT-INFO:  Final average call distance = 1654.7 (5326420 / 3219)
+BOLT-INFO:  Total Calls = 3219
+BOLT-INFO:  Total Calls within 64B = 154 (4.78%)
+BOLT-INFO:  Total Calls within 4KB = 2901 (90.12%)
+BOLT-INFO:  Total Calls within 2MB = 3219 (100.00%)
+BOLT-INFO: Finished pass: reorder-functions
+BOLT-INFO: Starting pass: populate-output-functions
+BOLT-INFO: Finished pass: populate-output-functions
+BOLT-INFO: Starting pass: split-functions
+BOLT-INFO: Finished pass: split-functions
+BOLT-INFO: Starting pass: print dyno-stats after optimizations
+BOLT-INFO: program-wide dynostats after all optimizations before SCTC and FOP:
+
+            16475867 : executed forward branches
+             6765558 : taken forward branches
+             2776798 : executed backward branches
+             2245932 : taken backward branches
+              127144 : executed unconditional branches
+              126975 : all function calls
+               60708 : indirect calls
+               60576 : PLT calls
+           152800023 : executed instructions
+            30698631 : executed load instructions
+            22146308 : executed store instructions
+                   0 : taken jump table branches
+                   0 : taken unknown indirect branches
+            19379809 : total branches
+             9138634 : taken branches
+            10241175 : non-taken conditional branches
+             9011490 : taken conditional branches
+            19252665 : all conditional branches
+                   0 : linker-inserted veneer calls
+
+            13207087 : executed forward branches (-19.8%)
+              186866 : taken forward branches (-97.2%)
+             6045572 : executed backward branches (+117.7%)
+             2099685 : taken backward branches (-6.5%)
+              309791 : executed unconditional branches (+143.7%)
+              124401 : all function calls (-2.0%)
+               60708 : indirect calls (=)
+               60576 : PLT calls (=)
+           151865040 : executed instructions (-0.6%)
+            30698620 : executed load instructions (-0.0%)
+            22146303 : executed store instructions (-0.0%)
+                   0 : taken jump table branches (=)
+                   0 : taken unknown indirect branches (=)
+            19562450 : total branches (+0.9%)
+             2596342 : taken branches (-71.6%)
+            16966108 : non-taken conditional branches (+65.7%)
+             2286551 : taken conditional branches (-74.6%)
+            19252659 : all conditional branches (-0.0%)
+                   0 : linker-inserted veneer calls (=)
+
+BOLT-INFO: Finished pass: print dyno-stats after optimizations
+BOLT-INFO: Starting pass: simplify-conditional-tail-calls
+BOLT-INFO: Finished pass: simplify-conditional-tail-calls
+BOLT-INFO: Starting pass: peepholes
+BOLT-INFO: Finished pass: peepholes
+BOLT-INFO: Starting pass: assign-sections
+BOLT-INFO: Finished pass: assign-sections
+BOLT-INFO: Starting pass: aligner
+BOLT-INFO: Finished pass: aligner
+BOLT-INFO: Starting pass: reorder-data
+BOLT-INFO: Finished pass: reorder-data
+BOLT-INFO: Starting pass: patch-entries
+BOLT-INFO: patching entries in original code
+BOLT-INFO: function FSE_readNCount too small to patch its entry point
+BOLT-WARNING: failed to patch entries in FSE_readNCount. The function will not be optimized
+BOLT-INFO: function ZSTD_minCLevel too small to patch its entry point
+BOLT-WARNING: failed to patch entries in ZSTD_minCLevel. The function will not be optimized
+BOLT-INFO: function ZSTD_maxCLevel too small to patch its entry point
+BOLT-WARNING: failed to patch entries in ZSTD_maxCLevel. The function will not be optimized
+BOLT-INFO: function ZSTD_DStreamOutSize too small to patch its entry point
+BOLT-WARNING: failed to patch entries in ZSTD_DStreamOutSize. The function will not be optimized
+BOLT-INFO: function FIO_freePreferences(*2) too small to patch its entry point
+BOLT-WARNING: failed to patch entries in FIO_freePreferences(*2). The function will not be optimized
+BOLT-INFO: function FIO_setMemLimit too small to patch its entry point
+BOLT-WARNING: failed to patch entries in FIO_setMemLimit. The function will not be optimized
+BOLT-INFO: function FIO_setAllowBlockDevices too small to patch its entry point
+BOLT-WARNING: failed to patch entries in FIO_setAllowBlockDevices. The function will not be optimized
+BOLT-INFO: function FIO_setMMapDict too small to patch its entry point
+BOLT-WARNING: failed to patch entries in FIO_setMMapDict. The function will not be optimized
+BOLT-INFO: function FIO_setHasStdoutOutput too small to patch its entry point
+BOLT-WARNING: failed to patch entries in FIO_setHasStdoutOutput. The function will not be optimized
+BOLT-INFO: function FIO_setNbFilesTotal too small to patch its entry point
+BOLT-WARNING: failed to patch entries in FIO_setNbFilesTotal. The function will not be optimized
+BOLT-INFO: function AIO_supported too small to patch its entry point
+BOLT-WARNING: failed to patch entries in AIO_supported. The function will not be optimized
+BOLT-INFO: function AIO_WritePool_getFile too small to patch its entry point
+BOLT-WARNING: failed to patch entries in AIO_WritePool_getFile. The function will not be optimized
+BOLT-INFO: Finished pass: patch-entries
+BOLT-INFO: Starting pass: assign-sections
+BOLT-INFO: Finished pass: assign-sections
+BOLT-INFO: Starting pass: aarch64-relaxation
+BOLT-INFO: Finished pass: aarch64-relaxation
+BOLT-INFO: Starting pass: long-jmp
+BOLT-INFO: Starting stub-insertion pass
+BOLT-INFO: Inserted 12 stubs in the hot area and 3 stubs in the cold area. Shared 0 times, iterated 3 times.
+BOLT-INFO: Finished pass: long-jmp
+BOLT-INFO: Starting pass: pointer-auth-cfi-fixup
+BOLT-INFO: rewritten pac-ret DWARF info in 1 out of 1028 functions (0.10%).
+BOLT-INFO: Finished pass: pointer-auth-cfi-fixup
+BOLT-INFO: Starting pass: finalize-functions
+BOLT-INFO: Finished pass: finalize-functions
+BOLT-INFO: Starting pass: frame-optimizer
+BOLT-INFO: Finished pass: frame-optimizer
+BOLT-INFO: Starting pass: alloc-combiner
+BOLT-INFO: Finished pass: alloc-combiner
+BOLT-INFO: Starting pass: retpoline-insertion
+BOLT-INFO: Finished pass: retpoline-insertion
+BOLT-INFO: Starting pass: inst-lowering
+BOLT-INFO: Finished pass: inst-lowering
+BOLT-INFO: Starting pass: lower-annotations
+BOLT-INFO: Finished pass: lower-annotations
+BOLT-INFO: Starting pass: clean-mc-state
+BOLT-INFO: Finished pass: clean-mc-state
+BOLT-INFO: padding code to 0x600000 to accommodate hot text
+BOLT-INFO: patched build-id (flipped first and last bits)
+BOLT: writing new section .fini_array
+ data at 0xaaaadd56ee70
+ of size 8
+ at offset 838800 with content size 8
+BOLT: writing new section .init_array
+ data at 0xaaaadd5e4c20
+ of size 8
+ at offset 838808 with content size 8
+BOLT: writing new section .data.rel.ro
+ data at 0xaaaadd614370
+ of size 2656
+ at offset 838816 with content size 2656
+BOLT: writing new section .text
+ data at 0xffff75200000
+ of size 35936
+ at offset 4194304 with content size 35936
+BOLT: writing new section .text.cold
+ data at 0xaaaadd6a92c0
+ of size 36848
+ at offset 4230272 with content size 36848
+BOLT: writing new section .bolt.new.eh_frame
+ data at 0xaaaadd6b22c0
+ of size 10944
+ at offset 6291456 with content size 10944
+BOLT: writing new section .relocated.eh_frame
+ data at 0xaaaadd6375e0
+ of size 47276
+ at offset 6302400 with content size 47276
+BOLT-INFO: not writing section header for section .fini_array
+BOLT-INFO: not writing section header for section .init_array
+BOLT-INFO: not writing section header for section .data.rel.ro
+BOLT-INFO: writing section header for .text
+BOLT-INFO: writing section header for .text.cold
+BOLT-INFO: writing section header for .eh_frame
+BOLT-INFO: writing section header for .eh_frame_hdr
+BOLT-INFO: setting __hot_start to 0x400000
+BOLT-INFO: setting __hot_end to 0x408c60
+BOLT-INFO: not writing section header for section .fini_array
+BOLT-INFO: not writing section header for section .init_array
+BOLT-INFO: not writing section header for section .data.rel.ro
+BOLT-INFO: writing section header for .text
+BOLT-INFO: writing section header for .text.cold
+BOLT-INFO: writing section header for .eh_frame
+BOLT-INFO: writing section header for .eh_frame_hdr
+BOLT-INFO: writing section header for .note.bolt_info

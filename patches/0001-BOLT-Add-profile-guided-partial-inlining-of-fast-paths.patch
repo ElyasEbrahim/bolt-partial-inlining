@@ -1,0 +1,3379 @@
+From 114045251fcc23c531b6183e3b34ffa25cf1ab09 Mon Sep 17 00:00:00 2001
+From: ElyasEbrahim <klaymarshmello51@gmail.com>
+Date: Fri, 6 Nov 2026 21:12:51 +0800
+Subject: [PATCH] [BOLT] Add profile-guided partial inlining of fast paths
+
+Hot functions often consist of a short fast path that returns early (cache
+hit, buffer with free space, disabled tracing level, non-empty free list)
+and a large slow path. They are too big to be inlined as a whole, cannot be
+inlined across translation units without LTO, and are frequently not
+shrink-wrapped, so every call also executes the full prologue and epilogue.
+
+Add a new pass, enabled with --partial-inline, that copies the profile-hot,
+acyclic fast region of a callee into its hot direct call sites:
+
+* Instructions that only build or tear down the callee's stack frame are
+  not copied (SP adjustments, callee-saved register spills and reloads, FP
+  setup, return address signing/authentication, CFI, BTI landing pads).
+* Callee-saved registers used as temporaries by the fast path are renamed
+  to scratch registers that are clobbered by the call or provably dead
+  after it (using RegAnalysis, so that callers relying on interprocedural
+  register allocation stay correct).
+* Returns fall through to the code after the call (or remain returns at
+  tail call sites).
+* Every edge leaving the region branches to the original call. The region
+  is required to be free of side effects and register hazards on every
+  path to such a slow exit, so the callee re-executes from its entry with
+  the state of the original call and is not modified.
+
+Call sites are selected with a conservative worst-case model for the
+context-insensitive profile and transformed hottest first. Block and edge
+counts of the caller copies, the slow-path call and the callee are updated.
+
+New MCPlusBuilder hooks: analyzeFrameInstruction() (frame instruction
+classification), getCallSiteScratchRegs() and getFullyDefinedReg(). Frame
+elision is implemented for AArch64; on X86 only fast paths that do not
+touch the stack are copied.
+
+On an Apple M3 Max running Linux/AArch64 the pass speeds up fast-path heavy
+microbenchmarks by up to 2.7x over the BOLT baseline, and does not change
+the run time of workloads without the pattern.
+---
+ bolt/docs/BOLTAArch64OptimizationStatus.md    |    7 +
+ bolt/docs/CommandLineArgumentReference.md     |   43 +
+ bolt/docs/PartialInlining.md                  |   92 ++
+ bolt/docs/index.md                            |    1 +
+ bolt/include/bolt/Core/MCPlusBuilder.h        |   53 +
+ bolt/include/bolt/Passes/PartialInlining.h    |  196 +++
+ bolt/lib/Passes/CMakeLists.txt                |    1 +
+ bolt/lib/Passes/PartialInlining.cpp           | 1416 +++++++++++++++++
+ bolt/lib/Rewrite/BinaryPassManager.cpp        |   13 +
+ .../Target/AArch64/AArch64MCPlusBuilder.cpp   |  189 +++
+ bolt/lib/Target/X86/X86MCPlusBuilder.cpp      |   20 +
+ .../AArch64/partial-inline-frame-elision.s    |  121 ++
+ bolt/test/AArch64/partial-inline-frameless.s  |  116 ++
+ bolt/test/AArch64/partial-inline-pauth.s      |  195 +++
+ bolt/test/AArch64/partial-inline-reject.s     |  252 +++
+ bolt/test/AArch64/partial-inline-sites.s      |  130 ++
+ bolt/test/X86/partial-inline.s                |  107 ++
+ bolt/test/runtime/AArch64/partial-inline.c    |  185 +++
+ 18 files changed, 3137 insertions(+)
+ create mode 100644 bolt/docs/PartialInlining.md
+ create mode 100644 bolt/include/bolt/Passes/PartialInlining.h
+ create mode 100644 bolt/lib/Passes/PartialInlining.cpp
+ create mode 100644 bolt/test/AArch64/partial-inline-frame-elision.s
+ create mode 100644 bolt/test/AArch64/partial-inline-frameless.s
+ create mode 100644 bolt/test/AArch64/partial-inline-pauth.s
+ create mode 100644 bolt/test/AArch64/partial-inline-reject.s
+ create mode 100644 bolt/test/AArch64/partial-inline-sites.s
+ create mode 100644 bolt/test/X86/partial-inline.s
+ create mode 100644 bolt/test/runtime/AArch64/partial-inline.c
+
+diff --git a/bolt/docs/BOLTAArch64OptimizationStatus.md b/bolt/docs/BOLTAArch64OptimizationStatus.md
+index 8567e48af..1cedd0d1e 100644
+--- a/bolt/docs/BOLTAArch64OptimizationStatus.md
++++ b/bolt/docs/BOLTAArch64OptimizationStatus.md
+@@ -60,6 +60,13 @@ The following optimizations are also supported for AArch64.
+   - Inline functions
+ * - `--icf=safe|all`
+   - Fold identical functions
++* - `--partial-inline`
++    Related options:
++    `--partial-inline-frame-elision`
++    `--partial-inline-max-insns=<uint>`
++    `--partial-inline-min-fast-ratio=<uint>`
++    `--partial-inline-profile-model=worst-case|average`
++  - Inline callee fast paths with stack frame elision
+ :::
+ 
+ ## Supported Flags With Limitations
+diff --git a/bolt/docs/CommandLineArgumentReference.md b/bolt/docs/CommandLineArgumentReference.md
+index f41b23ec5..034aed0c2 100644
+--- a/bolt/docs/CommandLineArgumentReference.md
++++ b/bolt/docs/CommandLineArgumentReference.md
+@@ -718,6 +718,49 @@
+ 
+   Do not scan cold functions for external references (may result in slower binary)
+ 
++- `--partial-inline`
++
++  Profile-guided partial inlining: copy the hot fast path of a callee (eliding
++  its stack frame) into hot call sites and fall back to the original call on
++  slow paths
++
++- `--partial-inline-coverage=<number>`
++
++  Partially inline the hottest eligible call sites until they cover this
++  percentage of all eligible fast-path calls
++
++- `--partial-inline-frame-elision`
++
++  Allow eliding the callee stack frame on partially inlined fast paths
++
++- `--partial-inline-max-blocks=<uint>`
++
++  Maximum number of basic blocks in a partially inlined region
++
++- `--partial-inline-max-insns=<uint>`
++
++  Maximum number of callee instructions copied to a call site by partial
++  inlining
++
++- `--partial-inline-min-count=<uint>`
++
++  Minimum execution count of a call site considered for partial inlining (0:
++  use the BOLT hot threshold, i.e. half of the average execution count of
++  profiled functions)
++
++- `--partial-inline-min-fast-ratio=<uint>`
++
++  Minimum estimated percentage of calls at a call site that take the callee
++  fast path
++
++- `--partial-inline-profile-model=<value>`
++
++  How the fast-path probability at a call site is estimated from the
++  context-insensitive callee profile
++  - `worst-case`: attribute the callee's slow-path invocations to the call site
++  first (conservative)
++  - `average`: use the callee-wide fast-path probability
++
+ - `--peepholes=<value>`
+ 
+   Enable peephole optimizations
+diff --git a/bolt/docs/PartialInlining.md b/bolt/docs/PartialInlining.md
+new file mode 100644
+index 000000000..8eadf5de6
+--- /dev/null
++++ b/bolt/docs/PartialInlining.md
+@@ -0,0 +1,92 @@
++# Partial Inlining of Callee Fast Paths
++
++`--partial-inline` copies the hot *fast path* of a callee into its hot call
++sites. It targets functions that are too large to be inlined as a whole but
++usually return after a few instructions: a cache hit, a buffer with free space,
++a disabled tracing level, a non-empty free list, an early argument check. The
++compiler cannot inline such functions across translation units without LTO,
++and it frequently cannot shrink-wrap them either, so every call pays for the
++call, the return, and the full prologue and epilogue.
++
++## Transformation
++
++For a direct call (or tail call) of function `F` at a hot call site the pass
++computes the *fast region* of `F`: the acyclic set of profile-warm blocks that
++starts at the entry, contains no calls or indirect branches, and ends in
++returns. The region is copied into the caller:
++
++* instructions that only build or tear down `F`'s stack frame are not copied
++  (stack pointer updates, spills and reloads of callee-saved registers, frame
++  pointer setup, return address signing/authentication, CFI, BTI/ENDBR landing
++  pads) - *frame elision*;
++* callee-saved registers that the fast path uses as temporaries are renamed to
++  scratch registers that the call already clobbers, or that are dead after the
++  call in the caller;
++* returns become fall-throughs to the code after the call (they remain returns
++  at tail call sites);
++* every edge that leaves the region (a *slow exit*) is redirected to a block
++  that performs the original call.
++
++```
++  caller:                         caller after partial inlining:
++    ...                             ...
++    bl memo_get        ===>         <copy of memo_get's fast path>  --miss-->  bl memo_get
++    <continue>                      <continue>                                 b <continue>
++```
++
++`F` itself is not modified. On a slow exit the original call re-executes `F`
++from its entry. This is correct because the pass only accepts regions where,
++on every path from the entry to a slow exit,
++
++1. no instruction has memory or other side effects (stores, atomics, barriers,
++   system instructions);
++2. no register is written after being read (or read without being defined
++   first) - the re-executed callee therefore observes exactly the state of the
++   original call and takes the same path;
++3. the scratch registers introduced by renaming are not read by `F` before
++   they are written.
++
++Instructions on paths that can no longer reach a slow exit (after the
++fast/slow decision) may store to memory. Code that accesses the stack, the
++frame pointer or the return address register is never copied.
++
++## Profile model
++
++BOLT profiles are context-insensitive: the probability that `F` takes its fast
++path is known for all calls of `F`, not per call site. With
++`--partial-inline-profile-model=worst-case` (the default) the pass assumes that
++all slow-path invocations of `F` may come from the call site under
++consideration, so a call site with `N` calls takes the fast path with
++probability at least `1 - SlowCalls(F) / N`. Call sites whose estimate is below
++`--partial-inline-min-fast-ratio` (60% by default) are left alone. This keeps
++call sites that only exercise the slow path from paying for the duplicated
++region check. `--partial-inline-profile-model=average` uses the callee-wide
++probability instead.
++
++Only call sites executed at least `--partial-inline-min-count` times (default:
++BOLT's hot threshold) are considered. They are transformed hottest first until
++`--partial-inline-coverage` percent (99 by default) of the eligible fast-path
++calls are covered.
++
++## Usage
++
++```
++llvm-bolt prog -o prog.bolt -data prog.fdata --partial-inline \
++  --reorder-blocks=ext-tsp --reorder-functions=cdsort --split-functions
++```
++
++`-v=1` prints every transformed call site, `-v=2` additionally prints why a
++callee has no usable fast region. Frame elision is implemented for AArch64. On
++x86-64 only fast paths that do not touch the stack (and their `endbr64`
++landing pads) are copied.
++
++## Limitations
++
++* Fast paths that store to memory *before* the fast/slow decision (for
++  example reference count decrements) or that overwrite an argument register
++  before it (`ldr x0, [x0]`) cannot use the re-execution fallback.
++* Fast paths with calls, loops, jump tables, stack accesses (spills, locals,
++  stack arguments) or reads of callee-saved entry values are not copied.
++* The copied instructions lose their debug line information, and the callee
++  no longer appears in stack traces taken on its fast path.
++* Volatile loads on the path to a slow exit are executed twice on that path.
+diff --git a/bolt/docs/index.md b/bolt/docs/index.md
+index 714c27802..b8b5897fd 100644
+--- a/bolt/docs/index.md
++++ b/bolt/docs/index.md
+@@ -40,5 +40,6 @@ BOLT Address Translation <BAT>
+ Binary Analysis <BinaryAnalysis>
+ Adding a New Backend <NewBackend>
+ Pointer Authentication <PointerAuthDesign>
++Partial Inlining <PartialInlining>
+ ORC-Based Linker <RuntimeLibrary>
+ ```
+diff --git a/bolt/include/bolt/Core/MCPlusBuilder.h b/bolt/include/bolt/Core/MCPlusBuilder.h
+index 04621e8fa..a4a1de6cd 100644
+--- a/bolt/include/bolt/Core/MCPlusBuilder.h
++++ b/bolt/include/bolt/Core/MCPlusBuilder.h
+@@ -847,6 +847,59 @@ public:
+ 
+   virtual bool isLeave(const MCInst &Inst) const { return false; }
+ 
++  /// Role of an instruction in setting up or tearing down the stack frame of
++  /// the function that contains it, as computed by analyzeFrameInstruction().
++  struct FrameInstrInfo {
++    enum FrameInstrKind : uint8_t {
++      FIK_None,       ///< Not a recognized frame instruction.
++      FIK_SPAdjust,   ///< SP += SPDelta.
++      FIK_Save,       ///< Store Regs to consecutive stack slots.
++      FIK_Restore,    ///< Load Regs from consecutive stack slots.
++      FIK_FPSetup,    ///< FP = SP + Offset.
++      FIK_SignRA,     ///< Sign the return address register.
++      FIK_AuthRA,     ///< Authenticate the return address register.
++      FIK_LandingPad, ///< Control-flow integrity landing pad (e.g. BTI C).
++    };
++    FrameInstrKind Kind = FIK_None;
++    /// Value added to the stack pointer by the instruction (pre/post-indexed
++    /// addressing modes and explicit adjustments).
++    int64_t SPDelta = 0;
++    /// FIK_Save/FIK_Restore: offset of the first slot relative to the stack
++    /// pointer value before the instruction executes. FIK_FPSetup: offset
++    /// added to the stack pointer to form the frame pointer.
++    int64_t Offset = 0;
++    /// FIK_Save/FIK_Restore: size in bytes of each slot.
++    unsigned SlotSize = 0;
++    /// FIK_Save/FIK_Restore: registers stored to (loaded from) consecutive
++    /// slots starting at Offset.
++    SmallVector<MCPhysReg, 2> Regs;
++  };
++
++  /// Return true if \p Inst only builds or tears down the stack frame of the
++  /// containing function in one of the forms emitted in prologues and
++  /// epilogues, and describe it in \p Info. Only stack-pointer based
++  /// addressing with a constant offset is recognized. Targets that do not
++  /// implement the analysis return false.
++  virtual bool analyzeFrameInstruction(const MCInst &Inst,
++                                       FrameInstrInfo &Info) const {
++    return false;
++  }
++
++  /// Append to \p Regs, in order of preference, registers of the same
++  /// register class and size as \p Reg that are caller-saved and are never
++  /// used for passing arguments or returning values under the platform ABI.
++  /// A callee cannot depend on their values at entry, which makes them usable
++  /// as scratch registers at a call site. Targets that do not implement it
++  /// append nothing.
++  virtual void getCallSiteScratchRegs(MCPhysReg Reg,
++                                      SmallVectorImpl<MCPhysReg> &Regs) const {}
++
++  /// Return the largest register whose value is completely determined when an
++  /// instruction writes \p Reg, e.g. X0 for a write to W0 on AArch64 (the upper
++  /// half is zeroed) or RAX for a write to EAX on x86-64. The default is
++  /// \p Reg itself, which is always correct but may be imprecise.
++  virtual MCPhysReg getFullyDefinedReg(MCPhysReg Reg) const { return Reg; }
++
+   virtual bool isADRP(const MCInst &Inst) const {
+     llvm_unreachable("not implemented");
+     return false;
+diff --git a/bolt/include/bolt/Passes/PartialInlining.h b/bolt/include/bolt/Passes/PartialInlining.h
+new file mode 100644
+index 000000000..29212fc74
+--- /dev/null
++++ b/bolt/include/bolt/Passes/PartialInlining.h
+@@ -0,0 +1,196 @@
++//===- bolt/Passes/PartialInlining.h - Fast-path partial inlining -*- C++ -*-=//
++//
++// Part of the LLVM Project, under the Apache License v2.0 with LLVM Exceptions.
++// See https://llvm.org/LICENSE.txt for license information.
++// SPDX-License-Identifier: Apache-2.0 WITH LLVM-exception
++//
++//===----------------------------------------------------------------------===//
++//
++// Profile-guided partial inlining of callee fast paths.
++//
++// Hot functions often begin with a short, frequently taken path that returns
++// early (a cache hit, a buffer with free space, a disabled tracing level, a
++// non-empty free list, ...) followed by a much larger slow path. These
++// functions are too big to be inlined as a whole, and without LTO the
++// compiler cannot inline across translation units at all. In addition, when
++// the fast path shares values with the slow path, the compiler frequently
++// fails to shrink-wrap the function, so every fast-path execution also pays
++// for the full prologue and epilogue.
++//
++// For a hot direct call site of such a function F, this pass copies the
++// profile-hot, acyclic "fast region" of F that starts at its entry and ends
++// in returns into the caller:
++//
++//   * Instructions that only build or tear down F's stack frame (stack
++//     pointer adjustments, callee-saved register spills and reloads, frame
++//     pointer setup, return address signing/authentication, CFI and landing
++//     pads) are not copied ("frame elision").
++//   * Callee-saved registers that the fast path uses as temporaries are
++//     renamed to scratch registers that the call already clobbers.
++//   * Returns become branches to the instruction following the call (or stay
++//     returns at tail-call sites).
++//   * Every edge leaving the region ("slow exit") is redirected to a block
++//     that performs the original call. The copied region is free of memory
++//     side effects on every path to a slow exit and never overwrites a
++//     register before reading it there, so the callee re-executes from its
++//     entry with exactly the architectural state of the original call
++//     ("re-execution fallback"). F itself is not modified.
++//
++//===----------------------------------------------------------------------===//
++
++#ifndef BOLT_PASSES_PARTIALINLINING_H
++#define BOLT_PASSES_PARTIALINLINING_H
++
++#include "bolt/Passes/BinaryPasses.h"
++#include "llvm/ADT/BitVector.h"
++#include "llvm/ADT/DenseMap.h"
++#include "llvm/ADT/DenseSet.h"
++#include "llvm/ADT/SmallVector.h"
++#include <memory>
++
++namespace llvm {
++namespace bolt {
++
++class RegAnalysis;
++class BinaryFunctionCallGraph;
++
++class PartialInlining : public BinaryFunctionPass {
++public:
++  /// Why a function could not provide a fast region. Used for statistics.
++  enum RejectReason : unsigned {
++    RR_None = 0,
++    RR_NotSimple,     ///< Not simple, ignored, no CFG or multi-entry.
++    RR_NoProfile,     ///< No valid profile or never executed.
++    RR_EntryNotSafe,  ///< Entry block contains a non-copyable instruction.
++    RR_NoFastExit,    ///< No return reachable through copyable blocks.
++    RR_StackAccess,   ///< Fast path accesses the stack frame or SP/FP/LR.
++    RR_FrameMismatch, ///< Prologue/epilogue could not be matched.
++    RR_SideEffect,    ///< Side effect before the fast/slow decision.
++    RR_RegClobber,    ///< Register overwritten before it is read on a slow
++                      ///< path (re-execution would observe a new value).
++    RR_NoScratch,     ///< Not enough scratch registers for renaming.
++    RR_TooLarge,      ///< Region exceeds size limits even after pruning.
++    RR_ColdFastPath,  ///< Fast path probability below the threshold.
++    RR_Last
++  };
++
++  /// The fast region of a callee together with everything needed to copy it.
++  struct FastRegion {
++    /// Region blocks in a topological order; Blocks.front() is the entry.
++    SmallVector<BinaryBasicBlock *, 8> Blocks;
++    DenseSet<const BinaryBasicBlock *> InRegion;
++    /// Instructions that are not copied (frame setup/teardown, CFI, ...).
++    DenseSet<const MCInst *> Dropped;
++    /// Callee-saved registers that the region uses as temporaries. Each one
++    /// is renamed to a scratch register chosen per call site.
++    SmallVector<MCPhysReg, 4> RenamedRegs;
++    /// For each renamed register, scratch candidates that satisfy all
++    /// callee-side constraints, in order of preference.
++    SmallVector<SmallVector<MCPhysReg, 8>, 4> ScratchCandidates;
++    /// Registers that a call to the callee may clobber.
++    BitVector CalleeClobbers;
++    /// Region flow: estimated number of callee invocations that reach each
++    /// block (and edge) by following region paths from the entry.
++    DenseMap<const BinaryBasicBlock *, double> Flow;
++    /// Probability of leaving the region through a return from each block.
++    DenseMap<const BinaryBasicBlock *, double> PFast;
++    /// Successor edge probabilities of region blocks (in successor order),
++    /// snapshotted before any profile update.
++    DenseMap<const BinaryBasicBlock *, SmallVector<double, 2>> SuccProb;
++    /// Estimated number of callee invocations.
++    double EntryFlow = 0.0;
++    /// Probability that an invocation leaves through a fast exit.
++    double FastProb = 0.0;
++    /// Estimated number of invocations that take a slow exit.
++    double SlowCount = 0.0;
++    /// Number of instructions copied to each call site.
++    unsigned NumCopiedInsts = 0;
++    /// True if prologue/epilogue instructions were elided.
++    bool HasFrame = false;
++  };
++
++  explicit PartialInlining(const cl::opt<bool> &PrintPass)
++      : BinaryFunctionPass(PrintPass) {}
++  ~PartialInlining() override;
++
++  const char *getName() const override { return "partial-inlining"; }
++
++  bool shouldPrint(const BinaryFunction &BF) const override {
++    return BinaryFunctionPass::shouldPrint(BF) && Modified.count(&BF) > 0;
++  }
++
++  Error runOnFunctions(BinaryContext &BC) override;
++
++private:
++  struct CallSite {
++    BinaryFunction *Caller;
++    BinaryBasicBlock *BB;
++    /// Index of the call instruction in BB at analysis time.
++    unsigned InstIdx;
++    BinaryFunction *Callee;
++    uint64_t Count;
++    double FastProb;
++    double Benefit;
++  };
++
++  /// Compute the fast region of \p BF. Returns RR_None on success.
++  RejectReason analyzeCallee(BinaryFunction &BF, FastRegion &Region);
++
++  /// Build the region once for the given set of excluded blocks. If the
++  /// region can be improved by excluding more blocks, they are returned in
++  /// \p Prune and the caller retries.
++  RejectReason buildRegion(BinaryFunction &BF, FastRegion &Region,
++                           const DenseSet<const BinaryBasicBlock *> &Excluded,
++                           SmallVectorImpl<const BinaryBasicBlock *> &Prune);
++
++  using RenameList = SmallVector<std::pair<MCPhysReg, MCPhysReg>, 4>;
++
++  /// Compute callee-side scratch register candidates for the registers in
++  /// \p Region.RenamedRegs.
++  bool computeScratchCandidates(BinaryFunction &BF, FastRegion &Region);
++
++  /// Choose scratch registers for \p Site. A candidate is usable if the call
++  /// already clobbers it, or if it is dead after the call in the caller.
++  bool chooseScratchRegisters(const CallSite &Site, const FastRegion &Region,
++                              RenameList &Renames);
++
++  /// Return true if no code of \p Site.Caller (or, through its exits, of its
++  /// callers) can observe the value of \p Reg after the call at \p Site.
++  bool isDeadAfterCall(const CallSite &Site, MCPhysReg Reg);
++
++  /// Copy the fast region of \p Site.Callee into the caller.
++  bool inlineFastPath(const CallSite &Site, const FastRegion &Region,
++                      const RenameList &Renames);
++
++  /// Remove the fast-path flow handled by the inlined copy from the callee
++  /// profile.
++  void updateCalleeProfile(BinaryFunction &Callee, const FastRegion &Region,
++                           uint64_t CallCount);
++
++  /// Lazily constructed register usage analysis.
++  RegAnalysis &getRegAnalysis(BinaryContext &BC);
++
++  std::unique_ptr<BinaryFunctionCallGraph> CG;
++  std::unique_ptr<RegAnalysis> RA;
++
++  DenseSet<const BinaryFunction *> Modified;
++
++  /// Statistics.
++  uint64_t NumRejected[RR_Last] = {};
++  uint64_t NumCandidates = 0;
++  uint64_t NumFramedCandidates = 0;
++  uint64_t NumInlinedSites = 0;
++  uint64_t NumInlinedFramedSites = 0;
++  uint64_t NumTailCallSites = 0;
++  uint64_t NumRenamedRegs = 0;
++  uint64_t NumSitesNoScratch = 0;
++  uint64_t NumCopiedInsts = 0;
++  double DynFastCalls = 0;
++  double DynSlowCalls = 0;
++  uint64_t TotalDirectCalls = 0;
++};
++
++} // namespace bolt
++} // namespace llvm
++
++#endif
+diff --git a/bolt/lib/Passes/CMakeLists.txt b/bolt/lib/Passes/CMakeLists.txt
+index a7514d4be..c9382aa5a 100644
+--- a/bolt/lib/Passes/CMakeLists.txt
++++ b/bolt/lib/Passes/CMakeLists.txt
+@@ -24,6 +24,7 @@ add_llvm_library(LLVMBOLTPasses
+   LoopInversionPass.cpp
+   LivenessAnalysis.cpp
+   MCF.cpp
++  PartialInlining.cpp
+   PatchEntries.cpp
+   PAuthGadgetScanner.cpp
+   PettisAndHansen.cpp
+diff --git a/bolt/lib/Passes/PartialInlining.cpp b/bolt/lib/Passes/PartialInlining.cpp
+new file mode 100644
+index 000000000..4e71d75d2
+--- /dev/null
++++ b/bolt/lib/Passes/PartialInlining.cpp
+@@ -0,0 +1,1416 @@
++//===- bolt/Passes/PartialInlining.cpp - Fast-path partial inlining -------===//
++//
++// Part of the LLVM Project, under the Apache License v2.0 with LLVM Exceptions.
++// See https://llvm.org/LICENSE.txt for license information.
++// SPDX-License-Identifier: Apache-2.0 WITH LLVM-exception
++//
++//===----------------------------------------------------------------------===//
++//
++// This file implements the PartialInlining pass. See PartialInlining.h for an
++// overview of the transformation.
++//
++// Correctness argument (re-execution fallback)
++// --------------------------------------------
++// Let R be the region copied from callee F into caller G at the call site S.
++// The copy R' executes in G's context instead of F's. On a path through R'
++// that ends in a return ("fast exit"), R' performs exactly the computation and
++// memory accesses F performs on that path, except for the dropped frame
++// instructions. Those only touch F's own (dead after return) stack frame, the
++// return address register and callee-saved registers whose original values are
++// restored before F returns; callee-saved registers that F uses as temporaries
++// are renamed to scratch registers that the call to F already clobbers.
++//
++// On a path through R' that leaves the region ("slow exit") control reaches
++// the original call. It must observe the state of the original call, so:
++//   (1) no instruction on a path from the entry to a slow exit may have memory
++//       side effects (stores, atomics, barriers, system instructions, ...);
++//   (2) no register may be written on such a path and also read there before
++//       it is (must-)defined: then F's re-execution recomputes identical
++//       values and takes the same path to the same slow exit;
++//   (3) scratch registers introduced by renaming must not be read by F before
++//       they are written (they are caller-saved, non-argument registers that
++//       F's own code never reads first).
++// Under (1)-(3) the re-executed call is indistinguishable from the original
++// one, so F does not need to be modified and other callers are unaffected.
++//
++//===----------------------------------------------------------------------===//
++
++#include "bolt/Passes/PartialInlining.h"
++#include "bolt/Core/BinaryFunctionCallGraph.h"
++#include "bolt/Passes/RegAnalysis.h"
++#include "bolt/Utils/CommandLineOpts.h"
++#include "llvm/MC/MCInstrInfo.h"
++#include "llvm/MC/MCRegisterInfo.h"
++#include "llvm/Support/CommandLine.h"
++#include "llvm/Support/Debug.h"
++#include "llvm/Support/Format.h"
++#include "llvm/Support/raw_ostream.h"
++#include <algorithm>
++#include <cmath>
++#include <functional>
++#include <map>
++
++#define DEBUG_TYPE "bolt-partial-inline"
++
++using namespace llvm;
++using namespace bolt;
++
++namespace opts {
++
++extern cl::OptionCategory BoltOptCategory;
++extern cl::opt<unsigned> Verbosity;
++
++cl::opt<bool> PartialInline(
++    "partial-inline",
++    cl::desc("profile-guided partial inlining: copy the hot fast path of a "
++             "callee (eliding its stack frame) into hot call sites and fall "
++             "back to the original call on slow paths"),
++    cl::init(false), cl::cat(BoltOptCategory));
++
++static cl::opt<unsigned> PartialInlineMaxInsts(
++    "partial-inline-max-insns",
++    cl::desc("maximum number of callee instructions copied to a call site by "
++             "partial inlining"),
++    cl::init(24), cl::cat(BoltOptCategory));
++
++static cl::opt<unsigned> PartialInlineMaxBlocks(
++    "partial-inline-max-blocks",
++    cl::desc("maximum number of basic blocks in a partially inlined region"),
++    cl::init(8), cl::cat(BoltOptCategory));
++
++static cl::opt<unsigned> PartialInlineMinFastRatio(
++    "partial-inline-min-fast-ratio",
++    cl::desc("minimum estimated percentage of calls at a call site that take "
++             "the callee fast path"),
++    cl::init(60), cl::cat(BoltOptCategory));
++
++enum PartialInlineProfileModel : char { PIM_WorstCase, PIM_Average };
++
++static cl::opt<PartialInlineProfileModel> PartialInlineModel(
++    "partial-inline-profile-model",
++    cl::desc("how the fast-path probability at a call site is estimated from "
++             "the context-insensitive callee profile"),
++    cl::init(PIM_WorstCase),
++    cl::values(clEnumValN(PIM_WorstCase, "worst-case",
++                          "attribute the callee's slow-path invocations to the "
++                          "call site first (conservative)"),
++               clEnumValN(PIM_Average, "average",
++                          "use the callee-wide fast-path probability")),
++    cl::cat(BoltOptCategory));
++
++static cl::opt<uint64_t> PartialInlineMinCount(
++    "partial-inline-min-count",
++    cl::desc("minimum execution count of a call site considered for partial "
++             "inlining (0: use the BOLT hot threshold, i.e. half of the "
++             "average execution count of profiled functions)"),
++    cl::init(0), cl::cat(BoltOptCategory));
++
++static cl::opt<double> PartialInlineCoverage(
++    "partial-inline-coverage",
++    cl::desc("partially inline the hottest eligible call sites until they "
++             "cover this percentage of all eligible fast-path calls"),
++    cl::init(99.0), cl::cat(BoltOptCategory));
++
++static cl::opt<double> PartialInlineMinBlockFlow(
++    "partial-inline-min-block-flow",
++    cl::desc("exclude blocks reached by less than this percentage of the "
++             "callee invocations from partially inlined regions"),
++    cl::init(1.0), cl::Hidden, cl::cat(BoltOptCategory));
++
++static cl::opt<bool> PartialInlineFrameElision(
++    "partial-inline-frame-elision",
++    cl::desc("allow eliding the callee stack frame on partially inlined fast "
++             "paths"),
++    cl::init(true), cl::cat(BoltOptCategory));
++
++static cl::opt<unsigned> PartialInlineMaxSites(
++    "partial-inline-max-sites",
++    cl::desc("maximum number of call sites to partially inline (0 means no "
++             "limit); useful for bisecting"),
++    cl::init(0), cl::Hidden, cl::cat(BoltOptCategory));
++
++static cl::list<std::string> PartialInlineSkip(
++    "partial-inline-skip", cl::CommaSeparated,
++    cl::desc("list of functions that are never partially inlined"),
++    cl::value_desc("func1,func2,func3,..."), cl::Hidden,
++    cl::cat(BoltOptCategory));
++
++} // namespace opts
++
++namespace {
++
++const char *getRejectReasonName(PartialInlining::RejectReason R) {
++  switch (R) {
++  case PartialInlining::RR_None:
++    return "none";
++  case PartialInlining::RR_NotSimple:
++    return "not-simple";
++  case PartialInlining::RR_NoProfile:
++    return "no-profile";
++  case PartialInlining::RR_EntryNotSafe:
++    return "entry-not-copyable";
++  case PartialInlining::RR_NoFastExit:
++    return "no-fast-exit";
++  case PartialInlining::RR_StackAccess:
++    return "stack-access";
++  case PartialInlining::RR_FrameMismatch:
++    return "frame-mismatch";
++  case PartialInlining::RR_SideEffect:
++    return "side-effect";
++  case PartialInlining::RR_RegClobber:
++    return "reg-clobber";
++  case PartialInlining::RR_NoScratch:
++    return "no-scratch";
++  case PartialInlining::RR_TooLarge:
++    return "too-large";
++  case PartialInlining::RR_ColdFastPath:
++    return "cold-fast-path";
++  case PartialInlining::RR_Last:
++    break;
++  }
++  return "unknown";
++}
++
++/// Return the probability of each successor edge of \p BB, in successor order.
++SmallVector<double, 2> getSuccessorProbabilities(const BinaryBasicBlock &BB) {
++  SmallVector<double, 2> Probs;
++  const unsigned NumSuccs = BB.succ_size();
++  if (!NumSuccs)
++    return Probs;
++  uint64_t Total = 0;
++  for (auto BI = BB.branch_info_begin(); BI != BB.branch_info_end(); ++BI)
++    if (BI->Count != BinaryBasicBlock::COUNT_NO_PROFILE)
++      Total += BI->Count;
++  for (auto BI = BB.branch_info_begin(); BI != BB.branch_info_end(); ++BI) {
++    if (!Total)
++      Probs.push_back(1.0 / NumSuccs);
++    else if (BI->Count == BinaryBasicBlock::COUNT_NO_PROFILE)
++      Probs.push_back(0.0);
++    else
++      Probs.push_back(static_cast<double>(BI->Count) / Total);
++  }
++  return Probs;
++}
++
++/// Set of registers that overlap any register in \p Regs.
++BitVector getAliasClosure(const BinaryContext &BC, const BitVector &Regs) {
++  BitVector Result(Regs.size(), false);
++  for (int R = Regs.find_first(); R != -1; R = Regs.find_next(R))
++    Result |= BC.MIB->getAliases(R, /*OnlySmaller=*/false);
++  return Result;
++}
++
++/// Storage of the architectural register containing \p Reg: the register
++/// written in full when \p Reg is written, and all of its sub-registers. Unlike
++/// the full alias set it does not include super-register tuples (e.g. the
++/// X8_X9 pair on AArch64), which would make unrelated registers conflict.
++const BitVector &getRegStorage(const BinaryContext &BC, MCPhysReg Reg) {
++  return BC.MIB->getAliases(BC.MIB->getFullyDefinedReg(Reg),
++                            /*OnlySmaller=*/true);
++}
++
++/// Registers completely defined by \p Inst: the OnlySmaller alias closure of
++/// the fully defined register (see MCPlusBuilder::getFullyDefinedReg) of every
++/// explicit and implicit definition.
++BitVector getFullyDefinedRegs(const BinaryContext &BC, const MCInst &Inst) {
++  const MCPlusBuilder &MIB = *BC.MIB;
++  BitVector Regs(BC.MRI->getNumRegs(), false);
++  const MCInstrDesc &Desc = BC.MII->get(Inst.getOpcode());
++  for (MCPhysReg R : Desc.implicit_defs())
++    Regs |= MIB.getAliases(MIB.getFullyDefinedReg(R), /*OnlySmaller=*/true);
++  for (const MCOperand &Op : MIB.defOperands(Inst))
++    if (Op.isReg() && Op.getReg())
++      Regs |= MIB.getAliases(MIB.getFullyDefinedReg(Op.getReg()),
++                             /*OnlySmaller=*/true);
++  return Regs;
++}
++
++/// Rename every occurrence of \p From (or one of its sub-registers) in \p Inst
++/// to the corresponding (sub-)register of \p To. Return false, leaving \p Inst
++/// in an unspecified state, if an operand references a super-register or a
++/// partially overlapping register of \p From, or if \p From overlaps an
++/// implicit operand.
++bool renameRegister(const BinaryContext &BC, MCInst &Inst, MCPhysReg From,
++                    MCPhysReg To) {
++  const MCRegisterInfo &MRI = *BC.MRI;
++  const MCInstrDesc &Desc = BC.MII->get(Inst.getOpcode());
++  for (MCPhysReg R : Desc.implicit_defs())
++    if (MRI.regsOverlap(R, From))
++      return false;
++  for (MCPhysReg R : Desc.implicit_uses())
++    if (MRI.regsOverlap(R, From))
++      return false;
++
++  for (MCOperand &Op : MCPlus::primeOperands(Inst)) {
++    if (!Op.isReg() || !Op.getReg())
++      continue;
++    const MCRegister Reg = Op.getReg();
++    if (!MRI.regsOverlap(Reg, From))
++      continue;
++    if (Reg == From) {
++      Op.setReg(To);
++      continue;
++    }
++    if (!MRI.isSubRegister(From, Reg))
++      return false;
++    const unsigned Idx = MRI.getSubRegIndex(From, Reg);
++    const MCRegister NewReg = Idx ? MRI.getSubReg(To, Idx) : MCRegister();
++    if (!NewReg)
++      return false;
++    Op.setReg(NewReg);
++  }
++  return true;
++}
++
++/// Return true if the instruction may be copied into another function without
++/// changing its meaning, ignoring the frame/register constraints that are
++/// checked separately. Branches must target blocks of \p BF.
++bool isCopyableInstruction(const BinaryContext &BC, const BinaryFunction &BF,
++                           const MCInst &Inst) {
++  const MCPlusBuilder &MIB = *BC.MIB;
++  if (MIB.isCFI(Inst))
++    return true;
++  // EH labels, SDT markers and other pseudo instructions.
++  if (MIB.isPseudo(Inst))
++    return false;
++  // Calls, tail calls and conditional tail calls.
++  if (MIB.isCall(Inst))
++    return false;
++  if (MIB.isIndirectBranch(Inst) || MIB.isUnsupportedInstruction(Inst) ||
++      MIB.getJumpTable(Inst))
++    return false;
++  if (MIB.isReturn(Inst))
++    return !BC.isX86() || MCPlus::getNumPrimeOperands(Inst) == 0;
++  if (MIB.isBranch(Inst)) {
++    const MCSymbol *Target = MIB.getTargetSymbol(Inst);
++    return Target && BF.getBasicBlockForLabel(Target);
++  }
++  // Symbolic operands must not reference code or data owned by the callee
++  // (local labels, secondary entries, jump tables).
++  for (const MCOperand &Op : MCPlus::primeOperands(Inst)) {
++    if (!Op.isExpr())
++      continue;
++    const MCSymbol *Sym = MIB.getTargetSymbol(Op.getExpr());
++    if (!Sym) {
++      if (!isa<MCConstantExpr>(Op.getExpr()))
++        return false;
++      continue;
++    }
++    if (BF.getBasicBlockForLabel(Sym))
++      return false;
++    uint64_t EntryID = 0;
++    if (BC.getFunctionForSymbol(Sym, &EntryID) == &BF && EntryID != 0)
++      return false;
++    if (const BinaryData *BD = BC.getBinaryDataByName(Sym->getName()))
++      if (const_cast<BinaryContext &>(BC).getJumpTableContainingAddress(
++              BD->getAddress()))
++        return false;
++  }
++  return true;
++}
++
++/// Frame and dataflow state at a program point of the region.
++struct RegionState {
++  bool Valid = false;
++  /// Stack pointer relative to its value at the callee entry.
++  int64_t SPOffset = 0;
++  /// Stack slot (relative to the entry SP) -> register whose entry value is
++  /// stored there.
++  std::map<int64_t, MCPhysReg> Slots;
++  /// Registers whose entry value has been saved to a slot.
++  BitVector Saved;
++  /// Saved registers modified by the body and not restored yet on some
++  /// (Dirty) or on every (MustDirty) region path to this point.
++  BitVector Dirty;
++  BitVector MustDirty;
++  /// Registers written by body instructions so far (OnlySmaller closure).
++  BitVector Written;
++  /// Registers that are defined on every region path to this point.
++  BitVector MustDef;
++  bool FPModified = false;
++  bool RASigned = false;
++
++  bool frameEquals(const RegionState &O) const {
++    return SPOffset == O.SPOffset && Slots == O.Slots && Saved == O.Saved &&
++           FPModified == O.FPModified && RASigned == O.RASigned;
++  }
++};
++
++/// Does \p BF read \p Reg before writing it on some path from its entry?
++/// Calls are assumed to read only argument registers (\p Reg is never one).
++bool isUpwardExposed(const BinaryContext &BC, const BinaryFunction &BF,
++                     MCPhysReg Reg) {
++  const MCPlusBuilder &MIB = *BC.MIB;
++  const BitVector &Aliases = MIB.getAliases(Reg, /*OnlySmaller=*/false);
++  enum Effect { Transparent, Reads, Kills };
++  auto getEffect = [&](const BinaryBasicBlock &BB) {
++    for (const MCInst &Inst : BB) {
++      if (MIB.isPseudo(Inst))
++        continue;
++      BitVector Used(BC.MRI->getNumRegs(), false);
++      MIB.getUsedRegs(Inst, Used);
++      if (Used.anyCommon(Aliases))
++        return Reads;
++      if (MIB.isCall(Inst) || getFullyDefinedRegs(BC, Inst).test(Reg))
++        return Kills;
++    }
++    return Transparent;
++  };
++  SmallVector<const BinaryBasicBlock *, 16> Worklist;
++  DenseSet<const BinaryBasicBlock *> Visited;
++  Worklist.push_back(&BF.front());
++  for (const BinaryBasicBlock *BB : BF.getLayout().blocks())
++    if (BB->isEntryPoint() || BB->isLandingPad())
++      Worklist.push_back(BB);
++  while (!Worklist.empty()) {
++    const BinaryBasicBlock *BB = Worklist.pop_back_val();
++    if (!Visited.insert(BB).second)
++      continue;
++    switch (getEffect(*BB)) {
++    case Reads:
++      return true;
++    case Kills:
++      continue;
++    case Transparent:
++      for (const BinaryBasicBlock *Succ : BB->successors())
++        Worklist.push_back(Succ);
++      for (const BinaryBasicBlock *LP : BB->landing_pads())
++        Worklist.push_back(LP);
++      break;
++    }
++  }
++  return false;
++}
++
++} // anonymous namespace
++
++namespace llvm {
++namespace bolt {
++
++PartialInlining::~PartialInlining() = default;
++
++RegAnalysis &PartialInlining::getRegAnalysis(BinaryContext &BC) {
++  if (!RA) {
++    CG = std::make_unique<BinaryFunctionCallGraph>(buildCallGraph(BC));
++    RA = std::make_unique<RegAnalysis>(BC, &BC.getBinaryFunctions(), CG.get());
++  }
++  return *RA;
++}
++
++PartialInlining::RejectReason
++PartialInlining::buildRegion(BinaryFunction &BF, FastRegion &Region,
++                             const DenseSet<const BinaryBasicBlock *> &Excluded,
++                             SmallVectorImpl<const BinaryBasicBlock *> &Prune) {
++  BinaryContext &BC = BF.getBinaryContext();
++  const MCPlusBuilder &MIB = *BC.MIB;
++  const unsigned NumRegs = BC.MRI->getNumRegs();
++  Region = FastRegion();
++  Prune.clear();
++  BinaryBasicBlock *Entry = &BF.front();
++
++  auto isCopyableBlock = [&](const BinaryBasicBlock &BB) {
++    if (BB.isLandingPad() || Excluded.count(&BB))
++      return false;
++    for (const MCInst &Inst : BB)
++      if (!isCopyableInstruction(BC, BF, Inst))
++        return false;
++    // A conditional branch must have both of its successors in the CFG.
++    const MCInst *Last = BB.getLastNonPseudoInstr();
++    if (Last && MIB.isConditionalBranch(*Last) && BB.succ_size() != 2)
++      return false;
++    if (Last && MIB.isReturn(*Last) && BB.succ_size() != 0)
++      return false;
++    return true;
++  };
++
++  // Step 1: blocks reachable from the entry through copyable blocks. The
++  // exploration is bounded since only short regions are of interest.
++  const unsigned ExploreLimit = 4 * opts::PartialInlineMaxBlocks + 16;
++  DenseSet<const BinaryBasicBlock *> Candidates;
++  {
++    SmallVector<BinaryBasicBlock *, 16> Worklist{Entry};
++    DenseSet<const BinaryBasicBlock *> Visited;
++    while (!Worklist.empty() && Visited.size() < ExploreLimit) {
++      BinaryBasicBlock *BB = Worklist.pop_back_val();
++      if (!Visited.insert(BB).second)
++        continue;
++      if (!isCopyableBlock(*BB))
++        continue;
++      Candidates.insert(BB);
++      for (BinaryBasicBlock *Succ : BB->successors())
++        Worklist.push_back(Succ);
++    }
++  }
++  if (!Candidates.count(Entry))
++    return RR_EntryNotSafe;
++
++  // Step 2: drop blocks that are part of a cycle within the candidate
++  // subgraph (Tarjan's SCC algorithm on the small subgraph).
++  {
++    DenseMap<const BinaryBasicBlock *, unsigned> Index, LowLink;
++    DenseSet<const BinaryBasicBlock *> OnStack, InCycle;
++    SmallVector<const BinaryBasicBlock *, 16> Stack;
++    unsigned NextIndex = 0;
++    std::function<void(const BinaryBasicBlock *)> StrongConnect =
++        [&](const BinaryBasicBlock *BB) {
++          Index[BB] = LowLink[BB] = NextIndex++;
++          Stack.push_back(BB);
++          OnStack.insert(BB);
++          for (const BinaryBasicBlock *Succ : BB->successors()) {
++            if (!Candidates.count(Succ))
++              continue;
++            if (Succ == BB)
++              InCycle.insert(BB);
++            if (!Index.count(Succ)) {
++              StrongConnect(Succ);
++              LowLink[BB] = std::min(LowLink[BB], LowLink[Succ]);
++            } else if (OnStack.count(Succ)) {
++              LowLink[BB] = std::min(LowLink[BB], Index[Succ]);
++            }
++          }
++          if (LowLink[BB] != Index[BB])
++            return;
++          SmallVector<const BinaryBasicBlock *, 4> SCC;
++          const BinaryBasicBlock *Member;
++          do {
++            Member = Stack.pop_back_val();
++            OnStack.erase(Member);
++            SCC.push_back(Member);
++          } while (Member != BB);
++          if (SCC.size() > 1)
++            InCycle.insert(SCC.begin(), SCC.end());
++        };
++    StrongConnect(Entry);
++    if (InCycle.count(Entry))
++      return RR_NoFastExit;
++    for (const BinaryBasicBlock *BB : InCycle)
++      Candidates.erase(BB);
++  }
++
++  // Step 3: keep blocks that are reachable from the entry and from which a
++  // return is reachable (both within the candidate subgraph).
++  DenseSet<const BinaryBasicBlock *> Reachable;
++  {
++    SmallVector<const BinaryBasicBlock *, 16> Worklist{Entry};
++    while (!Worklist.empty()) {
++      const BinaryBasicBlock *BB = Worklist.pop_back_val();
++      if (!Candidates.count(BB) || !Reachable.insert(BB).second)
++        continue;
++      for (const BinaryBasicBlock *Succ : BB->successors())
++        Worklist.push_back(Succ);
++    }
++  }
++  {
++    SmallVector<const BinaryBasicBlock *, 16> Worklist;
++    for (const BinaryBasicBlock *BB : Reachable) {
++      const MCInst *Last = BB->getLastNonPseudoInstr();
++      if (Last && MIB.isReturn(*Last))
++        Worklist.push_back(BB);
++    }
++    while (!Worklist.empty()) {
++      const BinaryBasicBlock *BB = Worklist.pop_back_val();
++      if (!Reachable.count(BB) || !Region.InRegion.insert(BB).second)
++        continue;
++      for (const BinaryBasicBlock *Pred : BB->predecessors())
++        Worklist.push_back(Pred);
++    }
++  }
++  if (!Region.InRegion.count(Entry))
++    return RR_NoFastExit;
++
++  // Step 4: topological order (reverse post-order from the entry).
++  {
++    SmallVector<BinaryBasicBlock *, 8> PostOrder;
++    DenseSet<const BinaryBasicBlock *> Visited;
++    std::function<void(BinaryBasicBlock *)> DFS = [&](BinaryBasicBlock *BB) {
++      Visited.insert(BB);
++      for (BinaryBasicBlock *Succ : BB->successors())
++        if (Region.InRegion.count(Succ) && !Visited.count(Succ))
++          DFS(Succ);
++      PostOrder.push_back(BB);
++    };
++    DFS(Entry);
++    Region.Blocks.assign(PostOrder.rbegin(), PostOrder.rend());
++  }
++
++  // Step 5: profile flow and fast-exit probabilities.
++  for (BinaryBasicBlock *BB : Region.Blocks)
++    Region.SuccProb[BB] = getSuccessorProbabilities(*BB);
++  // Entry flow is the number of invocations. The entry block count can be
++  // larger if the function branches back to its entry.
++  Region.Flow[Entry] = static_cast<double>(
++      BF.getKnownExecutionCount() ? BF.getKnownExecutionCount()
++                                  : Entry->getKnownExecutionCount());
++  for (BinaryBasicBlock *BB : Region.Blocks) {
++    const double Flow = Region.Flow[BB];
++    const SmallVector<double, 2> &Probs = Region.SuccProb[BB];
++    unsigned I = 0;
++    for (BinaryBasicBlock *Succ : BB->successors()) {
++      if (Region.InRegion.count(Succ))
++        Region.Flow[Succ] += Flow * Probs[I];
++      ++I;
++    }
++  }
++  for (BinaryBasicBlock *BB : llvm::reverse(Region.Blocks)) {
++    const MCInst *Last = BB->getLastNonPseudoInstr();
++    if (Last && MIB.isReturn(*Last)) {
++      Region.PFast[BB] = 1.0;
++      continue;
++    }
++    double P = 0.0;
++    const SmallVector<double, 2> &Probs = Region.SuccProb[BB];
++    unsigned I = 0;
++    for (const BinaryBasicBlock *Succ : BB->successors()) {
++      if (Region.InRegion.count(Succ))
++        P += Probs[I] * Region.PFast[Succ];
++      ++I;
++    }
++    Region.PFast[BB] = P;
++  }
++  Region.EntryFlow = Region.Flow[Entry];
++  Region.FastProb = Region.PFast[Entry];
++  Region.SlowCount = Region.EntryFlow * (1.0 - Region.FastProb);
++
++  // Step 6: drop cold blocks. They do not contribute to the fast path but
++  // add size and may introduce side effects or register hazards. The pruned
++  // blocks' incoming edges become slow exits.
++  const double MinFlow =
++      Region.EntryFlow * opts::PartialInlineMinBlockFlow / 100.0;
++  for (const BinaryBasicBlock *BB : llvm::drop_begin(Region.Blocks))
++    if (Region.Flow[BB] < MinFlow)
++      Prune.push_back(BB);
++  if (!Prune.empty())
++    return RR_ColdFastPath;
++
++  // Step 7: forward frame/dataflow analysis in topological order. A
++  // violation in a non-entry block prunes that block (its incoming edges
++  // become slow exits); a violation in the entry block rejects the callee.
++  DenseMap<const BinaryBasicBlock *, RegionState> StateIn;
++  DenseMap<const BinaryBasicBlock *, bool> HasSideEffect;
++  DenseMap<const BinaryBasicBlock *, BitVector> BlockUE, BlockDefs;
++  BitVector NeedsRename(NumRegs, false);
++  {
++    RegionState &S = StateIn[Entry];
++    S.Valid = true;
++    S.Saved = S.Dirty = S.MustDirty = S.Written = S.MustDef =
++        BitVector(NumRegs, false);
++  }
++  // Constant registers (e.g. XZR/WZR) are written and read by many
++  // instructions but carry no state.
++  // Their sub-registers (e.g. WZR_HI on AArch64) are constant as well.
++  BitVector ConstRegs(NumRegs, false);
++  for (unsigned R = 1; R < NumRegs; ++R)
++    if (BC.MRI->isConstant(R))
++      ConstRegs |= MIB.getAliases(R, /*OnlySmaller=*/true);
++  const MCPhysReg SP = MIB.getStackPointer();
++  const MCPhysReg FP = MIB.getFramePointer();
++  const BitVector &SPAliases = MIB.getAliases(SP, /*OnlySmaller=*/false);
++  const BitVector &FPAliases = MIB.getAliases(FP, /*OnlySmaller=*/false);
++  BitVector RAAliases(NumRegs, false);
++  if (BC.isAArch64())
++    RAAliases = MIB.getAliases(BC.MRI->getRARegister(), /*OnlySmaller=*/false);
++
++  auto fail = [&](const BinaryBasicBlock *BB, RejectReason R) {
++    if (BB != Entry)
++      Prune.push_back(BB);
++    return R;
++  };
++  for (BinaryBasicBlock *BB : Region.Blocks) {
++    RegionState S = StateIn[BB];
++    assert(S.Valid && "unreachable region block");
++    BitVector UE(NumRegs, false), Defs(NumRegs, false);
++    bool SideEffect = false;
++
++    for (const MCInst &Inst : *BB) {
++      if (MIB.isCFI(Inst) || MIB.isNoop(Inst)) {
++        Region.Dropped.insert(&Inst);
++        continue;
++      }
++
++      MCPlusBuilder::FrameInstrInfo FI;
++      if (MIB.analyzeFrameInstruction(Inst, FI) &&
++          (opts::PartialInlineFrameElision ||
++           FI.Kind == MCPlusBuilder::FrameInstrInfo::FIK_LandingPad)) {
++        using FIK = MCPlusBuilder::FrameInstrInfo;
++        Region.Dropped.insert(&Inst);
++        switch (FI.Kind) {
++        case FIK::FIK_None:
++          llvm_unreachable("unexpected frame instruction kind");
++        case FIK::FIK_LandingPad:
++          break;
++        case FIK::FIK_SignRA:
++          if (S.RASigned)
++            return fail(BB, RR_FrameMismatch);
++          S.RASigned = true;
++          Region.HasFrame = true;
++          break;
++        case FIK::FIK_AuthRA:
++          if (!S.RASigned)
++            return fail(BB, RR_FrameMismatch);
++          S.RASigned = false;
++          break;
++        case FIK::FIK_SPAdjust:
++          S.SPOffset += FI.SPDelta;
++          Region.HasFrame = true;
++          break;
++        case FIK::FIK_FPSetup:
++          // FP may only be modified after its entry value has been saved.
++          if (!S.Saved.test(FP))
++            return fail(BB, RR_FrameMismatch);
++          S.FPModified = true;
++          break;
++        case FIK::FIK_Save:
++          for (unsigned I = 0; I < FI.Regs.size(); ++I) {
++            const MCPhysReg Reg = FI.Regs[I];
++            const int64_t Slot = S.SPOffset + FI.Offset + I * FI.SlotSize;
++            // Only spills of entry values into the callee's own frame.
++            if (Slot + static_cast<int64_t>(FI.SlotSize) > 0 ||
++                S.Slots.count(Slot))
++              return fail(BB, RR_FrameMismatch);
++            if (MIB.getAliases(Reg, false).anyCommon(S.Written) ||
++                MIB.getAliases(Reg, false).anyCommon(SPAliases) ||
++                S.Saved.test(Reg))
++              return fail(BB, RR_FrameMismatch);
++            if (Reg == FP && S.FPModified)
++              return fail(BB, RR_FrameMismatch);
++            S.Slots[Slot] = Reg;
++            S.Saved.set(Reg);
++          }
++          S.SPOffset += FI.SPDelta;
++          Region.HasFrame = true;
++          break;
++        case FIK::FIK_Restore:
++          for (unsigned I = 0; I < FI.Regs.size(); ++I) {
++            const MCPhysReg Reg = FI.Regs[I];
++            const int64_t Slot = S.SPOffset + FI.Offset + I * FI.SlotSize;
++            auto It = S.Slots.find(Slot);
++            if (It == S.Slots.end() || It->second != Reg)
++              return fail(BB, RR_FrameMismatch);
++            S.Dirty.reset(Reg);
++            S.MustDirty.reset(Reg);
++            if (Reg == FP)
++              S.FPModified = false;
++          }
++          S.SPOffset += FI.SPDelta;
++          break;
++        }
++        continue;
++      }
++
++      if (MIB.isReturn(Inst)) {
++        // Fast exit: the frame must be fully torn down, and a signed return
++        // address must be authenticated by the return itself (RETAA/RETAB).
++        const bool AuthenticatingReturn =
++            BC.isAArch64() && MIB.isPAuthAndRet(Inst);
++        if (S.SPOffset != 0 || S.Dirty.any() || S.FPModified ||
++            S.RASigned != AuthenticatingReturn)
++          return fail(BB, RR_FrameMismatch);
++        continue;
++      }
++
++      // Regular instruction. It is copied verbatim (up to renaming), so it
++      // must not depend on the stack pointer, the frame pointer or the return
++      // address register, which differ between the caller and the callee.
++      BitVector Used(NumRegs, false), Written(NumRegs, false);
++      MIB.getUsedRegs(Inst, Used);
++      MIB.getWrittenRegs(Inst, Written);
++      Used.reset(ConstRegs);
++      Written.reset(ConstRegs);
++      BitVector Touched = Used;
++      Touched |= Written;
++      if (Touched.anyCommon(SPAliases) || Touched.anyCommon(FPAliases) ||
++          Touched.anyCommon(RAAliases))
++        return fail(BB, RR_StackAccess);
++
++      // Callee-saved registers whose entry value was spilled are temporaries
++      // for the body. All their accesses are renamed to a scratch register,
++      // so they may only be read after being written on every path. Reading
++      // their entry value is not supported.
++      for (int R = S.Saved.find_first(); R != -1; R = S.Saved.find_next(R)) {
++        const BitVector &Aliases = MIB.getAliases(R, /*OnlySmaller=*/false);
++        if (Used.anyCommon(Aliases) && !S.MustDirty.test(R))
++          return fail(BB, RR_FrameMismatch);
++        if (Written.anyCommon(Aliases)) {
++          S.Dirty.set(R);
++          S.MustDirty.set(R);
++          NeedsRename.set(R);
++        }
++      }
++
++      const MCInstrDesc &Desc = BC.MII->get(Inst.getOpcode());
++      if (MIB.mayStore(Inst) || Desc.hasUnmodeledSideEffects())
++        SideEffect = true;
++
++      // Re-execution hazard bookkeeping. Renamed registers are excluded:
++      // they become fresh scratch registers that are always written before
++      // they are read.
++      const BitVector SavedAliases = getAliasClosure(BC, S.Saved);
++      BitVector FullDefs = getFullyDefinedRegs(BC, Inst);
++      Used.reset(SavedAliases);
++      Written.reset(SavedAliases);
++      FullDefs.reset(SavedAliases);
++      FullDefs.reset(ConstRegs);
++      BitVector NotDefined = Used;
++      NotDefined.reset(S.MustDef);
++      UE |= NotDefined;
++      S.MustDef |= FullDefs;
++      Defs |= Written;
++      S.Written |= Written;
++
++      ++Region.NumCopiedInsts;
++    }
++
++    HasSideEffect[BB] = SideEffect;
++    BlockUE[BB] = UE;
++    BlockDefs[BB] = Defs;
++
++    // Propagate the state to region successors.
++    for (BinaryBasicBlock *Succ : BB->successors()) {
++      if (!Region.InRegion.count(Succ))
++        continue;
++      RegionState &SuccState = StateIn[Succ];
++      if (!SuccState.Valid) {
++        SuccState = S;
++        continue;
++      }
++      if (!SuccState.frameEquals(S))
++        return fail(Succ, RR_FrameMismatch);
++      SuccState.Dirty |= S.Dirty;
++      SuccState.MustDirty &= S.MustDirty;
++      SuccState.Written |= S.Written;
++      SuccState.MustDef &= S.MustDef;
++    }
++  }
++
++  // Step 8: slow-exit reachability (reverse topological order).
++  DenseMap<const BinaryBasicBlock *, bool> CanReachSlow;
++  for (BinaryBasicBlock *BB : llvm::reverse(Region.Blocks)) {
++    bool Slow = false;
++    for (const BinaryBasicBlock *Succ : BB->successors())
++      Slow |= !Region.InRegion.count(Succ) || CanReachSlow[Succ];
++    CanReachSlow[BB] = Slow;
++  }
++
++  // Step 9: side effects are only allowed on blocks that cannot reach a slow
++  // exit. Otherwise prune the offending block and let the caller retry.
++  for (BinaryBasicBlock *BB : Region.Blocks) {
++    if (HasSideEffect[BB] && CanReachSlow[BB]) {
++      Prune.push_back(BB);
++      return RR_SideEffect;
++    }
++  }
++
++  // Step 10: registers written on a path to a slow exit must not be read
++  // before being defined on such a path. If the conflict involves non-entry
++  // blocks, prune the coldest of them and let the caller retry.
++  {
++    BitVector SlowUE(NumRegs, false), SlowDefs(NumRegs, false);
++    for (BinaryBasicBlock *BB : Region.Blocks) {
++      if (!CanReachSlow[BB])
++        continue;
++      SlowUE |= BlockUE[BB];
++      SlowDefs |= BlockDefs[BB];
++    }
++    const BitVector SlowDefAliases = getAliasClosure(BC, SlowDefs);
++    if (SlowDefAliases.anyCommon(SlowUE)) {
++      LLVM_DEBUG({
++        BitVector Conflict = SlowDefAliases;
++        Conflict &= SlowUE;
++        dbgs() << "BOLT-DEBUG: partial inlining: " << BF
++               << ": registers read and overwritten before a slow exit:";
++        for (int R = Conflict.find_first(); R != -1; R = Conflict.find_next(R))
++          dbgs() << ' ' << BC.MRI->getName(R);
++        dbgs() << '\n';
++      });
++      const BinaryBasicBlock *Coldest = nullptr;
++      for (const BinaryBasicBlock *BB : llvm::drop_begin(Region.Blocks)) {
++        if (!CanReachSlow[BB])
++          continue;
++        const bool Involved =
++            BlockUE[BB].anyCommon(SlowDefAliases) ||
++            getAliasClosure(BC, BlockDefs[BB]).anyCommon(SlowUE);
++        if (Involved && (!Coldest || Region.Flow[BB] < Region.Flow[Coldest]))
++          Coldest = BB;
++      }
++      if (Coldest)
++        Prune.push_back(Coldest);
++      return RR_RegClobber;
++    }
++  }
++
++  // Step 11: size limits. Prune the coldest non-entry block if needed.
++  if (Region.NumCopiedInsts > opts::PartialInlineMaxInsts ||
++      Region.Blocks.size() > opts::PartialInlineMaxBlocks) {
++    const BinaryBasicBlock *Coldest = nullptr;
++    for (const BinaryBasicBlock *BB : llvm::drop_begin(Region.Blocks))
++      if (!Coldest || Region.Flow[BB] < Region.Flow[Coldest])
++        Coldest = BB;
++    if (Coldest)
++      Prune.push_back(Coldest);
++    return RR_TooLarge;
++  }
++
++  for (int R = NeedsRename.find_first(); R != -1; R = NeedsRename.find_next(R))
++    Region.RenamedRegs.push_back(R);
++  return RR_None;
++}
++
++bool PartialInlining::computeScratchCandidates(BinaryFunction &BF,
++                                               FastRegion &Region) {
++  BinaryContext &BC = BF.getBinaryContext();
++  const MCPlusBuilder &MIB = *BC.MIB;
++  const unsigned NumRegs = BC.MRI->getNumRegs();
++  Region.CalleeClobbers = BitVector(NumRegs, false);
++  Region.ScratchCandidates.clear();
++  if (Region.RenamedRegs.empty())
++    return true;
++
++  // Registers referenced by the copied instructions cannot be reused.
++  BitVector RegionRegs(NumRegs, false);
++  for (const BinaryBasicBlock *BB : Region.Blocks) {
++    for (const MCInst &Inst : *BB) {
++      if (Region.Dropped.count(&Inst) || MIB.isPseudo(Inst))
++        continue;
++      MIB.getUsedRegs(Inst, RegionRegs);
++      MIB.getWrittenRegs(Inst, RegionRegs);
++    }
++  }
++  Region.CalleeClobbers = getRegAnalysis(BC).getFunctionClobberList(&BF);
++
++  for (MCPhysReg From : Region.RenamedRegs) {
++    SmallVector<MCPhysReg, 16> All;
++    MIB.getCallSiteScratchRegs(From, All);
++    SmallVector<MCPhysReg, 8> &Candidates =
++        Region.ScratchCandidates.emplace_back();
++    for (MCPhysReg Cand : All) {
++      // The scratch register must be free in the copied code, and the callee
++      // must not depend on its value at entry when it re-executes.
++      if (getRegStorage(BC, Cand).anyCommon(RegionRegs) ||
++          isUpwardExposed(BC, BF, Cand))
++        continue;
++      Candidates.push_back(Cand);
++    }
++    if (Candidates.size() < 1)
++      return false;
++  }
++
++  // Verify that every copied instruction can be renamed (using the first
++  // candidate; all candidates of a register belong to the same class).
++  for (const BinaryBasicBlock *BB : Region.Blocks) {
++    for (const MCInst &Inst : *BB) {
++      if (Region.Dropped.count(&Inst) || MIB.isPseudo(Inst))
++        continue;
++      MCInst Copy = Inst;
++      for (unsigned I = 0; I < Region.RenamedRegs.size(); ++I)
++        if (!renameRegister(BC, Copy, Region.RenamedRegs[I],
++                            Region.ScratchCandidates[I].front()))
++          return false;
++    }
++  }
++  return true;
++}
++
++bool PartialInlining::isDeadAfterCall(const CallSite &Site, MCPhysReg Reg) {
++  BinaryContext &BC = Site.Caller->getBinaryContext();
++  const MCPlusBuilder &MIB = *BC.MIB;
++  RegAnalysis &RA = getRegAnalysis(BC);
++  const unsigned NumRegs = BC.MRI->getNumRegs();
++  const BitVector &Aliases = MIB.getAliases(Reg, /*OnlySmaller=*/false);
++
++  // Callers of the caller may rely on the register only if the caller never
++  // clobbers it (interprocedural register allocation).
++  const bool ClobberedByCaller =
++      RA.getFunctionClobberList(Site.Caller).test(Reg);
++  if (MIB.isTailCall(Site.BB->getInstructionAtIndex(Site.InstIdx)))
++    return ClobberedByCaller;
++
++  enum Result { Live, Dead, Unknown };
++  auto scan = [&](const BinaryBasicBlock &BB, unsigned From) {
++    for (unsigned I = From; I < BB.size(); ++I) {
++      const MCInst &Inst = BB.getInstructionAtIndex(I);
++      if (MIB.isPseudo(Inst))
++        continue;
++      const bool IsCall = MIB.isCall(Inst);
++      BitVector Used(NumRegs, false);
++      if (IsCall) {
++        RA.getInstUsedRegsList(Inst, Used, /*GetClobbers=*/false);
++        // Nothing is known about the callee: it follows the ABI and only
++        // reads argument registers.
++        if (RA.isConservative(Used))
++          Used = MIB.getRegsUsedAsParams();
++        for (const MCOperand &Op : MIB.useOperands(Inst))
++          if (Op.isReg() && Op.getReg())
++            Used |= MIB.getAliases(Op.getReg(), /*OnlySmaller=*/true);
++      } else {
++        MIB.getUsedRegs(Inst, Used);
++      }
++      if (Used.anyCommon(Aliases))
++        return Live;
++      if (MIB.isReturn(Inst) || (IsCall && MIB.isTailCall(Inst)))
++        return ClobberedByCaller ? Dead : Live;
++      if (IsCall) {
++        BitVector Clobbered(NumRegs, false);
++        RA.getInstClobberList(Inst, Clobbered);
++        // An unknown callee may clobber every caller-saved register, so the
++        // caller cannot keep a value in Reg across it either.
++        if (RA.isConservative(Clobbered) || Clobbered.test(Reg))
++          return Dead;
++        continue;
++      }
++      if (getFullyDefinedRegs(BC, Inst).test(Reg))
++        return Dead;
++    }
++    return Unknown;
++  };
++
++  SmallVector<const BinaryBasicBlock *, 16> Worklist;
++  DenseSet<const BinaryBasicBlock *> Visited;
++  auto pushSuccessors = [&](const BinaryBasicBlock &BB) {
++    for (const BinaryBasicBlock *Succ : BB.successors())
++      Worklist.push_back(Succ);
++    for (const BinaryBasicBlock *LP : BB.landing_pads())
++      Worklist.push_back(LP);
++  };
++  switch (scan(*Site.BB, Site.InstIdx + 1)) {
++  case Live:
++    return false;
++  case Dead:
++    return true;
++  case Unknown:
++    pushSuccessors(*Site.BB);
++    break;
++  }
++  while (!Worklist.empty()) {
++    const BinaryBasicBlock *BB = Worklist.pop_back_val();
++    if (!Visited.insert(BB).second)
++      continue;
++    switch (scan(*BB, 0)) {
++    case Live:
++      return false;
++    case Dead:
++      break;
++    case Unknown:
++      pushSuccessors(*BB);
++      break;
++    }
++  }
++  return true;
++}
++
++bool PartialInlining::chooseScratchRegisters(const CallSite &Site,
++                                             const FastRegion &Region,
++                                             RenameList &Renames) {
++  BinaryContext &BC = Site.Caller->getBinaryContext();
++  Renames.clear();
++  BitVector Assigned(BC.MRI->getNumRegs(), false);
++  for (unsigned I = 0; I < Region.RenamedRegs.size(); ++I) {
++    MCPhysReg Chosen = 0;
++    for (MCPhysReg Cand : Region.ScratchCandidates[I]) {
++      const BitVector &Storage = getRegStorage(BC, Cand);
++      if (Storage.anyCommon(Assigned))
++        continue;
++      // Registers clobbered by the original call are dead after it in every
++      // caller. Otherwise check the caller.
++      if (!Region.CalleeClobbers.test(Cand) && !isDeadAfterCall(Site, Cand))
++        continue;
++      Chosen = Cand;
++      Assigned |= Storage;
++      break;
++    }
++    if (!Chosen)
++      return false;
++    Renames.emplace_back(Region.RenamedRegs[I], Chosen);
++  }
++  return true;
++}
++
++PartialInlining::RejectReason
++PartialInlining::analyzeCallee(BinaryFunction &BF, FastRegion &Region) {
++  if (!shouldOptimize(BF) || BF.isMultiEntry() || BF.isPLTFunction() ||
++      BF.hasSDTMarker() || BF.hasIslandsInfo() || BF.empty() || BF.isInjected())
++    return RR_NotSimple;
++  if (llvm::any_of(opts::PartialInlineSkip,
++                   [&](const std::string &Name) { return BF.hasName(Name); }))
++    return RR_NotSimple;
++  if (!BF.hasValidProfile() || !BF.front().getKnownExecutionCount())
++    return RR_NoProfile;
++
++  DenseSet<const BinaryBasicBlock *> Excluded;
++  RejectReason Reason = RR_None;
++  SmallVector<const BinaryBasicBlock *, 8> Prune;
++  // The reason for the first pruning of a (warm) block. If pruning leaves no
++  // fast exit, it is the more informative explanation.
++  RejectReason PruneReason = RR_None;
++  for (unsigned Iter = 0; Iter < 4 * opts::PartialInlineMaxBlocks + 16;
++       ++Iter) {
++    Reason = buildRegion(BF, Region, Excluded, Prune);
++    if (Reason == RR_None || Prune.empty() ||
++        llvm::is_contained(Prune, &BF.front()))
++      break;
++    if (PruneReason == RR_None && Reason != RR_ColdFastPath)
++      PruneReason = Reason;
++    Excluded.insert(Prune.begin(), Prune.end());
++  }
++  if (Reason == RR_NoFastExit && PruneReason != RR_None)
++    Reason = PruneReason;
++  if (Reason != RR_None)
++    return Reason;
++  if (Region.FastProb * 100.0 < opts::PartialInlineMinFastRatio)
++    return RR_ColdFastPath;
++  if (!computeScratchCandidates(BF, Region))
++    return RR_NoScratch;
++  return RR_None;
++}
++
++bool PartialInlining::inlineFastPath(const CallSite &Site,
++                                     const FastRegion &Region,
++                                     const RenameList &Renames) {
++  BinaryFunction &Caller = *Site.Caller;
++  BinaryFunction &Callee = *Site.Callee;
++  BinaryContext &BC = Caller.getBinaryContext();
++  MCPlusBuilder &MIB = *BC.MIB;
++  BinaryBasicBlock *BB = Site.BB;
++
++  if (Site.InstIdx >= BB->size())
++    return false;
++  auto CallIt = BB->begin() + Site.InstIdx;
++  if (!MIB.isCall(*CallIt) || MIB.getTargetSymbol(*CallIt) == nullptr)
++    return false;
++  const bool IsTailCall = MIB.isTailCall(*CallIt);
++
++  // Validate the call site shape before modifying anything.
++  if (IsTailCall) {
++    if (std::next(CallIt) != BB->end() || BB->succ_size() != 0)
++      return false;
++  } else if (std::next(CallIt) == BB->end() && BB->succ_size() != 1) {
++    return false;
++  }
++
++  const int32_t CFIState = BB->getCFIStateAtInstr(&*CallIt);
++  const std::optional<bool> RAState = MIB.getRAState(*CallIt);
++  const uint64_t Count = Site.Count;
++  const double Scale =
++      Region.EntryFlow > 0 ? static_cast<double>(Count) / Region.EntryFlow : 0;
++
++  // Split off the code following the call.
++  BinaryBasicBlock *Cont = nullptr;
++  if (!IsTailCall) {
++    if (std::next(CallIt) != BB->end()) {
++      Cont = BB->splitAt(std::next(CallIt));
++      CallIt = BB->begin() + Site.InstIdx;
++    } else {
++      Cont = BB->getSuccessor();
++    }
++    BB->removeSuccessor(Cont);
++  }
++
++  // Move the original call into the slow-path block.
++  MCInst Call = *CallIt;
++  BB->eraseInstruction(CallIt);
++  BinaryBasicBlock *Slow = Caller.addBasicBlock();
++  Slow->setCFIState(CFIState);
++  Slow->addInstruction(std::move(Call));
++
++  // Create the copies of the region blocks.
++  DenseMap<const BinaryBasicBlock *, BinaryBasicBlock *> Clones;
++  for (const BinaryBasicBlock *RB : Region.Blocks) {
++    BinaryBasicBlock *NB = Caller.addBasicBlock();
++    NB->setCFIState(CFIState);
++    Clones[RB] = NB;
++  }
++
++  double SlowFlow = 0;
++  for (const BinaryBasicBlock *RB : Region.Blocks) {
++    BinaryBasicBlock *NB = Clones[RB];
++    const double Flow = Scale * Region.Flow.lookup(RB);
++    NB->setExecutionCount(static_cast<uint64_t>(std::llround(Flow)));
++
++    bool EndsInReturn = false;
++    for (const MCInst &Inst : *RB) {
++      if (Region.Dropped.count(&Inst) || MIB.isPseudo(Inst))
++        continue;
++      if (MIB.isReturn(Inst)) {
++        EndsInReturn = true;
++        if (IsTailCall) {
++          MCInst Ret;
++          MIB.createReturn(Ret);
++          if (RAState)
++            MIB.setRAState(Ret, *RAState);
++          NB->addInstruction(std::move(Ret));
++        }
++        continue;
++      }
++      MCInst NewInst = Inst;
++      MIB.stripAnnotations(NewInst);
++      for (const auto &[From, To] : Renames) {
++        const bool Renamed = renameRegister(BC, NewInst, From, To);
++        (void)Renamed;
++        assert(Renamed && "renaming was verified during analysis");
++      }
++      if (MIB.isBranch(NewInst)) {
++        const MCSymbol *Target = MIB.getTargetSymbol(NewInst);
++        const BinaryBasicBlock *TargetBB = Callee.getBasicBlockForLabel(Target);
++        BinaryBasicBlock *NewTarget =
++            TargetBB && Region.InRegion.count(TargetBB) ? Clones[TargetBB]
++                                                        : Slow;
++        MIB.replaceBranchTarget(NewInst, NewTarget->getLabel(), BC.Ctx.get());
++      }
++      if (RAState)
++        MIB.setRAState(NewInst, *RAState);
++      NB->addInstruction(std::move(NewInst));
++    }
++
++    // Successor edges, in the original order (taken, fall-through).
++    const SmallVector<double, 2> &Probs = Region.SuccProb.find(RB)->second;
++    unsigned I = 0;
++    for (const BinaryBasicBlock *Succ : RB->successors()) {
++      const double EdgeFlow = Flow * Probs[I++];
++      BinaryBasicBlock *Target = nullptr;
++      if (Region.InRegion.count(Succ)) {
++        Target = Clones[Succ];
++      } else {
++        Target = Slow;
++        SlowFlow += EdgeFlow;
++      }
++      NB->addSuccessor(Target, static_cast<uint64_t>(std::llround(EdgeFlow)),
++                       0);
++    }
++    if (EndsInReturn && !IsTailCall)
++      NB->addSuccessor(Cont, NB->getKnownExecutionCount(), 0);
++  }
++
++  Slow->setExecutionCount(static_cast<uint64_t>(std::llround(SlowFlow)));
++  // The call graph uses the call count annotation, if present, as the edge
++  // weight. Only slow-path invocations still call the callee.
++  if (ErrorOr<uint64_t &> CallCount =
++          MIB.tryGetAnnotationAs<uint64_t>(Slow->front(), "Count"))
++    *CallCount = Slow->getKnownExecutionCount();
++  if (!IsTailCall)
++    Slow->addSuccessor(Cont, Slow->getKnownExecutionCount(), 0);
++  BB->addSuccessor(Clones[Region.Blocks.front()], Count, 0);
++
++  // splitAt() does not move landing pad information, and the invoke (if any)
++  // moved to the slow-path block.
++  if (Caller.hasEHRanges() || MIB.isInvoke(Slow->front()))
++    Caller.recomputeLandingPads();
++  return true;
++}
++
++void PartialInlining::updateCalleeProfile(BinaryFunction &Callee,
++                                          const FastRegion &Region,
++                                          uint64_t CallCount) {
++  if (Region.EntryFlow <= 0)
++    return;
++  const double Scale =
++      std::min(1.0, static_cast<double>(CallCount) / Region.EntryFlow);
++  auto subtract = [](uint64_t Value, double Delta) -> uint64_t {
++    const int64_t D = std::llround(Delta);
++    return D >= static_cast<int64_t>(Value) ? 0 : Value - D;
++  };
++  for (BinaryBasicBlock *BB : Region.Blocks) {
++    const double Flow = Scale * Region.Flow.lookup(BB);
++    BB->setExecutionCount(
++        subtract(BB->getKnownExecutionCount(), Flow * Region.PFast.lookup(BB)));
++    const SmallVector<double, 2> &Probs = Region.SuccProb.find(BB)->second;
++    unsigned I = 0;
++    auto BI = BB->branch_info_begin();
++    for (const BinaryBasicBlock *Succ : BB->successors()) {
++      const double PFastSucc =
++          Region.InRegion.count(Succ) ? Region.PFast.lookup(Succ) : 0.0;
++      if (BI->Count != BinaryBasicBlock::COUNT_NO_PROFILE)
++        BI->Count = subtract(BI->Count, Flow * Probs[I] * PFastSucc);
++      ++I;
++      ++BI;
++    }
++  }
++  Callee.setExecutionCount(
++      subtract(Callee.getKnownExecutionCount(),
++               Scale * Region.EntryFlow * Region.FastProb));
++}
++
++Error PartialInlining::runOnFunctions(BinaryContext &BC) {
++  if (!opts::PartialInline)
++    return Error::success();
++  if (!BC.isAArch64() && !BC.isX86()) {
++    BC.errs() << "BOLT-WARNING: partial inlining is only supported on AArch64 "
++                 "and X86\n";
++    return Error::success();
++  }
++  const MCPlusBuilder &MIB = *BC.MIB;
++
++  // Analyze callees lazily, once.
++  std::map<BinaryFunction *, std::unique_ptr<FastRegion>> Regions;
++  auto getRegion = [&](BinaryFunction *Callee) -> FastRegion * {
++    auto [It, Inserted] = Regions.try_emplace(Callee);
++    if (!Inserted)
++      return It->second.get();
++    auto Region = std::make_unique<FastRegion>();
++    const RejectReason Reason = analyzeCallee(*Callee, *Region);
++    if (Reason != RR_None) {
++      ++NumRejected[Reason];
++      LLVM_DEBUG(dbgs() << "BOLT-DEBUG: partial inlining: " << *Callee
++                        << " rejected: " << getRejectReasonName(Reason)
++                        << '\n');
++      if (opts::Verbosity >= 2)
++        BC.outs() << "BOLT-INFO: partial inlining: no fast region in "
++                  << *Callee << ": " << getRejectReasonName(Reason)
++                  << " (exec count " << Callee->getKnownExecutionCount()
++                  << ")\n";
++      return nullptr;
++    }
++    ++NumCandidates;
++    NumFramedCandidates += Region->HasFrame;
++    LLVM_DEBUG(dbgs() << "BOLT-DEBUG: partial inlining: fast region in "
++                      << *Callee << ": " << Region->Blocks.size() << " blocks, "
++                      << Region->NumCopiedInsts
++                      << " instructions, p(fast) = " << Region->FastProb
++                      << ", renamed " << Region->RenamedRegs.size() << '\n');
++    It->second = std::move(Region);
++    return It->second.get();
++  };
++
++  const uint64_t MinCount = opts::PartialInlineMinCount
++                                ? opts::PartialInlineMinCount
++                                : BC.getHotThreshold();
++
++  // Collect eligible call sites.
++  std::vector<CallSite> Sites;
++  for (auto &BFI : BC.getBinaryFunctions()) {
++    BinaryFunction &Caller = BFI.second;
++    if (!shouldOptimize(Caller) || !Caller.hasValidProfile())
++      continue;
++    for (BinaryBasicBlock &BB : Caller) {
++      const uint64_t Count = BB.getKnownExecutionCount();
++      if (!Count)
++        continue;
++      for (unsigned Idx = 0; Idx < BB.size(); ++Idx) {
++        const MCInst &Inst = BB.getInstructionAtIndex(Idx);
++        if (!MIB.isCall(Inst) || MIB.isIndirectCall(Inst) ||
++            MIB.isConditionalBranch(Inst) ||
++            MCPlus::getNumPrimeOperands(Inst) != 1 ||
++            !Inst.getOperand(0).isExpr())
++          continue;
++        const MCSymbol *Target = MIB.getTargetSymbol(Inst);
++        uint64_t EntryID = 0;
++        BinaryFunction *Callee =
++            Target ? BC.getFunctionForSymbol(Target, &EntryID) : nullptr;
++        if (!Callee || EntryID != 0)
++          continue;
++        TotalDirectCalls += Count;
++        while (Callee->isFolded())
++          Callee = Callee->getFoldedIntoFunction();
++        if (Callee == &Caller || Count < MinCount)
++          continue;
++        FastRegion *Region = getRegion(Callee);
++        if (!Region)
++          continue;
++        const double Average = Region->FastProb;
++        const double WorstCase =
++            std::max(0.0, 1.0 - Region->SlowCount / static_cast<double>(Count));
++        const double FastProb = opts::PartialInlineModel == opts::PIM_WorstCase
++                                    ? std::min(Average, WorstCase)
++                                    : Average;
++        if (FastProb * 100.0 < opts::PartialInlineMinFastRatio)
++          continue;
++        Sites.push_back(
++            {&Caller, &BB, Idx, Callee, Count, FastProb, Count * FastProb});
++      }
++    }
++  }
++
++  // Select the hottest call sites covering the requested share of the
++  // eligible fast-path calls.
++  llvm::stable_sort(Sites, [](const CallSite &A, const CallSite &B) {
++    return A.Benefit > B.Benefit;
++  });
++  double TotalBenefit = 0;
++  for (const CallSite &Site : Sites)
++    TotalBenefit += Site.Benefit;
++  std::vector<CallSite> Selected;
++  double Covered = 0;
++  for (const CallSite &Site : Sites) {
++    if (Covered >= TotalBenefit * opts::PartialInlineCoverage / 100.0)
++      break;
++    if (opts::PartialInlineMaxSites &&
++        Selected.size() >= opts::PartialInlineMaxSites)
++      break;
++    Selected.push_back(Site);
++    Covered += Site.Benefit;
++  }
++
++  // Transform. Within a block, process call sites from the last to the first
++  // so that the recorded instruction indices remain valid.
++  llvm::stable_sort(Selected, [](const CallSite &A, const CallSite &B) {
++    if (A.BB != B.BB)
++      return A.Caller != B.Caller
++                 ? A.Caller->getAddress() < B.Caller->getAddress()
++                 : A.BB->getIndex() < B.BB->getIndex();
++    return A.InstIdx > B.InstIdx;
++  });
++  for (const CallSite &Site : Selected) {
++    const FastRegion &Region = *Regions[Site.Callee];
++    const bool IsTailCall =
++        MIB.isTailCall(Site.BB->getInstructionAtIndex(Site.InstIdx));
++    RenameList Renames;
++    if (!chooseScratchRegisters(Site, Region, Renames)) {
++      ++NumSitesNoScratch;
++      continue;
++    }
++    if (!inlineFastPath(Site, Region, Renames))
++      continue;
++    updateCalleeProfile(*Site.Callee, Region, Site.Count);
++    Modified.insert(Site.Caller);
++    ++NumInlinedSites;
++    NumInlinedFramedSites += Region.HasFrame;
++    NumTailCallSites += IsTailCall;
++    NumRenamedRegs += Renames.size();
++    NumCopiedInsts += Region.NumCopiedInsts;
++    DynFastCalls += Site.Count * Region.FastProb;
++    DynSlowCalls += Site.Count * (1.0 - Region.FastProb);
++    if (opts::Verbosity >= 1)
++      BC.outs() << "BOLT-INFO: partial inlining: " << *Site.Callee << " into "
++                << *Site.Caller << " (count " << Site.Count << ", p(fast) "
++                << format("%.3f", Region.FastProb) << " callee, "
++                << format("%.3f", Site.FastProb) << " site, "
++                << Region.NumCopiedInsts << " insns, " << Renames.size()
++                << " renamed regs" << (Region.HasFrame ? ", frame elided" : "")
++                << (IsTailCall ? ", tail call" : "") << ")\n";
++  }
++
++  BC.outs() << "BOLT-INFO: partial inlining: " << NumCandidates
++            << " callees with a fast region (" << NumFramedCandidates
++            << " with frame elision); inlined " << NumInlinedSites
++            << " call sites (" << NumInlinedFramedSites
++            << " with frame elision, " << NumTailCallSites << " tail calls), "
++            << NumCopiedInsts << " instructions copied, " << NumRenamedRegs
++            << " registers renamed\n";
++  if (NumSitesNoScratch)
++    BC.outs() << "BOLT-INFO: partial inlining: skipped " << NumSitesNoScratch
++              << " call sites without free scratch registers\n";
++  if (NumInlinedSites) {
++    BC.outs() << "BOLT-INFO: partial inlining: estimated "
++              << format("%.0f", DynFastCalls) << " calls avoided on fast paths";
++    if (TotalDirectCalls)
++      BC.outs() << " ("
++                << format("%.2f", 100.0 * DynFastCalls / TotalDirectCalls)
++                << "% of profiled direct calls)";
++    BC.outs() << ", " << format("%.0f", DynSlowCalls)
++              << " slow-path calls re-execute the copied region\n";
++  }
++  bool AnyRejected = false;
++  for (unsigned R = RR_None + 1; R < RR_Last; ++R)
++    AnyRejected |= NumRejected[R] != 0;
++  if (AnyRejected) {
++    BC.outs() << "BOLT-INFO: partial inlining: callees without a usable fast "
++                 "region:";
++    for (unsigned R = RR_None + 1; R < RR_Last; ++R)
++      if (NumRejected[R])
++        BC.outs() << ' ' << getRejectReasonName(static_cast<RejectReason>(R))
++                  << '=' << NumRejected[R];
++    BC.outs() << '\n';
++  }
++  return Error::success();
++}
++
++} // namespace bolt
++} // namespace llvm
+diff --git a/bolt/lib/Rewrite/BinaryPassManager.cpp b/bolt/lib/Rewrite/BinaryPassManager.cpp
+index 3d77ff10e..efa52b2ac 100644
+--- a/bolt/lib/Rewrite/BinaryPassManager.cpp
++++ b/bolt/lib/Rewrite/BinaryPassManager.cpp
+@@ -25,6 +25,7 @@
+ #include "bolt/Passes/LoopInversionPass.h"
+ #include "bolt/Passes/MCF.h"
+ #include "bolt/Passes/PLTCall.h"
++#include "bolt/Passes/PartialInlining.h"
+ #include "bolt/Passes/PatchEntries.h"
+ #include "bolt/Passes/PointerAuthCFIAnalyzer.h"
+ #include "bolt/Passes/PointerAuthCFIFixup.h"
+@@ -58,6 +59,7 @@ extern cl::opt<bool> DumpDotAll;
+ extern bool shouldDumpDot(const bolt::BinaryFunction &Function);
+ extern cl::opt<std::string> AsmDump;
+ extern cl::opt<bolt::PLTCall::OptType> PLT;
++extern cl::opt<bool> PartialInline;
+ extern cl::opt<bolt::IdenticalCodeFolding::ICFLevel, false,
+                llvm::bolt::DeprecatedICFNumericOptionParser>
+     ICF;
+@@ -158,6 +160,11 @@ static cl::opt<bool> PrintOptimizeBodyless(
+     cl::desc("print functions after bodyless optimization"), cl::Hidden,
+     cl::cat(BoltOptCategory));
+ 
++static cl::opt<bool>
++    PrintPartialInline("print-partial-inline",
++                       cl::desc("print functions after partial inlining"),
++                       cl::Hidden, cl::cat(BoltOptCategory));
++
+ static cl::opt<bool>
+     PrintPeepholes("print-peepholes",
+                    cl::desc("print functions after peephole optimization"),
+@@ -457,6 +464,12 @@ Error BinaryFunctionPassManager::runAllPasses(BinaryContext &BC) {
+   Manager.registerPass(std::make_unique<IdenticalCodeFolding>(PrintICF),
+                        opts::ICF != IdenticalCodeFolding::ICFLevel::None);
+ 
++  // Runs after whole-function inlining, which is preferred where possible,
++  // and before block reordering and splitting so that the copied fast paths
++  // and the slow-path call blocks are laid out together with the caller.
++  Manager.registerPass(std::make_unique<PartialInlining>(PrintPartialInline),
++                       opts::PartialInline && !opts::Instrument);
++
+   Manager.registerPass(std::make_unique<PLTCall>(PrintPLT));
+ 
+   Manager.registerPass(std::make_unique<ThreeWayBranch>(),
+diff --git a/bolt/lib/Target/AArch64/AArch64MCPlusBuilder.cpp b/bolt/lib/Target/AArch64/AArch64MCPlusBuilder.cpp
+index d6940b0cb..d4125a3a1 100644
+--- a/bolt/lib/Target/AArch64/AArch64MCPlusBuilder.cpp
++++ b/bolt/lib/Target/AArch64/AArch64MCPlusBuilder.cpp
+@@ -230,6 +230,195 @@ public:
+     return isLoadFromStack(Inst);
+   }
+ 
++  bool analyzeFrameInstruction(const MCInst &Inst,
++                               FrameInstrInfo &Info) const override {
++    Info = FrameInstrInfo();
++    auto isSP = [](const MCOperand &Op) {
++      return Op.isReg() && Op.getReg() == AArch64::SP;
++    };
++    // Record a store/load of NumRegs registers, starting at operand FirstReg,
++    // based on SP at operand FirstReg + NumRegs with an immediate offset at the
++    // next operand. Pre-indexed forms update SP before the access, post-indexed
++    // forms after it.
++    enum IndexKind { Offset, PreIndex, PostIndex };
++    auto setSlots = [&](FrameInstrInfo::FrameInstrKind Kind, unsigned FirstReg,
++                        unsigned NumRegs, unsigned Scale, IndexKind Index) {
++      const MCOperand &Base = Inst.getOperand(FirstReg + NumRegs);
++      const MCOperand &Imm = Inst.getOperand(FirstReg + NumRegs + 1);
++      if (!isSP(Base) || !Imm.isImm())
++        return false;
++      const int64_t Disp = Imm.getImm() * Scale;
++      Info.Kind = Kind;
++      Info.SlotSize = 8;
++      for (unsigned I = 0; I < NumRegs; ++I) {
++        const MCOperand &Op = Inst.getOperand(FirstReg + I);
++        if (!Op.isReg())
++          return false;
++        Info.Regs.push_back(Op.getReg());
++      }
++      switch (Index) {
++      case Offset:
++        Info.Offset = Disp;
++        break;
++      case PreIndex:
++        Info.Offset = Disp;
++        Info.SPDelta = Disp;
++        break;
++      case PostIndex:
++        Info.Offset = 0;
++        Info.SPDelta = Disp;
++        break;
++      }
++      return true;
++    };
++
++    switch (Inst.getOpcode()) {
++    default:
++      break;
++    // ADD/SUB SP, SP, #imm{, lsl #12} and ADD FP, SP, #imm{, lsl #12}.
++    case AArch64::ADDXri:
++    case AArch64::SUBXri: {
++      if (!Inst.getOperand(0).isReg() || !isSP(Inst.getOperand(1)) ||
++          !Inst.getOperand(2).isImm() || !Inst.getOperand(3).isImm())
++        return false;
++      int64_t Value = Inst.getOperand(2).getImm()
++                      << AArch64_AM::getShiftValue(Inst.getOperand(3).getImm());
++      if (Inst.getOpcode() == AArch64::SUBXri)
++        Value = -Value;
++      if (Inst.getOperand(0).getReg() == AArch64::SP) {
++        Info.Kind = FrameInstrInfo::FIK_SPAdjust;
++        Info.SPDelta = Value;
++        return true;
++      }
++      if (Inst.getOperand(0).getReg() == AArch64::FP && Value >= 0) {
++        Info.Kind = FrameInstrInfo::FIK_FPSetup;
++        Info.Offset = Value;
++        return true;
++      }
++      return false;
++    }
++    // Callee-saved register spills.
++    case AArch64::STPXi:
++    case AArch64::STPDi:
++      return setSlots(FrameInstrInfo::FIK_Save, 0, 2, 8, Offset);
++    case AArch64::STPXpre:
++    case AArch64::STPDpre:
++      return setSlots(FrameInstrInfo::FIK_Save, 1, 2, 8, PreIndex);
++    case AArch64::STRXui:
++    case AArch64::STRDui:
++      return setSlots(FrameInstrInfo::FIK_Save, 0, 1, 8, Offset);
++    case AArch64::STURXi:
++    case AArch64::STURDi:
++      return setSlots(FrameInstrInfo::FIK_Save, 0, 1, 1, Offset);
++    case AArch64::STRXpre:
++    case AArch64::STRDpre:
++      return setSlots(FrameInstrInfo::FIK_Save, 1, 1, 1, PreIndex);
++    // Callee-saved register reloads.
++    case AArch64::LDPXi:
++    case AArch64::LDPDi:
++      return setSlots(FrameInstrInfo::FIK_Restore, 0, 2, 8, Offset);
++    case AArch64::LDPXpost:
++    case AArch64::LDPDpost:
++      return setSlots(FrameInstrInfo::FIK_Restore, 1, 2, 8, PostIndex);
++    case AArch64::LDRXui:
++    case AArch64::LDRDui:
++      return setSlots(FrameInstrInfo::FIK_Restore, 0, 1, 8, Offset);
++    case AArch64::LDURXi:
++    case AArch64::LDURDi:
++      return setSlots(FrameInstrInfo::FIK_Restore, 0, 1, 1, Offset);
++    case AArch64::LDRXpost:
++    case AArch64::LDRDpost:
++      return setSlots(FrameInstrInfo::FIK_Restore, 1, 1, 1, PostIndex);
++    case AArch64::HINT: {
++      // BTI {c|j|jc} landing pads (HINT #32, #34, #36, #38).
++      if (MCPlus::getNumPrimeOperands(Inst) != 1 || !Inst.getOperand(0).isImm())
++        return false;
++      const int64_t Imm = Inst.getOperand(0).getImm();
++      if (Imm != 32 && Imm != 34 && Imm != 36 && Imm != 38)
++        return false;
++      Info.Kind = FrameInstrInfo::FIK_LandingPad;
++      return true;
++    }
++    }
++
++    // Return address signing and authentication that only use SP as the
++    // modifier (PACIASP, AUTIBSP, ...).
++    if (isPSignOnLR(Inst)) {
++      Info.Kind = FrameInstrInfo::FIK_SignRA;
++      return true;
++    }
++    if (isPAuthOnLR(Inst) && !isReturn(Inst)) {
++      Info.Kind = FrameInstrInfo::FIK_AuthRA;
++      return true;
++    }
++    return false;
++  }
++
++  void getCallSiteScratchRegs(MCPhysReg Reg,
++                              SmallVectorImpl<MCPhysReg> &Regs) const override {
++    // AAPCS64: X9-X15 are temporaries and V16-V31 are caller-saved vector
++    // registers, none of which carries arguments or results. X16/X17 are
++    // excluded since BOLT uses them for long-branch stubs.
++    const MCRegisterClass &GPR64 =
++        RegInfo->getRegClass(AArch64::GPR64RegClassID);
++    const MCRegisterClass &GPR32 =
++        RegInfo->getRegClass(AArch64::GPR32RegClassID);
++    const MCRegisterClass &FPR64 =
++        RegInfo->getRegClass(AArch64::FPR64RegClassID);
++    const MCRegisterClass &FPR128 =
++        RegInfo->getRegClass(AArch64::FPR128RegClassID);
++    static const MCPhysReg XTemps[] = {AArch64::X9,  AArch64::X10, AArch64::X11,
++                                       AArch64::X12, AArch64::X13, AArch64::X14,
++                                       AArch64::X15};
++    static const MCPhysReg WTemps[] = {AArch64::W9,  AArch64::W10, AArch64::W11,
++                                       AArch64::W12, AArch64::W13, AArch64::W14,
++                                       AArch64::W15};
++    static const MCPhysReg DTemps[] = {
++        AArch64::D16, AArch64::D17, AArch64::D18, AArch64::D19,
++        AArch64::D20, AArch64::D21, AArch64::D22, AArch64::D23,
++        AArch64::D24, AArch64::D25, AArch64::D26, AArch64::D27,
++        AArch64::D28, AArch64::D29, AArch64::D30, AArch64::D31};
++    static const MCPhysReg QTemps[] = {
++        AArch64::Q16, AArch64::Q17, AArch64::Q18, AArch64::Q19,
++        AArch64::Q20, AArch64::Q21, AArch64::Q22, AArch64::Q23,
++        AArch64::Q24, AArch64::Q25, AArch64::Q26, AArch64::Q27,
++        AArch64::Q28, AArch64::Q29, AArch64::Q30, AArch64::Q31};
++    if (GPR64.contains(Reg))
++      Regs.append(std::begin(XTemps), std::end(XTemps));
++    else if (GPR32.contains(Reg))
++      Regs.append(std::begin(WTemps), std::end(WTemps));
++    else if (FPR64.contains(Reg))
++      Regs.append(std::begin(DTemps), std::end(DTemps));
++    else if (FPR128.contains(Reg))
++      Regs.append(std::begin(QTemps), std::end(QTemps));
++  }
++
++  MCPhysReg getFullyDefinedReg(MCPhysReg Reg) const override {
++    // Writes to W registers zero the upper half of the X register. Scalar
++    // writes to B/H/S/D registers zero the remaining bits of the Q register.
++    const MCRegisterClass &GPR32 =
++        RegInfo->getRegClass(AArch64::GPR32RegClassID);
++    if (GPR32.contains(Reg) && Reg != AArch64::WZR && Reg != AArch64::WSP) {
++      const MCPhysReg Super = RegInfo->getMatchingSuperReg(
++          Reg, AArch64::sub_32,
++          &RegInfo->getRegClass(AArch64::GPR64RegClassID));
++      return Super ? Super : Reg;
++    }
++    static const std::pair<unsigned, unsigned> FPSubRegs[] = {
++        {AArch64::FPR8RegClassID, AArch64::bsub},
++        {AArch64::FPR16RegClassID, AArch64::hsub},
++        {AArch64::FPR32RegClassID, AArch64::ssub},
++        {AArch64::FPR64RegClassID, AArch64::dsub}};
++    for (const auto &[ClassID, SubIdx] : FPSubRegs) {
++      if (!RegInfo->getRegClass(ClassID).contains(Reg))
++        continue;
++      const MCPhysReg Super = RegInfo->getMatchingSuperReg(
++          Reg, SubIdx, &RegInfo->getRegClass(AArch64::FPR128RegClassID));
++      return Super ? Super : Reg;
++    }
++    return Reg;
++  }
++
+   // We look for instruction that saves LR to or restores LR from stack.
+   //
+   // If we ever see an LR save to stack, we assume this block is not an
+diff --git a/bolt/lib/Target/X86/X86MCPlusBuilder.cpp b/bolt/lib/Target/X86/X86MCPlusBuilder.cpp
+index f2a52e188..384f74c02 100644
+--- a/bolt/lib/Target/X86/X86MCPlusBuilder.cpp
++++ b/bolt/lib/Target/X86/X86MCPlusBuilder.cpp
+@@ -235,6 +235,26 @@ public:
+     return Inst.getOpcode() == X86::ENDBR32 || Inst.getOpcode() == X86::ENDBR64;
+   }
+ 
++  bool analyzeFrameInstruction(const MCInst &Inst,
++                               FrameInstrInfo &Info) const override {
++    Info = FrameInstrInfo();
++    // Only CET landing pads are recognized. Stack frame elision is not
++    // implemented for x86, so instructions that touch RSP are not classified.
++    if (Inst.getOpcode() == X86::ENDBR32 || Inst.getOpcode() == X86::ENDBR64) {
++      Info.Kind = FrameInstrInfo::FIK_LandingPad;
++      return true;
++    }
++    return false;
++  }
++
++  MCPhysReg getFullyDefinedReg(MCPhysReg Reg) const override {
++    // 32-bit general purpose register writes zero-extend to 64 bits.
++    if (RegInfo->getRegClass(X86::GR32RegClassID).contains(Reg))
++      if (MCPhysReg Super = getX86SubSuperRegister(Reg, 64))
++        return Super;
++    return Reg;
++  }
++
+   bool isX86HLT(const MCInst &Inst) const override {
+     return Inst.getOpcode() == X86::HLT;
+   }
+diff --git a/bolt/test/AArch64/partial-inline-frame-elision.s b/bolt/test/AArch64/partial-inline-frame-elision.s
+new file mode 100644
+index 000000000..781e99d34
+--- /dev/null
++++ b/bolt/test/AArch64/partial-inline-frame-elision.s
+@@ -0,0 +1,121 @@
++## Check that partial inlining elides the callee's stack frame on the copied
++## fast path: callee-saved register spills/reloads, SP updates and frame pointer
++## setup are dropped, and callee-saved registers that the fast path uses as
++## temporaries are renamed to scratch registers clobbered by the call.
++
++# RUN: llvm-mc -filetype=obj -triple aarch64-unknown-unknown %s -o %t.o
++# RUN: link_fdata %s %t.o %t.fdata
++# RUN: %clang %cflags %t.o -o %t.exe -Wl,-q,--no-relax
++# RUN: llvm-strip --strip-unneeded %t.exe
++# RUN: llvm-bolt %t.exe -o %t.bolt --data %t.fdata --partial-inline -v=1 \
++# RUN:   --print-partial-inline --print-only=main 2>&1 | FileCheck %s
++
++## Frame elision can be disabled, in which case no fast region exists.
++# RUN: llvm-bolt %t.exe -o %t.nofe --data %t.fdata --partial-inline \
++# RUN:   --partial-inline-frame-elision=false 2>&1 \
++# RUN:   | FileCheck %s --check-prefix=CHECK-NOFE
++# CHECK-NOFE: BOLT-INFO: partial inlining: 0 callees with a fast region
++# CHECK-NOFE: callees without a usable fast region:{{.*}} stack-access=1
++
++# CHECK: BOLT-INFO: partial inlining: memo_get into main (count 1000, p(fast) 0.950 callee, 0.950 site, 9 insns, 2 renamed regs, frame elided)
++# CHECK: BOLT-INFO: partial inlining: 1 callees with a fast region (1 with frame elision); inlined 1 call sites (1 with frame elision, 0 tail calls), 9 instructions copied, 2 registers renamed
++
++# CHECK:      Binary Function "main" after partial-inlining
++## The slow exit performs the original call.
++# CHECK:      [[SLOW:.LBB[0-9]+]] (1 instructions
++# CHECK-NEXT:   Exec Count : 50
++# CHECK-NEXT:   Predecessors: [[COPY:.LBB[0-9]+]]
++# CHECK-NEXT:   bl memo_get
++## The copy has no prologue: x19 and x20 are renamed to x10 and x11.
++# CHECK:      [[COPY]] (8 instructions
++# CHECK-NEXT:   Exec Count : 1000
++# CHECK-NEXT:   Predecessors:
++# CHECK-NEXT:   and x8, x0, #0xfff
++# CHECK-NEXT:   adrp x9, cache
++# CHECK-NEXT:   add x9, x9, :lo12:cache
++# CHECK-NEXT:   add x11, x0, #0x1
++# CHECK-NEXT:   add x10, x9, x8, lsl #4
++# CHECK-NEXT:   ldr x8, [x10]
++# CHECK-NEXT:   cmp x8, x11
++# CHECK-NEXT:   b.ne [[SLOW]]
++# CHECK-NEXT:   Successors: [[SLOW]] (mispreds: 0, count: 50), [[HIT:.LBB[0-9]+]] (mispreds: 0, count: 950)
++# CHECK:      [[HIT]] (1 instructions
++# CHECK-NEXT:   Exec Count : 950
++# CHECK-NEXT:   Predecessors: [[COPY]]
++# CHECK-NEXT:   ldr x0, [x10, #0x8]
++# CHECK-NEXT:   Successors: [[EPI:.LBB[0-9]+]]
++## No epilogue either: the reloads, the SP update and the return are gone.
++# CHECK:      [[EPI]] (0 instructions
++# CHECK-NEXT:   Exec Count : 950
++# CHECK-NOT:    ldp
++# CHECK:      End of Function "main"
++
++  .bss
++  .globl cache
++  .p2align 4
++cache:
++  .zero 65536
++
++  .text
++## uint64_t memo_get(uint64_t key) with a direct-mapped cache in front of
++## expensive(). Compiled code that keeps the entry address and key+1 in
++## callee-saved registers because they are live across the call on a miss.
++  .globl memo_get
++  .type memo_get,@function
++  .p2align 2
++memo_get:
++  stp x29, x30, [sp, #-32]!
++  stp x20, x19, [sp, #16]
++  mov x29, sp
++  and x8, x0, #0xfff
++  adrp x9, cache
++  add x9, x9, :lo12:cache
++  add x20, x0, #1
++  add x19, x9, x8, lsl #4
++  ldr x8, [x19]
++  cmp x8, x20
++memo_br:
++  b.ne memo_miss
++# FDATA: 1 memo_get #memo_br# 1 memo_get #memo_miss# 0 50
++# FDATA: 1 memo_get #memo_br# 1 memo_get #memo_hit# 0 950
++memo_hit:
++  ldr x0, [x19, #8]
++# FDATA: 1 memo_get #memo_hit# 1 memo_get #memo_epi# 0 950
++memo_epi:
++  ldp x20, x19, [sp, #16]
++  ldp x29, x30, [sp], #32
++  ret
++memo_miss:
++  bl expensive
++  stp x20, x0, [x19]
++memo_miss_br:
++  b memo_epi
++# FDATA: 1 memo_get #memo_miss_br# 1 memo_get #memo_epi# 0 50
++  .size memo_get, .-memo_get
++
++## Clobbers x10 and x11, so a call to memo_get clobbers them as well.
++  .globl expensive
++  .type expensive,@function
++  .p2align 2
++expensive:
++  eor x10, x0, x0, lsr #3
++  mul x11, x10, x10
++  add x0, x11, x10
++  ret
++  .size expensive, .-expensive
++
++  .globl main
++  .type main,@function
++  .p2align 2
++main:
++# FDATA: 0 [unknown] 0 1 main 0 0 1000
++  stp x29, x30, [sp, #-16]!
++  mov x29, sp
++  mov x0, #7
++main_call:
++  bl memo_get
++# FDATA: 1 main #main_call# 1 memo_get 0 0 1000
++  mov w0, wzr
++  ldp x29, x30, [sp], #16
++  ret
++  .size main, .-main
+diff --git a/bolt/test/AArch64/partial-inline-frameless.s b/bolt/test/AArch64/partial-inline-frameless.s
+new file mode 100644
+index 000000000..e6e853dd7
+--- /dev/null
++++ b/bolt/test/AArch64/partial-inline-frameless.s
+@@ -0,0 +1,116 @@
++## Check that partial inlining copies the hot, frameless fast path of a callee
++## into a hot call site, redirects the slow exit to the original call, updates
++## the profile, and leaves the callee code untouched.
++
++# RUN: llvm-mc -filetype=obj -triple aarch64-unknown-unknown %s -o %t.o
++# RUN: link_fdata %s %t.o %t.fdata
++# RUN: %clang %cflags %t.o -o %t.exe -Wl,-q
++# RUN: llvm-strip --strip-unneeded %t.exe
++# RUN: llvm-bolt %t.exe -o %t.bolt --data %t.fdata --partial-inline \
++# RUN:   --print-partial-inline --print-only=main 2>&1 | FileCheck %s
++# RUN: llvm-objdump -d --no-show-raw-insn --disassemble-symbols=trace %t.bolt \
++# RUN:   | FileCheck %s --check-prefix=CHECK-CALLEE
++# RUN: llvm-bolt %t.exe -o %t.bolt --data %t.fdata --partial-inline \
++# RUN:   --print-finalized --print-only=trace 2>&1 \
++# RUN:   | FileCheck %s --check-prefix=CHECK-PROF
++
++## Without the option the pass does not run.
++# RUN: llvm-bolt %t.exe -o %t.nopi --data %t.fdata \
++# RUN:   | FileCheck %s --check-prefix=CHECK-OFF
++# CHECK-OFF-NOT: partial inlining
++
++# CHECK: BOLT-INFO: partial inlining: 1 callees with a fast region (0 with frame elision); inlined 1 call sites (0 with frame elision, 0 tail calls), 4 instructions copied, 0 registers renamed
++# CHECK: BOLT-INFO: partial inlining: estimated 990 calls avoided on fast paths (98.02% of profiled direct calls), 10 slow-path calls re-execute the copied region
++
++# CHECK:      Binary Function "main" after partial-inlining
++# CHECK:        mov w0, #0x5
++# CHECK-NEXT:   Successors: [[COPY:.LBB[0-9]+]] (mispreds: 0, count: 1000)
++## The code after the call.
++# CHECK:      [[CONT:.LBB[0-9]+]] (3 instructions
++# CHECK-NEXT:   Exec Count : 1000
++# CHECK:        mov w0, wzr
++## The slow exit performs the original call, which now executes 10 times.
++# CHECK:      [[SLOW:.LBB[0-9]+]] (1 instructions
++# CHECK-NEXT:   Exec Count : 10
++# CHECK-NEXT:   Predecessors: [[COPY]]
++# CHECK-NEXT:   bl trace # Count: 10
++# CHECK-NEXT:   Successors: [[CONT]] (mispreds: 0, count: 10)
++## The copied fast path.
++# CHECK:      [[COPY]] (4 instructions
++# CHECK-NEXT:   Exec Count : 1000
++# CHECK-NEXT:   Predecessors:
++# CHECK-NEXT:   adrp x8, trace_level
++# CHECK-NEXT:   ldr w8, [x8, :lo12:trace_level]
++# CHECK-NEXT:   cmp w0, w8
++# CHECK-NEXT:   b.gt [[SLOW]]
++# CHECK-NEXT:   Successors: [[SLOW]] (mispreds: 0, count: 10), [[RET:.LBB[0-9]+]] (mispreds: 0, count: 990)
++## The return became a fall-through to the code after the call.
++# CHECK:      [[RET]] (0 instructions
++# CHECK-NEXT:   Exec Count : 990
++# CHECK-NEXT:   Predecessors: [[COPY]]
++# CHECK-NEXT:   Successors: [[CONT]] (mispreds: 0, count: 990)
++
++## The callee code is not modified ...
++# CHECK-CALLEE:      <trace>:
++# CHECK-CALLEE-NEXT:   adrp x8
++# CHECK-CALLEE-NEXT:   ldr w8, [x8
++# CHECK-CALLEE-NEXT:   cmp w0, w8
++# CHECK-CALLEE-NEXT:   b.gt
++# CHECK-CALLEE-NEXT:   ret
++# CHECK-CALLEE-NEXT:   stp x29, x30, [sp, #-0x10]!
++
++## ... but its profile only retains the slow-path invocations.
++# CHECK-PROF:      Binary Function "trace" after finalize-functions
++# CHECK-PROF:        Exec Count  : 10
++
++  .data
++  .globl trace_level
++  .p2align 2
++trace_level:
++  .word 0
++
++  .text
++## trace(level): if (level > trace_level) return; emit();
++  .globl trace
++  .type trace,@function
++  .p2align 2
++trace:
++  adrp x8, trace_level
++  ldr w8, [x8, :lo12:trace_level]
++  cmp w0, w8
++trace_br:
++  b.gt trace_slow
++# FDATA: 1 trace #trace_br# 1 trace #trace_slow# 0 10
++# FDATA: 1 trace #trace_br# 1 trace #trace_ret# 0 990
++trace_ret:
++  ret
++trace_slow:
++  stp x29, x30, [sp, #-16]!
++  mov x29, sp
++  bl emit
++  ldp x29, x30, [sp], #16
++  ret
++  .size trace, .-trace
++
++  .globl emit
++  .type emit,@function
++  .p2align 2
++emit:
++  ret
++  .size emit, .-emit
++
++  .globl main
++  .type main,@function
++  .p2align 2
++main:
++# FDATA: 0 [unknown] 0 1 main 0 0 1000
++  stp x29, x30, [sp, #-16]!
++  mov x29, sp
++  mov w0, #5
++main_call:
++  bl trace
++# FDATA: 1 main #main_call# 1 trace 0 0 1000
++  mov w0, wzr
++  ldp x29, x30, [sp], #16
++  ret
++  .size main, .-main
+diff --git a/bolt/test/AArch64/partial-inline-pauth.s b/bolt/test/AArch64/partial-inline-pauth.s
+new file mode 100644
+index 000000000..91a3e883f
+--- /dev/null
++++ b/bolt/test/AArch64/partial-inline-pauth.s
+@@ -0,0 +1,195 @@
++## Check partial inlining with pointer authentication and BTI:
++##  * BTI landing pads at the callee entry are not copied;
++##  * return address signing/authentication of the callee is elided together
++##    with the rest of its frame;
++##  * the copied instructions take the RA state of the call site in the
++##    (pac-ret protected) caller, so no additional negate_ra_state is needed.
++
++# RUN: llvm-mc -filetype=obj -triple aarch64-unknown-unknown \
++# RUN:   -mattr=+v8.3a,+bti %s -o %t.o
++# RUN: link_fdata %s %t.o %t.fdata
++# RUN: %clang %cflags %t.o -o %t.exe -Wl,-q
++# RUN: llvm-strip --strip-unneeded %t.exe
++# RUN: llvm-bolt %t.exe -o %t.bolt --data %t.fdata --partial-inline -v=1 \
++# RUN:   --print-partial-inline --print-only=main 2>&1 | FileCheck %s
++# RUN: llvm-objdump -d --no-show-raw-insn --disassemble-symbols=main %t.bolt \
++# RUN:   > %t.main.txt
++# RUN: FileCheck %s --check-prefix=CHECK-MAIN < %t.main.txt
++# RUN: FileCheck %s --check-prefix=CHECK-COPY < %t.main.txt
++
++# CHECK-NOT: BOLT-ERROR
++# CHECK-DAG: partial inlining: lookup into main (count 1000, p(fast) 0.990 callee, 0.990 site, 6 insns, 0 renamed regs)
++# CHECK-DAG: partial inlining: lookup2 into main (count 1000, p(fast) 0.990 callee, 0.990 site, 3 insns, 1 renamed regs, frame elided)
++# CHECK: Binary Function "main" after partial-inlining
++# CHECK-NOT: bti
++# CHECK: End of Function "main"
++
++## main signs and authenticates its return address exactly once; the copies
++## add no signing, authentication or landing pads.
++# CHECK-MAIN:      <main>:
++# CHECK-MAIN-NEXT:   paciasp
++# CHECK-MAIN-NOT:    {{paciasp|bti|retaa}}
++# CHECK-MAIN:        autiasp
++# CHECK-MAIN-NOT:    {{paciasp|autiasp|bti|retaa}}
++
++## Both fast paths are present, x19 of lookup2 is renamed to x9, and both
++## callees are still called on the slow paths.
++# CHECK-COPY-DAG:    ldr x8, [x8, #0x8]
++# CHECK-COPY-DAG:    cmp x8, x1
++# CHECK-COPY-DAG:    add x0, x1, #0x1
++# CHECK-COPY-DAG:    ldr x9, [x0]
++# CHECK-COPY-DAG:    cbz x9,
++# CHECK-COPY-DAG:    ldr x0, [x9, #0x8]
++# CHECK-COPY-DAG:    bl {{.*}} <lookup>
++# CHECK-COPY-DAG:    bl {{.*}} <lookup2>
++
++  .text
++## Shrink-wrapped by the compiler: the fast path only has a BTI landing pad.
++  .globl lookup
++  .type lookup,@function
++  .p2align 2
++lookup:
++  .cfi_startproc
++  hint #34
++  ldr x8, [x0]
++lookup_br1:
++  cbz x8, lookup_slow
++# FDATA: 1 lookup #lookup_br1# 1 lookup #lookup_slow# 0 5
++# FDATA: 1 lookup #lookup_br1# 1 lookup #lookup_bb1# 0 995
++lookup_bb1:
++  ldr x8, [x8, #8]
++  cmp x8, x1
++lookup_br2:
++  b.ne lookup_slow
++# FDATA: 1 lookup #lookup_br2# 1 lookup #lookup_slow# 0 5
++# FDATA: 1 lookup #lookup_br2# 1 lookup #lookup_bb2# 0 990
++lookup_bb2:
++  add x0, x1, #1
++  ret
++lookup_slow:
++  hint #25
++  .cfi_negate_ra_state
++  stp x29, x30, [sp, #-32]!
++  str x19, [sp, #16]
++  mov x29, sp
++  .cfi_def_cfa w29, 32
++  .cfi_offset w19, -16
++  .cfi_offset w30, -24
++  .cfi_offset w29, -32
++  mov x19, x1
++  bl slow_lookup
++  add x0, x0, x19
++  ldr x19, [sp, #16]
++  ldp x29, x30, [sp], #32
++  .cfi_def_cfa wsp, 0
++  hint #29
++  .cfi_negate_ra_state
++  .cfi_restore w19
++  .cfi_restore w30
++  .cfi_restore w29
++  ret
++  .cfi_endproc
++  .size lookup, .-lookup
++
++## Not shrink-wrapped: signs the return address in the prologue.
++  .globl lookup2
++  .type lookup2,@function
++  .p2align 2
++lookup2:
++  .cfi_startproc
++  hint #34
++  hint #25
++  .cfi_negate_ra_state
++  stp x29, x30, [sp, #-32]!
++  .cfi_def_cfa_offset 32
++  str x19, [sp, #16]
++  mov x29, sp
++  .cfi_def_cfa w29, 32
++  .cfi_offset w19, -16
++  .cfi_offset w30, -24
++  .cfi_offset w29, -32
++  ldr x19, [x0]
++lookup2_br:
++  cbz x19, lookup2_slow
++# FDATA: 1 lookup2 #lookup2_br# 1 lookup2 #lookup2_slow# 0 10
++# FDATA: 1 lookup2 #lookup2_br# 1 lookup2 #lookup2_fast# 0 990
++lookup2_fast:
++  ldr x0, [x19, #8]
++  .cfi_remember_state
++  ldr x19, [sp, #16]
++  ldp x29, x30, [sp], #32
++  .cfi_def_cfa wsp, 0
++  hint #29
++  .cfi_negate_ra_state
++  .cfi_restore w19
++  .cfi_restore w30
++  .cfi_restore w29
++  ret
++lookup2_slow:
++  .cfi_restore_state
++  bl slow_lookup
++  ldr x19, [sp, #16]
++  ldp x29, x30, [sp], #32
++  .cfi_def_cfa wsp, 0
++  hint #29
++  .cfi_negate_ra_state
++  .cfi_restore w19
++  .cfi_restore w30
++  .cfi_restore w29
++  ret
++  .cfi_endproc
++  .size lookup2, .-lookup2
++
++## Clobbers x9, so x9 is a valid scratch register at calls to lookup2.
++  .globl slow_lookup
++  .type slow_lookup,@function
++  .p2align 2
++slow_lookup:
++  .cfi_startproc
++  hint #34
++  mov x9, x0
++  ldr x0, [x9]
++  ret
++  .cfi_endproc
++  .size slow_lookup, .-slow_lookup
++
++  .globl main
++  .type main,@function
++  .p2align 2
++main:
++  .cfi_startproc
++# FDATA: 0 [unknown] 0 1 main 0 0 1000
++  hint #25
++  .cfi_negate_ra_state
++  stp x29, x30, [sp, #-16]!
++  .cfi_def_cfa_offset 16
++  mov x29, sp
++  .cfi_def_cfa w29, 16
++  .cfi_offset w30, -8
++  .cfi_offset w29, -16
++  adrp x0, slot
++  add x0, x0, :lo12:slot
++  mov x1, #3
++main_call1:
++  bl lookup
++# FDATA: 1 main #main_call1# 1 lookup 0 0 1000
++  adrp x0, slot
++  add x0, x0, :lo12:slot
++main_call2:
++  bl lookup2
++# FDATA: 1 main #main_call2# 1 lookup2 0 0 1000
++  ldp x29, x30, [sp], #16
++  .cfi_def_cfa wsp, 0
++  hint #29
++  .cfi_negate_ra_state
++  .cfi_restore w30
++  .cfi_restore w29
++  ret
++  .cfi_endproc
++  .size main, .-main
++
++  .data
++  .globl slot
++  .p2align 3
++slot:
++  .xword 0
+diff --git a/bolt/test/AArch64/partial-inline-reject.s b/bolt/test/AArch64/partial-inline-reject.s
+new file mode 100644
+index 000000000..1705772dc
+--- /dev/null
++++ b/bolt/test/AArch64/partial-inline-reject.s
+@@ -0,0 +1,252 @@
++## Check that partial inlining rejects hot fast paths that cannot be copied
++## safely, and that the calls to them are left unchanged.
++
++# RUN: llvm-mc -filetype=obj -triple aarch64-unknown-unknown %s -o %t.o
++# RUN: link_fdata %s %t.o %t.fdata
++# RUN: %clang %cflags %t.o -o %t.exe -Wl,-q
++# RUN: llvm-strip --strip-unneeded %t.exe
++# RUN: llvm-bolt %t.exe -o %t.bolt --data %t.fdata --partial-inline -v=2 \
++# RUN:   2>&1 | FileCheck %s
++# RUN: llvm-objdump -d --no-show-raw-insn --disassemble-symbols=main %t.bolt \
++# RUN:   | FileCheck %s --check-prefix=CHECK-MAIN
++
++## A store before the fast/slow decision would be repeated on the slow path.
++# CHECK-DAG: no fast region in rc_release: side-effect
++## So would a barrier.
++# CHECK-DAG: no fast region in fenced: side-effect
++## The argument register is overwritten before the decision, so the callee
++## would re-execute with a different argument.
++# CHECK-DAG: no fast region in chain: reg-clobber
++## The stack pointer and the return address differ between caller and callee.
++# CHECK-DAG: no fast region in stackaddr: stack-access
++# CHECK-DAG: no fast region in retaddr: stack-access
++## A load from the caller's frame (a stack argument) is not a reload of a spill.
++# CHECK-DAG: no fast region in stackarg: frame-mismatch
++## A callee-saved register is modified and not restored on the fast path.
++# CHECK-DAG: no fast region in unbalanced: frame-mismatch
++## A renamed callee-saved register is read on the fast path, but it is only
++## written on one of the paths reaching the read.
++# CHECK-DAG: no fast region in halfdirty: frame-mismatch
++## The fast path is taken by only 10% of the calls.
++# CHECK-DAG: no fast region in rarely: cold-fast-path
++## The entry block is a loop header.
++# CHECK-DAG: no fast region in looping: no-fast-exit
++
++# CHECK: BOLT-INFO: partial inlining: 0 callees with a fast region (0 with frame elision); inlined 0 call sites
++# CHECK: callees without a usable fast region:{{.*}} no-fast-exit=1 stack-access=2 frame-mismatch=3 side-effect=2 reg-clobber=1 {{.*}}cold-fast-path=1
++
++# CHECK-MAIN: bl {{.*}} <rc_release>
++# CHECK-MAIN: bl {{.*}} <fenced>
++# CHECK-MAIN: bl {{.*}} <chain>
++# CHECK-MAIN: bl {{.*}} <stackaddr>
++# CHECK-MAIN: bl {{.*}} <retaddr>
++# CHECK-MAIN: bl {{.*}} <stackarg>
++# CHECK-MAIN: bl {{.*}} <unbalanced>
++# CHECK-MAIN: bl {{.*}} <halfdirty>
++# CHECK-MAIN: bl {{.*}} <rarely>
++# CHECK-MAIN: bl {{.*}} <looping>
++
++  .text
++  .macro SLOWPATH name
++\name\()_slow:
++  stp x29, x30, [sp, #-16]!
++  mov x29, sp
++  bl helper
++  ldp x29, x30, [sp], #16
++  ret
++  .endm
++
++  .macro FUNC name
++  .globl \name
++  .type \name,@function
++  .p2align 2
++\name:
++  .endm
++
++FUNC rc_release
++  ldr x8, [x0]
++  subs x8, x8, #1
++  str x8, [x0]
++rc_release_br:
++  b.eq rc_release_slow
++# FDATA: 1 rc_release #rc_release_br# 1 rc_release #rc_release_slow# 0 10
++# FDATA: 1 rc_release #rc_release_br# 1 rc_release #rc_release_fast# 0 990
++rc_release_fast:
++  mov w0, wzr
++  ret
++  SLOWPATH rc_release
++  .size rc_release, .-rc_release
++
++FUNC fenced
++  dmb ish
++  ldr x8, [x0]
++fenced_br:
++  cbz x8, fenced_slow
++# FDATA: 1 fenced #fenced_br# 1 fenced #fenced_slow# 0 10
++# FDATA: 1 fenced #fenced_br# 1 fenced #fenced_fast# 0 990
++fenced_fast:
++  mov x0, x8
++  ret
++  SLOWPATH fenced
++  .size fenced, .-fenced
++
++FUNC chain
++  ldr x0, [x0, #8]
++  ldr x8, [x0]
++chain_br:
++  cbz x8, chain_slow
++# FDATA: 1 chain #chain_br# 1 chain #chain_slow# 0 10
++# FDATA: 1 chain #chain_br# 1 chain #chain_fast# 0 990
++chain_fast:
++  mov x0, x8
++  ret
++  SLOWPATH chain
++  .size chain, .-chain
++
++FUNC stackaddr
++  mov x8, sp
++  ldr x8, [x8, #8]
++stackaddr_br:
++  cbz x8, stackaddr_slow
++# FDATA: 1 stackaddr #stackaddr_br# 1 stackaddr #stackaddr_slow# 0 10
++# FDATA: 1 stackaddr #stackaddr_br# 1 stackaddr #stackaddr_fast# 0 990
++stackaddr_fast:
++  mov x0, x8
++  ret
++  SLOWPATH stackaddr
++  .size stackaddr, .-stackaddr
++
++FUNC retaddr
++  cmp x0, #0
++retaddr_br:
++  b.eq retaddr_slow
++# FDATA: 1 retaddr #retaddr_br# 1 retaddr #retaddr_slow# 0 10
++# FDATA: 1 retaddr #retaddr_br# 1 retaddr #retaddr_fast# 0 990
++retaddr_fast:
++  mov x0, x30
++  ret
++  SLOWPATH retaddr
++  .size retaddr, .-retaddr
++
++FUNC stackarg
++  ldr x8, [sp]
++stackarg_br:
++  cbz x8, stackarg_slow
++# FDATA: 1 stackarg #stackarg_br# 1 stackarg #stackarg_slow# 0 10
++# FDATA: 1 stackarg #stackarg_br# 1 stackarg #stackarg_fast# 0 990
++stackarg_fast:
++  mov x0, x8
++  ret
++  SLOWPATH stackarg
++  .size stackarg, .-stackarg
++
++FUNC unbalanced
++  stp x29, x30, [sp, #-32]!
++  str x19, [sp, #16]
++  mov x29, sp
++  ldr x19, [x0]
++unbalanced_br:
++  cbz x19, unbalanced_slow
++# FDATA: 1 unbalanced #unbalanced_br# 1 unbalanced #unbalanced_slow# 0 10
++# FDATA: 1 unbalanced #unbalanced_br# 1 unbalanced #unbalanced_fast# 0 990
++unbalanced_fast:
++  mov x0, x19
++  ldp x29, x30, [sp], #32
++  ret
++unbalanced_slow:
++  bl helper
++  ldr x19, [sp, #16]
++  ldp x29, x30, [sp], #32
++  ret
++  .size unbalanced, .-unbalanced
++
++FUNC halfdirty
++  stp x29, x30, [sp, #-32]!
++  str x19, [sp, #16]
++  mov x29, sp
++halfdirty_br1:
++  cbz x0, halfdirty_join
++# FDATA: 1 halfdirty #halfdirty_br1# 1 halfdirty #halfdirty_join# 0 500
++# FDATA: 1 halfdirty #halfdirty_br1# 1 halfdirty #halfdirty_set# 0 500
++halfdirty_set:
++  mov x19, x1
++halfdirty_join:
++  ldr x8, [x2]
++halfdirty_br2:
++  cbz x8, halfdirty_slow
++# FDATA: 1 halfdirty #halfdirty_br2# 1 halfdirty #halfdirty_slow# 0 10
++# FDATA: 1 halfdirty #halfdirty_br2# 1 halfdirty #halfdirty_fast# 0 990
++halfdirty_fast:
++  add x0, x19, #1
++  ldr x19, [sp, #16]
++  ldp x29, x30, [sp], #32
++  ret
++halfdirty_slow:
++  bl helper
++  ldr x19, [sp, #16]
++  ldp x29, x30, [sp], #32
++  ret
++  .size halfdirty, .-halfdirty
++
++FUNC rarely
++  ldr x8, [x0]
++rarely_br:
++  cbnz x8, rarely_slow
++# FDATA: 1 rarely #rarely_br# 1 rarely #rarely_slow# 0 900
++# FDATA: 1 rarely #rarely_br# 1 rarely #rarely_fast# 0 100
++rarely_fast:
++  ret
++  SLOWPATH rarely
++  .size rarely, .-rarely
++
++FUNC looping
++  sub x0, x0, #1
++looping_br:
++  cbnz x0, looping
++# FDATA: 1 looping #looping_br# 1 looping 0 0 9000
++# FDATA: 1 looping #looping_br# 1 looping #looping_ret# 0 1000
++looping_ret:
++  ret
++  .size looping, .-looping
++
++FUNC helper
++  ret
++  .size helper, .-helper
++
++FUNC main
++# FDATA: 0 [unknown] 0 1 main 0 0 1000
++  stp x29, x30, [sp, #-16]!
++  mov x29, sp
++call_rc_release:
++  bl rc_release
++# FDATA: 1 main #call_rc_release# 1 rc_release 0 0 1000
++call_fenced:
++  bl fenced
++# FDATA: 1 main #call_fenced# 1 fenced 0 0 1000
++call_chain:
++  bl chain
++# FDATA: 1 main #call_chain# 1 chain 0 0 1000
++call_stackaddr:
++  bl stackaddr
++# FDATA: 1 main #call_stackaddr# 1 stackaddr 0 0 1000
++call_retaddr:
++  bl retaddr
++# FDATA: 1 main #call_retaddr# 1 retaddr 0 0 1000
++call_stackarg:
++  bl stackarg
++# FDATA: 1 main #call_stackarg# 1 stackarg 0 0 1000
++call_unbalanced:
++  bl unbalanced
++# FDATA: 1 main #call_unbalanced# 1 unbalanced 0 0 1000
++call_halfdirty:
++  bl halfdirty
++# FDATA: 1 main #call_halfdirty# 1 halfdirty 0 0 1000
++call_rarely:
++  bl rarely
++# FDATA: 1 main #call_rarely# 1 rarely 0 0 1000
++call_looping:
++  bl looping
++# FDATA: 1 main #call_looping# 1 looping 0 0 1000
++  ldp x29, x30, [sp], #16
++  ret
++  .size main, .-main
+diff --git a/bolt/test/AArch64/partial-inline-sites.s b/bolt/test/AArch64/partial-inline-sites.s
+new file mode 100644
+index 000000000..fdb5d20b3
+--- /dev/null
++++ b/bolt/test/AArch64/partial-inline-sites.s
+@@ -0,0 +1,130 @@
++## Check call site handling of partial inlining:
++##  * at a tail call site the copied fast path returns directly and the slow
++##    exit performs the original tail call;
++##  * with the default worst-case profile model, a call site whose share of the
++##    calls could consist of slow-path invocations only is not transformed,
++##    while the average model transforms it;
++##  * --partial-inline-min-fast-ratio and --partial-inline-min-count apply per
++##    call site.
++
++# RUN: llvm-mc -filetype=obj -triple aarch64-unknown-unknown %s -o %t.o
++# RUN: link_fdata %s %t.o %t.fdata
++# RUN: %clang %cflags %t.o -o %t.exe -Wl,-q
++# RUN: llvm-strip --strip-unneeded %t.exe
++# RUN: llvm-bolt %t.exe -o %t.bolt --data %t.fdata --partial-inline -v=1 \
++# RUN:   --partial-inline-min-count=1 \
++# RUN:   --print-partial-inline --print-only=wrapper 2>&1 \
++# RUN:   | FileCheck %s --check-prefixes=CHECK,WORST
++# RUN: llvm-bolt %t.exe -o %t.avg --data %t.fdata --partial-inline -v=1 \
++# RUN:   --partial-inline-min-count=1 \
++# RUN:   --partial-inline-profile-model=average 2>&1 \
++# RUN:   | FileCheck %s --check-prefix=AVG
++# RUN: llvm-bolt %t.exe -o %t.ratio --data %t.fdata --partial-inline -v=2 \
++# RUN:   --partial-inline-profile-model=average \
++# RUN:   --partial-inline-min-fast-ratio=90 2>&1 \
++# RUN:   | FileCheck %s --check-prefix=RATIO
++# RUN: llvm-bolt %t.exe -o %t.count --data %t.fdata --partial-inline -v=1 \
++# RUN:   --partial-inline-min-count=2000 2>&1 \
++# RUN:   | FileCheck %s --check-prefix=COUNT
++
++## classify() is called 7000 times (3000 + 1000 + 3000 tail calls) and 1000
++## invocations take the slow path, so 85.7% are fast on average. hot_site and
++## wrapper make 3000 calls each: even if all slow invocations came from one
++## of them, 66.7% of its calls would be fast. cold_site makes 1000 calls, all
++## of which may be the slow ones.
++# WORST-DAG: partial inlining: classify into hot_site (count 3000, p(fast) 0.857 callee, 0.667 site, 3 insns, 0 renamed regs)
++# WORST-DAG: partial inlining: classify into wrapper (count 3000, p(fast) 0.857 callee, 0.667 site, 3 insns, 0 renamed regs, tail call)
++# WORST-NOT: classify into cold_site
++# AVG-DAG:   classify into hot_site (count 3000, p(fast) 0.857 callee, 0.857 site
++# AVG-DAG:   classify into cold_site (count 1000, p(fast) 0.857 callee, 0.857 site
++# AVG-DAG:   classify into wrapper (count 3000
++# RATIO:     no fast region in classify: cold-fast-path
++# RATIO:     inlined 0 call sites
++# COUNT-NOT: classify into cold_site
++# COUNT:     inlined 2 call sites (0 with frame elision, 1 tail calls)
++
++## The tail call site: the copy keeps the return, the slow exit is the
++## original tail call.
++# CHECK:      Binary Function "wrapper" after partial-inlining
++# CHECK:        add x0, x0, #0x10
++# CHECK-NEXT:   Successors: [[COPY:.LBB[0-9]+]] (mispreds: 0, count: 3000)
++# CHECK:      [[SLOW:.LBB[0-9]+]] (1 instructions
++# CHECK-NEXT:   Exec Count : 429
++# CHECK-NEXT:   Predecessors: [[COPY]]
++# CHECK-NEXT:   b classify # TAILCALL # Count: 429
++# CHECK:      [[COPY]] (2 instructions
++# CHECK-NEXT:   Exec Count : 3000
++# CHECK-NEXT:   Predecessors:
++# CHECK-NEXT:   ldr x8, [x0]
++# CHECK-NEXT:   cbnz x8, [[SLOW]]
++# CHECK:      {{.LBB[0-9]+}} (2 instructions
++# CHECK-NEXT:   Exec Count : 2571
++# CHECK-NEXT:   Predecessors: [[COPY]]
++# CHECK-NEXT:   ldr x0, [x0, #0x8]
++# CHECK-NEXT:   ret
++
++  .text
++  .macro FUNC name
++  .globl \name
++  .type \name,@function
++  .p2align 2
++\name:
++  .endm
++
++## classify(it): kind == 0 ? it->w : slow(it)
++FUNC classify
++  ldr x8, [x0]
++classify_br:
++  cbnz x8, classify_slow
++# FDATA: 1 classify #classify_br# 1 classify #classify_slow# 0 1000
++# FDATA: 1 classify #classify_br# 1 classify #classify_fast# 0 6000
++classify_fast:
++  ldr x0, [x0, #8]
++  ret
++classify_slow:
++  stp x29, x30, [sp, #-16]!
++  mov x29, sp
++  bl helper
++  ldp x29, x30, [sp], #16
++  ret
++  .size classify, .-classify
++
++FUNC helper
++  ret
++  .size helper, .-helper
++
++FUNC hot_site
++# FDATA: 0 [unknown] 0 1 hot_site 0 0 3000
++  stp x29, x30, [sp, #-16]!
++  mov x29, sp
++hot_call:
++  bl classify
++# FDATA: 1 hot_site #hot_call# 1 classify 0 0 3000
++  ldp x29, x30, [sp], #16
++  ret
++  .size hot_site, .-hot_site
++
++FUNC cold_site
++# FDATA: 0 [unknown] 0 1 cold_site 0 0 1000
++  stp x29, x30, [sp, #-16]!
++  mov x29, sp
++cold_call:
++  bl classify
++# FDATA: 1 cold_site #cold_call# 1 classify 0 0 1000
++  ldp x29, x30, [sp], #16
++  ret
++  .size cold_site, .-cold_site
++
++## A wrapper ending in a tail call. Its calls are not counted as calls to
++## classify by the profile above; it gets its own counts.
++FUNC wrapper
++# FDATA: 0 [unknown] 0 1 wrapper 0 0 3000
++  add x0, x0, #16
++wrapper_call:
++  b classify
++# FDATA: 1 wrapper #wrapper_call# 1 classify 0 0 3000
++  .size wrapper, .-wrapper
++
++FUNC main
++  ret
++  .size main, .-main
+diff --git a/bolt/test/X86/partial-inline.s b/bolt/test/X86/partial-inline.s
+new file mode 100644
+index 000000000..263688f05
+--- /dev/null
++++ b/bolt/test/X86/partial-inline.s
+@@ -0,0 +1,107 @@
++## Check partial inlining on x86-64: the frameless fast path of a callee
++## (including its CET landing pad, which is not copied) is inlined into a hot
++## call site; callees whose fast path manipulates the stack are rejected since
++## frame elision is only implemented for AArch64.
++
++# RUN: llvm-mc -filetype=obj -triple x86_64-unknown-unknown %s -o %t.o
++# RUN: link_fdata %s %t.o %t.fdata
++# RUN: llvm-strip --strip-unneeded %t.o
++# RUN: %clang %cflags %t.o -o %t.exe -Wl,-q
++# RUN: llvm-bolt %t.exe -o %t.bolt --data %t.fdata --partial-inline -v=2 \
++# RUN:   --print-partial-inline --print-only=main 2>&1 | FileCheck %s
++
++# CHECK-DAG: partial inlining: trace into main (count 1000, p(fast) 0.990 callee, 0.990 site, 2 insns, 0 renamed regs)
++# CHECK-DAG: partial inlining: no fast region in pushy: stack-access
++# CHECK: BOLT-INFO: partial inlining: 1 callees with a fast region (0 with frame elision); inlined 1 call sites
++
++# CHECK:      Binary Function "main" after partial-inlining
++# CHECK:      [[SLOW:.LBB[0-9]+]] (1 instructions
++# CHECK-NEXT:   Exec Count : 10
++# CHECK-NEXT:   Predecessors: [[COPY:.LBB[0-9]+]]
++# CHECK-NEXT:   callq trace
++# CHECK:      [[COPY]] (2 instructions
++# CHECK-NEXT:   Exec Count : 1000
++# CHECK-NEXT:   Predecessors:
++# CHECK-NOT:    endbr64
++# CHECK-NEXT:   cmpl trace_level(%rip), %edi
++# CHECK-NEXT:   jg [[SLOW]]
++# CHECK:      End of Function "main"
++
++  .text
++  .globl trace
++  .type trace,@function
++  .p2align 4
++trace:
++  endbr64
++  cmpl trace_level(%rip), %edi
++trace_br:
++  jg trace_slow
++# FDATA: 1 trace #trace_br# 1 trace #trace_slow# 0 10
++# FDATA: 1 trace #trace_br# 1 trace #trace_ret# 0 990
++trace_ret:
++  retq
++trace_slow:
++  pushq %rbx
++  movl %edi, %ebx
++  callq emit
++  movl %ebx, %eax
++  popq %rbx
++  retq
++  .size trace, .-trace
++
++  .globl pushy
++  .type pushy,@function
++  .p2align 4
++pushy:
++  pushq %rbx
++  movq (%rdi), %rbx
++  testq %rbx, %rbx
++pushy_br:
++  je pushy_slow
++# FDATA: 1 pushy #pushy_br# 1 pushy #pushy_slow# 0 10
++# FDATA: 1 pushy #pushy_br# 1 pushy #pushy_fast# 0 990
++pushy_fast:
++  movq %rbx, %rax
++  popq %rbx
++  retq
++pushy_slow:
++  callq emit
++  movq %rbx, %rax
++  popq %rbx
++  retq
++  .size pushy, .-pushy
++
++  .globl emit
++  .type emit,@function
++  .p2align 4
++emit:
++  retq
++  .size emit, .-emit
++
++  .globl main
++  .type main,@function
++  .p2align 4
++main:
++# FDATA: 0 [unknown] 0 1 main 0 0 1000
++  pushq %rax
++  movl $5, %edi
++main_call1:
++  callq trace
++# FDATA: 1 main #main_call1# 1 trace 0 0 1000
++  leaq slot(%rip), %rdi
++main_call2:
++  callq pushy
++# FDATA: 1 main #main_call2# 1 pushy 0 0 1000
++  xorl %eax, %eax
++  popq %rcx
++  retq
++  .size main, .-main
++
++  .data
++  .globl trace_level
++trace_level:
++  .long 0
++  .globl slot
++  .p2align 3
++slot:
++  .quad 0
+diff --git a/bolt/test/runtime/AArch64/partial-inline.c b/bolt/test/runtime/AArch64/partial-inline.c
+new file mode 100644
+index 000000000..38c989107
+--- /dev/null
++++ b/bolt/test/runtime/AArch64/partial-inline.c
+@@ -0,0 +1,185 @@
++// Check that partial inlining preserves program behavior end to end: compile
++// at -O2, collect an instrumentation profile, optimize with partial inlining
++// and compare the output with the original binary. The program contains fast
++// paths with and without stack frames, with stores after the fast/slow
++// decision and with callee-saved temporaries, and also callees that must be
++// rejected. Repeat with return address signing and BTI enabled, which on
++// hardware with FEAT_PAuth makes a wrong frame elision fault.
++
++// REQUIRES: system-linux,bolt-runtime
++
++// RUN: %clang %cflags -O2 -fno-inline %s -o %t.exe -Wl,-q
++// RUN: %t.exe 2000000 > %t.ref
++// RUN: llvm-bolt %t.exe --instrument --instrumentation-file=%t.fdata \
++// RUN:   --instrumentation-file-append-pid=0 -o %t.instr
++// RUN: %t.instr 200000 > /dev/null
++// RUN: llvm-bolt %t.exe -o %t.bolt --data %t.fdata --partial-inline -v=1 \
++// RUN:   --reorder-blocks=ext-tsp --split-functions --split-all-cold \
++// RUN:   | FileCheck %s
++// RUN: %t.bolt 2000000 > %t.out
++// RUN: cmp %t.ref %t.out
++
++// RUN: %clang %cflags -O2 -fno-inline -mbranch-protection=standard %s \
++// RUN:   -o %t.pac.exe -Wl,-q
++// RUN: %t.pac.exe 2000000 > %t.pac.ref
++// RUN: llvm-bolt %t.pac.exe --instrument --instrumentation-file=%t.pac.fdata \
++// RUN:   --instrumentation-file-append-pid=0 -o %t.pac.instr
++// RUN: %t.pac.instr 200000 > /dev/null
++// RUN: llvm-bolt %t.pac.exe -o %t.pac.bolt --data %t.pac.fdata \
++// RUN:   --partial-inline -v=1 --reorder-blocks=ext-tsp --split-functions \
++// RUN:   | FileCheck %s
++// RUN: %t.pac.bolt 2000000 > %t.pac.out
++// RUN: cmp %t.pac.ref %t.pac.out
++
++// CHECK-DAG: partial inlining: trace_event into
++// CHECK-DAG: partial inlining: memo_get into
++// CHECK-DAG: partial inlining: buf_putc into
++// CHECK-DAG: partial inlining: pool_free into
++// CHECK-NOT: partial inlining: obj_release into
++// CHECK: BOLT-INFO: partial inlining: {{[0-9]+}} callees with a fast region
++
++#include <stdint.h>
++#include <stdio.h>
++#include <stdlib.h>
++#include <string.h>
++
++#define NOINLINE __attribute__((noinline))
++
++// Frameless fast path.
++int trace_level;
++unsigned long trace_bytes;
++NOINLINE void trace_event(int level, long a) {
++  if (level > trace_level)
++    return;
++  char line[64];
++  int n = snprintf(line, sizeof line, "%d:%ld\n", level, a);
++  trace_bytes += n;
++}
++
++// Callee-saved temporaries on the fast path (typically not shrink-wrapped).
++struct entry {
++  uint64_t key, val;
++};
++static struct entry cache[256];
++uint64_t misses;
++NOINLINE uint64_t expensive(uint64_t k) {
++  for (int i = 0; i < 16; i++)
++    k = (k ^ (k >> 29)) * 0xbf58476d1ce4e5b9ULL;
++  return k;
++}
++NOINLINE uint64_t memo_get(uint64_t key) {
++  struct entry *e = &cache[key & 255];
++  if (e->key == key + 1)
++    return e->val;
++  uint64_t v = expensive(key);
++  e->key = key + 1;
++  e->val = v;
++  misses++;
++  return v;
++}
++
++// Stores on the fast path after the decision.
++struct buf {
++  unsigned char *data;
++  size_t pos, cap;
++  uint64_t hash;
++};
++NOINLINE void flush(struct buf *b) {
++  for (size_t i = 0; i < b->pos; i++)
++    b->hash = (b->hash ^ b->data[i]) * 0x100000001b3ULL;
++  b->pos = 0;
++}
++NOINLINE int buf_putc(struct buf *b, int c) {
++  if (b->pos < b->cap) {
++    b->data[b->pos++] = (unsigned char)c;
++    return c;
++  }
++  flush(b);
++  b->data[b->pos++] = (unsigned char)c;
++  return c;
++}
++
++struct node {
++  struct node *next;
++};
++struct pool {
++  struct node *free;
++  size_t live, slabs;
++};
++NOINLINE void *pool_alloc(struct pool *p) {
++  struct node *n = p->free;
++  if (n) {
++    p->free = n->next;
++    p->live++;
++    return n;
++  }
++  char *slab = malloc(64 * 32);
++  for (int i = 0; i < 32; i++) {
++    struct node *nd = (struct node *)(slab + i * 64);
++    nd->next = p->free;
++    p->free = nd;
++  }
++  p->slabs++;
++  n = p->free;
++  p->free = n->next;
++  p->live++;
++  return n;
++}
++NOINLINE void pool_free(struct pool *p, void *ptr) {
++  struct node *n = ptr;
++  n->next = p->free;
++  p->free = n;
++  p->live--;
++}
++
++// Store before the decision: must be rejected.
++struct obj {
++  long rc;
++  long destroyed;
++};
++NOINLINE void destroy(struct obj *o) {
++  o->destroyed++;
++  o->rc = 100;
++}
++NOINLINE int obj_release(struct obj *o) {
++  if (--o->rc != 0)
++    return 0;
++  destroy(o);
++  return 1;
++}
++
++static uint64_t rng(uint64_t *s) {
++  *s ^= *s << 13;
++  *s ^= *s >> 7;
++  *s ^= *s << 17;
++  return *s;
++}
++
++int main(int argc, char **argv) {
++  long n = argc > 1 ? atol(argv[1]) : 100000;
++  uint64_t s = 42, acc = 0;
++  struct buf b = {malloc(4096), 0, 4096, 1469598103934665603ULL};
++  struct pool p = {0, 0, 0};
++  void *window[64] = {0};
++  struct obj o = {100, 0};
++  for (long i = 0; i < n; i++) {
++    uint64_t r = rng(&s);
++    trace_event(2, (long)r);
++    if ((i & 1023) == 0)
++      trace_event(0, i); // rarely taken slow path
++    acc += memo_get((r & 15) ? (r >> 32) & 63 : r >> 20);
++    acc += buf_putc(&b, 'a' + (int)(r % 26));
++    unsigned slot = (unsigned)(r >> 40) & 63;
++    if (window[slot])
++      pool_free(&p, window[slot]);
++    window[slot] = pool_alloc(&p);
++    acc += obj_release(&o);
++  }
++  flush(&b);
++  printf("acc=%016llx misses=%llu hash=%016llx live=%zu slabs=%zu "
++         "trace=%lu destroyed=%ld\n",
++         (unsigned long long)acc, (unsigned long long)misses,
++         (unsigned long long)b.hash, p.live, p.slabs, trace_bytes,
++         o.destroyed);
++  return 0;
++}
+-- 
+2.56.0
+

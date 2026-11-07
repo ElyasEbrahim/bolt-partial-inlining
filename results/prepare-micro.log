@@ -1,0 +1,8 @@
+BOLT-INFO: partial inlining: 1 callees with a fast region (1 with frame elision); inlined 1 call sites (1 with frame elision, 0 tail calls), 10 instructions copied, 2 registers renamed
+BOLT-INFO: partial inlining: 1 callees with a fast region (1 with frame elision); inlined 1 call sites (1 with frame elision, 0 tail calls), 10 instructions copied, 2 registers renamed
+BOLT-INFO: partial inlining: 1 callees with a fast region (0 with frame elision); inlined 2 call sites (0 with frame elision, 0 tail calls), 8 instructions copied, 0 registers renamed
+BOLT-INFO: partial inlining: 2 callees with a fast region (1 with frame elision); inlined 2 call sites (1 with frame elision, 0 tail calls), 16 instructions copied, 1 registers renamed
+BOLT-INFO: partial inlining: 2 callees with a fast region (0 with frame elision); inlined 3 call sites (0 with frame elision, 0 tail calls), 15 instructions copied, 0 registers renamed
+BOLT-INFO: partial inlining: 0 callees with a fast region (0 with frame elision); inlined 0 call sites (0 with frame elision, 0 tail calls), 0 instructions copied, 0 registers renamed
+BOLT-INFO: partial inlining: 0 callees with a fast region (0 with frame elision); inlined 0 call sites (0 with frame elision, 0 tail calls), 0 instructions copied, 0 registers renamed
+BOLT-INFO: partial inlining: 1 callees with a fast region (0 with frame elision); inlined 1 call sites (0 with frame elision, 0 tail calls), 3 instructions copied, 0 registers renamed

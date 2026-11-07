@@ -1,0 +1,9 @@
+-- Testing: 780 tests, 12 workers --
+FAIL: BOLT :: AArch64/icp-inline.c (59 of 780)
+********************
+Failed Tests (1):
+  BOLT :: AArch64/icp-inline.c
+
+
+Total Discovered Tests: 860
+  Failed: 1 (0.12%)

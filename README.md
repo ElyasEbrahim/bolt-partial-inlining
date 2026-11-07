@@ -1,0 +1,170 @@
+# Partial Inlining for LLVM BOLT
+
+[![CI](https://github.com/ElyasEbrahim/bolt-partial-inlining/actions/workflows/ci.yml/badge.svg)](https://github.com/ElyasEbrahim/bolt-partial-inlining/actions/workflows/ci.yml)
+[![License: Apache-2.0 WITH LLVM-exception](https://img.shields.io/badge/license-Apache--2.0%20WITH%20LLVM--exception-blue.svg)](LICENSE)
+
+Profile-guided **partial inlining with stack frame elision** for the
+[LLVM BOLT](https://github.com/llvm/llvm-project/tree/main/bolt) post-link
+optimizer, enabled with `llvm-bolt --partial-inline`.
+
+Many hot functions return early after a few instructions (a cache hit, a
+buffer with room, a disabled log level, a non-empty free list) but are too
+large to inline, live in another translation unit, or were not shrink-wrapped
+by the compiler, so every call also pays for the prologue and epilogue. For
+each hot direct call site, the new BOLT pass copies the callee's profile-hot
+fast path into the caller,
+
+* drops the callee's frame setup and teardown on that path (stack pointer
+  updates, callee-saved spills and reloads, frame pointer setup, return
+  address signing, CFI, BTI landing pads),
+* renames callee-saved registers used as temporaries to scratch registers that
+  are provably dead at the call site, and
+* falls back to the original call on every other path. The copied region is
+  side-effect free and re-executable up to the fast/slow decision, so the
+  callee itself is left unchanged.
+
+The patch applies to llvm-project
+[`0a0e65b2e8ff`](https://github.com/llvm/llvm-project/commit/0a0e65b2e8ff6043d85ab07c4d23ea18bf0b9b7d)
+(2026-11-06). AArch64 is fully supported; on x86-64 only fast paths that do
+not touch the stack are inlined.
+
+## Results
+
+Apple M3 Max, Linux/AArch64 VM, clang 23 `-O2`/`-O3` without LTO, speedup of
+`--partial-inline` over the BOLT baseline (`-reorder-blocks=ext-tsp
+-reorder-functions=cdsort -split-functions ...`), median of paired rounds with
+95% confidence interval. All numbers come from one run of `make experiments`;
+see [`results/REPORT.md`](results/REPORT.md) and
+[Section 5 of the design document](docs/design.md#5-experimental-evaluation).
+
+| Workload | Pattern | Speedup | Executed instructions |
+|---|---|---|---:|
+| `mixed` | always-fast and always-slow call sites of one callee | **2.715x** [2.670, 2.745] | -13.0% |
+| `trace` | disabled tracing hook | **1.667x** [1.639, 1.681] | -16.0% |
+| `memo` | memoization cache hit, callee not shrink-wrapped | **1.016x** [1.005, 1.021] | -16.3% |
+| `bufwrite` | buffered writer, bound by a store-to-load chain | 1.001x [0.988, 1.012] | -23.9% |
+| `pool` | free-list allocator, ext-tsp layout interaction | 0.949x [0.936, 0.953] | -25.0% |
+| `unsafe`, `memo-lowhit`, `compute` | unsafe, too cold, or no calls | 0.999-1.002x | 0.00% |
+| SQLite 3.54, Lua 5.5, CPython 3.14, zstd 1.5 | real programs | 0.995-1.008x, all CIs include 1.0 | -0.41% to 0.00% |
+| A/A control | byte-identical copy of the baseline | 0.991-1.007x | - |
+
+The pass removes the call, return and frame overhead of hot fast paths and is
+effective where such calls dominate the run time. On the four real programs
+it removes up to 12.7% of the direct calls (Lua), but the saved instructions
+(at most 0.41%) are below the resolution of the measurement (about +-1%, see
+the A/A control). Without `--partial-inline`, the patched `llvm-bolt` writes
+byte-identical binaries to upstream, and no existing BOLT test changes its
+result.
+
+
+## Repository layout
+
+| Path | Content |
+|---|---|
+| [`patches/`](patches/) | the LLVM patch (pass, target hooks, 7 lit tests, documentation) and the LLVM commit it applies to |
+| [`docs/design.md`](docs/design.md) | design document: problem, design, correctness argument, implementation, evaluation, limitations |
+| [`benchmarks/`](benchmarks/) | microbenchmarks and build scripts for SQLite, Lua, CPython and zstd |
+| [`scripts/`](scripts/) | profiling, BOLT variant generation, benchmarking, checks and reporting |
+| [`results/`](results/) | the measurements of one complete evaluation run, see [`results/README.md`](results/README.md) |
+| [`docker/`](docker/) | reproducible evaluation image and development environment |
+
+## Getting started
+
+### Build BOLT with the patch
+
+```bash
+git clone https://github.com/llvm/llvm-project.git && cd llvm-project
+git checkout 0a0e65b2e8ff6043d85ab07c4d23ea18bf0b9b7d
+git am /path/to/bolt-partial-inlining/patches/0001-*.patch
+cmake -G Ninja -S llvm -B build -DCMAKE_BUILD_TYPE=Release \
+  -DLLVM_ENABLE_PROJECTS=bolt -DLLVM_TARGETS_TO_BUILD="AArch64;X86"
+ninja -C build bolt        # llvm-bolt, perf2bolt, merge-fdata, instrumentation runtime
+```
+
+### Use it
+
+Link the program with `-Wl,--emit-relocs`, collect a profile (instrumentation
+or `perf`) and add `--partial-inline` to the usual BOLT options:
+
+```bash
+llvm-bolt prog -instrument -o prog.instr && ./prog.instr <training input>
+llvm-bolt prog -o prog.bolt -data /tmp/prof.fdata \
+  -reorder-blocks=ext-tsp -reorder-functions=cdsort -split-functions \
+  --partial-inline -v=1
+```
+
+| Option | Default | Meaning |
+|---|---|---|
+| `--partial-inline` | off | enable the pass |
+| `--partial-inline-min-fast-ratio` | 60 | minimum estimated fast-path percentage at a call site |
+| `--partial-inline-profile-model` | `worst-case` | `worst-case` or `average` estimate of a call site's fast-path share |
+| `--partial-inline-max-insns` / `-max-blocks` | 24 / 8 | maximum size of a copied region |
+| `--partial-inline-min-count` | BOLT hot threshold | minimum execution count of a call site |
+| `--partial-inline-coverage` | 99 | share of the eligible fast-path calls to cover, hottest first |
+| `--partial-inline-frame-elision` | on | allow eliding the callee's stack frame |
+| `--print-partial-inline` | off | print the transformed functions |
+
+`-v=1` lists every transformed call site, `-v=2` also why callees were
+rejected. The options are documented in BOLT's command-line reference and in
+`bolt/docs/PartialInlining.md` (both added by the patch).
+
+## Reproducing the evaluation
+
+Requires Docker on an AArch64 Linux host or Apple silicon. Either download the
+prebuilt image from the [latest release](https://github.com/ElyasEbrahim/bolt-partial-inlining/releases/latest)
+and `docker load` it, or build it:
+
+```bash
+make image          # upstream and patched BOLT, BOLT test suite for both, workloads
+make check-bolt     # results/check-bolt/: test results of both builds, compared
+make experiments    # complete evaluation in one run (about 35 min), updates results/
+make x86-validate   # functional validation on x86-64 under emulation
+```
+
+`make experiments` runs [`scripts/run_experiments.sh`](scripts/run_experiments.sh)
+in the image: it builds all BOLT variants from instrumentation profiles,
+verifies that `llvm-bolt` without `--partial-inline` produces byte-identical
+binaries to upstream, times all variants with interleaved rounds and
+per-run output verification, counts executed instructions with valgrind and
+writes [`results/REPORT.md`](results/REPORT.md). The training runs disable
+address space layout randomization (`setarch -R`) so that profiles and BOLT
+outputs are reproducible, and every measured run executes a fresh copy of the
+binary at the same path, so that the result does not depend on a variant's
+file name. The container therefore needs `--security-opt seccomp=unconfined`
+and a tmpfs at `/stage`, both set by the Makefile.
+
+## Testing
+
+The patch adds seven lit tests to `bolt/test/` (run them with
+`ninja check-bolt`):
+
+| Test | Checks |
+|---|---|
+| `AArch64/partial-inline-frameless.s` | copied fast path, slow-path call, profile update, callee unchanged |
+| `AArch64/partial-inline-frame-elision.s` | prologue/epilogue elision and callee-saved register renaming |
+| `AArch64/partial-inline-reject.s` | ten callees that must not be transformed |
+| `AArch64/partial-inline-sites.s` | tail-call sites, profile models, thresholds |
+| `AArch64/partial-inline-pauth.s` | pointer authentication and BTI |
+| `X86/partial-inline.s` | x86-64 frameless fast paths with `endbr64` |
+| `runtime/AArch64/partial-inline.c` | end-to-end build, profile, optimize and run, with and without `-mbranch-protection=standard` |
+
+## Limitations
+
+Fast paths that call other functions, contain loops, use the stack, or store to
+memory or overwrite an argument register before the fast/slow decision are not
+inlined. Stack frame elision is implemented for AArch64 only. BOLT profiles are
+context-insensitive, which the default worst-case model compensates for
+conservatively. See [`docs/design.md`](docs/design.md#7-limitations-and-future-work)
+for details and future work.
+
+## Contributing
+
+See [CONTRIBUTING.md](CONTRIBUTING.md). Changes are listed in
+[CHANGELOG.md](CHANGELOG.md).
+
+## License
+
+Apache License v2.0 with LLVM Exceptions, the license of the LLVM project; see
+[LICENSE](LICENSE). The evaluation downloads and builds third-party software
+under its own license: SQLite (public domain), Lua (MIT), CPython (PSF
+License) and zstd (BSD or GPLv2).

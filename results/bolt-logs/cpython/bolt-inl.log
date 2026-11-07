@@ -1,0 +1,99 @@
+BOLT-WARNING: specifying numeric value "1" for option -icf is deprecated
+BOLT-INFO: shared object or position-independent executable detected
+BOLT-INFO: Target architecture: aarch64
+BOLT-INFO: BOLT version: 0a0e65b2e8ff6043d85ab07c4d23ea18bf0b9b7d
+BOLT-INFO: first alloc address is 0x0
+BOLT-INFO: creating new program header table at address 0x800000, offset 0x800000
+BOLT-WARNING: debug info will be stripped from the binary. Use -update-debug-sections to keep it.
+BOLT-INFO: enabling relocation mode
+BOLT-INFO: enabling lite mode
+BOLT-INFO: pre-processing profile using branch profile reader
+BOLT-INFO: PointerAuthCFIAnalyzer ran on 2 functions. Ignored 0 functions (0.00%) because of CFI inconsistencies
+BOLT-INFO: number of removed linker-inserted veneers: 0
+BOLT-INFO: 2300 out of 7601 functions in the binary (30.3%) have non-empty execution profile
+BOLT-INFO: 43 functions with profile could not be optimized
+BOLT-INFO: profile for 1 objects was ignored
+BOLT-INFO: profile quality metrics for the hottest 1000 functions (reporting top 5% values): function CFG discontinuity 0.00%; call graph flow conservation gap 0.00%; CFG flow conservation gap 0.00% (weighted) 0.00% (worst); exception handling usage 0.00% (of total BBEC) 0.00% (of total InvokeEC)
+BOLT-INFO: ICF folded 88 out of 7991 functions in 4 passes. 0 functions had jump tables.
+BOLT-INFO: Removing all identical functions will save 5.95 KB of code space. Folded functions were called 3655048 times based on profile.
+BOLT-INFO: inlined 3836274 calls at 2866 call sites in 3 iteration(s). Change in binary size: 126912 bytes.
+BOLT-INFO: ICF folded 2 out of 7991 functions in 3 passes. 0 functions had jump tables.
+BOLT-INFO: Removing all identical functions will save 0.01 KB of code space. Folded functions were called 1058 times based on profile.
+BOLT-INFO: basic block reordering modified layout of 1589 functions (69.09% of profiled, 19.88% of total)
+BOLT-INFO: UCE removed 18 blocks and 0 bytes of code
+BOLT-INFO: 3 Functions were reordered by LoopInversionPass
+BOLT-INFO: program-wide dynostats after all optimizations before SCTC and FOP:
+
+           258612885 : executed forward branches
+           113733791 : taken forward branches
+            33386653 : executed backward branches
+            17279224 : taken backward branches
+            20559962 : executed unconditional branches
+            74667696 : all function calls
+            16633820 : indirect calls
+             3875896 : PLT calls
+          2299646947 : executed instructions
+           593691163 : executed load instructions
+           337264810 : executed store instructions
+                   0 : taken jump table branches
+                   0 : taken unknown indirect branches
+           312559500 : total branches
+           151572977 : taken branches
+           160986523 : non-taken conditional branches
+           131013015 : taken conditional branches
+           291999538 : all conditional branches
+                   0 : linker-inserted veneer calls
+
+           271895230 : executed forward branches (+5.1%)
+            22860443 : taken forward branches (-79.9%)
+            20103558 : executed backward branches (-39.8%)
+             8726602 : taken backward branches (-49.5%)
+             3585801 : executed unconditional branches (-82.6%)
+            71535031 : all function calls (-4.2%)
+            17117260 : indirect calls (+2.9%)
+             3875896 : PLT calls (=)
+          2276940610 : executed instructions (-1.0%)
+           593690170 : executed load instructions (-0.0%)
+           337264424 : executed store instructions (-0.0%)
+                   0 : taken jump table branches (=)
+                   0 : taken unknown indirect branches (=)
+           295584589 : total branches (-5.4%)
+            35172846 : taken branches (-76.8%)
+           260411743 : non-taken conditional branches (+61.8%)
+            31587045 : taken conditional branches (-75.9%)
+           291998788 : all conditional branches (-0.0%)
+                   0 : linker-inserted veneer calls (=)
+
+BOLT-WARNING: failed to patch entries in _PyToken_Init/1(*2). The function will not be optimized
+BOLT-WARNING: failed to patch entries in PyException_SetTraceback. The function will not be optimized
+BOLT-WARNING: failed to patch entries in _PyFunction_GetVersionForCurrentState/1(*2). The function will not be optimized
+BOLT-WARNING: failed to patch entries in PyFunction_New. The function will not be optimized
+BOLT-WARNING: failed to patch entries in PyLong_FromVoidPtr. The function will not be optimized
+BOLT-WARNING: failed to patch entries in PyDict_Clear. The function will not be optimized
+BOLT-WARNING: failed to patch entries in PyDict_Update. The function will not be optimized
+BOLT-WARNING: failed to patch entries in PyDict_SetDefaultRef. The function will not be optimized
+BOLT-WARNING: failed to patch entries in PyUnstable_Object_EnableDeferredRefcount. The function will not be optimized
+BOLT-WARNING: failed to patch entries in _PyMem_DefaultRawFree/1(*2). The function will not be optimized
+BOLT-WARNING: failed to patch entries in PyStructSequence_NewType. The function will not be optimized
+BOLT-WARNING: failed to patch entries in PyType_GetFlags. The function will not be optimized
+BOLT-WARNING: failed to patch entries in PyUnicode_AsUTF8. The function will not be optimized
+BOLT-WARNING: failed to patch entries in PyUnicodeWriter_WriteASCII. The function will not be optimized
+BOLT-WARNING: failed to patch entries in _PyCompile_FutureFeatures/1(*2). The function will not be optimized
+BOLT-WARNING: failed to patch entries in _PyCompile_Symtable/1(*2). The function will not be optimized
+BOLT-WARNING: failed to patch entries in _PyEval_ReleaseLock/1(*2). The function will not be optimized
+BOLT-WARNING: failed to patch entries in _PyImport_GetModules/1(*2). The function will not be optimized
+BOLT-WARNING: failed to patch entries in _PyImport_GetDLOpenFlags/1(*2). The function will not be optimized
+BOLT-WARNING: failed to patch entries in Py_FinalizeEx. The function will not be optimized
+BOLT-WARNING: failed to patch entries in _PyInterpreterState_SetNotRunningMain. The function will not be optimized
+BOLT-WARNING: failed to patch entries in _PyInterpreterState_SetWhence/1(*2). The function will not be optimized
+BOLT-WARNING: failed to patch entries in _PyThreadState_New. The function will not be optimized
+BOLT-WARNING: failed to patch entries in PyThread_tss_get. The function will not be optimized
+BOLT-WARNING: failed to patch entries in PyThread_tss_is_created. The function will not be optimized
+BOLT-WARNING: failed to patch entries in _Py_fstat_noraise. The function will not be optimized
+BOLT-INFO: Starting stub-insertion pass
+BOLT-INFO: Inserted 1531 stubs in the hot area and 994 stubs in the cold area. Shared 0 times, iterated 3 times.
+BOLT-INFO: rewritten pac-ret DWARF info in 2 out of 7991 functions (0.03%).
+BOLT-INFO: padding code to 0xc00000 to accommodate hot text
+BOLT-INFO: patched build-id (flipped first and last bits)
+BOLT-INFO: setting __hot_start to 0xa00000
+BOLT-INFO: setting __hot_end to 0xab2cf0

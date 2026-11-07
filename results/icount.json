@@ -1,0 +1,106 @@
+{
+ "bufwrite": {
+  "orig": 141316458,
+  "bolt": 138318069,
+  "bolt-pi": 105329050,
+  "bolt-pi-nofe": 138318069,
+  "bolt-inl": 138316601,
+  "bolt-inl-pi": 105327582
+ },
+ "memo": {
+  "orig": 82909274,
+  "bolt": 81011309,
+  "bolt-pi": 67826398,
+  "bolt-pi-nofe": 81011309,
+  "bolt-inl": 80909421,
+  "bolt-inl-pi": 67724510
+ },
+ "trace": {
+  "orig": 75098455,
+  "bolt": 75098604,
+  "bolt-pi": 63098604,
+  "bolt-pi-nofe": 63098604,
+  "bolt-inl": 75098602,
+  "bolt-inl-pi": 63098602
+ },
+ "pool": {
+  "orig": 90102072,
+  "bolt": 88102221,
+  "bolt-pi": 66102745,
+  "bolt-pi-nofe": 84102733,
+  "bolt-inl": 84102731,
+  "bolt-inl-pi": 66102743
+ },
+ "mixed": {
+  "orig": 46900490,
+  "bolt": 46300637,
+  "bolt-pi": 40300638,
+  "bolt-pi-nofe": 40300638,
+  "bolt-inl": 43900635,
+  "bolt-inl-pi": 36700636
+ },
+ "memo-lowhit": {
+  "orig": 180335834,
+  "bolt": 180335983,
+  "bolt-pi": 180335983,
+  "bolt-pi-nofe": 180335983,
+  "bolt-inl": 179363631,
+  "bolt-inl-pi": 179363631
+ },
+ "unsafe": {
+  "orig": 42129131,
+  "bolt": 42129278,
+  "bolt-pi": 42129278,
+  "bolt-pi-nofe": 42129278,
+  "bolt-inl": 38125252,
+  "bolt-inl-pi": 38125252
+ },
+ "compute": {
+  "orig": 79632151,
+  "bolt": 79632300,
+  "bolt-pi": 79632298,
+  "bolt-pi-nofe": 79632298,
+  "bolt-inl": 79632495,
+  "bolt-inl-pi": 79632495
+ },
+ "sqlite": {
+  "orig": 1185600869,
+  "bolt": 1175824470,
+  "bolt-pi": 1175156798,
+  "bolt-pi-nofe": 1175470322,
+  "bolt-inl": 1175022609,
+  "bolt-inl-pi": 1174681589
+ },
+ "lua": {
+  "orig": 3170891877,
+  "bolt": 3127950744,
+  "bolt-pi": 3115209601,
+  "bolt-pi-nofe": 3123366699,
+  "bolt-inl": 3119942598,
+  "bolt-inl-pi": 3110964933
+ },
+ "cpython": {
+  "orig": 2637340698,
+  "bolt": 2628610774,
+  "bolt-pi": 2621377200,
+  "bolt-pi-nofe": 2626897436,
+  "bolt-inl": 2625946088,
+  "bolt-inl-pi": 2620269835
+ },
+ "zstd-compress": {
+  "orig": 945884031,
+  "bolt": 945884181,
+  "bolt-pi": 945884181,
+  "bolt-pi-nofe": 945884181,
+  "bolt-inl": 945884177,
+  "bolt-inl-pi": 945884177
+ },
+ "zstd-decompress": {
+  "orig": 330964337,
+  "bolt": 331355307,
+  "bolt-pi": 331351789,
+  "bolt-pi-nofe": 331351789,
+  "bolt-inl": 331345962,
+  "bolt-inl-pi": 331345260
+ }
+}

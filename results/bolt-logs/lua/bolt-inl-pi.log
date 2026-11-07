@@ -1,0 +1,1395 @@
+BOLT-WARNING: specifying numeric value "1" for option -icf is deprecated
+BOLT-INFO: shared object or position-independent executable detected
+BOLT-INFO: Target architecture: aarch64
+BOLT-INFO: BOLT version: 0a0e65b2e8ff6043d85ab07c4d23ea18bf0b9b7d
+BOLT-INFO: first alloc address is 0x0
+BOLT-INFO: creating new program header table at address 0x200000, offset 0x200000
+BOLT-INFO: marking .fini_array as GNU_RELRO
+BOLT-INFO: marking .init_array as GNU_RELRO
+BOLT-INFO: marking .data.rel.ro as GNU_RELRO
+BOLT-INFO: marking .dynamic as GNU_RELRO
+BOLT-INFO: marking .got as GNU_RELRO
+BOLT-INFO: marking .relro_padding as GNU_RELRO
+BOLT-INFO: enabling relocation mode
+BOLT-INFO: enabling lite mode
+BOLT-INFO: setting size of function _init/1(*2) to 24 (was 0)
+BOLT-INFO: setting size of function _fini/1(*2) to 20 (was 0)
+BOLT-INFO: setting size of function __BOLT_PSEUDO_.plt to 32 (was 0)
+BOLT-INFO: setting size of function abort@PLT to 16 (was 0)
+BOLT-INFO: setting size of function __libc_start_main@PLT to 16 (was 0)
+BOLT-INFO: setting size of function __gmon_start__@PLT to 16 (was 0)
+BOLT-INFO: setting size of function __cxa_finalize@PLT to 16 (was 0)
+BOLT-INFO: setting size of function fprintf@PLT to 16 (was 0)
+BOLT-INFO: setting size of function fflush@PLT to 16 (was 0)
+BOLT-INFO: setting size of function fwrite@PLT to 16 (was 0)
+BOLT-INFO: setting size of function fputc@PLT to 16 (was 0)
+BOLT-INFO: setting size of function getenv@PLT to 16 (was 0)
+BOLT-INFO: setting size of function strchr@PLT to 16 (was 0)
+BOLT-INFO: setting size of function isatty@PLT to 16 (was 0)
+BOLT-INFO: setting size of function dlopen@PLT to 16 (was 0)
+BOLT-INFO: setting size of function dlsym@PLT to 16 (was 0)
+BOLT-INFO: setting size of function strlen@PLT to 16 (was 0)
+BOLT-INFO: setting size of function strspn@PLT to 16 (was 0)
+BOLT-INFO: setting size of function strncmp@PLT to 16 (was 0)
+BOLT-INFO: setting size of function strcmp@PLT to 16 (was 0)
+BOLT-INFO: setting size of function sigemptyset@PLT to 16 (was 0)
+BOLT-INFO: setting size of function sigaction@PLT to 16 (was 0)
+BOLT-INFO: setting size of function fputs@PLT to 16 (was 0)
+BOLT-INFO: setting size of function fgets@PLT to 16 (was 0)
+BOLT-INFO: setting size of function free@PLT to 16 (was 0)
+BOLT-INFO: setting size of function _longjmp@PLT to 16 (was 0)
+BOLT-INFO: setting size of function _setjmp@PLT to 16 (was 0)
+BOLT-INFO: setting size of function memset@PLT to 16 (was 0)
+BOLT-INFO: setting size of function pow@PLT to 16 (was 0)
+BOLT-INFO: setting size of function strpbrk@PLT to 16 (was 0)
+BOLT-INFO: setting size of function strtod@PLT to 16 (was 0)
+BOLT-INFO: setting size of function strcpy@PLT to 16 (was 0)
+BOLT-INFO: setting size of function localeconv@PLT to 16 (was 0)
+BOLT-INFO: setting size of function snprintf@PLT to 16 (was 0)
+BOLT-INFO: setting size of function memcpy@PLT to 16 (was 0)
+BOLT-INFO: setting size of function ldexp@PLT to 16 (was 0)
+BOLT-INFO: setting size of function bcmp@PLT to 16 (was 0)
+BOLT-INFO: setting size of function frexp@PLT to 16 (was 0)
+BOLT-INFO: setting size of function fmod@PLT to 16 (was 0)
+BOLT-INFO: setting size of function strcoll@PLT to 16 (was 0)
+BOLT-INFO: setting size of function __errno_location@PLT to 16 (was 0)
+BOLT-INFO: setting size of function strerror@PLT to 16 (was 0)
+BOLT-INFO: setting size of function fopen64@PLT to 16 (was 0)
+BOLT-INFO: setting size of function freopen64@PLT to 16 (was 0)
+BOLT-INFO: setting size of function ferror@PLT to 16 (was 0)
+BOLT-INFO: setting size of function fclose@PLT to 16 (was 0)
+BOLT-INFO: setting size of function getc@PLT to 16 (was 0)
+BOLT-INFO: setting size of function feof@PLT to 16 (was 0)
+BOLT-INFO: setting size of function fread@PLT to 16 (was 0)
+BOLT-INFO: setting size of function strstr@PLT to 16 (was 0)
+BOLT-INFO: setting size of function realloc@PLT to 16 (was 0)
+BOLT-INFO: setting size of function __ctype_b_loc@PLT to 16 (was 0)
+BOLT-INFO: setting size of function __ctype_toupper_loc@PLT to 16 (was 0)
+BOLT-INFO: setting size of function dlerror@PLT to 16 (was 0)
+BOLT-INFO: setting size of function dlclose@PLT to 16 (was 0)
+BOLT-INFO: setting size of function memchr@PLT to 16 (was 0)
+BOLT-INFO: setting size of function popen@PLT to 16 (was 0)
+BOLT-INFO: setting size of function tmpfile64@PLT to 16 (was 0)
+BOLT-INFO: setting size of function clearerr@PLT to 16 (was 0)
+BOLT-INFO: setting size of function flockfile@PLT to 16 (was 0)
+BOLT-INFO: setting size of function __uflow@PLT to 16 (was 0)
+BOLT-INFO: setting size of function ungetc@PLT to 16 (was 0)
+BOLT-INFO: setting size of function funlockfile@PLT to 16 (was 0)
+BOLT-INFO: setting size of function pclose@PLT to 16 (was 0)
+BOLT-INFO: setting size of function fseeko64@PLT to 16 (was 0)
+BOLT-INFO: setting size of function ftello64@PLT to 16 (was 0)
+BOLT-INFO: setting size of function setvbuf@PLT to 16 (was 0)
+BOLT-INFO: setting size of function acos@PLT to 16 (was 0)
+BOLT-INFO: setting size of function asin@PLT to 16 (was 0)
+BOLT-INFO: setting size of function atan2@PLT to 16 (was 0)
+BOLT-INFO: setting size of function cos@PLT to 16 (was 0)
+BOLT-INFO: setting size of function exp@PLT to 16 (was 0)
+BOLT-INFO: setting size of function log2@PLT to 16 (was 0)
+BOLT-INFO: setting size of function log@PLT to 16 (was 0)
+BOLT-INFO: setting size of function log10@PLT to 16 (was 0)
+BOLT-INFO: setting size of function sin@PLT to 16 (was 0)
+BOLT-INFO: setting size of function sqrt@PLT to 16 (was 0)
+BOLT-INFO: setting size of function tan@PLT to 16 (was 0)
+BOLT-INFO: setting size of function clock@PLT to 16 (was 0)
+BOLT-INFO: setting size of function time@PLT to 16 (was 0)
+BOLT-INFO: setting size of function gmtime_r@PLT to 16 (was 0)
+BOLT-INFO: setting size of function strftime@PLT to 16 (was 0)
+BOLT-INFO: setting size of function localtime_r@PLT to 16 (was 0)
+BOLT-INFO: setting size of function difftime@PLT to 16 (was 0)
+BOLT-INFO: setting size of function system@PLT to 16 (was 0)
+BOLT-INFO: setting size of function exit@PLT to 16 (was 0)
+BOLT-INFO: setting size of function remove@PLT to 16 (was 0)
+BOLT-INFO: setting size of function rename@PLT to 16 (was 0)
+BOLT-INFO: setting size of function setlocale@PLT to 16 (was 0)
+BOLT-INFO: setting size of function mktime@PLT to 16 (was 0)
+BOLT-INFO: setting size of function mkstemp64@PLT to 16 (was 0)
+BOLT-INFO: setting size of function close@PLT to 16 (was 0)
+BOLT-INFO: setting size of function __ctype_tolower_loc@PLT to 16 (was 0)
+BOLT-INFO: pre-processing profile using branch profile reader
+BOLT-INFO: skipping processing no_getenv/1(*2) per user request
+BOLT-INFO: skipping processing doREPL/1(*2) per user request
+BOLT-INFO: skipping processing dofile/1(*2) per user request
+BOLT-INFO: skipping processing dostring/1(*2) per user request
+BOLT-INFO: skipping processing msghandler/1(*2) per user request
+BOLT-INFO: skipping processing laction/1(*2) per user request
+BOLT-INFO: skipping processing lstop/1(*2) per user request
+BOLT-INFO: skipping processing pushline/1(*2) per user request
+BOLT-INFO: skipping processing l_message/1(*2) per user request
+BOLT-INFO: skipping processing print_usage/1(*2) per user request
+BOLT-INFO: skipping processing lua_xmove per user request
+BOLT-INFO: skipping processing lua_typename per user request
+BOLT-INFO: skipping processing lua_iscfunction per user request
+BOLT-INFO: skipping processing lua_isinteger per user request
+BOLT-INFO: skipping processing lua_isnumber per user request
+BOLT-INFO: skipping processing lua_isuserdata per user request
+BOLT-INFO: skipping processing lua_arith per user request
+BOLT-INFO: skipping processing lua_rawlen per user request
+BOLT-INFO: skipping processing lua_tocfunction per user request
+BOLT-INFO: skipping processing lua_tothread per user request
+BOLT-INFO: skipping processing lua_topointer per user request
+BOLT-INFO: skipping processing lua_pushvfstring per user request
+BOLT-INFO: skipping processing lua_pushthread per user request
+BOLT-INFO: skipping processing lua_gettable per user request
+BOLT-INFO: skipping processing lua_rawgetp per user request
+BOLT-INFO: skipping processing lua_getiuservalue per user request
+BOLT-INFO: skipping processing lua_settable per user request
+BOLT-INFO: skipping processing lua_rawset per user request
+BOLT-INFO: skipping processing aux_rawset/1(*2) per user request
+BOLT-INFO: skipping processing lua_rawsetp per user request
+BOLT-INFO: skipping processing lua_setiuservalue per user request
+BOLT-INFO: skipping processing lua_dump per user request
+BOLT-INFO: skipping processing lua_status per user request
+BOLT-INFO: skipping processing lua_error per user request
+BOLT-INFO: skipping processing lua_concat per user request
+BOLT-INFO: skipping processing lua_setallocf per user request
+BOLT-INFO: skipping processing lua_getupvalue per user request
+BOLT-INFO: skipping processing lua_setupvalue per user request
+BOLT-INFO: skipping processing lua_upvalueid per user request
+BOLT-INFO: skipping processing lua_upvaluejoin per user request
+BOLT-INFO: skipping processing luaG_getfuncline/1(*2) per user request
+BOLT-INFO: skipping processing lua_sethook per user request
+BOLT-INFO: skipping processing lua_gethook per user request
+BOLT-INFO: skipping processing lua_gethookmask per user request
+BOLT-INFO: skipping processing lua_gethookcount per user request
+BOLT-INFO: skipping processing lua_getstack per user request
+BOLT-INFO: skipping processing luaG_findlocal/1(*2) per user request
+BOLT-INFO: skipping processing lua_getlocal per user request
+BOLT-INFO: skipping processing lua_setlocal per user request
+BOLT-INFO: skipping processing lua_getinfo per user request
+BOLT-INFO: skipping processing luaG_typeerror/1(*2) per user request
+BOLT-INFO: skipping processing typeerror/1(*2) per user request
+BOLT-INFO: skipping processing varinfo/1(*2) per user request
+BOLT-INFO: skipping processing luaG_callerror/1(*2) per user request
+BOLT-INFO: skipping processing funcnamefromcall/1(*2) per user request
+BOLT-INFO: skipping processing luaG_forerror/1(*2) per user request
+BOLT-INFO: skipping processing luaG_runerror/1(*2) per user request
+BOLT-INFO: skipping processing luaG_concaterror/1(*2) per user request
+BOLT-INFO: skipping processing luaG_opinterror/1(*2) per user request
+BOLT-INFO: skipping processing luaG_tointerror/1(*2) per user request
+BOLT-INFO: skipping processing luaG_ordererror/1(*2) per user request
+BOLT-INFO: skipping processing luaG_errnnil/1(*2) per user request
+BOLT-INFO: skipping processing luaG_addinfo/1(*2) per user request
+BOLT-INFO: skipping processing luaG_errormsg/1(*2) per user request
+BOLT-INFO: skipping processing luaG_tracecall/1(*2) per user request
+BOLT-INFO: skipping processing getobjname/1(*2) per user request
+BOLT-INFO: skipping processing basicgetobjname/1(*2) per user request
+BOLT-INFO: skipping processing luaD_seterrorobj/1(*2) per user request
+BOLT-INFO: skipping processing luaD_throw/1(*2) per user request
+BOLT-INFO: skipping processing luaD_throwbaselevel/1(*2) per user request
+BOLT-INFO: skipping processing luaD_errerr/1(*2) per user request
+BOLT-INFO: skipping processing correctstack/1(*2) per user request
+BOLT-INFO: skipping processing luaD_hook/1(*2) per user request
+BOLT-INFO: skipping processing luaD_hookcall/1(*2) per user request
+BOLT-INFO: skipping processing rethook/1(*2) per user request
+BOLT-INFO: skipping processing lua_resume per user request
+BOLT-INFO: skipping processing resume/1(*2) per user request
+BOLT-INFO: skipping processing lua_isyieldable per user request
+BOLT-INFO: skipping processing lua_yieldk per user request
+BOLT-INFO: skipping processing unroll/1(*2) per user request
+BOLT-INFO: skipping processing luaU_dump/1(*2) per user request
+BOLT-INFO: skipping processing dumpFunction/1(*2) per user request
+BOLT-INFO: skipping processing dumpString/1(*2) per user request
+BOLT-INFO: skipping processing luaF_unlinkupval/1(*2) per user request
+BOLT-INFO: skipping processing luaF_getlocalname/1(*2) per user request
+BOLT-INFO: skipping processing luaC_newobjdt/1(*2) per user request
+BOLT-INFO: skipping processing sweeptolive/1(*2) per user request
+BOLT-INFO: skipping processing luaC_runtilstate/1(*2) per user request
+BOLT-INFO: skipping processing luaC_fullgc/1(*2) per user request
+BOLT-INFO: skipping processing fullinc/1(*2) per user request
+BOLT-INFO: skipping processing traverseephemeron/1(*2) per user request
+BOLT-INFO: skipping processing luaM_toobig/1(*2) per user request
+BOLT-INFO: skipping processing tryagain/1(*2) per user request
+BOLT-INFO: skipping processing intarith/1(*2) per user request
+BOLT-INFO: skipping processing luaO_arith/1(*2) per user request
+BOLT-INFO: skipping processing luaO_hexavalue/1(*2) per user request
+BOLT-INFO: skipping processing luaO_utf8esc/1(*2) per user request
+BOLT-INFO: skipping processing luaO_pushfstring/1(*2) per user request
+BOLT-INFO: skipping processing luaO_chunkid/1(*2) per user request
+BOLT-INFO: skipping processing luaP_isIT/1(*2) per user request
+BOLT-INFO: skipping processing errorlimit/1(*2) per user request
+BOLT-INFO: skipping processing undefgoto/1(*2) per user request
+BOLT-INFO: skipping processing jumpscopeerror/1(*2) per user request
+BOLT-INFO: skipping processing error_expected/1(*2) per user request
+BOLT-INFO: skipping processing globalfunc/1(*2) per user request
+BOLT-INFO: skipping processing globalstat/1(*2) per user request
+BOLT-INFO: skipping processing initglobal/1(*2) per user request
+BOLT-INFO: skipping processing luaX_token2str/1(*2) per user request
+BOLT-INFO: skipping processing luaX_syntaxerror/1(*2) per user request
+BOLT-INFO: skipping processing lexerror/1(*2) per user request
+BOLT-INFO: skipping processing save/1(*2) per user request
+BOLT-INFO: skipping processing read_long_string/1(*2) per user request
+BOLT-INFO: skipping processing gethexa/1(*2) per user request
+BOLT-INFO: skipping processing luaK_semerror/1(*2) per user request
+BOLT-INFO: skipping processing luaK_exp2const/1(*2) per user request
+BOLT-INFO: skipping processing luaK_nil/1(*2) per user request
+BOLT-INFO: skipping processing luaK_concat/1(*2) per user request
+BOLT-INFO: skipping processing luaK_jump/1(*2) per user request
+BOLT-INFO: skipping processing luaK_patchlist/1(*2) per user request
+BOLT-INFO: skipping processing luaK_codecheckglobal/1(*2) per user request
+BOLT-INFO: skipping processing luaK_vapar2local/1(*2) per user request
+BOLT-INFO: skipping processing luaK_posfix/1(*2) per user request
+BOLT-INFO: skipping processing finishbinexpneg/1(*2) per user request
+BOLT-INFO: skipping processing luaE_checkcstack/1(*2) per user request
+BOLT-INFO: skipping processing lua_newthread per user request
+BOLT-INFO: skipping processing luaE_freethread/1(*2) per user request
+BOLT-INFO: skipping processing luaE_resetthread/1(*2) per user request
+BOLT-INFO: skipping processing lua_closethread per user request
+BOLT-INFO: skipping processing luaE_warnerror/1(*2) per user request
+BOLT-INFO: skipping processing luaS_eqstr/1(*2) per user request
+BOLT-INFO: skipping processing luaS_hashlongstr/1(*2) per user request
+BOLT-INFO: skipping processing tablerehash/1(*2) per user request
+BOLT-INFO: skipping processing luaS_createlngstrobj/1(*2) per user request
+BOLT-INFO: skipping processing luaS_normstr/1(*2) per user request
+BOLT-INFO: skipping processing freehash/1(*2) per user request
+BOLT-INFO: skipping processing luaT_objtypename/1(*2) per user request
+BOLT-INFO: skipping processing luaT_callTM/1(*2) per user request
+BOLT-INFO: skipping processing luaT_callTMres/1(*2) per user request
+BOLT-INFO: skipping processing luaT_trybinTM/1(*2) per user request
+BOLT-INFO: skipping processing callbinTM/1(*2) per user request
+BOLT-INFO: skipping processing luaT_tryconcatTM/1(*2) per user request
+BOLT-INFO: skipping processing luaT_trybinassocTM/1(*2) per user request
+BOLT-INFO: skipping processing luaT_trybiniTM/1(*2) per user request
+BOLT-INFO: skipping processing luaT_callorderTM/1(*2) per user request
+BOLT-INFO: skipping processing luaT_callorderiTM/1(*2) per user request
+BOLT-INFO: skipping processing luaT_getvararg/1(*2) per user request
+BOLT-INFO: skipping processing luaT_getvarargs/1(*2) per user request
+BOLT-INFO: skipping processing luaU_undump/1(*2) per user request
+BOLT-INFO: skipping processing loadFunction/1(*2) per user request
+BOLT-INFO: skipping processing error/1(*2) per user request
+BOLT-INFO: skipping processing numerror/1(*2) per user request
+BOLT-INFO: skipping processing loadString/1(*2) per user request
+BOLT-INFO: skipping processing luaV_tonumber_/1(*2) per user request
+BOLT-INFO: skipping processing luaV_tointegerns/1(*2) per user request
+BOLT-INFO: skipping processing luaV_tointeger/1(*2) per user request
+BOLT-INFO: skipping processing luaV_lessequal/1(*2) per user request
+BOLT-INFO: skipping processing luaV_idiv/1(*2) per user request
+BOLT-INFO: skipping processing luaV_mod/1(*2) per user request
+BOLT-INFO: skipping processing luaV_modf/1(*2) per user request
+BOLT-INFO: skipping processing luaV_shiftl/1(*2) per user request
+BOLT-INFO: skipping processing luaV_finishOp/1(*2) per user request
+BOLT-INFO: skipping processing l_strcmp/1(*2) per user request
+BOLT-INFO: skipping processing luaZ_read/1(*2) per user request
+BOLT-INFO: skipping processing luaZ_getaddr/1(*2) per user request
+BOLT-INFO: skipping processing luaL_traceback per user request
+BOLT-INFO: skipping processing luaL_addstring per user request
+BOLT-INFO: skipping processing luaL_argerror per user request
+BOLT-INFO: skipping processing luaL_error per user request
+BOLT-INFO: skipping processing pushglobalfuncname/1(*2) per user request
+BOLT-INFO: skipping processing luaL_typeerror per user request
+BOLT-INFO: skipping processing luaL_where per user request
+BOLT-INFO: skipping processing luaL_fileresult per user request
+BOLT-INFO: skipping processing luaL_execresult per user request
+BOLT-INFO: skipping processing luaL_testudata per user request
+BOLT-INFO: skipping processing luaL_checkoption per user request
+BOLT-INFO: skipping processing luaL_optnumber per user request
+BOLT-INFO: skipping processing interror/1(*2) per user request
+BOLT-INFO: skipping processing luaL_ref per user request
+BOLT-INFO: skipping processing luaL_unref per user request
+BOLT-INFO: skipping processing errfile/1(*2) per user request
+BOLT-INFO: skipping processing luaL_loadbufferx per user request
+BOLT-INFO: skipping processing getS/1(*2) per user request
+BOLT-INFO: skipping processing luaL_loadstring per user request
+BOLT-INFO: skipping processing luaL_addgsub per user request
+BOLT-INFO: skipping processing luaL_gsub per user request
+BOLT-INFO: skipping processing findfield/1(*2) per user request
+BOLT-INFO: skipping processing warnfoff/1(*2) per user request
+BOLT-INFO: skipping processing panic/1(*2) per user request
+BOLT-INFO: skipping processing warnfcont/1(*2) per user request
+BOLT-INFO: skipping processing luaB_assert/1(*2) per user request
+BOLT-INFO: skipping processing luaB_collectgarbage/1(*2) per user request
+BOLT-INFO: skipping processing luaB_dofile/1(*2) per user request
+BOLT-INFO: skipping processing luaB_error/1(*2) per user request
+BOLT-INFO: skipping processing luaB_getmetatable/1(*2) per user request
+BOLT-INFO: skipping processing luaB_ipairs/1(*2) per user request
+BOLT-INFO: skipping processing luaB_loadfile/1(*2) per user request
+BOLT-INFO: skipping processing luaB_load/1(*2) per user request
+BOLT-INFO: skipping processing luaB_pcall/1(*2) per user request
+BOLT-INFO: skipping processing luaB_warn/1(*2) per user request
+BOLT-INFO: skipping processing luaB_rawequal/1(*2) per user request
+BOLT-INFO: skipping processing luaB_rawlen/1(*2) per user request
+BOLT-INFO: skipping processing luaB_rawget/1(*2) per user request
+BOLT-INFO: skipping processing luaB_rawset/1(*2) per user request
+BOLT-INFO: skipping processing luaB_select/1(*2) per user request
+BOLT-INFO: skipping processing luaB_type/1(*2) per user request
+BOLT-INFO: skipping processing luaB_xpcall/1(*2) per user request
+BOLT-INFO: skipping processing dofilecont/1(*2) per user request
+BOLT-INFO: skipping processing ipairsaux/1(*2) per user request
+BOLT-INFO: skipping processing generic_reader/1(*2) per user request
+BOLT-INFO: skipping processing pairscont/1(*2) per user request
+BOLT-INFO: skipping processing finishpcall/1(*2) per user request
+BOLT-INFO: skipping processing ll_loadlib/1(*2) per user request
+BOLT-INFO: skipping processing ll_searchpath/1(*2) per user request
+BOLT-INFO: skipping processing lookforfunc/1(*2) per user request
+BOLT-INFO: skipping processing freelib/1(*2) per user request
+BOLT-INFO: skipping processing searchpath/1(*2) per user request
+BOLT-INFO: skipping processing searcher_preload/1(*2) per user request
+BOLT-INFO: skipping processing searcher_Lua/1(*2) per user request
+BOLT-INFO: skipping processing searcher_C/1(*2) per user request
+BOLT-INFO: skipping processing searcher_Croot/1(*2) per user request
+BOLT-INFO: skipping processing loadfunc/1(*2) per user request
+BOLT-INFO: skipping processing ll_require/1(*2) per user request
+BOLT-INFO: skipping processing luaB_cocreate/1(*2) per user request
+BOLT-INFO: skipping processing luaB_coresume/1(*2) per user request
+BOLT-INFO: skipping processing luaB_corunning/1(*2) per user request
+BOLT-INFO: skipping processing luaB_costatus/1(*2) per user request
+BOLT-INFO: skipping processing luaB_cowrap/1(*2) per user request
+BOLT-INFO: skipping processing luaB_yield/1(*2) per user request
+BOLT-INFO: skipping processing luaB_yieldable/1(*2) per user request
+BOLT-INFO: skipping processing luaB_close/1(*2) per user request
+BOLT-INFO: skipping processing auxresume/1(*2) per user request
+BOLT-INFO: skipping processing luaB_auxwrap/1(*2) per user request
+BOLT-INFO: skipping processing db_getuservalue/1(*2) per user request
+BOLT-INFO: skipping processing db_gethook/1(*2) per user request
+BOLT-INFO: skipping processing db_getinfo/1(*2) per user request
+BOLT-INFO: skipping processing db_getlocal/1(*2) per user request
+BOLT-INFO: skipping processing db_getregistry/1(*2) per user request
+BOLT-INFO: skipping processing db_getmetatable/1(*2) per user request
+BOLT-INFO: skipping processing db_getupvalue/1(*2) per user request
+BOLT-INFO: skipping processing db_upvaluejoin/1(*2) per user request
+BOLT-INFO: skipping processing db_upvalueid/1(*2) per user request
+BOLT-INFO: skipping processing db_setuservalue/1(*2) per user request
+BOLT-INFO: skipping processing db_sethook/1(*2) per user request
+BOLT-INFO: skipping processing db_setlocal/1(*2) per user request
+BOLT-INFO: skipping processing db_setmetatable/1(*2) per user request
+BOLT-INFO: skipping processing db_setupvalue/1(*2) per user request
+BOLT-INFO: skipping processing db_traceback/1(*2) per user request
+BOLT-INFO: skipping processing hookf/1(*2) per user request
+BOLT-INFO: skipping processing db_debug/1(*2) per user request
+BOLT-INFO: skipping processing io_close/1(*2) per user request
+BOLT-INFO: skipping processing io_flush/1(*2) per user request
+BOLT-INFO: skipping processing io_input/1(*2) per user request
+BOLT-INFO: skipping processing io_lines/1(*2) per user request
+BOLT-INFO: skipping processing io_open/1(*2) per user request
+BOLT-INFO: skipping processing io_output/1(*2) per user request
+BOLT-INFO: skipping processing io_popen/1(*2) per user request
+BOLT-INFO: skipping processing io_read/1(*2) per user request
+BOLT-INFO: skipping processing io_tmpfile/1(*2) per user request
+BOLT-INFO: skipping processing io_type/1(*2) per user request
+BOLT-INFO: skipping processing io_write/1(*2) per user request
+BOLT-INFO: skipping processing f_close/1(*2) per user request
+BOLT-INFO: skipping processing g_iofile/1(*2) per user request
+BOLT-INFO: skipping processing opencheck/1(*2) per user request
+BOLT-INFO: skipping processing io_fclose/1(*2) per user request
+BOLT-INFO: skipping processing aux_lines/1(*2) per user request
+BOLT-INFO: skipping processing io_readline/1(*2) per user request
+BOLT-INFO: skipping processing g_read/1(*2) per user request
+BOLT-INFO: skipping processing read_line/1(*2) per user request
+BOLT-INFO: skipping processing io_pclose/1(*2) per user request
+BOLT-INFO: skipping processing g_write/1(*2) per user request
+BOLT-INFO: skipping processing f_tostring/1(*2) per user request
+BOLT-INFO: skipping processing f_read/1(*2) per user request
+BOLT-INFO: skipping processing f_write/1(*2) per user request
+BOLT-INFO: skipping processing f_lines/1(*2) per user request
+BOLT-INFO: skipping processing f_flush/1(*2) per user request
+BOLT-INFO: skipping processing f_seek/1(*2) per user request
+BOLT-INFO: skipping processing f_setvbuf/1(*2) per user request
+BOLT-INFO: skipping processing math_abs/1(*2) per user request
+BOLT-INFO: skipping processing math_acos/1(*2) per user request
+BOLT-INFO: skipping processing math_asin/1(*2) per user request
+BOLT-INFO: skipping processing math_atan/1(*2) per user request
+BOLT-INFO: skipping processing math_ceil/1(*2) per user request
+BOLT-INFO: skipping processing math_cos/1(*2) per user request
+BOLT-INFO: skipping processing math_deg/1(*2) per user request
+BOLT-INFO: skipping processing math_exp/1(*2) per user request
+BOLT-INFO: skipping processing math_toint/1(*2) per user request
+BOLT-INFO: skipping processing math_floor/1(*2) per user request
+BOLT-INFO: skipping processing math_fmod/1(*2) per user request
+BOLT-INFO: skipping processing math_frexp/1(*2) per user request
+BOLT-INFO: skipping processing math_ult/1(*2) per user request
+BOLT-INFO: skipping processing math_ldexp/1(*2) per user request
+BOLT-INFO: skipping processing math_log/1(*2) per user request
+BOLT-INFO: skipping processing math_max/1(*2) per user request
+BOLT-INFO: skipping processing math_min/1(*2) per user request
+BOLT-INFO: skipping processing math_modf/1(*2) per user request
+BOLT-INFO: skipping processing math_rad/1(*2) per user request
+BOLT-INFO: skipping processing math_sin/1(*2) per user request
+BOLT-INFO: skipping processing math_tan/1(*2) per user request
+BOLT-INFO: skipping processing math_type/1(*2) per user request
+BOLT-INFO: skipping processing math_random/1(*2) per user request
+BOLT-INFO: skipping processing math_randomseed/1(*2) per user request
+BOLT-INFO: skipping processing os_clock/1(*2) per user request
+BOLT-INFO: skipping processing os_date/1(*2) per user request
+BOLT-INFO: skipping processing os_difftime/1(*2) per user request
+BOLT-INFO: skipping processing os_execute/1(*2) per user request
+BOLT-INFO: skipping processing os_exit/1(*2) per user request
+BOLT-INFO: skipping processing os_getenv/1(*2) per user request
+BOLT-INFO: skipping processing os_remove/1(*2) per user request
+BOLT-INFO: skipping processing os_rename/1(*2) per user request
+BOLT-INFO: skipping processing os_setlocale/1(*2) per user request
+BOLT-INFO: skipping processing os_time/1(*2) per user request
+BOLT-INFO: skipping processing os_tmpname/1(*2) per user request
+BOLT-INFO: skipping processing setallfields/1(*2) per user request
+BOLT-INFO: skipping processing getfield/1(*2) per user request
+BOLT-INFO: skipping processing str_byte/1(*2) per user request
+BOLT-INFO: skipping processing str_char/1(*2) per user request
+BOLT-INFO: skipping processing str_dump/1(*2) per user request
+BOLT-INFO: skipping processing str_find/1(*2) per user request
+BOLT-INFO: skipping processing str_format/1(*2) per user request
+BOLT-INFO: skipping processing str_len/1(*2) per user request
+BOLT-INFO: skipping processing str_lower/1(*2) per user request
+BOLT-INFO: skipping processing str_match/1(*2) per user request
+BOLT-INFO: skipping processing str_rep/1(*2) per user request
+BOLT-INFO: skipping processing str_reverse/1(*2) per user request
+BOLT-INFO: skipping processing str_sub/1(*2) per user request
+BOLT-INFO: skipping processing str_pack/1(*2) per user request
+BOLT-INFO: skipping processing str_packsize/1(*2) per user request
+BOLT-INFO: skipping processing str_unpack/1(*2) per user request
+BOLT-INFO: skipping processing writer/1(*2) per user request
+BOLT-INFO: skipping processing str_find_aux/1(*2) per user request
+BOLT-INFO: skipping processing getdetails/1(*2) per user request
+BOLT-INFO: skipping processing getoption/1(*2) per user request
+BOLT-INFO: skipping processing arith_add/1(*2) per user request
+BOLT-INFO: skipping processing arith_sub/1(*2) per user request
+BOLT-INFO: skipping processing arith_mul/1(*2) per user request
+BOLT-INFO: skipping processing arith_mod/1(*2) per user request
+BOLT-INFO: skipping processing arith_pow/1(*2) per user request
+BOLT-INFO: skipping processing arith_div/1(*2) per user request
+BOLT-INFO: skipping processing arith_idiv/1(*2) per user request
+BOLT-INFO: skipping processing arith_unm/1(*2) per user request
+BOLT-INFO: skipping processing arith/1(*2) per user request
+BOLT-INFO: skipping processing tcreate/1(*2) per user request
+BOLT-INFO: skipping processing tinsert/1(*2) per user request
+BOLT-INFO: skipping processing tpack/1(*2) per user request
+BOLT-INFO: skipping processing tunpack/1(*2) per user request
+BOLT-INFO: skipping processing tremove/1(*2) per user request
+BOLT-INFO: skipping processing tmove/1(*2) per user request
+BOLT-INFO: skipping processing byteoffset/1(*2) per user request
+BOLT-INFO: skipping processing codepoint/1(*2) per user request
+BOLT-INFO: skipping processing utfchar/1(*2) per user request
+BOLT-INFO: skipping processing utflen/1(*2) per user request
+BOLT-INFO: skipping processing iter_codes/1(*2) per user request
+BOLT-INFO: skipping processing iter_auxlax/1(*2) per user request
+BOLT-INFO: skipping processing iter_auxstrict/1(*2) per user request
+BOLT-INFO: skipping processing iter_aux/1(*2) per user request
+BOLT-INFO: potentially escaped address 0x2710c in function lua_gc
+BOLT-INFO: potentially escaped address 0x328ac in function statement/1(*2)
+BOLT-INFO: potentially escaped address 0x340d8 in function subexpr/1(*2)
+BOLT-INFO: potentially escaped address 0x34104 in function subexpr/1(*2)
+BOLT-INFO: potentially escaped address 0x36ce8 in function llex/1(*2)
+BOLT-INFO: potentially escaped address 0x370f0 in function llex/1(*2)
+BOLT-INFO: potentially escaped address 0x39a18 in function luaK_dischargevars/1(*2)
+BOLT-INFO: potentially escaped address 0x43aec in function luaV_equalobj/1(*2)
+BOLT-INFO: potentially escaped address 0x54aec in function match_class/1(*2)
+BOLT-WARNING: failed to post-process indirect branches for deregister_tm_clones/1(*2)
+BOLT-WARNING: failed to post-process indirect branches for register_tm_clones/1(*2)
+BOLT-WARNING: failed to post-process indirect branches for lua_gc
+BOLT-WARNING: failed to post-process indirect branches for subexpr/1(*2)
+BOLT-WARNING: failed to post-process indirect branches for statement/1(*2)
+BOLT-WARNING: failed to post-process indirect branches for luaE_warning/1(*2)
+BOLT-WARNING: failed to post-process indirect branches for luaK_dischargevars/1(*2)
+BOLT-WARNING: failed to post-process indirect branches for llex/1(*2)
+BOLT-WARNING: failed to post-process indirect branches for luaV_equalobj/1(*2)
+BOLT-WARNING: failed to post-process indirect branches for match_class/1(*2)
+BOLT-WARNING: failed to post-process indirect branches for luaV_execute/1(*2)
+BOLT-INFO: Starting pass: pointer-auth-cfi-analyzer
+BOLT-INFO: PointerAuthCFIAnalyzer ran on 1 functions. Ignored 0 functions (0.00%) because of CFI inconsistencies
+BOLT-INFO: Finished pass: pointer-auth-cfi-analyzer
+BOLT-INFO: Starting pass: estimate-edge-counts
+BOLT-INFO: Finished pass: estimate-edge-counts
+BOLT-INFO: Starting pass: set dyno-stats before optimizations
+BOLT-INFO: Finished pass: set dyno-stats before optimizations
+BOLT-INFO: Starting pass: fix-relaxations
+BOLT-INFO: Finished pass: fix-relaxations
+BOLT-INFO: Starting pass: veneer-elimination
+BOLT-INFO: number of removed linker-inserted veneers: 0
+BOLT-INFO: Finished pass: veneer-elimination
+BOLT-INFO: Starting pass: print-stats
+BOLT-INFO: 328 out of 695 functions in the binary (47.2%) have non-empty execution profile
+BOLT-INFO: 11 functions with profile could not be optimized
+BOLT-INFO: profile for 1 objects was ignored
+BOLT-INFO: top called functions are:
+  luaH_getshortstr/1(*2) : 25960027
+  luaH_psetshortstr/1(*2) : 7500392
+  luaL_alloc : 4011685
+  luaD_precall/1(*2) : 3624820
+  singlematch/1(*2) : 3346050
+  luaD_poscall/1(*2) : 2481047
+  match/1(*2) : 2273025
+  lua_type : 2074760
+  luaM_free_/1(*2) : 2005704
+  luaM_malloc_/1(*2) : 1844134
+  luaH_get/1(*2) : 1620196
+  lua_settop : 1373242
+  luaV_finishget/1(*2) : 1282935
+  luaC_newobj/1(*2) : 1244032
+  freeobj/1(*2) : 1244032
+  mainpositionTV/1(*2) : 1205413
+  insertkey/1(*2) : 1203002
+  luaH_Hgetshortstr/1(*2) : 1200023
+  luaT_gettm/1(*2) : 1200008
+  luaD_pretailcall/1(*2) : 1200004
+  internshrstr/1(*2) : 1080884
+  luaS_newlstr/1(*2) : 960657
+  lua_getmetatable : 840026
+  lua_tonumberx : 800003
+  lua_pushnumber : 800003
+  luaL_checknumber : 800003
+  math_sqrt/1(*2) : 800001
+  lua_tolstring : 763168
+  prepbuffsize/1(*2) : 763162
+  luaH_free/1(*2) : 762528
+  luaH_new/1(*2) : 762528
+  setnodevector/1(*2) : 761274
+  luaH_resize/1(*2) : 761274
+  objsize/1(*2) : 700747
+  lua_geti : 683317
+  luaL_checktype : 601000
+  luaO_ceillog2/1(*2) : 600180
+  lua_setmetatable : 600009
+  luaC_checkfinalizer/1(*2) : 600008
+  luaL_getmetafield : 600003
+  luaB_setmetatable/1(*2) : 600002
+  reallymarkobject/1(*2) : 581852
+  luaV_lessthan/1(*2) : 513732
+  lua_compare : 513732
+  sort_comp/1(*2) : 513732
+  luaS_remove/1(*2) : 481442
+  lua_absindex : 480031
+  luaO_tostringbuff/1(*2) : 420005
+  luaV_objlen/1(*2) : 360007
+  lua_pushlstring : 360003
+  luaH_pset/1(*2) : 300217
+  luaO_tostring/1(*2) : 300000
+  luaV_concat/1(*2) : 300000
+  luaL_addlstring : 283144
+  lua_seti : 253278
+  luaD_call/1(*2) : 240999
+  luaS_new/1(*2) : 240334
+  lua_touserdata : 240062
+  lua_pushstring : 240034
+  luaL_prepbuffsize : 240018
+  lua_checkstack : 240017
+  luaL_tolstring : 240014
+  luaL_callmeta : 240014
+  luaL_checkstack : 240001
+  gmatch_aux/1(*2) : 240001
+  push_onecapture/1(*2) : 240000
+  luaL_addvalue : 240000
+  luaH_size/1(*2) : 230035
+  propagatemark/1(*2) : 192893
+  luaM_realloc_/1(*2) : 161468
+  lua_pushvalue : 129840
+  lua_rotate : 120025
+  lua_gettop : 120011
+  lua_rawget : 120009
+  luaL_checklstring : 120007
+  lua_pushlightuserdata : 120006
+  luaH_getn/1(*2) : 120005
+  lua_numbertocstring : 120005
+  luaL_pushresult : 120005
+  luaL_buffinit : 120004
+  lua_tointegerx : 120004
+  checkformat/1(*2) : 120002
+  luaL_checkany : 120001
+  lua_isstring : 120000
+  luaB_tostring/1(*2) : 120000
+  luaL_checkinteger : 120000
+  luaH_getint/1(*2) : 81933
+  luaH_resizearray/1(*2) : 80556
+  singlestep/1(*2) : 53186
+  auxsort/1(*2) : 9794
+  clearbyvalues/1(*2) : 4360
+  luaO_applyparam/1(*2) : 2908
+  luaM_growaux_/1(*2) : 1906
+  luaF_protosize/1(*2) : 1450
+  luaE_setdebt/1(*2) : 1371
+  luaX_next/1(*2) : 1314
+  luaC_step/1(*2) : 1289
+  markmt/1(*2) : 1180
+  getgeneric/1(*2) : 1092
+  luaE_shrinkCI/1(*2) : 1090
+BOLT-INFO: Finished pass: print-stats
+BOLT-INFO: Starting pass: profile-quality-stats
+BOLT-INFO: profile quality metrics for the hottest 328 functions (reporting top 5% values): function CFG discontinuity 0.00%; 
+abbreviations: EC = execution count, POS BBs = positive EC BBs
+distribution of NUM(unreachable POS BBs) per function
+  Length     : 328
+  MAX        : 0
+  TOP 1%     : 0
+  TOP 5%     : 0
+  TOP 10%    : 0
+  TOP 20%    : 0
+  TOP 50%    : 0
+  TOP 80%    : 0
+  MIN        : 0
+distribution of SUM_EC(unreachable POS BBs) per function
+  Length     : 328
+  MAX        : 0
+  TOP 1%     : 0
+  TOP 5%     : 0
+  TOP 10%    : 0
+  TOP 20%    : 0
+  TOP 50%    : 0
+  TOP 80%    : 0
+  MIN        : 0
+distribution of [(SUM_EC(unreachable POS BBs) / SUM_EC(all POS BBs))] per function
+  Length     : 328
+  MAX        : 0.00%
+  TOP 1%     : 0.00%
+  TOP 5%     : 0.00%
+  TOP 10%    : 0.00%
+  TOP 20%    : 0.00%
+  TOP 50%    : 0.00%
+  TOP 80%    : 0.00%
+  MIN        : 0.00%
+call graph flow conservation gap 0.00%; 
+distribution of function entry flow conservation gaps
+  Length     : 328
+  MAX        : 40.60%
+  TOP 1%     : 0.00%
+  TOP 5%     : 0.00%
+  TOP 10%    : 0.00%
+  TOP 20%    : 0.00%
+  TOP 50%    : 0.00%
+  TOP 80%    : 0.00%
+  MIN        : 0.00%
+CFG flow conservation gap 0.00% (weighted) 0.00% (worst); distribution of weighted CFG flow conservation gaps
+  Length     : 328
+  MAX        : 0.76%
+  TOP 1%     : 0.00%
+  TOP 5%     : 0.00%
+  TOP 10%    : 0.00%
+  TOP 20%    : 0.00%
+  TOP 50%    : 0.00%
+  TOP 80%    : 0.00%
+  MIN        : 0.00%
+Consider only blocks with execution counts > 500:
+distribution of worst block flow conservation gap per function 
+  Length     : 328
+  MAX        : 9.37%
+  TOP 1%     : 0.00%
+  TOP 5%     : 0.00%
+  TOP 10%    : 0.00%
+  TOP 20%    : 0.00%
+  TOP 50%    : 0.00%
+  TOP 80%    : 0.00%
+  MIN        : 0.00%
+distribution of worst block flow conservation gap (absolute value) per function
+  Length     : 328
+  MAX        : 120000
+  TOP 1%     : 0
+  TOP 5%     : 0
+  TOP 10%    : 0
+  TOP 20%    : 0
+  TOP 50%    : 0
+  TOP 80%    : 0
+  MIN        : 0
+exception handling usage 0.00% (of total BBEC) 0.00% (of total InvokeEC)
+distribution of exception handling usage as a fraction of total BBEC of each function
+  Length     : 328
+  MAX        : 0.00%
+  TOP 1%     : 0.00%
+  TOP 5%     : 0.00%
+  TOP 10%    : 0.00%
+  TOP 20%    : 0.00%
+  TOP 50%    : 0.00%
+  TOP 80%    : 0.00%
+  MIN        : 0.00%
+distribution of exception handling usage as a fraction of total InvokeEC of each function
+  Length     : 328
+  MAX        : 0.00%
+  TOP 1%     : 0.00%
+  TOP 5%     : 0.00%
+  TOP 10%    : 0.00%
+  TOP 20%    : 0.00%
+  TOP 50%    : 0.00%
+  TOP 80%    : 0.00%
+  MIN        : 0.00%
+Detailed stats for 5 buckets, each with  65 functions:
+----------------
+|   Bucket 1:  |
+----------------
+execution counts of the 65 functions in the bucket: 240001-25960027
+function CFG discontinuity 0.00%; 
+abbreviations: EC = execution count, POS BBs = positive EC BBs
+distribution of NUM(unreachable POS BBs) per function
+  Length     : 65
+  MAX        : 0
+  TOP 1%     : 0
+  TOP 5%     : 0
+  TOP 10%    : 0
+  TOP 20%    : 0
+  TOP 50%    : 0
+  TOP 80%    : 0
+  MIN        : 0
+distribution of SUM_EC(unreachable POS BBs) per function
+  Length     : 65
+  MAX        : 0
+  TOP 1%     : 0
+  TOP 5%     : 0
+  TOP 10%    : 0
+  TOP 20%    : 0
+  TOP 50%    : 0
+  TOP 80%    : 0
+  MIN        : 0
+distribution of [(SUM_EC(unreachable POS BBs) / SUM_EC(all POS BBs))] per function
+  Length     : 65
+  MAX        : 0.00%
+  TOP 1%     : 0.00%
+  TOP 5%     : 0.00%
+  TOP 10%    : 0.00%
+  TOP 20%    : 0.00%
+  TOP 50%    : 0.00%
+  TOP 80%    : 0.00%
+  MIN        : 0.00%
+call graph flow conservation gap 0.00%; 
+distribution of function entry flow conservation gaps
+  Length     : 65
+  MAX        : 0.00%
+  TOP 1%     : 0.00%
+  TOP 5%     : 0.00%
+  TOP 10%    : 0.00%
+  TOP 20%    : 0.00%
+  TOP 50%    : 0.00%
+  TOP 80%    : 0.00%
+  MIN        : 0.00%
+CFG flow conservation gap 0.00% (weighted) 0.00% (worst); distribution of weighted CFG flow conservation gaps
+  Length     : 65
+  MAX        : 0.76%
+  TOP 1%     : 0.76%
+  TOP 5%     : 0.00%
+  TOP 10%    : 0.00%
+  TOP 20%    : 0.00%
+  TOP 50%    : 0.00%
+  TOP 80%    : 0.00%
+  MIN        : 0.00%
+Consider only blocks with execution counts > 500:
+distribution of worst block flow conservation gap per function 
+  Length     : 65
+  MAX        : 9.37%
+  TOP 1%     : 9.37%
+  TOP 5%     : 0.00%
+  TOP 10%    : 0.00%
+  TOP 20%    : 0.00%
+  TOP 50%    : 0.00%
+  TOP 80%    : 0.00%
+  MIN        : 0.00%
+distribution of worst block flow conservation gap (absolute value) per function
+  Length     : 65
+  MAX        : 120000
+  TOP 1%     : 120000
+  TOP 5%     : 0
+  TOP 10%    : 0
+  TOP 20%    : 0
+  TOP 50%    : 0
+  TOP 80%    : 0
+  MIN        : 0
+exception handling usage 0.00% (of total BBEC) 0.00% (of total InvokeEC)
+distribution of exception handling usage as a fraction of total BBEC of each function
+  Length     : 65
+  MAX        : 0.00%
+  TOP 1%     : 0.00%
+  TOP 5%     : 0.00%
+  TOP 10%    : 0.00%
+  TOP 20%    : 0.00%
+  TOP 50%    : 0.00%
+  TOP 80%    : 0.00%
+  MIN        : 0.00%
+distribution of exception handling usage as a fraction of total InvokeEC of each function
+  Length     : 65
+  MAX        : 0.00%
+  TOP 1%     : 0.00%
+  TOP 5%     : 0.00%
+  TOP 10%    : 0.00%
+  TOP 20%    : 0.00%
+  TOP 50%    : 0.00%
+  TOP 80%    : 0.00%
+  MIN        : 0.00%
+----------------
+|   Bucket 2:  |
+----------------
+execution counts of the 65 functions in the bucket: 165-240000
+function CFG discontinuity 0.00%; 
+abbreviations: EC = execution count, POS BBs = positive EC BBs
+distribution of NUM(unreachable POS BBs) per function
+  Length     : 65
+  MAX        : 0
+  TOP 1%     : 0
+  TOP 5%     : 0
+  TOP 10%    : 0
+  TOP 20%    : 0
+  TOP 50%    : 0
+  TOP 80%    : 0
+  MIN        : 0
+distribution of SUM_EC(unreachable POS BBs) per function
+  Length     : 65
+  MAX        : 0
+  TOP 1%     : 0
+  TOP 5%     : 0
+  TOP 10%    : 0
+  TOP 20%    : 0
+  TOP 50%    : 0
+  TOP 80%    : 0
+  MIN        : 0
+distribution of [(SUM_EC(unreachable POS BBs) / SUM_EC(all POS BBs))] per function
+  Length     : 65
+  MAX        : 0.00%
+  TOP 1%     : 0.00%
+  TOP 5%     : 0.00%
+  TOP 10%    : 0.00%
+  TOP 20%    : 0.00%
+  TOP 50%    : 0.00%
+  TOP 80%    : 0.00%
+  MIN        : 0.00%
+call graph flow conservation gap 0.00%; 
+distribution of function entry flow conservation gaps
+  Length     : 65
+  MAX        : 40.60%
+  TOP 1%     : 40.60%
+  TOP 5%     : 0.00%
+  TOP 10%    : 0.00%
+  TOP 20%    : 0.00%
+  TOP 50%    : 0.00%
+  TOP 80%    : 0.00%
+  MIN        : 0.00%
+CFG flow conservation gap 0.00% (weighted) 0.00% (worst); distribution of weighted CFG flow conservation gaps
+  Length     : 65
+  MAX        : 0.00%
+  TOP 1%     : 0.00%
+  TOP 5%     : 0.00%
+  TOP 10%    : 0.00%
+  TOP 20%    : 0.00%
+  TOP 50%    : 0.00%
+  TOP 80%    : 0.00%
+  MIN        : 0.00%
+Consider only blocks with execution counts > 500:
+distribution of worst block flow conservation gap per function 
+  Length     : 65
+  MAX        : 0.00%
+  TOP 1%     : 0.00%
+  TOP 5%     : 0.00%
+  TOP 10%    : 0.00%
+  TOP 20%    : 0.00%
+  TOP 50%    : 0.00%
+  TOP 80%    : 0.00%
+  MIN        : 0.00%
+distribution of worst block flow conservation gap (absolute value) per function
+  Length     : 65
+  MAX        : 0
+  TOP 1%     : 0
+  TOP 5%     : 0
+  TOP 10%    : 0
+  TOP 20%    : 0
+  TOP 50%    : 0
+  TOP 80%    : 0
+  MIN        : 0
+exception handling usage 0.00% (of total BBEC) 0.00% (of total InvokeEC)
+distribution of exception handling usage as a fraction of total BBEC of each function
+  Length     : 65
+  MAX        : 0.00%
+  TOP 1%     : 0.00%
+  TOP 5%     : 0.00%
+  TOP 10%    : 0.00%
+  TOP 20%    : 0.00%
+  TOP 50%    : 0.00%
+  TOP 80%    : 0.00%
+  MIN        : 0.00%
+distribution of exception handling usage as a fraction of total InvokeEC of each function
+  Length     : 65
+  MAX        : 0.00%
+  TOP 1%     : 0.00%
+  TOP 5%     : 0.00%
+  TOP 10%    : 0.00%
+  TOP 20%    : 0.00%
+  TOP 50%    : 0.00%
+  TOP 80%    : 0.00%
+  MIN        : 0.00%
+----------------
+|   Bucket 3:  |
+----------------
+execution counts of the 65 functions in the bucket: 16-137
+function CFG discontinuity 0.00%; 
+abbreviations: EC = execution count, POS BBs = positive EC BBs
+distribution of NUM(unreachable POS BBs) per function
+  Length     : 65
+  MAX        : 0
+  TOP 1%     : 0
+  TOP 5%     : 0
+  TOP 10%    : 0
+  TOP 20%    : 0
+  TOP 50%    : 0
+  TOP 80%    : 0
+  MIN        : 0
+distribution of SUM_EC(unreachable POS BBs) per function
+  Length     : 65
+  MAX        : 0
+  TOP 1%     : 0
+  TOP 5%     : 0
+  TOP 10%    : 0
+  TOP 20%    : 0
+  TOP 50%    : 0
+  TOP 80%    : 0
+  MIN        : 0
+distribution of [(SUM_EC(unreachable POS BBs) / SUM_EC(all POS BBs))] per function
+  Length     : 65
+  MAX        : 0.00%
+  TOP 1%     : 0.00%
+  TOP 5%     : 0.00%
+  TOP 10%    : 0.00%
+  TOP 20%    : 0.00%
+  TOP 50%    : 0.00%
+  TOP 80%    : 0.00%
+  MIN        : 0.00%
+call graph flow conservation gap 0.00%; 
+distribution of function entry flow conservation gaps
+  Length     : 65
+  MAX        : 0.00%
+  TOP 1%     : 0.00%
+  TOP 5%     : 0.00%
+  TOP 10%    : 0.00%
+  TOP 20%    : 0.00%
+  TOP 50%    : 0.00%
+  TOP 80%    : 0.00%
+  MIN        : 0.00%
+CFG flow conservation gap 0.00% (weighted) 0.00% (worst); distribution of weighted CFG flow conservation gaps
+  Length     : 65
+  MAX        : 0.00%
+  TOP 1%     : 0.00%
+  TOP 5%     : 0.00%
+  TOP 10%    : 0.00%
+  TOP 20%    : 0.00%
+  TOP 50%    : 0.00%
+  TOP 80%    : 0.00%
+  MIN        : 0.00%
+Consider only blocks with execution counts > 500:
+distribution of worst block flow conservation gap per function 
+  Length     : 65
+  MAX        : 0.00%
+  TOP 1%     : 0.00%
+  TOP 5%     : 0.00%
+  TOP 10%    : 0.00%
+  TOP 20%    : 0.00%
+  TOP 50%    : 0.00%
+  TOP 80%    : 0.00%
+  MIN        : 0.00%
+distribution of worst block flow conservation gap (absolute value) per function
+  Length     : 65
+  MAX        : 0
+  TOP 1%     : 0
+  TOP 5%     : 0
+  TOP 10%    : 0
+  TOP 20%    : 0
+  TOP 50%    : 0
+  TOP 80%    : 0
+  MIN        : 0
+exception handling usage 0.00% (of total BBEC) 0.00% (of total InvokeEC)
+distribution of exception handling usage as a fraction of total BBEC of each function
+  Length     : 65
+  MAX        : 0.00%
+  TOP 1%     : 0.00%
+  TOP 5%     : 0.00%
+  TOP 10%    : 0.00%
+  TOP 20%    : 0.00%
+  TOP 50%    : 0.00%
+  TOP 80%    : 0.00%
+  MIN        : 0.00%
+distribution of exception handling usage as a fraction of total InvokeEC of each function
+  Length     : 65
+  MAX        : 0.00%
+  TOP 1%     : 0.00%
+  TOP 5%     : 0.00%
+  TOP 10%    : 0.00%
+  TOP 20%    : 0.00%
+  TOP 50%    : 0.00%
+  TOP 80%    : 0.00%
+  MIN        : 0.00%
+----------------
+|   Bucket 4:  |
+----------------
+execution counts of the 65 functions in the bucket: 2-16
+function CFG discontinuity 0.00%; 
+abbreviations: EC = execution count, POS BBs = positive EC BBs
+distribution of NUM(unreachable POS BBs) per function
+  Length     : 65
+  MAX        : 0
+  TOP 1%     : 0
+  TOP 5%     : 0
+  TOP 10%    : 0
+  TOP 20%    : 0
+  TOP 50%    : 0
+  TOP 80%    : 0
+  MIN        : 0
+distribution of SUM_EC(unreachable POS BBs) per function
+  Length     : 65
+  MAX        : 0
+  TOP 1%     : 0
+  TOP 5%     : 0
+  TOP 10%    : 0
+  TOP 20%    : 0
+  TOP 50%    : 0
+  TOP 80%    : 0
+  MIN        : 0
+distribution of [(SUM_EC(unreachable POS BBs) / SUM_EC(all POS BBs))] per function
+  Length     : 65
+  MAX        : 0.00%
+  TOP 1%     : 0.00%
+  TOP 5%     : 0.00%
+  TOP 10%    : 0.00%
+  TOP 20%    : 0.00%
+  TOP 50%    : 0.00%
+  TOP 80%    : 0.00%
+  MIN        : 0.00%
+call graph flow conservation gap 0.00%; 
+distribution of function entry flow conservation gaps
+  Length     : 65
+  MAX        : 0.00%
+  TOP 1%     : 0.00%
+  TOP 5%     : 0.00%
+  TOP 10%    : 0.00%
+  TOP 20%    : 0.00%
+  TOP 50%    : 0.00%
+  TOP 80%    : 0.00%
+  MIN        : 0.00%
+CFG flow conservation gap 0.00% (weighted) 0.00% (worst); distribution of weighted CFG flow conservation gaps
+  Length     : 65
+  MAX        : 0.00%
+  TOP 1%     : 0.00%
+  TOP 5%     : 0.00%
+  TOP 10%    : 0.00%
+  TOP 20%    : 0.00%
+  TOP 50%    : 0.00%
+  TOP 80%    : 0.00%
+  MIN        : 0.00%
+Consider only blocks with execution counts > 500:
+distribution of worst block flow conservation gap per function 
+  Length     : 65
+  MAX        : 0.00%
+  TOP 1%     : 0.00%
+  TOP 5%     : 0.00%
+  TOP 10%    : 0.00%
+  TOP 20%    : 0.00%
+  TOP 50%    : 0.00%
+  TOP 80%    : 0.00%
+  MIN        : 0.00%
+distribution of worst block flow conservation gap (absolute value) per function
+  Length     : 65
+  MAX        : 0
+  TOP 1%     : 0
+  TOP 5%     : 0
+  TOP 10%    : 0
+  TOP 20%    : 0
+  TOP 50%    : 0
+  TOP 80%    : 0
+  MIN        : 0
+exception handling usage 0.00% (of total BBEC) 0.00% (of total InvokeEC)
+distribution of exception handling usage as a fraction of total BBEC of each function
+  Length     : 65
+  MAX        : 0.00%
+  TOP 1%     : 0.00%
+  TOP 5%     : 0.00%
+  TOP 10%    : 0.00%
+  TOP 20%    : 0.00%
+  TOP 50%    : 0.00%
+  TOP 80%    : 0.00%
+  MIN        : 0.00%
+distribution of exception handling usage as a fraction of total InvokeEC of each function
+  Length     : 65
+  MAX        : 0.00%
+  TOP 1%     : 0.00%
+  TOP 5%     : 0.00%
+  TOP 10%    : 0.00%
+  TOP 20%    : 0.00%
+  TOP 50%    : 0.00%
+  TOP 80%    : 0.00%
+  MIN        : 0.00%
+----------------
+|   Bucket 5:  |
+----------------
+execution counts of the 65 functions in the bucket: 1-2
+function CFG discontinuity 0.00%; 
+abbreviations: EC = execution count, POS BBs = positive EC BBs
+distribution of NUM(unreachable POS BBs) per function
+  Length     : 65
+  MAX        : 0
+  TOP 1%     : 0
+  TOP 5%     : 0
+  TOP 10%    : 0
+  TOP 20%    : 0
+  TOP 50%    : 0
+  TOP 80%    : 0
+  MIN        : 0
+distribution of SUM_EC(unreachable POS BBs) per function
+  Length     : 65
+  MAX        : 0
+  TOP 1%     : 0
+  TOP 5%     : 0
+  TOP 10%    : 0
+  TOP 20%    : 0
+  TOP 50%    : 0
+  TOP 80%    : 0
+  MIN        : 0
+distribution of [(SUM_EC(unreachable POS BBs) / SUM_EC(all POS BBs))] per function
+  Length     : 65
+  MAX        : 0.00%
+  TOP 1%     : 0.00%
+  TOP 5%     : 0.00%
+  TOP 10%    : 0.00%
+  TOP 20%    : 0.00%
+  TOP 50%    : 0.00%
+  TOP 80%    : 0.00%
+  MIN        : 0.00%
+call graph flow conservation gap 0.00%; 
+distribution of function entry flow conservation gaps
+  Length     : 65
+  MAX        : 0.00%
+  TOP 1%     : 0.00%
+  TOP 5%     : 0.00%
+  TOP 10%    : 0.00%
+  TOP 20%    : 0.00%
+  TOP 50%    : 0.00%
+  TOP 80%    : 0.00%
+  MIN        : 0.00%
+CFG flow conservation gap 0.00% (weighted) 0.00% (worst); distribution of weighted CFG flow conservation gaps
+  Length     : 65
+  MAX        : 0.00%
+  TOP 1%     : 0.00%
+  TOP 5%     : 0.00%
+  TOP 10%    : 0.00%
+  TOP 20%    : 0.00%
+  TOP 50%    : 0.00%
+  TOP 80%    : 0.00%
+  MIN        : 0.00%
+Consider only blocks with execution counts > 500:
+distribution of worst block flow conservation gap per function 
+  Length     : 65
+  MAX        : 0.00%
+  TOP 1%     : 0.00%
+  TOP 5%     : 0.00%
+  TOP 10%    : 0.00%
+  TOP 20%    : 0.00%
+  TOP 50%    : 0.00%
+  TOP 80%    : 0.00%
+  MIN        : 0.00%
+distribution of worst block flow conservation gap (absolute value) per function
+  Length     : 65
+  MAX        : 0
+  TOP 1%     : 0
+  TOP 5%     : 0
+  TOP 10%    : 0
+  TOP 20%    : 0
+  TOP 50%    : 0
+  TOP 80%    : 0
+  MIN        : 0
+exception handling usage 0.00% (of total BBEC) 0.00% (of total InvokeEC)
+distribution of exception handling usage as a fraction of total BBEC of each function
+  Length     : 65
+  MAX        : 0.00%
+  TOP 1%     : 0.00%
+  TOP 5%     : 0.00%
+  TOP 10%    : 0.00%
+  TOP 20%    : 0.00%
+  TOP 50%    : 0.00%
+  TOP 80%    : 0.00%
+  MIN        : 0.00%
+distribution of exception handling usage as a fraction of total InvokeEC of each function
+  Length     : 65
+  MAX        : 0.00%
+  TOP 1%     : 0.00%
+  TOP 5%     : 0.00%
+  TOP 10%    : 0.00%
+  TOP 20%    : 0.00%
+  TOP 50%    : 0.00%
+  TOP 80%    : 0.00%
+  MIN        : 0.00%
+BOLT-INFO: Finished pass: profile-quality-stats
+BOLT-INFO: Starting pass: validate-internal-calls
+BOLT-INFO: Finished pass: validate-internal-calls
+BOLT-INFO: Starting pass: validate-mem-refs
+BOLT-INFO: Finished pass: validate-mem-refs
+BOLT-INFO: Starting pass: shorten-instructions
+BOLT-INFO: Finished pass: shorten-instructions
+BOLT-INFO: Starting pass: remove-nops
+BOLT-INFO: Finished pass: remove-nops
+BOLT-INFO: Starting pass: normalize CFG
+BOLT-INFO: Finished pass: normalize CFG
+BOLT-INFO: Starting pass: identical-code-folding
+BOLT-INFO: Finished pass: identical-code-folding
+BOLT-INFO: Starting pass: indirect-call-promotion
+BOLT-INFO: Finished pass: indirect-call-promotion
+BOLT-INFO: Starting pass: inlining
+BOLT-INFO: inlined 8659196 calls at 272 call sites in 3 iteration(s). Change in binary size: 32544 bytes.
+BOLT-INFO: Finished pass: inlining
+BOLT-INFO: Starting pass: identical-code-folding
+BOLT-INFO: Finished pass: identical-code-folding
+BOLT-INFO: Starting pass: partial-inlining
+BOLT-INFO: buildCallGraph: 785 nodes, 1972 callsites (23 recursive), density = 0.001873, 5 callsites not processed, 401 callsites with invalid profile, used perf data for 0 stale functions.
+BOLT-INFO: partial inlining: luaC_checkfinalizer/1(*2) into lua_setmetatable (count 600008, p(fast) 1.000 callee, 1.000 site, 5 insns, 0 renamed regs)
+BOLT-INFO: partial inlining: mainpositionTV/1(*2) into insertkey/1(*2) (count 1203002, p(fast) 1.000 callee, 1.000 site, 21 insns, 0 renamed regs, frame elided)
+BOLT-INFO: partial inlining: prepbuffsize/1(*2) into luaL_prepbuffsize (count 240004, p(fast) 1.000 callee, 1.000 site, 8 insns, 1 renamed regs, frame elided, tail call)
+BOLT-INFO: partial inlining: prepbuffsize/1(*2) into luaL_addvalue (count 240000, p(fast) 1.000 callee, 1.000 site, 8 insns, 1 renamed regs, frame elided)
+BOLT-INFO: partial inlining: prepbuffsize/1(*2) into luaL_addlstring (count 283143, p(fast) 1.000 callee, 1.000 site, 8 insns, 1 renamed regs, frame elided)
+BOLT-INFO: partial inlining: luaV_lessthan/1(*2) into sort_comp/1(*2) (count 513732, p(fast) 1.000 callee, 1.000 site, 18 insns, 0 renamed regs, tail call)
+BOLT-INFO: partial inlining: 5 callees with a fast region (3 with frame elision); inlined 6 call sites (4 with frame elision, 2 tail calls), 68 instructions copied, 3 registers renamed
+BOLT-INFO: partial inlining: estimated 3079509 calls avoided on fast paths (6.70% of profiled direct calls), 380 slow-path calls re-execute the copied region
+BOLT-INFO: partial inlining: callees without a usable fast region: not-simple=8 entry-not-copyable=7 no-fast-exit=17 stack-access=1 side-effect=2 reg-clobber=4 cold-fast-path=2
+BOLT-INFO: Finished pass: partial-inlining
+BOLT-INFO: Starting pass: plt-call-optimization
+BOLT-INFO: Finished pass: plt-call-optimization
+BOLT-INFO: Starting pass: reorder-blocks
+BOLT-INFO: basic block reordering modified layout of 223 functions (67.99% of profiled, 28.41% of total)
+BOLT-INFO: Finished pass: reorder-blocks
+BOLT-INFO: Starting pass: eliminate-unreachable
+BOLT-INFO: removed 1 dead basic block(s) accounting for 0 bytes in function luaH_pset/1(*2)
+BOLT-INFO: removed 1 dead basic block(s) accounting for 0 bytes in function luaH_newkey/1(*2)
+BOLT-INFO: removed 1 dead basic block(s) accounting for 0 bytes in function luaV_finishset/1(*2)
+BOLT-INFO: UCE removed 3 blocks and 0 bytes of code
+BOLT-INFO: Finished pass: eliminate-unreachable
+BOLT-INFO: Starting pass: split-functions
+BOLT-INFO: Finished pass: split-functions
+BOLT-INFO: Starting pass: loop-inversion-opt
+BOLT-INFO: 5 Functions were reordered by LoopInversionPass
+BOLT-INFO: Finished pass: loop-inversion-opt
+BOLT-INFO: Starting pass: tail-duplication
+BOLT-INFO: Finished pass: tail-duplication
+BOLT-INFO: Starting pass: fix-branches
+BOLT-INFO: Finished pass: fix-branches
+BOLT-INFO: Starting pass: reorder-functions
+BOLT-INFO: buildCallGraph: 339 nodes, 1263 callsites (18 recursive), density = 0.006178, 167 callsites not processed, 307 callsites with invalid profile, used perf data for 0 stale functions.
+BOLT-INFO: Function reordering stats
+BOLT-INFO:  Number of hot functions: 298
+BOLT-INFO:  Number of clusters: 1
+BOLT-INFO:  Final average call distance = 1030.3 (41955909802 / 40723605)
+BOLT-INFO:  Total Calls = 40723605
+BOLT-INFO:  Total Calls within 64B = 8390814 (20.60%)
+BOLT-INFO:  Total Calls within 4KB = 37681767 (92.53%)
+BOLT-INFO:  Total Calls within 2MB = 40723605 (100.00%)
+BOLT-INFO: Finished pass: reorder-functions
+BOLT-INFO: Starting pass: populate-output-functions
+BOLT-INFO: Finished pass: populate-output-functions
+BOLT-INFO: Starting pass: split-functions
+BOLT-INFO: Finished pass: split-functions
+BOLT-INFO: Starting pass: print dyno-stats after optimizations
+BOLT-INFO: program-wide dynostats after all optimizations before SCTC and FOP:
+
+           247226320 : executed forward branches
+            81758610 : taken forward branches
+           116890086 : executed backward branches
+            27417169 : taken backward branches
+            96218161 : executed unconditional branches
+            68143173 : all function calls
+            13548623 : indirect calls
+             7655876 : PLT calls
+          2878555388 : executed instructions
+           776351228 : executed load instructions
+           345587766 : executed store instructions
+                   0 : taken jump table branches
+                   0 : taken unknown indirect branches
+           460334567 : total branches
+           205393940 : taken branches
+           254940627 : non-taken conditional branches
+           109175779 : taken conditional branches
+           364116406 : all conditional branches
+                   0 : linker-inserted veneer calls
+
+           324047787 : executed forward branches (+31.1%)
+            25204426 : taken forward branches (-69.2%)
+            40069286 : executed backward branches (-65.7%)
+            23783944 : taken backward branches (-13.3%)
+            11228739 : executed unconditional branches (-88.3%)
+            56404466 : all function calls (-17.2%)
+            13548623 : indirect calls (=)
+             7655876 : PLT calls (=)
+          2745213066 : executed instructions (-4.6%)
+           770893533 : executed load instructions (-0.7%)
+           340129941 : executed store instructions (-1.6%)
+                   0 : taken jump table branches (=)
+                   0 : taken unknown indirect branches (=)
+           375345812 : total branches (-18.5%)
+            60217109 : taken branches (-70.7%)
+           315128703 : non-taken conditional branches (+23.6%)
+            48988370 : taken conditional branches (-55.1%)
+           364117073 : all conditional branches (+0.0%)
+                   0 : linker-inserted veneer calls (=)
+
+BOLT-INFO: Finished pass: print dyno-stats after optimizations
+BOLT-INFO: Starting pass: simplify-conditional-tail-calls
+BOLT-INFO: Finished pass: simplify-conditional-tail-calls
+BOLT-INFO: Starting pass: peepholes
+BOLT-INFO: Finished pass: peepholes
+BOLT-INFO: Starting pass: assign-sections
+BOLT-INFO: Finished pass: assign-sections
+BOLT-INFO: Starting pass: aligner
+BOLT-INFO: Finished pass: aligner
+BOLT-INFO: Starting pass: reorder-data
+BOLT-INFO: Finished pass: reorder-data
+BOLT-INFO: Starting pass: patch-entries
+BOLT-INFO: patching entries in original code
+BOLT-INFO: function lua_warning too small to patch its entry point
+BOLT-WARNING: failed to patch entries in lua_warning. The function will not be optimized
+BOLT-INFO: function luaL_prepbuffsize too small to patch its entry point
+BOLT-WARNING: failed to patch entries in luaL_prepbuffsize. The function will not be optimized
+BOLT-INFO: function luaL_makeseed too small to patch its entry point
+BOLT-WARNING: failed to patch entries in luaL_makeseed. The function will not be optimized
+BOLT-INFO: Finished pass: patch-entries
+BOLT-INFO: Starting pass: assign-sections
+BOLT-INFO: Finished pass: assign-sections
+BOLT-INFO: Starting pass: aarch64-relaxation
+BOLT-INFO: Finished pass: aarch64-relaxation
+BOLT-INFO: Starting pass: long-jmp
+BOLT-INFO: Starting stub-insertion pass
+BOLT-INFO: Inserted 45 stubs in the hot area and 18 stubs in the cold area. Shared 0 times, iterated 3 times.
+BOLT-INFO: Finished pass: long-jmp
+BOLT-INFO: Starting pass: pointer-auth-cfi-fixup
+BOLT-INFO: rewritten pac-ret DWARF info in 1 out of 785 functions (0.13%).
+BOLT-INFO: Finished pass: pointer-auth-cfi-fixup
+BOLT-INFO: Starting pass: finalize-functions
+BOLT-INFO: Finished pass: finalize-functions
+BOLT-INFO: Starting pass: frame-optimizer
+BOLT-INFO: Finished pass: frame-optimizer
+BOLT-INFO: Starting pass: alloc-combiner
+BOLT-INFO: Finished pass: alloc-combiner
+BOLT-INFO: Starting pass: retpoline-insertion
+BOLT-INFO: Finished pass: retpoline-insertion
+BOLT-INFO: Starting pass: inst-lowering
+BOLT-INFO: Finished pass: inst-lowering
+BOLT-INFO: Starting pass: lower-annotations
+BOLT-INFO: Finished pass: lower-annotations
+BOLT-INFO: Starting pass: clean-mc-state
+BOLT-INFO: Finished pass: clean-mc-state
+BOLT-INFO: padding code to 0x600000 to accommodate hot text
+BOLT-INFO: patched build-id (flipped first and last bits)
+BOLT: writing new section .fini_array
+ data at 0xaaab067aa040
+ of size 8
+ at offset 291984 with content size 8
+BOLT: writing new section .init_array
+ data at 0xaaab067bb990
+ of size 8
+ at offset 291992 with content size 8
+BOLT: writing new section .data.rel.ro
+ data at 0xaaab0614efa0
+ of size 4376
+ at offset 292000 with content size 4376
+BOLT: writing new section .text
+ data at 0xffff88200000
+ of size 107108
+ at offset 4194304 with content size 107108
+BOLT: writing new section .text.cold
+ data at 0xaaab06bda6c0
+ of size 58872
+ at offset 4301440 with content size 58872
+BOLT: writing new section .bolt.new.eh_frame
+ data at 0xaaab06c428d0
+ of size 33752
+ at offset 6291456 with content size 33752
+BOLT: writing new section .relocated.eh_frame
+ data at 0xaaab06be8cc0
+ of size 33116
+ at offset 6325208 with content size 33116
+BOLT-INFO: not writing section header for section .fini_array
+BOLT-INFO: not writing section header for section .init_array
+BOLT-INFO: not writing section header for section .data.rel.ro
+BOLT-INFO: writing section header for .text
+BOLT-INFO: writing section header for .text.cold
+BOLT-INFO: writing section header for .eh_frame
+BOLT-INFO: writing section header for .eh_frame_hdr
+BOLT-INFO: setting __hot_start to 0x400000
+BOLT-INFO: setting __hot_end to 0x41a264
+BOLT-INFO: not writing section header for section .fini_array
+BOLT-INFO: not writing section header for section .init_array
+BOLT-INFO: not writing section header for section .data.rel.ro
+BOLT-INFO: writing section header for .text
+BOLT-INFO: writing section header for .text.cold
+BOLT-INFO: writing section header for .eh_frame
+BOLT-INFO: writing section header for .eh_frame_hdr
+BOLT-INFO: writing section header for .note.bolt_info

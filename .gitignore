@@ -1,0 +1,13 @@
+# Local working directory of the Makefile (LLVM checkout, extracted binaries)
+/.work/
+# Build products
+*.o
+*.exe
+__pycache__/
+*.pyc
+# Docker image archives (published as release assets)
+*.tar
+*.tar.gz
+.DS_Store
+# Local tool state
+.claude/

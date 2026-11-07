@@ -1,0 +1,54 @@
+name: CI
+
+on:
+  push:
+    branches: [main]
+  pull_request:
+
+permissions:
+  contents: read
+
+jobs:
+  lint:
+    name: Lint scripts
+    runs-on: ubuntu-24.04
+    steps:
+      - uses: actions/checkout@v4
+      - name: Install linters
+        run: sudo apt-get update -qq && sudo apt-get install -y -qq shellcheck python3-pyflakes
+      - name: shellcheck
+        run: shellcheck -S warning scripts/*.sh benchmarks/realworld/build.sh
+      - name: pyflakes
+        run: python3 -m pyflakes scripts/*.py benchmarks/realworld/python/bench.py
+
+  patch:
+    name: Patch applies to the pinned LLVM commit
+    runs-on: ubuntu-24.04
+    steps:
+      - uses: actions/checkout@v4
+      - name: Sparse checkout of llvm-project
+        run: |
+          commit=$(cat patches/LLVM_COMMIT)
+          git init -q llvm-project && cd llvm-project
+          git remote add origin https://github.com/llvm/llvm-project.git
+          git sparse-checkout set bolt
+          git fetch -q --depth 1 --filter=blob:none origin "$commit"
+          git checkout -q FETCH_HEAD
+          test "$(git rev-parse HEAD)" = "$commit"
+      - name: git apply --check
+        run: cd llvm-project && git apply --check --verbose ../patches/0001-*.patch
+
+  microbenchmarks:
+    name: Microbenchmarks build and run
+    runs-on: ubuntu-24.04
+    steps:
+      - uses: actions/checkout@v4
+      - name: Install toolchain
+        run: sudo apt-get update -qq && sudo apt-get install -y -qq clang lld
+      - name: Build
+        run: make -C benchmarks/micro all
+      - name: Run with small inputs
+        run: |
+          cd benchmarks/micro
+          for b in bufwrite memo trace pool mixed unsafe; do "$b/$b.exe" 100000; done
+          compute/compute.exe 1 32

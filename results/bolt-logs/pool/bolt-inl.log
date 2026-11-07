@@ -1,0 +1,67 @@
+BOLT-WARNING: specifying numeric value "1" for option -icf is deprecated
+BOLT-INFO: shared object or position-independent executable detected
+BOLT-INFO: Target architecture: aarch64
+BOLT-INFO: BOLT version: 0a0e65b2e8ff6043d85ab07c4d23ea18bf0b9b7d
+BOLT-INFO: first alloc address is 0x0
+BOLT-INFO: creating new program header table at address 0x200000, offset 0x200000
+BOLT-INFO: enabling relocation mode
+BOLT-INFO: enabling lite mode
+BOLT-INFO: pre-processing profile using branch profile reader
+BOLT-INFO: PointerAuthCFIAnalyzer ran on 1 functions. Ignored 0 functions (0.00%) because of CFI inconsistencies
+BOLT-INFO: number of removed linker-inserted veneers: 0
+BOLT-INFO: 9 out of 12 functions in the binary (75.0%) have non-empty execution profile
+BOLT-INFO: 2 functions with profile could not be optimized
+BOLT-INFO: profile for 1 objects was ignored
+BOLT-INFO: profile quality metrics for the hottest 9 functions (reporting top 5% values): function CFG discontinuity 0.00%; call graph flow conservation gap 0.00%; CFG flow conservation gap 0.00% (weighted) 0.00% (worst); exception handling usage 0.00% (of total BBEC) 0.00% (of total InvokeEC)
+BOLT-INFO: inlined 19999745 calls at 2 call sites in 2 iteration(s). Change in binary size: 36 bytes.
+BOLT-INFO: basic block reordering modified layout of 3 functions (33.33% of profiled, 15.00% of total)
+BOLT-INFO: 0 Functions were reordered by LoopInversionPass
+BOLT-INFO: program-wide dynostats after all optimizations before SCTC and FOP:
+
+            40000009 : executed forward branches
+                   4 : taken forward branches
+            20000512 : executed backward branches
+                 767 : taken backward branches
+            39999746 : executed unconditional branches
+            39999761 : all function calls
+                   7 : indirect calls
+                   7 : PLT calls
+           900002178 : executed instructions
+           179999513 : executed load instructions
+           199999758 : executed store instructions
+                   0 : taken jump table branches
+                   0 : taken unknown indirect branches
+           100000267 : total branches
+            40000517 : taken branches
+            59999750 : non-taken conditional branches
+                 771 : taken conditional branches
+            60000521 : all conditional branches
+                   0 : linker-inserted veneer calls
+
+            40000009 : executed forward branches (=)
+                   2 : taken forward branches (-50.0%)
+            20000512 : executed backward branches (=)
+                 767 : taken backward branches (=)
+            19999746 : executed unconditional branches (-50.0%)
+            20000016 : all function calls (-50.0%)
+                   7 : indirect calls (=)
+                   7 : PLT calls (=)
+           840002939 : executed instructions (-6.7%)
+           179999513 : executed load instructions (=)
+           199999758 : executed store instructions (=)
+                   0 : taken jump table branches (=)
+                   0 : taken unknown indirect branches (=)
+            80000267 : total branches (-20.0%)
+            20000515 : taken branches (-50.0%)
+            59999752 : non-taken conditional branches (+0.0%)
+                 769 : taken conditional branches (-0.3%)
+            60000521 : all conditional branches (=)
+                   0 : linker-inserted veneer calls (=)
+
+BOLT-INFO: Starting stub-insertion pass
+BOLT-INFO: Inserted 0 stubs in the hot area and 0 stubs in the cold area. Shared 0 times, iterated 1 times.
+BOLT-INFO: rewritten pac-ret DWARF info in 1 out of 20 functions (5.00%).
+BOLT-INFO: padding code to 0x600000 to accommodate hot text
+BOLT-INFO: patched build-id (flipped first and last bits)
+BOLT-INFO: setting __hot_start to 0x400000
+BOLT-INFO: setting __hot_end to 0x400370

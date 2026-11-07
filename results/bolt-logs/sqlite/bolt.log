@@ -1,0 +1,69 @@
+BOLT-WARNING: specifying numeric value "1" for option -icf is deprecated
+BOLT-INFO: shared object or position-independent executable detected
+BOLT-INFO: Target architecture: aarch64
+BOLT-INFO: BOLT version: 0a0e65b2e8ff6043d85ab07c4d23ea18bf0b9b7d
+BOLT-INFO: first alloc address is 0x0
+BOLT-INFO: creating new program header table at address 0x200000, offset 0x200000
+BOLT-INFO: enabling relocation mode
+BOLT-INFO: enabling lite mode
+BOLT-INFO: pre-processing profile using branch profile reader
+BOLT-INFO: PointerAuthCFIAnalyzer ran on 1 functions. Ignored 0 functions (0.00%) because of CFI inconsistencies
+BOLT-INFO: number of removed linker-inserted veneers: 0
+BOLT-INFO: 774 out of 1583 functions in the binary (48.9%) have non-empty execution profile
+BOLT-INFO: 23 functions with profile could not be optimized
+BOLT-INFO: profile for 1 objects was ignored
+BOLT-INFO: profile quality metrics for the hottest 774 functions (reporting top 5% values): function CFG discontinuity 0.00%; call graph flow conservation gap 0.00%; CFG flow conservation gap 0.00% (weighted) 0.00% (worst); exception handling usage 0.00% (of total BBEC) 0.00% (of total InvokeEC)
+BOLT-INFO: ICF folded 2 out of 1632 functions in 3 passes. 0 functions had jump tables.
+BOLT-INFO: Removing all identical functions will save 0.02 KB of code space. Folded functions were called 98025 times based on profile.
+BOLT-INFO: basic block reordering modified layout of 684 functions (88.37% of profiled, 41.91% of total)
+BOLT-INFO: 4 Functions were reordered by LoopInversionPass
+BOLT-INFO: program-wide dynostats after all optimizations before SCTC and FOP:
+
+           218645031 : executed forward branches
+            93332281 : taken forward branches
+            47312286 : executed backward branches
+            27222179 : taken backward branches
+            48222483 : executed unconditional branches
+            44069240 : all function calls
+            20198337 : indirect calls
+             8958540 : PLT calls
+          1839356281 : executed instructions
+           467148102 : executed load instructions
+           181239914 : executed store instructions
+                   0 : taken jump table branches
+                   0 : taken unknown indirect branches
+           314179800 : total branches
+           168776943 : taken branches
+           145402857 : non-taken conditional branches
+           120554460 : taken conditional branches
+           265957317 : all conditional branches
+                   0 : linker-inserted veneer calls
+
+           218671136 : executed forward branches (+0.0%)
+            14933965 : taken forward branches (-84.0%)
+            47286181 : executed backward branches (-0.1%)
+            29334302 : taken backward branches (+7.8%)
+            10813741 : executed unconditional branches (-77.6%)
+            44069240 : all function calls (=)
+            20198337 : indirect calls (=)
+             8958540 : PLT calls (=)
+          1792478125 : executed instructions (-2.5%)
+           467148102 : executed load instructions (=)
+           181239914 : executed store instructions (=)
+                   0 : taken jump table branches (=)
+                   0 : taken unknown indirect branches (=)
+           276771058 : total branches (-11.9%)
+            55082008 : taken branches (-67.4%)
+           221689050 : non-taken conditional branches (+52.5%)
+            44268267 : taken conditional branches (-63.3%)
+           265957317 : all conditional branches (=)
+                   0 : linker-inserted veneer calls (=)
+
+BOLT-WARNING: failed to patch entries in sqlite3_bind_int. The function will not be optimized
+BOLT-INFO: Starting stub-insertion pass
+BOLT-INFO: Inserted 511 stubs in the hot area and 239 stubs in the cold area. Shared 0 times, iterated 3 times.
+BOLT-INFO: rewritten pac-ret DWARF info in 1 out of 1632 functions (0.06%).
+BOLT-INFO: padding code to 0x600000 to accommodate hot text
+BOLT-INFO: patched build-id (flipped first and last bits)
+BOLT-INFO: setting __hot_start to 0x400000
+BOLT-INFO: setting __hot_end to 0x4596e4

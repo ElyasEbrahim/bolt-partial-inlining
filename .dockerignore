@@ -1,0 +1,13 @@
+# Only docker/, patches/, benchmarks/, scripts/ and LICENSE are needed.
+.git
+.github
+.work
+results
+docs
+**/*.o
+**/*.exe
+**/__pycache__
+**/*.pyc
+**/.DS_Store
+*.tar
+*.tar.gz

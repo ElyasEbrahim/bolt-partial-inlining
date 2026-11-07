@@ -1,0 +1,1808 @@
+BOLT-WARNING: specifying numeric value "1" for option -icf is deprecated
+BOLT-INFO: shared object or position-independent executable detected
+BOLT-INFO: Target architecture: aarch64
+BOLT-INFO: BOLT version: 0a0e65b2e8ff6043d85ab07c4d23ea18bf0b9b7d
+BOLT-INFO: first alloc address is 0x0
+BOLT-INFO: creating new program header table at address 0x200000, offset 0x200000
+BOLT-INFO: marking .fini_array as GNU_RELRO
+BOLT-INFO: marking .init_array as GNU_RELRO
+BOLT-INFO: marking .data.rel.ro as GNU_RELRO
+BOLT-INFO: marking .dynamic as GNU_RELRO
+BOLT-INFO: marking .got as GNU_RELRO
+BOLT-INFO: marking .relro_padding as GNU_RELRO
+BOLT-INFO: enabling relocation mode
+BOLT-INFO: enabling lite mode
+BOLT-INFO: setting size of function _init/1(*2) to 24 (was 0)
+BOLT-INFO: setting size of function _fini/1(*2) to 20 (was 0)
+BOLT-INFO: setting size of function __BOLT_PSEUDO_.plt to 32 (was 0)
+BOLT-INFO: setting size of function abort@PLT to 16 (was 0)
+BOLT-INFO: setting size of function __libc_start_main@PLT to 16 (was 0)
+BOLT-INFO: setting size of function __gmon_start__@PLT to 16 (was 0)
+BOLT-INFO: setting size of function __cxa_finalize@PLT to 16 (was 0)
+BOLT-INFO: setting size of function strcmp@PLT to 16 (was 0)
+BOLT-INFO: setting size of function strchr@PLT to 16 (was 0)
+BOLT-INFO: setting size of function strlen@PLT to 16 (was 0)
+BOLT-INFO: setting size of function memcpy@PLT to 16 (was 0)
+BOLT-INFO: setting size of function memset@PLT to 16 (was 0)
+BOLT-INFO: setting size of function memmove@PLT to 16 (was 0)
+BOLT-INFO: setting size of function getpid@PLT to 16 (was 0)
+BOLT-INFO: setting size of function __errno_location@PLT to 16 (was 0)
+BOLT-INFO: setting size of function strerror@PLT to 16 (was 0)
+BOLT-INFO: setting size of function fsync@PLT to 16 (was 0)
+BOLT-INFO: setting size of function time@PLT to 16 (was 0)
+BOLT-INFO: setting size of function nanosleep@PLT to 16 (was 0)
+BOLT-INFO: setting size of function gettimeofday@PLT to 16 (was 0)
+BOLT-INFO: setting size of function strncmp@PLT to 16 (was 0)
+BOLT-INFO: setting size of function strcspn@PLT to 16 (was 0)
+BOLT-INFO: setting size of function strspn@PLT to 16 (was 0)
+BOLT-INFO: setting size of function open64@PLT to 16 (was 0)
+BOLT-INFO: setting size of function sysconf@PLT to 16 (was 0)
+BOLT-INFO: setting size of function getenv@PLT to 16 (was 0)
+BOLT-INFO: setting size of function utimes@PLT to 16 (was 0)
+BOLT-INFO: setting size of function bcmp@PLT to 16 (was 0)
+BOLT-INFO: setting size of function memcmp@PLT to 16 (was 0)
+BOLT-INFO: setting size of function memchr@PLT to 16 (was 0)
+BOLT-INFO: setting size of function strrchr@PLT to 16 (was 0)
+BOLT-INFO: setting size of function localtime@PLT to 16 (was 0)
+BOLT-INFO: setting size of function malloc@PLT to 16 (was 0)
+BOLT-INFO: setting size of function free@PLT to 16 (was 0)
+BOLT-INFO: setting size of function realloc@PLT to 16 (was 0)
+BOLT-INFO: setting size of function unlink@PLT to 16 (was 0)
+BOLT-INFO: setting size of function fprintf@PLT to 16 (was 0)
+BOLT-INFO: setting size of function printf@PLT to 16 (was 0)
+BOLT-INFO: setting size of function fflush@PLT to 16 (was 0)
+BOLT-INFO: setting size of function __assert_fail@PLT to 16 (was 0)
+BOLT-INFO: setting size of function fputc@PLT to 16 (was 0)
+BOLT-INFO: setting size of function fclose@PLT to 16 (was 0)
+BOLT-INFO: setting size of function putchar@PLT to 16 (was 0)
+BOLT-INFO: setting size of function __ctype_b_loc@PLT to 16 (was 0)
+BOLT-INFO: setting size of function vfprintf@PLT to 16 (was 0)
+BOLT-INFO: setting size of function exit@PLT to 16 (was 0)
+BOLT-INFO: setting size of function fwrite@PLT to 16 (was 0)
+BOLT-INFO: setting size of function strstr@PLT to 16 (was 0)
+BOLT-INFO: setting size of function fopen@PLT to 16 (was 0)
+BOLT-INFO: setting size of function strtol@PLT to 16 (was 0)
+BOLT-INFO: setting size of function puts@PLT to 16 (was 0)
+BOLT-INFO: setting size of function fgets@PLT to 16 (was 0)
+BOLT-INFO: pre-processing profile using branch profile reader
+BOLT-INFO: skipping processing sqlite3_status64 per user request
+BOLT-INFO: skipping processing sqlite3_status per user request
+BOLT-INFO: skipping processing sqlite3_db_status64 per user request
+BOLT-INFO: skipping processing sqlite3_msize per user request
+BOLT-INFO: skipping processing sqlite3DeleteTrigger/1(*2) per user request
+BOLT-INFO: skipping processing sqlite3_db_status per user request
+BOLT-INFO: skipping processing sqlite3_vfs_register per user request
+BOLT-INFO: skipping processing sqlite3_vfs_unregister per user request
+BOLT-INFO: skipping processing sqlite3_release_memory per user request
+BOLT-INFO: skipping processing sqlite3_memory_alarm per user request
+BOLT-INFO: skipping processing sqlite3_soft_heap_limit64 per user request
+BOLT-INFO: skipping processing sqlite3_memory_used per user request
+BOLT-INFO: skipping processing sqlite3_soft_heap_limit per user request
+BOLT-INFO: skipping processing sqlite3_hard_heap_limit64 per user request
+BOLT-INFO: skipping processing sqlite3_memory_highwater per user request
+BOLT-INFO: skipping processing sqlite3_malloc per user request
+BOLT-INFO: skipping processing sqlite3_malloc64 per user request
+BOLT-INFO: skipping processing sqlite3_realloc per user request
+BOLT-INFO: skipping processing sqlite3_realloc64 per user request
+BOLT-INFO: skipping processing sqlite3_str_append per user request
+BOLT-INFO: skipping processing sqlite3_str_length per user request
+BOLT-INFO: skipping processing sqlite3_str_appendchar per user request
+BOLT-INFO: skipping processing sqlite3_str_errcode per user request
+BOLT-INFO: skipping processing sqlite3_str_value per user request
+BOLT-INFO: skipping processing sqlite3_str_appendall per user request
+BOLT-INFO: skipping processing sqlite3_str_finish per user request
+BOLT-INFO: skipping processing sqlite3_str_truncate per user request
+BOLT-INFO: skipping processing sqlite3_str_free per user request
+BOLT-INFO: skipping processing sqlite3_str_new per user request
+BOLT-INFO: skipping processing sqlite3_vsnprintf per user request
+BOLT-INFO: skipping processing sqlite3_os_init per user request
+BOLT-INFO: skipping processing unixOpen/1(*2) per user request
+BOLT-INFO: skipping processing unixDelete/1(*2) per user request
+BOLT-INFO: skipping processing unixAccess/1(*2) per user request
+BOLT-INFO: skipping processing unixFullPathname/1(*2) per user request
+BOLT-INFO: skipping processing unixSleep/1(*2) per user request
+BOLT-INFO: skipping processing unixCurrentTime/1(*2) per user request
+BOLT-INFO: skipping processing unixGetLastError/1(*2) per user request
+BOLT-INFO: skipping processing unixSetSystemCall/1(*2) per user request
+BOLT-INFO: skipping processing unixGetSystemCall/1(*2) per user request
+BOLT-INFO: skipping processing unixNextSystemCall/1(*2) per user request
+BOLT-INFO: skipping processing sqlite3_os_end per user request
+BOLT-INFO: skipping processing sqlite3_serialize per user request
+BOLT-INFO: skipping processing memdbFromDbSchema/1(*2) per user request
+BOLT-INFO: skipping processing sqlite3_column_int64 per user request
+BOLT-INFO: skipping processing sqlite3_column_int per user request
+BOLT-INFO: skipping processing sqlite3_deserialize per user request
+BOLT-INFO: skipping processing sqlite3_database_file_object per user request
+BOLT-INFO: skipping processing sqlite3_enable_shared_cache per user request
+BOLT-INFO: skipping processing sqlite3_backup_init per user request
+BOLT-INFO: skipping processing findBtree/1(*2) per user request
+BOLT-INFO: skipping processing sqlite3BtreeSetVersion/1(*2) per user request
+BOLT-INFO: skipping processing sqlite3PagerSync/1(*2) per user request
+BOLT-INFO: skipping processing sqlite3_backup_remaining per user request
+BOLT-INFO: skipping processing sqlite3_backup_pagecount per user request
+BOLT-INFO: skipping processing sqlite3_expired per user request
+BOLT-INFO: skipping processing invokeProfileCallback/1(*2) per user request
+BOLT-INFO: skipping processing sqlite3_clear_bindings per user request
+BOLT-INFO: skipping processing sqlite3_value_bytes per user request
+BOLT-INFO: skipping processing sqlite3_value_bytes16 per user request
+BOLT-INFO: skipping processing sqlite3_value_double per user request
+BOLT-INFO: skipping processing sqlite3_value_int per user request
+BOLT-INFO: skipping processing sqlite3VdbeIntValue/1(*2) per user request
+BOLT-INFO: skipping processing sqlite3_value_int64 per user request
+BOLT-INFO: skipping processing sqlite3_value_subtype per user request
+BOLT-INFO: skipping processing sqlite3_value_pointer per user request
+BOLT-INFO: skipping processing sqlite3ValueText/1(*2) per user request
+BOLT-INFO: skipping processing sqlite3_value_text16 per user request
+BOLT-INFO: skipping processing sqlite3_value_text16be per user request
+BOLT-INFO: skipping processing sqlite3_value_text16le per user request
+BOLT-INFO: skipping processing sqlite3_value_type per user request
+BOLT-INFO: skipping processing sqlite3_value_encoding per user request
+BOLT-INFO: skipping processing sqlite3_value_nochange per user request
+BOLT-INFO: skipping processing sqlite3_value_frombind per user request
+BOLT-INFO: skipping processing sqlite3_value_dup per user request
+BOLT-INFO: skipping processing sqlite3_value_free per user request
+BOLT-INFO: skipping processing sqlite3_result_blob per user request
+BOLT-INFO: skipping processing sqlite3_result_blob64 per user request
+BOLT-INFO: skipping processing sqlite3_result_double per user request
+BOLT-INFO: skipping processing sqlite3_result_error per user request
+BOLT-INFO: skipping processing sqlite3_result_error16 per user request
+BOLT-INFO: skipping processing sqlite3_result_int per user request
+BOLT-INFO: skipping processing sqlite3_result_null per user request
+BOLT-INFO: skipping processing sqlite3_result_pointer per user request
+BOLT-INFO: skipping processing sqlite3_result_subtype per user request
+BOLT-INFO: skipping processing sqlite3_result_text per user request
+BOLT-INFO: skipping processing sqlite3_result_text16 per user request
+BOLT-INFO: skipping processing sqlite3_result_text16be per user request
+BOLT-INFO: skipping processing sqlite3_result_text16le per user request
+BOLT-INFO: skipping processing sqlite3_result_error_toobig per user request
+BOLT-INFO: skipping processing sqlite3_result_zeroblob per user request
+BOLT-INFO: skipping processing sqlite3_result_zeroblob64 per user request
+BOLT-INFO: skipping processing sqlite3_result_error_code per user request
+BOLT-INFO: skipping processing sqlite3_result_error_nomem per user request
+BOLT-INFO: skipping processing sqlite3OomFault/1(*2) per user request
+BOLT-INFO: skipping processing sqlite3RowSetClear/1(*2) per user request
+BOLT-INFO: skipping processing sqlite3_user_data per user request
+BOLT-INFO: skipping processing sqlite3_context_db_handle per user request
+BOLT-INFO: skipping processing sqlite3_vtab_nochange per user request
+BOLT-INFO: skipping processing sqlite3_vtab_in_first per user request
+BOLT-INFO: skipping processing valueFromValueList/1(*2) per user request
+BOLT-INFO: skipping processing sqlite3_vtab_in_next per user request
+BOLT-INFO: skipping processing sqlite3_aggregate_context per user request
+BOLT-INFO: skipping processing sqlite3_get_auxdata per user request
+BOLT-INFO: skipping processing sqlite3_set_auxdata per user request
+BOLT-INFO: skipping processing sqlite3_aggregate_count per user request
+BOLT-INFO: skipping processing sqlite3_data_count per user request
+BOLT-INFO: skipping processing sqlite3_column_blob per user request
+BOLT-INFO: skipping processing sqlite3_column_bytes per user request
+BOLT-INFO: skipping processing sqlite3_column_bytes16 per user request
+BOLT-INFO: skipping processing sqlite3_column_double per user request
+BOLT-INFO: skipping processing sqlite3_column_value per user request
+BOLT-INFO: skipping processing sqlite3_column_text16 per user request
+BOLT-INFO: skipping processing sqlite3_column_type per user request
+BOLT-INFO: skipping processing sqlite3_column_name per user request
+BOLT-INFO: skipping processing sqlite3_column_name16 per user request
+BOLT-INFO: skipping processing sqlite3_column_decltype per user request
+BOLT-INFO: skipping processing sqlite3_column_decltype16 per user request
+BOLT-INFO: skipping processing sqlite3_bind_blob per user request
+BOLT-INFO: skipping processing sqlite3_bind_blob64 per user request
+BOLT-INFO: skipping processing sqlite3_bind_null per user request
+BOLT-INFO: skipping processing sqlite3_bind_pointer per user request
+BOLT-INFO: skipping processing sqlite3_bind_text16 per user request
+BOLT-INFO: skipping processing sqlite3_bind_value per user request
+BOLT-INFO: skipping processing sqlite3_bind_zeroblob per user request
+BOLT-INFO: skipping processing sqlite3_bind_zeroblob64 per user request
+BOLT-INFO: skipping processing sqlite3_bind_parameter_count per user request
+BOLT-INFO: skipping processing sqlite3_bind_parameter_name per user request
+BOLT-INFO: skipping processing sqlite3_bind_parameter_index per user request
+BOLT-INFO: skipping processing sqlite3_transfer_bindings per user request
+BOLT-INFO: skipping processing sqlite3_db_handle per user request
+BOLT-INFO: skipping processing sqlite3_stmt_readonly per user request
+BOLT-INFO: skipping processing sqlite3_stmt_isexplain per user request
+BOLT-INFO: skipping processing sqlite3_stmt_explain per user request
+BOLT-INFO: skipping processing sqlite3_stmt_busy per user request
+BOLT-INFO: skipping processing sqlite3_next_stmt per user request
+BOLT-INFO: skipping processing sqlite3_stmt_status per user request
+BOLT-INFO: skipping processing sqlite3_sql per user request
+BOLT-INFO: skipping processing sqlite3_expanded_sql per user request
+BOLT-INFO: skipping processing sqlite3VdbeExpandSql/1(*2) per user request
+BOLT-INFO: skipping processing sqlite3_blob_open per user request
+BOLT-INFO: skipping processing blobSeekToRow/1(*2) per user request
+BOLT-INFO: skipping processing sqlite3_blob_close per user request
+BOLT-INFO: skipping processing sqlite3_blob_read per user request
+BOLT-INFO: skipping processing blobReadWrite/1(*2) per user request
+BOLT-INFO: skipping processing sqlite3BtreePayloadChecked/1(*2) per user request
+BOLT-INFO: skipping processing sqlite3_blob_write per user request
+BOLT-INFO: skipping processing sqlite3BtreePutData/1(*2) per user request
+BOLT-INFO: skipping processing sqlite3_blob_bytes per user request
+BOLT-INFO: skipping processing sqlite3_blob_reopen per user request
+BOLT-INFO: skipping processing sqlite3_set_authorizer per user request
+BOLT-INFO: skipping processing sqlite3_strglob per user request
+BOLT-INFO: skipping processing sqlite3_strlike per user request
+BOLT-INFO: skipping processing sqlite3_errmsg per user request
+BOLT-INFO: skipping processing sqlite3_auto_extension per user request
+BOLT-INFO: skipping processing sqlite3_cancel_auto_extension per user request
+BOLT-INFO: skipping processing sqlite3_reset_auto_extension per user request
+BOLT-INFO: skipping processing sqlite3_prepare per user request
+BOLT-INFO: skipping processing sqlite3_prepare_v3 per user request
+BOLT-INFO: skipping processing sqlite3_prepare16 per user request
+BOLT-INFO: skipping processing sqlite3Prepare16/1(*2) per user request
+BOLT-INFO: skipping processing sqlite3_prepare16_v2 per user request
+BOLT-INFO: skipping processing sqlite3_prepare16_v3 per user request
+BOLT-INFO: skipping processing sqlite3_get_table per user request
+BOLT-INFO: skipping processing sqlite3_get_table_cb/1(*2) per user request
+BOLT-INFO: skipping processing sqlite3_free_table per user request
+BOLT-INFO: skipping processing sqlite3_create_module per user request
+BOLT-INFO: skipping processing sqlite3_create_module_v2 per user request
+BOLT-INFO: skipping processing sqlite3_drop_modules per user request
+BOLT-INFO: skipping processing sqlite3_vtab_on_conflict per user request
+BOLT-INFO: skipping processing sqlite3_vtab_config per user request
+BOLT-INFO: skipping processing sqlite3_vtab_collation per user request
+BOLT-INFO: skipping processing sqlite3_vtab_in per user request
+BOLT-INFO: skipping processing sqlite3_vtab_rhs_value per user request
+BOLT-INFO: skipping processing sqlite3_vtab_distinct per user request
+BOLT-INFO: skipping processing sqlite3_keyword_name per user request
+BOLT-INFO: skipping processing sqlite3_keyword_count per user request
+BOLT-INFO: skipping processing sqlite3_keyword_check per user request
+BOLT-INFO: skipping processing sqlite3_incomplete per user request
+BOLT-INFO: skipping processing sqlite3_complete per user request
+BOLT-INFO: skipping processing sqlite3_complete16 per user request
+BOLT-INFO: skipping processing sqlite3_threadsafe per user request
+BOLT-INFO: skipping processing sqlite3_shutdown per user request
+BOLT-INFO: skipping processing sqlite3_db_mutex per user request
+BOLT-INFO: skipping processing sqlite3_db_release_memory per user request
+BOLT-INFO: skipping processing sqlite3_db_cacheflush per user request
+BOLT-INFO: skipping processing sqlite3_db_config per user request
+BOLT-INFO: skipping processing sqlite3_last_insert_rowid per user request
+BOLT-INFO: skipping processing sqlite3_set_last_insert_rowid per user request
+BOLT-INFO: skipping processing sqlite3_changes64 per user request
+BOLT-INFO: skipping processing sqlite3_changes per user request
+BOLT-INFO: skipping processing sqlite3_total_changes64 per user request
+BOLT-INFO: skipping processing sqlite3_total_changes per user request
+BOLT-INFO: skipping processing sqlite3_txn_state per user request
+BOLT-INFO: skipping processing sqlite3_close_v2 per user request
+BOLT-INFO: skipping processing sqlite3_busy_handler per user request
+BOLT-INFO: skipping processing sqlite3_progress_handler per user request
+BOLT-INFO: skipping processing sqlite3_busy_timeout per user request
+BOLT-INFO: skipping processing sqliteDefaultBusyCallback/1(*2) per user request
+BOLT-INFO: skipping processing sqlite3_setlk_timeout per user request
+BOLT-INFO: skipping processing sqlite3_interrupt per user request
+BOLT-INFO: skipping processing sqlite3_is_interrupted per user request
+BOLT-INFO: skipping processing sqlite3_create_function_v2 per user request
+BOLT-INFO: skipping processing sqlite3_create_window_function per user request
+BOLT-INFO: skipping processing sqlite3_create_function16 per user request
+BOLT-INFO: skipping processing sqlite3_overload_function per user request
+BOLT-INFO: skipping processing sqlite3InvalidFunction/1(*2) per user request
+BOLT-INFO: skipping processing sqlite3_trace per user request
+BOLT-INFO: skipping processing sqlite3_trace_v2 per user request
+BOLT-INFO: skipping processing sqlite3_profile per user request
+BOLT-INFO: skipping processing sqlite3_commit_hook per user request
+BOLT-INFO: skipping processing sqlite3_update_hook per user request
+BOLT-INFO: skipping processing sqlite3_rollback_hook per user request
+BOLT-INFO: skipping processing sqlite3_autovacuum_pages per user request
+BOLT-INFO: skipping processing sqlite3_wal_autocheckpoint per user request
+BOLT-INFO: skipping processing sqlite3_wal_hook per user request
+BOLT-INFO: skipping processing sqlite3WalDefaultHook/1(*2) per user request
+BOLT-INFO: skipping processing sqlite3_wal_checkpoint_v2 per user request
+BOLT-INFO: skipping processing sqlite3_wal_checkpoint per user request
+BOLT-INFO: skipping processing sqlite3_set_errmsg per user request
+BOLT-INFO: skipping processing sqlite3_error_offset per user request
+BOLT-INFO: skipping processing sqlite3_errmsg16 per user request
+BOLT-INFO: skipping processing sqlite3_extended_errcode per user request
+BOLT-INFO: skipping processing sqlite3_system_errno per user request
+BOLT-INFO: skipping processing sqlite3_errstr per user request
+BOLT-INFO: skipping processing sqlite3_limit per user request
+BOLT-INFO: skipping processing sqlite3_open per user request
+BOLT-INFO: skipping processing sqlite3_open16 per user request
+BOLT-INFO: skipping processing sqlite3_create_collation per user request
+BOLT-INFO: skipping processing sqlite3_create_collation_v2 per user request
+BOLT-INFO: skipping processing sqlite3_create_collation16 per user request
+BOLT-INFO: skipping processing sqlite3_collation_needed per user request
+BOLT-INFO: skipping processing sqlite3_collation_needed16 per user request
+BOLT-INFO: skipping processing sqlite3_get_clientdata per user request
+BOLT-INFO: skipping processing sqlite3_set_clientdata per user request
+BOLT-INFO: skipping processing sqlite3_global_recover per user request
+BOLT-INFO: skipping processing sqlite3_get_autocommit per user request
+BOLT-INFO: skipping processing sqlite3_thread_cleanup per user request
+BOLT-INFO: skipping processing sqlite3_table_column_metadata per user request
+BOLT-INFO: skipping processing sqlite3IsRowid/1(*2) per user request
+BOLT-INFO: skipping processing sqlite3_sleep per user request
+BOLT-INFO: skipping processing sqlite3_extended_result_codes per user request
+BOLT-INFO: skipping processing sqlite3LogEst/1(*2) per user request
+BOLT-INFO: skipping processing sqlite3_create_filename per user request
+BOLT-INFO: skipping processing sqlite3_free_filename per user request
+BOLT-INFO: skipping processing sqlite3_uri_parameter per user request
+BOLT-INFO: skipping processing sqlite3_uri_key per user request
+BOLT-INFO: skipping processing sqlite3_uri_boolean per user request
+BOLT-INFO: skipping processing sqlite3_uri_int64 per user request
+BOLT-INFO: skipping processing sqlite3_filename_database per user request
+BOLT-INFO: skipping processing sqlite3_filename_journal per user request
+BOLT-INFO: skipping processing sqlite3_filename_wal per user request
+BOLT-INFO: skipping processing sqlite3_db_name per user request
+BOLT-INFO: skipping processing sqlite3_db_filename per user request
+BOLT-INFO: skipping processing sqlite3_db_readonly per user request
+BOLT-INFO: skipping processing sqlite3_compileoption_get per user request
+BOLT-INFO: skipping processing sqlite3DbFreeNN/1(*2) per user request
+BOLT-INFO: skipping processing measureAllocationSize/1(*2) per user request
+BOLT-INFO: skipping processing posixIoFinderImpl/1(*2) per user request
+BOLT-INFO: skipping processing unixClose/1(*2) per user request
+BOLT-INFO: skipping processing unixRead/1(*2) per user request
+BOLT-INFO: skipping processing unixWrite/1(*2) per user request
+BOLT-INFO: skipping processing unixTruncate/1(*2) per user request
+BOLT-INFO: skipping processing unixSync/1(*2) per user request
+BOLT-INFO: skipping processing unixFileSize/1(*2) per user request
+BOLT-INFO: skipping processing unixLock/1(*2) per user request
+BOLT-INFO: skipping processing unixUnlock/1(*2) per user request
+BOLT-INFO: skipping processing unixCheckReservedLock/1(*2) per user request
+BOLT-INFO: skipping processing unixFileControl/1(*2) per user request
+BOLT-INFO: skipping processing unixSectorSize/1(*2) per user request
+BOLT-INFO: skipping processing unixDeviceCharacteristics/1(*2) per user request
+BOLT-INFO: skipping processing unixShmMap/1(*2) per user request
+BOLT-INFO: skipping processing unixShmLock/1(*2) per user request
+BOLT-INFO: skipping processing unixShmBarrier/1(*2) per user request
+BOLT-INFO: skipping processing unixShmUnmap/1(*2) per user request
+BOLT-INFO: skipping processing unixFetch/1(*2) per user request
+BOLT-INFO: skipping processing unixUnfetch/1(*2) per user request
+BOLT-INFO: skipping processing verifyDbFile/1(*2) per user request
+BOLT-INFO: skipping processing closeUnixFile/1(*2) per user request
+BOLT-INFO: skipping processing openDirectory/1(*2) per user request
+BOLT-INFO: skipping processing unixGetpagesize/1(*2) per user request
+BOLT-INFO: skipping processing robust_open/1(*2) per user request
+BOLT-INFO: skipping processing unixLogErrorAtLine/1(*2) per user request
+BOLT-INFO: skipping processing closePendingFds/1(*2) per user request
+BOLT-INFO: skipping processing sqliteErrorFromPosixError/1(*2) per user request
+BOLT-INFO: skipping processing unixMapfile/1(*2) per user request
+BOLT-INFO: skipping processing unixTempFileDir/1(*2) per user request
+BOLT-INFO: skipping processing unixLockSharedMemory/1(*2) per user request
+BOLT-INFO: skipping processing unixShmPurge/1(*2) per user request
+BOLT-INFO: skipping processing unixShmSystemLock/1(*2) per user request
+BOLT-INFO: skipping processing findReusableFd/1(*2) per user request
+BOLT-INFO: skipping processing nolockClose/1(*2) per user request
+BOLT-INFO: skipping processing nolockLock/1(*2) per user request
+BOLT-INFO: skipping processing nolockUnlock/1(*2) per user request
+BOLT-INFO: skipping processing nolockCheckReservedLock/1(*2) per user request
+BOLT-INFO: skipping processing dotlockClose/1(*2) per user request
+BOLT-INFO: skipping processing dotlockLock/1(*2) per user request
+BOLT-INFO: skipping processing dotlockUnlock/1(*2) per user request
+BOLT-INFO: skipping processing dotlockCheckReservedLock/1(*2) per user request
+BOLT-INFO: skipping processing appendAllPathElements/1(*2) per user request
+BOLT-INFO: skipping processing nolockIoFinderImpl/1(*2) per user request
+BOLT-INFO: skipping processing dotlockIoFinderImpl/1(*2) per user request
+BOLT-INFO: skipping processing memdbClose/1(*2) per user request
+BOLT-INFO: skipping processing memdbRead/1(*2) per user request
+BOLT-INFO: skipping processing memdbWrite/1(*2) per user request
+BOLT-INFO: skipping processing memdbTruncate/1(*2) per user request
+BOLT-INFO: skipping processing memdbSync/1(*2) per user request
+BOLT-INFO: skipping processing memdbFileSize/1(*2) per user request
+BOLT-INFO: skipping processing memdbLock/1(*2) per user request
+BOLT-INFO: skipping processing memdbUnlock/1(*2) per user request
+BOLT-INFO: skipping processing memdbFileControl/1(*2) per user request
+BOLT-INFO: skipping processing memdbDeviceCharacteristics/1(*2) per user request
+BOLT-INFO: skipping processing memdbFetch/1(*2) per user request
+BOLT-INFO: skipping processing memdbUnfetch/1(*2) per user request
+BOLT-INFO: skipping processing btreeInvokeBusyHandler/1(*2) per user request
+BOLT-INFO: skipping processing sqlite3PagerOpenWal/1(*2) per user request
+BOLT-INFO: skipping processing releasePageOne/1(*2) per user request
+BOLT-INFO: skipping processing freeTempSpace/1(*2) per user request
+BOLT-INFO: skipping processing pagerLockDb/1(*2) per user request
+BOLT-INFO: skipping processing pagerSyncHotJournal/1(*2) per user request
+BOLT-INFO: skipping processing pager_playback/1(*2) per user request
+BOLT-INFO: skipping processing pagerUnlockDb/1(*2) per user request
+BOLT-INFO: skipping processing pager_reset/1(*2) per user request
+BOLT-INFO: skipping processing pagerOpenWalIfPresent/1(*2) per user request
+BOLT-INFO: skipping processing readSuperJournal/1(*2) per user request
+BOLT-INFO: skipping processing readJournalHdr/1(*2) per user request
+BOLT-INFO: skipping processing pager_playback_one_page/1(*2) per user request
+BOLT-INFO: skipping processing freeSuperJournal/1(*2) per user request
+BOLT-INFO: skipping processing setSectorSize/1(*2) per user request
+BOLT-INFO: skipping processing read32bits/1(*2) per user request
+BOLT-INFO: skipping processing pagerIsSuperJrnlName/1(*2) per user request
+BOLT-INFO: skipping processing sqlite3PagerLookup/1(*2) per user request
+BOLT-INFO: skipping processing sqlite3PcacheMakeDirty/1(*2) per user request
+BOLT-INFO: skipping processing backupUpdate/1(*2) per user request
+BOLT-INFO: skipping processing sqlite3PcacheCleanAll/1(*2) per user request
+BOLT-INFO: skipping processing memjrnlRead/1(*2) per user request
+BOLT-INFO: skipping processing memjrnlSync/1(*2) per user request
+BOLT-INFO: skipping processing memjrnlFileSize/1(*2) per user request
+BOLT-INFO: skipping processing getPageError/1(*2) per user request
+BOLT-INFO: skipping processing getPageMMap/1(*2) per user request
+BOLT-INFO: skipping processing walFindFrame/1(*2) per user request
+BOLT-INFO: skipping processing walIndexPageRealloc/1(*2) per user request
+BOLT-INFO: skipping processing readDbPage/1(*2) per user request
+BOLT-INFO: skipping processing pagerUndoCallback/1(*2) per user request
+BOLT-INFO: skipping processing sqlite3PcacheDirtyList/1(*2) per user request
+BOLT-INFO: skipping processing walTryBeginRead/1(*2) per user request
+BOLT-INFO: skipping processing walIndexReadHdr/1(*2) per user request
+BOLT-INFO: skipping processing walIndexTryHdr/1(*2) per user request
+BOLT-INFO: skipping processing walChecksumBytes/1(*2) per user request
+BOLT-INFO: skipping processing walDecodeFrame/1(*2) per user request
+BOLT-INFO: skipping processing walIndexAppend/1(*2) per user request
+BOLT-INFO: skipping processing pagerOpenWal/1(*2) per user request
+BOLT-INFO: skipping processing pagerWriteLargeSector/1(*2) per user request
+BOLT-INFO: skipping processing databaseIsUnmoved/1(*2) per user request
+BOLT-INFO: skipping processing pagerWalFrames/1(*2) per user request
+BOLT-INFO: skipping processing pager_incr_changecounter/1(*2) per user request
+BOLT-INFO: skipping processing writeSuperJournal/1(*2) per user request
+BOLT-INFO: skipping processing syncJournal/1(*2) per user request
+BOLT-INFO: skipping processing pager_write_pagelist/1(*2) per user request
+BOLT-INFO: skipping processing walWriteOneFrame/1(*2) per user request
+BOLT-INFO: skipping processing walLimitSize/1(*2) per user request
+BOLT-INFO: skipping processing walRestartHdr/1(*2) per user request
+BOLT-INFO: skipping processing incrVacuumStep/1(*2) per user request
+BOLT-INFO: skipping processing ptrmapGet/1(*2) per user request
+BOLT-INFO: skipping processing releasePage/1(*2) per user request
+BOLT-INFO: skipping processing relocatePage/1(*2) per user request
+BOLT-INFO: skipping processing setChildPtrmaps/1(*2) per user request
+BOLT-INFO: skipping processing ptrmapPut/1(*2) per user request
+BOLT-INFO: skipping processing modifyPagePointer/1(*2) per user request
+BOLT-INFO: skipping processing ptrmapPutOvflPtr/1(*2) per user request
+BOLT-INFO: skipping processing btreeCellSizeCheck/1(*2) per user request
+BOLT-INFO: skipping processing sqlite3BtreeTripAllCursors/1(*2) per user request
+BOLT-INFO: skipping processing freeP4Mem/1(*2) per user request
+BOLT-INFO: skipping processing sqlite3VdbeFrameRestore/1(*2) per user request
+BOLT-INFO: skipping processing sqlite3RCStrUnref/1(*2) per user request
+BOLT-INFO: skipping processing sqlite3OsCloseFree/1(*2) per user request
+BOLT-INFO: skipping processing sqlite3WalCheckpoint/1(*2) per user request
+BOLT-INFO: skipping processing vdbeFkError/1(*2) per user request
+BOLT-INFO: skipping processing sqlite3VdbeError/1(*2) per user request
+BOLT-INFO: skipping processing sqlite3OsOpenMalloc/1(*2) per user request
+BOLT-INFO: skipping processing sqlite3BtreeSavepoint/1(*2) per user request
+BOLT-INFO: skipping processing sqlite3VdbeMemStringify/1(*2) per user request
+BOLT-INFO: skipping processing sqlite3MemRealValueNoRC/1(*2) per user request
+BOLT-INFO: skipping processing sqlite3MemRealValueRCSlowPath/1(*2) per user request
+BOLT-INFO: skipping processing memIntValue/1(*2) per user request
+BOLT-INFO: skipping processing vdbeReleaseAndSetInt64/1(*2) per user request
+BOLT-INFO: skipping processing sqlite3NoopDestructor/1(*2) per user request
+BOLT-INFO: skipping processing sqlite3VdbeMemTranslate/1(*2) per user request
+BOLT-INFO: skipping processing sqlite3VdbeExec/1(*2) per user request
+BOLT-INFO: skipping processing sqlite3VdbeLogAbort/1(*2) per user request
+BOLT-INFO: skipping processing sqlite3VdbeBooleanValue/1(*2) per user request
+BOLT-INFO: skipping processing sqlite3VdbeHandleMovedCursor/1(*2) per user request
+BOLT-INFO: skipping processing sqlite3VdbeMemFromBtreeZeroOffset/1(*2) per user request
+BOLT-INFO: skipping processing sqlite3PutVarint/1(*2) per user request
+BOLT-INFO: skipping processing sqlite3BtreeRowCountEst/1(*2) per user request
+BOLT-INFO: skipping processing sqlite3ResetOneSchema/1(*2) per user request
+BOLT-INFO: skipping processing sqlite3VdbeFindIndexKey/1(*2) per user request
+BOLT-INFO: skipping processing sqlite3RootPageMoved/1(*2) per user request
+BOLT-INFO: skipping processing sqlite3VdbeMemSetRowSet/1(*2) per user request
+BOLT-INFO: skipping processing sqlite3RowSetInsert/1(*2) per user request
+BOLT-INFO: skipping processing sqlite3RowSetNext/1(*2) per user request
+BOLT-INFO: skipping processing sqlite3RowSetTest/1(*2) per user request
+BOLT-INFO: skipping processing sqlite3VdbeFrameMemDel/1(*2) per user request
+BOLT-INFO: skipping processing sqlite3PagerCloseWal/1(*2) per user request
+BOLT-INFO: skipping processing sqlite3VtabCallCreate/1(*2) per user request
+BOLT-INFO: skipping processing sqlite3VdbeValueListFree/1(*2) per user request
+BOLT-INFO: skipping processing vdbeClrCopy/1(*2) per user request
+BOLT-INFO: skipping processing computeNumericType/1(*2) per user request
+BOLT-INFO: skipping processing sqlite3VdbeMemNumerify/1(*2) per user request
+BOLT-INFO: skipping processing sqlite3BlobCompare/1(*2) per user request
+BOLT-INFO: skipping processing vdbeCompareMemStringWithEncodingChange/1(*2) per user request
+BOLT-INFO: skipping processing btreeRestoreCursorPosition/1(*2) per user request
+BOLT-INFO: skipping processing sqlite3VdbeMemFromBtree/1(*2) per user request
+BOLT-INFO: skipping processing sqlite3WindowDelete/1(*2) per user request
+BOLT-INFO: skipping processing invalidateIncrblobCursors/1(*2) per user request
+BOLT-INFO: skipping processing pageReinit/1(*2) per user request
+BOLT-INFO: skipping processing sqlite3BtreeSetCacheSize/1(*2) per user request
+BOLT-INFO: skipping processing pagerStress/1(*2) per user request
+BOLT-INFO: skipping processing vdbeSorterFlushPMA/1(*2) per user request
+BOLT-INFO: skipping processing vdbeSorterCompare/1(*2) per user request
+BOLT-INFO: skipping processing vdbeSorterOpenTempFile/1(*2) per user request
+BOLT-INFO: skipping processing vdbeMergeEngineInit/1(*2) per user request
+BOLT-INFO: skipping processing vdbeMergeEngineLevel0/1(*2) per user request
+BOLT-INFO: skipping processing vdbePmaReaderSeek/1(*2) per user request
+BOLT-INFO: skipping processing vdbePmaReadVarint/1(*2) per user request
+BOLT-INFO: skipping processing vdbePmaReaderNext/1(*2) per user request
+BOLT-INFO: skipping processing vdbePmaReadBlob/1(*2) per user request
+BOLT-INFO: skipping processing vdbeMergeEngineStep/1(*2) per user request
+BOLT-INFO: skipping processing sqlite3SetString/1(*2) per user request
+BOLT-INFO: skipping processing corruptSchema/1(*2) per user request
+BOLT-INFO: skipping processing checkAppendMsg/1(*2) per user request
+BOLT-INFO: skipping processing checkPtrmap/1(*2) per user request
+BOLT-INFO: skipping processing sqlite3RowSetDelete/1(*2) per user request
+BOLT-INFO: skipping processing rowSetEntrySort/1(*2) per user request
+BOLT-INFO: skipping processing rowSetTreeToList/1(*2) per user request
+BOLT-INFO: skipping processing rowSetNDeepTree/1(*2) per user request
+BOLT-INFO: skipping processing memdbOpen/1(*2) per user request
+BOLT-INFO: skipping processing memdbAccess/1(*2) per user request
+BOLT-INFO: skipping processing memdbFullPathname/1(*2) per user request
+BOLT-INFO: skipping processing memdbDlOpen/1(*2) per user request
+BOLT-INFO: skipping processing memdbDlError/1(*2) per user request
+BOLT-INFO: skipping processing memdbDlSym/1(*2) per user request
+BOLT-INFO: skipping processing memdbDlClose/1(*2) per user request
+BOLT-INFO: skipping processing memdbRandomness/1(*2) per user request
+BOLT-INFO: skipping processing memdbSleep/1(*2) per user request
+BOLT-INFO: skipping processing memdbGetLastError/1(*2) per user request
+BOLT-INFO: skipping processing memdbCurrentTimeInt64/1(*2) per user request
+BOLT-INFO: skipping processing sqlite3BtreeSetSpillSize/1(*2) per user request
+BOLT-INFO: skipping processing accessPayloadChecked/1(*2) per user request
+BOLT-INFO: skipping processing sqlite3JsonVtabRegister/1(*2) per user request
+BOLT-INFO: skipping processing pragmaVtabRowid/1(*2) per user request
+BOLT-INFO: skipping processing jsonEachConnect/1(*2) per user request
+BOLT-INFO: skipping processing jsonEachBestIndex/1(*2) per user request
+BOLT-INFO: skipping processing jsonEachDisconnect/1(*2) per user request
+BOLT-INFO: skipping processing jsonEachOpen/1(*2) per user request
+BOLT-INFO: skipping processing jsonEachClose/1(*2) per user request
+BOLT-INFO: skipping processing jsonEachFilter/1(*2) per user request
+BOLT-INFO: skipping processing jsonEachNext/1(*2) per user request
+BOLT-INFO: skipping processing jsonEachEof/1(*2) per user request
+BOLT-INFO: skipping processing jsonEachColumn/1(*2) per user request
+BOLT-INFO: skipping processing jsonEachRowid/1(*2) per user request
+BOLT-INFO: skipping processing jsonEachCursorReset/1(*2) per user request
+BOLT-INFO: skipping processing jsonStringReset/1(*2) per user request
+BOLT-INFO: skipping processing jsonBadPathError/1(*2) per user request
+BOLT-INFO: skipping processing jsonIs4Hex/1(*2) per user request
+BOLT-INFO: skipping processing sqlite3Utf8ReadLimited/1(*2) per user request
+BOLT-INFO: skipping processing jsonIs4HexB/1(*2) per user request
+BOLT-INFO: skipping processing jsonLabelCompareEscaped/1(*2) per user request
+BOLT-INFO: skipping processing jsonAppendPathName/1(*2) per user request
+BOLT-INFO: skipping processing jsonPrintf/1(*2) per user request
+BOLT-INFO: skipping processing jsonEachPathLength/1(*2) per user request
+BOLT-INFO: skipping processing jsonAppendRawNZ/1(*2) per user request
+BOLT-INFO: skipping processing sqlite3DeleteColumnNames/1(*2) per user request
+BOLT-INFO: skipping processing sqlite3Utf8Read/1(*2) per user request
+BOLT-INFO: skipping processing sqlite3DeleteTriggerStep/1(*2) per user request
+BOLT-INFO: skipping processing upsertDelete/1(*2) per user request
+BOLT-INFO: skipping processing yy_destructor/1(*2) per user request
+BOLT-INFO: skipping processing parserStackRealloc/1(*2) per user request
+BOLT-INFO: skipping processing sqlite3Savepoint/1(*2) per user request
+BOLT-INFO: skipping processing sqlite3AddGenerated/1(*2) per user request
+BOLT-INFO: skipping processing sqlite3RenameTokenMap/1(*2) per user request
+BOLT-INFO: skipping processing sqlite3AddReturning/1(*2) per user request
+BOLT-INFO: skipping processing sqlite3SrcListAppendList/1(*2) per user request
+BOLT-INFO: skipping processing sqlite3ExprListAppendVector/1(*2) per user request
+BOLT-INFO: skipping processing sqlite3UpsertNew/1(*2) per user request
+BOLT-INFO: skipping processing sqlite3ExprAddCollateToken/1(*2) per user request
+BOLT-INFO: skipping processing sqlite3ExprAddFunctionOrderBy/1(*2) per user request
+BOLT-INFO: skipping processing sqlite3WindowAttach/1(*2) per user request
+BOLT-INFO: skipping processing sqlite3ExprUnmapAndDelete/1(*2) per user request
+BOLT-INFO: skipping processing sqlite3ExprListToValues/1(*2) per user request
+BOLT-INFO: skipping processing sqlite3DropIndex/1(*2) per user request
+BOLT-INFO: skipping processing sqlite3Pragma/1(*2) per user request
+BOLT-INFO: skipping processing sqlite3FinishTrigger/1(*2) per user request
+BOLT-INFO: skipping processing sqlite3BeginTrigger/1(*2) per user request
+BOLT-INFO: skipping processing sqlite3TriggerUpdateStep/1(*2) per user request
+BOLT-INFO: skipping processing sqlite3TriggerInsertStep/1(*2) per user request
+BOLT-INFO: skipping processing sqlite3TriggerDeleteStep/1(*2) per user request
+BOLT-INFO: skipping processing sqlite3TriggerSelectStep/1(*2) per user request
+BOLT-INFO: skipping processing sqlite3DropTrigger/1(*2) per user request
+BOLT-INFO: skipping processing sqlite3Reindex/1(*2) per user request
+BOLT-INFO: skipping processing sqlite3AlterRenameTable/1(*2) per user request
+BOLT-INFO: skipping processing sqlite3AlterDropColumn/1(*2) per user request
+BOLT-INFO: skipping processing sqlite3AlterRenameColumn/1(*2) per user request
+BOLT-INFO: skipping processing sqlite3AlterDropConstraint/1(*2) per user request
+BOLT-INFO: skipping processing sqlite3AlterSetNotNull/1(*2) per user request
+BOLT-INFO: skipping processing sqlite3AlterAddConstraint/1(*2) per user request
+BOLT-INFO: skipping processing sqlite3VtabFinishParse/1(*2) per user request
+BOLT-INFO: skipping processing sqlite3VtabBeginParse/1(*2) per user request
+BOLT-INFO: skipping processing sqlite3VtabArgInit/1(*2) per user request
+BOLT-INFO: skipping processing sqlite3WindowChain/1(*2) per user request
+BOLT-INFO: skipping processing sqlite3WindowAssemble/1(*2) per user request
+BOLT-INFO: skipping processing sqlite3WindowAlloc/1(*2) per user request
+BOLT-INFO: skipping processing sqlite3DequoteNumber/1(*2) per user request
+BOLT-INFO: skipping processing lockTable/1(*2) per user request
+BOLT-INFO: skipping processing sqlite3VdbeAppendP4/1(*2) per user request
+BOLT-INFO: skipping processing sqlite3IndexedExprLookup/1(*2) per user request
+BOLT-INFO: skipping processing sqlite3ExprCodeGeneratedColumn/1(*2) per user request
+BOLT-INFO: skipping processing exprPartidxExprLookup/1(*2) per user request
+BOLT-INFO: skipping processing sqlite3ExprTruthValue/1(*2) per user request
+BOLT-INFO: skipping processing exprComputeOperands/1(*2) per user request
+BOLT-INFO: skipping processing exprCodeVector/1(*2) per user request
+BOLT-INFO: skipping processing setDoNotMergeFlagOnCopy/1(*2) per user request
+BOLT-INFO: skipping processing exprCompareVariable/1(*2) per user request
+BOLT-INFO: skipping processing sqlite3WindowCompare/1(*2) per user request
+BOLT-INFO: skipping processing walkWindowList/1(*2) per user request
+BOLT-INFO: skipping processing authFunctions/1(*2) per user request
+BOLT-INFO: skipping processing realAuthCheck/1(*2) per user request
+BOLT-INFO: skipping processing sqlite3ExprImpliesExpr/1(*2) per user request
+BOLT-INFO: skipping processing exprImpliesNotNull/1(*2) per user request
+BOLT-INFO: skipping processing impliesNotNullRow/1(*2) per user request
+BOLT-INFO: skipping processing bothImplyNotNullRow/1(*2) per user request
+BOLT-INFO: skipping processing sqlite3IdListDup/1(*2) per user request
+BOLT-INFO: skipping processing sqlite3WindowDup/1(*2) per user request
+BOLT-INFO: skipping processing gatherSelectWindowsCallback/1(*2) per user request
+BOLT-INFO: skipping processing gatherSelectWindowsSelectCallback/1(*2) per user request
+BOLT-INFO: skipping processing sqlite3WindowLink/1(*2) per user request
+BOLT-INFO: skipping processing sqlite3ReadOnlyShadowTables/1(*2) per user request
+BOLT-INFO: skipping processing sqlite3IsShadowTableOf/1(*2) per user request
+BOLT-INFO: skipping processing createTableStmt/1(*2) per user request
+BOLT-INFO: skipping processing resolveExprStep/1(*2) per user request
+BOLT-INFO: skipping processing notValidImpl/1(*2) per user request
+BOLT-INFO: skipping processing exprProbability/1(*2) per user request
+BOLT-INFO: skipping processing sqlite3WindowUpdate/1(*2) per user request
+BOLT-INFO: skipping processing sqlite3MatchEName/1(*2) per user request
+BOLT-INFO: skipping processing isValidSchemaTableName/1(*2) per user request
+BOLT-INFO: skipping processing incrAggDepth/1(*2) per user request
+BOLT-INFO: skipping processing sqlite3AuthReadCol/1(*2) per user request
+BOLT-INFO: skipping processing sqlite3SelectWrongNumTermsError/1(*2) per user request
+BOLT-INFO: skipping processing sqlite3MarkAllShadowTablesOf/1(*2) per user request
+BOLT-INFO: skipping processing tableAndColumnIndex/1(*2) per user request
+BOLT-INFO: skipping processing resolveRemoveWindowsCb/1(*2) per user request
+BOLT-INFO: skipping processing selectCheckOnClausesSelect/1(*2) per user request
+BOLT-INFO: skipping processing identPut/1(*2) per user request
+BOLT-INFO: skipping processing renameUnmapExprCb/1(*2) per user request
+BOLT-INFO: skipping processing renameUnmapSelectCb/1(*2) per user request
+BOLT-INFO: skipping processing renameWalkWith/1(*2) per user request
+BOLT-INFO: skipping processing sqlite3HasExplicitNulls/1(*2) per user request
+BOLT-INFO: skipping processing sqlite3DropTriggerPtr/1(*2) per user request
+BOLT-INFO: skipping processing sqlite3ExprListDeleteGeneric/1(*2) per user request
+BOLT-INFO: skipping processing sameSrcAlias/1(*2) per user request
+BOLT-INFO: skipping processing unsetJoinExpr/1(*2) per user request
+BOLT-INFO: skipping processing sqlite3WindowCodeInit/1(*2) per user request
+BOLT-INFO: skipping processing sqlite3WindowCodeStep/1(*2) per user request
+BOLT-INFO: skipping processing optimizeAggregateUseOfIndexedExpr/1(*2) per user request
+BOLT-INFO: skipping processing aggregateConvertIndexedExprRefToColumn/1(*2) per user request
+BOLT-INFO: skipping processing explainSimpleCount/1(*2) per user request
+BOLT-INFO: skipping processing sqlite3WhereMinMaxOptEarlyOut/1(*2) per user request
+BOLT-INFO: skipping processing disallowAggregatesInOrderByCb/1(*2) per user request
+BOLT-INFO: skipping processing exprListAppendList/1(*2) per user request
+BOLT-INFO: skipping processing sqlite3WindowExtraAggFuncDepth/1(*2) per user request
+BOLT-INFO: skipping processing selectWindowRewriteExprCb/1(*2) per user request
+BOLT-INFO: skipping processing selectWindowRewriteSelectCb/1(*2) per user request
+BOLT-INFO: skipping processing compoundHasDifferentAffinities/1(*2) per user request
+BOLT-INFO: skipping processing renumberCursors/1(*2) per user request
+BOLT-INFO: skipping processing sqlite3DeleteTableGeneric/1(*2) per user request
+BOLT-INFO: skipping processing srclistRenumberCursors/1(*2) per user request
+BOLT-INFO: skipping processing renumberCursorsCb/1(*2) per user request
+BOLT-INFO: skipping processing sqlite3SelectDeleteGeneric/1(*2) per user request
+BOLT-INFO: skipping processing exprSelectWalkTableConstant/1(*2) per user request
+BOLT-INFO: skipping processing exprNodeIsConstantOrGroupBy/1(*2) per user request
+BOLT-INFO: skipping processing whereReverseScanOrder/1(*2) per user request
+BOLT-INFO: skipping processing whereAddIndexedExpr/1(*2) per user request
+BOLT-INFO: skipping processing wherePartIdxExpr/1(*2) per user request
+BOLT-INFO: skipping processing sqlite3ConstructBloomFilter/1(*2) per user request
+BOLT-INFO: skipping processing sqlite3ExprForVectorField/1(*2) per user request
+BOLT-INFO: skipping processing whereAddLimitExpr/1(*2) per user request
+BOLT-INFO: skipping processing whereUsablePartialIndex/1(*2) per user request
+BOLT-INFO: skipping processing wherePathMatchSubqueryOB/1(*2) per user request
+BOLT-INFO: skipping processing whereIndexedExprCleanup/1(*2) per user request
+BOLT-INFO: skipping processing sqlite3WhereAddExplainText/1(*2) per user request
+BOLT-INFO: skipping processing explainAppendTerm/1(*2) per user request
+BOLT-INFO: skipping processing whereApplyPartialIndexConstraints/1(*2) per user request
+BOLT-INFO: skipping processing whereExprIsReady/1(*2) per user request
+BOLT-INFO: skipping processing windowExprGtZero/1(*2) per user request
+BOLT-INFO: skipping processing windowCheckValue/1(*2) per user request
+BOLT-INFO: skipping processing windowAggFinal/1(*2) per user request
+BOLT-INFO: skipping processing windowReturnOneRow/1(*2) per user request
+BOLT-INFO: skipping processing windowIfNewPeer/1(*2) per user request
+BOLT-INFO: skipping processing windowCodeOp/1(*2) per user request
+BOLT-INFO: skipping processing windowCodeRangeTest/1(*2) per user request
+BOLT-INFO: skipping processing windowReadPeerValues/1(*2) per user request
+BOLT-INFO: skipping processing windowAggStep/1(*2) per user request
+BOLT-INFO: skipping processing noopStepFunc/1(*2) per user request
+BOLT-INFO: skipping processing sqlite3WhereRightJoinLoop/1(*2) per user request
+BOLT-INFO: skipping processing havingToWhereExprCb/1(*2) per user request
+BOLT-INFO: skipping processing aggregateIdxEprRefToColCallback/1(*2) per user request
+BOLT-INFO: skipping processing sqlite3MaterializeView/1(*2) per user request
+BOLT-INFO: skipping processing sqlite3VtabMakeWritable/1(*2) per user request
+BOLT-INFO: skipping processing sqlite3CodeChangeCount/1(*2) per user request
+BOLT-INFO: skipping processing triggersReallyExist/1(*2) per user request
+BOLT-INFO: skipping processing sqlite3FkOldmask/1(*2) per user request
+BOLT-INFO: skipping processing sqlite3CodeRowTrigger/1(*2) per user request
+BOLT-INFO: skipping processing sqlite3FkCheck/1(*2) per user request
+BOLT-INFO: skipping processing sqlite3FkActions/1(*2) per user request
+BOLT-INFO: skipping processing codeRowTrigger/1(*2) per user request
+BOLT-INFO: skipping processing sqlite3UpsertDup/1(*2) per user request
+BOLT-INFO: skipping processing sqlite3FkLocateIndex/1(*2) per user request
+BOLT-INFO: skipping processing sqlite3CodeRowTriggerDirect/1(*2) per user request
+BOLT-INFO: skipping processing codeReturningTrigger/1(*2) per user request
+BOLT-INFO: skipping processing sqlite3ProcessReturningSubqueries/1(*2) per user request
+BOLT-INFO: skipping processing sqlite3ReturningSubqueryCorrelated/1(*2) per user request
+BOLT-INFO: skipping processing sqlite3ReturningSubqueryVarSelect/1(*2) per user request
+BOLT-INFO: skipping processing fkLookupParent/1(*2) per user request
+BOLT-INFO: skipping processing fkScanChildren/1(*2) per user request
+BOLT-INFO: skipping processing exprTableRegister/1(*2) per user request
+BOLT-INFO: skipping processing fkActionTrigger/1(*2) per user request
+BOLT-INFO: skipping processing autoIncrementEnd/1(*2) per user request
+BOLT-INFO: skipping processing sqlite3DeleteReturning/1(*2) per user request
+BOLT-INFO: skipping processing updateVirtualTable/1(*2) per user request
+BOLT-INFO: skipping processing updateFromSelect/1(*2) per user request
+BOLT-INFO: skipping processing sqlite3ComputeGeneratedColumns/1(*2) per user request
+BOLT-INFO: skipping processing exprColumnFlagUnion/1(*2) per user request
+BOLT-INFO: skipping processing sqlite3UpsertDoUpdate/1(*2) per user request
+BOLT-INFO: skipping processing sqlite3UpsertAnalyzeTarget/1(*2) per user request
+BOLT-INFO: skipping processing xferCompatibleCheck/1(*2) per user request
+BOLT-INFO: skipping processing xferCheckRowid/1(*2) per user request
+BOLT-INFO: skipping processing returnSingleText/1(*2) per user request
+BOLT-INFO: skipping processing getLockingMode/1(*2) per user request
+BOLT-INFO: skipping processing getAutoVacuum/1(*2) per user request
+BOLT-INFO: skipping processing setAllPagerFlags/1(*2) per user request
+BOLT-INFO: skipping processing sqlite3BtreeSetMmapLimit/1(*2) per user request
+BOLT-INFO: skipping processing invalidateTempStorage/1(*2) per user request
+BOLT-INFO: skipping processing getSafetyLevel/1(*2) per user request
+BOLT-INFO: skipping processing pragmaFunclistLine/1(*2) per user request
+BOLT-INFO: skipping processing sqlite3RegisterLikeFunctions/1(*2) per user request
+BOLT-INFO: skipping processing triggerStepAllocate/1(*2) per user request
+BOLT-INFO: skipping processing sqlite3VtabEponymousTableClearAll/1(*2) per user request
+BOLT-INFO: skipping processing detachFunc/1(*2) per user request
+BOLT-INFO: skipping processing statAccumDestructor/1(*2) per user request
+BOLT-INFO: skipping processing renameTestSchema/1(*2) per user request
+BOLT-INFO: skipping processing isRowidAlias/1(*2) per user request
+BOLT-INFO: skipping processing renameFixQuotes/1(*2) per user request
+BOLT-INFO: skipping processing alterFindTable/1(*2) per user request
+BOLT-INFO: skipping processing alterFindCol/1(*2) per user request
+BOLT-INFO: skipping processing alterRtrimConstraint/1(*2) per user request
+BOLT-INFO: skipping processing sqlite3WindowOffsetExpr/1(*2) per user request
+BOLT-INFO: skipping processing versionFunc/1(*2) per user request
+BOLT-INFO: skipping processing compileoptionusedFunc/1(*2) per user request
+BOLT-INFO: skipping processing compileoptiongetFunc/1(*2) per user request
+BOLT-INFO: skipping processing minMaxValue/1(*2) per user request
+BOLT-INFO: skipping processing typeofFunc/1(*2) per user request
+BOLT-INFO: skipping processing subtypeFunc/1(*2) per user request
+BOLT-INFO: skipping processing bytelengthFunc/1(*2) per user request
+BOLT-INFO: skipping processing unicodeFunc/1(*2) per user request
+BOLT-INFO: skipping processing absFunc/1(*2) per user request
+BOLT-INFO: skipping processing upperFunc/1(*2) per user request
+BOLT-INFO: skipping processing lowerFunc/1(*2) per user request
+BOLT-INFO: skipping processing unhexFunc/1(*2) per user request
+BOLT-INFO: skipping processing concatwsFunc/1(*2) per user request
+BOLT-INFO: skipping processing randomFunc/1(*2) per user request
+BOLT-INFO: skipping processing nullifFunc/1(*2) per user request
+BOLT-INFO: skipping processing sourceidFunc/1(*2) per user request
+BOLT-INFO: skipping processing errlogFunc/1(*2) per user request
+BOLT-INFO: skipping processing unistrFunc/1(*2) per user request
+BOLT-INFO: skipping processing last_insert_rowid/1(*2) per user request
+BOLT-INFO: skipping processing changes/1(*2) per user request
+BOLT-INFO: skipping processing total_changes/1(*2) per user request
+BOLT-INFO: skipping processing replaceFunc/1(*2) per user request
+BOLT-INFO: skipping processing zeroblobFunc/1(*2) per user request
+BOLT-INFO: skipping processing sumInverse/1(*2) per user request
+BOLT-INFO: skipping processing totalFinalize/1(*2) per user request
+BOLT-INFO: skipping processing countInverse/1(*2) per user request
+BOLT-INFO: skipping processing groupConcatValue/1(*2) per user request
+BOLT-INFO: skipping processing groupConcatInverse/1(*2) per user request
+BOLT-INFO: skipping processing signFunc/1(*2) per user request
+BOLT-INFO: skipping processing renameColumnFunc/1(*2) per user request
+BOLT-INFO: skipping processing renameTableFunc/1(*2) per user request
+BOLT-INFO: skipping processing renameTableTest/1(*2) per user request
+BOLT-INFO: skipping processing dropColumnFunc/1(*2) per user request
+BOLT-INFO: skipping processing renameQuotefixFunc/1(*2) per user request
+BOLT-INFO: skipping processing dropConstraintFunc/1(*2) per user request
+BOLT-INFO: skipping processing failConstraintFunc/1(*2) per user request
+BOLT-INFO: skipping processing addConstraintFunc/1(*2) per user request
+BOLT-INFO: skipping processing findConstraintFunc/1(*2) per user request
+BOLT-INFO: skipping processing renameParseSql/1(*2) per user request
+BOLT-INFO: skipping processing renameColumnExprCb/1(*2) per user request
+BOLT-INFO: skipping processing renameColumnSelectCb/1(*2) per user request
+BOLT-INFO: skipping processing renameResolveTrigger/1(*2) per user request
+BOLT-INFO: skipping processing renameColumnElistNames/1(*2) per user request
+BOLT-INFO: skipping processing renameColumnIdlistNames/1(*2) per user request
+BOLT-INFO: skipping processing renameWalkTrigger/1(*2) per user request
+BOLT-INFO: skipping processing renameEditSql/1(*2) per user request
+BOLT-INFO: skipping processing renameColumnParseError/1(*2) per user request
+BOLT-INFO: skipping processing renameParseCleanup/1(*2) per user request
+BOLT-INFO: skipping processing renameTableExprCb/1(*2) per user request
+BOLT-INFO: skipping processing renameTableSelectCb/1(*2) per user request
+BOLT-INFO: skipping processing renameQuotefixExprCb/1(*2) per user request
+BOLT-INFO: skipping processing getWhitespace/1(*2) per user request
+BOLT-INFO: skipping processing quotedCompare/1(*2) per user request
+BOLT-INFO: skipping processing getConstraint/1(*2) per user request
+BOLT-INFO: skipping processing errorMPrintf/1(*2) per user request
+BOLT-INFO: skipping processing row_numberStepFunc/1(*2) per user request
+BOLT-INFO: skipping processing row_numberValueFunc/1(*2) per user request
+BOLT-INFO: skipping processing dense_rankStepFunc/1(*2) per user request
+BOLT-INFO: skipping processing dense_rankValueFunc/1(*2) per user request
+BOLT-INFO: skipping processing rankStepFunc/1(*2) per user request
+BOLT-INFO: skipping processing rankValueFunc/1(*2) per user request
+BOLT-INFO: skipping processing percent_rankStepFunc/1(*2) per user request
+BOLT-INFO: skipping processing percent_rankValueFunc/1(*2) per user request
+BOLT-INFO: skipping processing percent_rankInvFunc/1(*2) per user request
+BOLT-INFO: skipping processing cume_distStepFunc/1(*2) per user request
+BOLT-INFO: skipping processing cume_distValueFunc/1(*2) per user request
+BOLT-INFO: skipping processing cume_distInvFunc/1(*2) per user request
+BOLT-INFO: skipping processing ntileStepFunc/1(*2) per user request
+BOLT-INFO: skipping processing ntileValueFunc/1(*2) per user request
+BOLT-INFO: skipping processing ntileInvFunc/1(*2) per user request
+BOLT-INFO: skipping processing last_valueStepFunc/1(*2) per user request
+BOLT-INFO: skipping processing last_valueFinalizeFunc/1(*2) per user request
+BOLT-INFO: skipping processing last_valueValueFunc/1(*2) per user request
+BOLT-INFO: skipping processing last_valueInvFunc/1(*2) per user request
+BOLT-INFO: skipping processing nth_valueStepFunc/1(*2) per user request
+BOLT-INFO: skipping processing nth_valueFinalizeFunc/1(*2) per user request
+BOLT-INFO: skipping processing noopValueFunc/1(*2) per user request
+BOLT-INFO: skipping processing first_valueStepFunc/1(*2) per user request
+BOLT-INFO: skipping processing first_valueFinalizeFunc/1(*2) per user request
+BOLT-INFO: skipping processing juliandayFunc/1(*2) per user request
+BOLT-INFO: skipping processing unixepochFunc/1(*2) per user request
+BOLT-INFO: skipping processing dateFunc/1(*2) per user request
+BOLT-INFO: skipping processing timeFunc/1(*2) per user request
+BOLT-INFO: skipping processing datetimeFunc/1(*2) per user request
+BOLT-INFO: skipping processing strftimeFunc/1(*2) per user request
+BOLT-INFO: skipping processing timediffFunc/1(*2) per user request
+BOLT-INFO: skipping processing ctimeFunc/1(*2) per user request
+BOLT-INFO: skipping processing ctimestampFunc/1(*2) per user request
+BOLT-INFO: skipping processing cdateFunc/1(*2) per user request
+BOLT-INFO: skipping processing isDate/1(*2) per user request
+BOLT-INFO: skipping processing computeJD/1(*2) per user request
+BOLT-INFO: skipping processing sqlite3NotPureFunc/1(*2) per user request
+BOLT-INFO: skipping processing parseHhMmSs/1(*2) per user request
+BOLT-INFO: skipping processing getDigits/1(*2) per user request
+BOLT-INFO: skipping processing computeFloor/1(*2) per user request
+BOLT-INFO: skipping processing toLocaltime/1(*2) per user request
+BOLT-INFO: skipping processing computeYMD_HMS/1(*2) per user request
+BOLT-INFO: skipping processing jsonArrayFunc/1(*2) per user request
+BOLT-INFO: skipping processing jsonArrayLengthFunc/1(*2) per user request
+BOLT-INFO: skipping processing jsonErrorFunc/1(*2) per user request
+BOLT-INFO: skipping processing jsonPatchFunc/1(*2) per user request
+BOLT-INFO: skipping processing jsonPrettyFunc/1(*2) per user request
+BOLT-INFO: skipping processing jsonQuoteFunc/1(*2) per user request
+BOLT-INFO: skipping processing jsonReplaceFunc/1(*2) per user request
+BOLT-INFO: skipping processing jsonValidFunc/1(*2) per user request
+BOLT-INFO: skipping processing jsonArrayValue/1(*2) per user request
+BOLT-INFO: skipping processing jsonGroupInverse/1(*2) per user request
+BOLT-INFO: skipping processing jsonObjectValue/1(*2) per user request
+BOLT-INFO: skipping processing jsonMergePatch/1(*2) per user request
+BOLT-INFO: skipping processing jsonTranslateBlobToPrettyText/1(*2) per user request
+BOLT-INFO: skipping processing sqlite3MemShutdown/1(*2) per user request
+BOLT-INFO: skipping processing pcache1Shutdown/1(*2) per user request
+BOLT-INFO: skipping processing pcache1Pagecount/1(*2) per user request
+BOLT-INFO: skipping processing pcache1Unpin/1(*2) per user request
+BOLT-INFO: skipping processing pcache1Shrink/1(*2) per user request
+BOLT-INFO: skipping processing nocaseCollatingFunc/1(*2) per user request
+BOLT-INFO: skipping processing rtrimCollFunc/1(*2) per user request
+BOLT-INFO: skipping processing speedtest1_timestamp per user request
+BOLT-INFO: skipping processing speedtest1_random per user request
+BOLT-INFO: skipping processing swizzle per user request
+BOLT-INFO: skipping processing roundup_allones per user request
+BOLT-INFO: skipping processing speedtest1_shrink_memory per user request
+BOLT-INFO: skipping processing printSql/1(*2) per user request
+BOLT-INFO: skipping processing speedtest1_random_ascii_fp per user request
+BOLT-INFO: skipping processing testset_trigger per user request
+BOLT-INFO: skipping processing testset_debug1 per user request
+BOLT-INFO: skipping processing traceCallback/1(*2) per user request
+BOLT-INFO: skipping processing xCompileOptions/1(*2) per user request
+BOLT-INFO: skipping processing fatal_error/1(*2) per user request
+BOLT-INFO: potentially escaped address 0x46fb0 in function sqlite3_str_vappendf
+BOLT-INFO: potentially escaped address 0x473ec in function sqlite3_str_vappendf
+BOLT-INFO: potentially escaped address 0x4d59c in function sqlite3_step
+BOLT-INFO: potentially escaped address 0x59a90 in function sqlite3GetToken/1(*2)
+BOLT-INFO: potentially escaped address 0x5c6c8 in function sqlite3_config
+BOLT-INFO: potentially escaped address 0x61b1c in function sqlite3_test_control
+BOLT-INFO: potentially escaped address 0x87d9c in function sqlite3VdbeSerialGet/1(*2)
+BOLT-INFO: potentially escaped address 0xa2810 in function jsonUnescapeOneChar/1(*2)
+BOLT-INFO: potentially escaped address 0xa2be0 in function jsonTranslateTextToBlob/1(*2)
+BOLT-INFO: potentially escaped address 0xa30f0 in function jsonTranslateTextToBlob/1(*2)
+BOLT-INFO: potentially escaped address 0xa5cb8 in function jsonTranslateBlobToText/1(*2)
+BOLT-INFO: potentially escaped address 0xa9e88 in function yy_reduce/1(*2)
+BOLT-INFO: potentially escaped address 0xc9d10 in function sqlite3ExprCodeTarget/1(*2)
+BOLT-INFO: potentially escaped address 0xe0530 in function sqlite3ExprDataType/1(*2)
+BOLT-INFO: potentially escaped address 0xe8cbc in function selectInnerLoop/1(*2)
+BOLT-INFO: potentially escaped address 0xf0390 in function generateOutputSubroutine/1(*2)
+BOLT-WARNING: failed to post-process indirect branches for deregister_tm_clones/1(*2)
+BOLT-WARNING: failed to post-process indirect branches for register_tm_clones/1(*2)
+BOLT-WARNING: failed to post-process indirect branches for sqlite3DbFree/1(*2)
+BOLT-WARNING: failed to post-process indirect branches for sqlite3_free
+BOLT-WARNING: failed to post-process indirect branches for sqlite3GetToken/1(*2)
+BOLT-WARNING: failed to post-process indirect branches for sqlite3_step
+BOLT-WARNING: failed to post-process indirect branches for sqlite3PcacheRelease/1(*2)
+BOLT-WARNING: failed to post-process indirect branches for sqlite3_config
+BOLT-WARNING: failed to post-process indirect branches for releasePageNotNull/1(*2)
+BOLT-WARNING: failed to post-process indirect branches for getCellInfo/1(*2)
+BOLT-WARNING: failed to post-process indirect branches for sqlite3DbNNFreeNN/1(*2)
+BOLT-WARNING: failed to post-process indirect branches for sqlite3_test_control
+BOLT-WARNING: failed to post-process indirect branches for vdbeCompareMemString/1(*2)
+BOLT-WARNING: failed to post-process indirect branches for sqlite3VdbeSerialGet/1(*2)
+BOLT-WARNING: failed to post-process indirect branches for sqlite3_str_vappendf
+BOLT-WARNING: failed to post-process indirect branches for jsonUnescapeOneChar/1(*2)
+BOLT-WARNING: failed to post-process indirect branches for jsonTranslateBlobToText/1(*2)
+BOLT-WARNING: failed to post-process indirect branches for jsonTranslateTextToBlob/1(*2)
+BOLT-WARNING: failed to post-process indirect branches for yy_reduce/1(*2)
+BOLT-WARNING: failed to post-process indirect branches for sqlite3ExprCodeTarget/1(*2)
+BOLT-WARNING: failed to post-process indirect branches for sqlite3ExprDataType/1(*2)
+BOLT-WARNING: failed to post-process indirect branches for selectInnerLoop/1(*2)
+BOLT-WARNING: failed to post-process indirect branches for generateOutputSubroutine/1(*2)
+BOLT-INFO: Starting pass: pointer-auth-cfi-analyzer
+BOLT-INFO: PointerAuthCFIAnalyzer ran on 1 functions. Ignored 0 functions (0.00%) because of CFI inconsistencies
+BOLT-INFO: Finished pass: pointer-auth-cfi-analyzer
+BOLT-INFO: Starting pass: estimate-edge-counts
+BOLT-INFO: Finished pass: estimate-edge-counts
+BOLT-INFO: Starting pass: set dyno-stats before optimizations
+BOLT-INFO: Finished pass: set dyno-stats before optimizations
+BOLT-INFO: Starting pass: fix-relaxations
+BOLT-INFO: Finished pass: fix-relaxations
+BOLT-INFO: Starting pass: veneer-elimination
+BOLT-INFO: number of removed linker-inserted veneers: 0
+BOLT-INFO: Finished pass: veneer-elimination
+BOLT-INFO: Starting pass: print-stats
+BOLT-INFO: 774 out of 1583 functions in the binary (48.9%) have non-empty execution profile
+BOLT-INFO: 23 functions with profile could not be optimized
+BOLT-INFO: profile for 1 objects was ignored
+BOLT-INFO: top called functions are:
+  vdbeRecordCompareInt/1(*2) : 3334191
+  sqlite3BtreeNext/1(*2) : 1912114
+  btreeParseCellPtr/1(*2) : 1905249
+  vdbeRecordCompareString/1(*2) : 1620686
+  pcache1Fetch/1(*2) : 1070480
+  getPageNormal/1(*2) : 1050938
+  patternCompare/1(*2) : 935590
+  getAndInitPage/1(*2) : 926690
+  btreeParseCellPtrIndex/1(*2) : 883198
+  sqlite3DbMallocRawNN/1(*2) : 869185
+  vdbeSorterCompareInt/1(*2) : 863116
+  moveToRoot/1(*2) : 807001
+  cellSizePtrIdxLeaf/1(*2) : 728492
+  applyAffinity/1(*2) : 659896
+  sqlite3MemSize/1(*2) : 611082
+  sqlite3BtreeInsert/1(*2) : 571138
+  computeCellSize/1(*2) : 461210
+  sqlite3BtreeIndexMoveto/1(*2) : 433887
+  sqlite3VdbeMemGrow/1(*2) : 385218
+  sqlite3VdbeRecordCompareWithSkip/1(*2) : 358638
+  pageFindSlot/1(*2) : 350717
+  sqlite3_snprintf : 338949
+  sqlite3VdbeMemSetText/1(*2) : 328319
+  likeFunc/1(*2) : 301020
+  sqlite3_column_text : 300649
+  sqlite3MemRoundup/1(*2) : 271023
+  sqlite3BtreeTableMoveto/1(*2) : 269571
+  sqlite3MemFree/1(*2) : 259810
+  sqlite3MemMalloc/1(*2) : 259810
+  sqlite3Malloc/1(*2) : 259810
+  sqlite3MemCompare/1(*2) : 247335
+  vdbeSorterCompareText/1(*2) : 246516
+  sqlite3SubInt64/1(*2) : 243871
+  sqlite3MulInt64/1(*2) : 224998
+  valueToText/1(*2) : 220684
+  vdbeMemRenderNum/1(*2) : 220628
+  sqlite3VdbeIdxRowid/1(*2) : 217409
+  sqlite3_value_numeric_type : 216932
+  sumStep/1(*2) : 216932
+  jsonBlobChangePayloadSize/1(*2) : 211328
+  freeSpace/1(*2) : 208940
+  sqlite3VdbeFreeCursorNN/1(*2) : 208325
+  allocateCursor/1(*2) : 208305
+  btreeReleaseAllCursorPages/1(*2) : 208230
+  sqlite3_bind_int64 : 207051
+  btreeCursor/1(*2) : 195243
+  moveToChild/1(*2) : 194711
+  vdbeSorterCompareReal/1(*2) : 181379
+  sqlite3BinaryCompare/1(*2) : 178186
+  cellSizePtrTableLeaf/1(*2) : 171572
+  vdbeUnbind/1(*2) : 170292
+  sqlite3WalkExprNN/1(*2) : 164242
+  setResultStrOrError/1(*2) : 163596
+  dropCell/1(*2) : 148640
+  sqlite3VdbeMemMakeWriteable/1(*2) : 148412
+  subjournalPageIfRequired/1(*2) : 144765
+  speedtest1_numbername : 142906
+  bindText/1(*2) : 140290
+  releaseMemArray/1(*2) : 134217
+  sqlite3_result_text64 : 133309
+  substrFunc/1(*2) : 130602
+  sqlite3VdbeReset/1(*2) : 128657
+  sqlite3VdbeHalt/1(*2) : 128531
+  sqlite3BtreeBeginTrans/1(*2) : 126654
+  sqlite3_reset : 125598
+  speedtest1_run : 125565
+  sqlite3_value_blob : 115843
+  sqlite3_bind_int : 114552
+  sqlite3BtreeDelete/1(*2) : 108692
+  statPush/1(*2) : 108192
+  sqlite3VdbeFinishMoveto/1(*2) : 103366
+  sqlite3ExprWalkNoop/1(*2) : 94929
+  sqlite3VdbeMemClearAndResize/1(*2) : 91949
+  countStep/1(*2) : 87706
+  btreeLast/1(*2) : 86338
+  sqlite3WalkExpr/1(*2) : 86198
+  sqlite3Fp10Convert2/1(*2) : 85582
+  sqlite3_bind_text : 84040
+  sqlite3ExprDeleteNN/1(*2) : 79685
+  sqlite3_column_count : 75945
+  groupConcatStep/1(*2) : 66834
+  lengthFunc/1(*2) : 66673
+  sqlite3AtoF/1(*2) : 58423
+  sqlite3_str_appendf : 57038
+  sqlite3_bind_text64 : 56251
+  pageInsertArray/1(*2) : 55229
+  exprDup/1(*2) : 54619
+  balance/1(*2) : 50833
+  sqlite3MemRealValueRC/1(*2) : 47292
+  vdbeMemAddTerminator/1(*2) : 46513
+  dbMallocRawFinish/1(*2) : 37855
+  editPage/1(*2) : 37051
+  sqlite3StrAccumEnlarge/1(*2) : 35242
+  btreeNext/1(*2) : 35223
+  sqlite3BitvecDestroy/1(*2) : 32010
+  releaseAllSavepoints/1(*2) : 31354
+  sqlite3VdbeMemRealify/1(*2) : 31283
+  pager_unlock/1(*2) : 30805
+  btreeEndTransaction/1(*2) : 30649
+  pagerUnlockAndRollback/1(*2) : 30403
+BOLT-INFO: Finished pass: print-stats
+BOLT-INFO: Starting pass: profile-quality-stats
+BOLT-INFO: profile quality metrics for the hottest 774 functions (reporting top 5% values): function CFG discontinuity 0.00%; 
+abbreviations: EC = execution count, POS BBs = positive EC BBs
+distribution of NUM(unreachable POS BBs) per function
+  Length     : 774
+  MAX        : 0
+  TOP 1%     : 0
+  TOP 5%     : 0
+  TOP 10%    : 0
+  TOP 20%    : 0
+  TOP 50%    : 0
+  TOP 80%    : 0
+  MIN        : 0
+distribution of SUM_EC(unreachable POS BBs) per function
+  Length     : 774
+  MAX        : 0
+  TOP 1%     : 0
+  TOP 5%     : 0
+  TOP 10%    : 0
+  TOP 20%    : 0
+  TOP 50%    : 0
+  TOP 80%    : 0
+  MIN        : 0
+distribution of [(SUM_EC(unreachable POS BBs) / SUM_EC(all POS BBs))] per function
+  Length     : 774
+  MAX        : 0.00%
+  TOP 1%     : 0.00%
+  TOP 5%     : 0.00%
+  TOP 10%    : 0.00%
+  TOP 20%    : 0.00%
+  TOP 50%    : 0.00%
+  TOP 80%    : 0.00%
+  MIN        : 0.00%
+call graph flow conservation gap 0.00%; 
+distribution of function entry flow conservation gaps
+  Length     : 774
+  MAX        : 50.00%
+  TOP 1%     : 0.00%
+  TOP 5%     : 0.00%
+  TOP 10%    : 0.00%
+  TOP 20%    : 0.00%
+  TOP 50%    : 0.00%
+  TOP 80%    : 0.00%
+  MIN        : 0.00%
+CFG flow conservation gap 0.00% (weighted) 0.00% (worst); distribution of weighted CFG flow conservation gaps
+  Length     : 774
+  MAX        : 2.75%
+  TOP 1%     : 0.00%
+  TOP 5%     : 0.00%
+  TOP 10%    : 0.00%
+  TOP 20%    : 0.00%
+  TOP 50%    : 0.00%
+  TOP 80%    : 0.00%
+  MIN        : 0.00%
+Consider only blocks with execution counts > 500:
+distribution of worst block flow conservation gap per function 
+  Length     : 774
+  MAX        : 34.88%
+  TOP 1%     : 0.00%
+  TOP 5%     : 0.00%
+  TOP 10%    : 0.00%
+  TOP 20%    : 0.00%
+  TOP 50%    : 0.00%
+  TOP 80%    : 0.00%
+  MIN        : 0.00%
+distribution of worst block flow conservation gap (absolute value) per function
+  Length     : 774
+  MAX        : 60810
+  TOP 1%     : 0
+  TOP 5%     : 0
+  TOP 10%    : 0
+  TOP 20%    : 0
+  TOP 50%    : 0
+  TOP 80%    : 0
+  MIN        : 0
+exception handling usage 0.00% (of total BBEC) 0.00% (of total InvokeEC)
+distribution of exception handling usage as a fraction of total BBEC of each function
+  Length     : 774
+  MAX        : 0.00%
+  TOP 1%     : 0.00%
+  TOP 5%     : 0.00%
+  TOP 10%    : 0.00%
+  TOP 20%    : 0.00%
+  TOP 50%    : 0.00%
+  TOP 80%    : 0.00%
+  MIN        : 0.00%
+distribution of exception handling usage as a fraction of total InvokeEC of each function
+  Length     : 774
+  MAX        : 0.00%
+  TOP 1%     : 0.00%
+  TOP 5%     : 0.00%
+  TOP 10%    : 0.00%
+  TOP 20%    : 0.00%
+  TOP 50%    : 0.00%
+  TOP 80%    : 0.00%
+  MIN        : 0.00%
+Detailed stats for 5 buckets, each with  154 functions:
+----------------
+|   Bucket 1:  |
+----------------
+execution counts of the 154 functions in the bucket: 9949-3334191
+function CFG discontinuity 0.00%; 
+abbreviations: EC = execution count, POS BBs = positive EC BBs
+distribution of NUM(unreachable POS BBs) per function
+  Length     : 154
+  MAX        : 0
+  TOP 1%     : 0
+  TOP 5%     : 0
+  TOP 10%    : 0
+  TOP 20%    : 0
+  TOP 50%    : 0
+  TOP 80%    : 0
+  MIN        : 0
+distribution of SUM_EC(unreachable POS BBs) per function
+  Length     : 154
+  MAX        : 0
+  TOP 1%     : 0
+  TOP 5%     : 0
+  TOP 10%    : 0
+  TOP 20%    : 0
+  TOP 50%    : 0
+  TOP 80%    : 0
+  MIN        : 0
+distribution of [(SUM_EC(unreachable POS BBs) / SUM_EC(all POS BBs))] per function
+  Length     : 154
+  MAX        : 0.00%
+  TOP 1%     : 0.00%
+  TOP 5%     : 0.00%
+  TOP 10%    : 0.00%
+  TOP 20%    : 0.00%
+  TOP 50%    : 0.00%
+  TOP 80%    : 0.00%
+  MIN        : 0.00%
+call graph flow conservation gap 0.00%; 
+distribution of function entry flow conservation gaps
+  Length     : 154
+  MAX        : 0.00%
+  TOP 1%     : 0.00%
+  TOP 5%     : 0.00%
+  TOP 10%    : 0.00%
+  TOP 20%    : 0.00%
+  TOP 50%    : 0.00%
+  TOP 80%    : 0.00%
+  MIN        : 0.00%
+CFG flow conservation gap 0.00% (weighted) 0.00% (worst); distribution of weighted CFG flow conservation gaps
+  Length     : 154
+  MAX        : 2.37%
+  TOP 1%     : 0.00%
+  TOP 5%     : 0.00%
+  TOP 10%    : 0.00%
+  TOP 20%    : 0.00%
+  TOP 50%    : 0.00%
+  TOP 80%    : 0.00%
+  MIN        : 0.00%
+Consider only blocks with execution counts > 500:
+distribution of worst block flow conservation gap per function 
+  Length     : 154
+  MAX        : 34.88%
+  TOP 1%     : 0.00%
+  TOP 5%     : 0.00%
+  TOP 10%    : 0.00%
+  TOP 20%    : 0.00%
+  TOP 50%    : 0.00%
+  TOP 80%    : 0.00%
+  MIN        : 0.00%
+distribution of worst block flow conservation gap (absolute value) per function
+  Length     : 154
+  MAX        : 60810
+  TOP 1%     : 0
+  TOP 5%     : 0
+  TOP 10%    : 0
+  TOP 20%    : 0
+  TOP 50%    : 0
+  TOP 80%    : 0
+  MIN        : 0
+exception handling usage 0.00% (of total BBEC) 0.00% (of total InvokeEC)
+distribution of exception handling usage as a fraction of total BBEC of each function
+  Length     : 154
+  MAX        : 0.00%
+  TOP 1%     : 0.00%
+  TOP 5%     : 0.00%
+  TOP 10%    : 0.00%
+  TOP 20%    : 0.00%
+  TOP 50%    : 0.00%
+  TOP 80%    : 0.00%
+  MIN        : 0.00%
+distribution of exception handling usage as a fraction of total InvokeEC of each function
+  Length     : 154
+  MAX        : 0.00%
+  TOP 1%     : 0.00%
+  TOP 5%     : 0.00%
+  TOP 10%    : 0.00%
+  TOP 20%    : 0.00%
+  TOP 50%    : 0.00%
+  TOP 80%    : 0.00%
+  MIN        : 0.00%
+----------------
+|   Bucket 2:  |
+----------------
+execution counts of the 154 functions in the bucket: 1176-9848
+function CFG discontinuity 0.00%; 
+abbreviations: EC = execution count, POS BBs = positive EC BBs
+distribution of NUM(unreachable POS BBs) per function
+  Length     : 154
+  MAX        : 0
+  TOP 1%     : 0
+  TOP 5%     : 0
+  TOP 10%    : 0
+  TOP 20%    : 0
+  TOP 50%    : 0
+  TOP 80%    : 0
+  MIN        : 0
+distribution of SUM_EC(unreachable POS BBs) per function
+  Length     : 154
+  MAX        : 0
+  TOP 1%     : 0
+  TOP 5%     : 0
+  TOP 10%    : 0
+  TOP 20%    : 0
+  TOP 50%    : 0
+  TOP 80%    : 0
+  MIN        : 0
+distribution of [(SUM_EC(unreachable POS BBs) / SUM_EC(all POS BBs))] per function
+  Length     : 154
+  MAX        : 0.00%
+  TOP 1%     : 0.00%
+  TOP 5%     : 0.00%
+  TOP 10%    : 0.00%
+  TOP 20%    : 0.00%
+  TOP 50%    : 0.00%
+  TOP 80%    : 0.00%
+  MIN        : 0.00%
+call graph flow conservation gap 0.00%; 
+distribution of function entry flow conservation gaps
+  Length     : 154
+  MAX        : 0.00%
+  TOP 1%     : 0.00%
+  TOP 5%     : 0.00%
+  TOP 10%    : 0.00%
+  TOP 20%    : 0.00%
+  TOP 50%    : 0.00%
+  TOP 80%    : 0.00%
+  MIN        : 0.00%
+CFG flow conservation gap 0.00% (weighted) 0.00% (worst); distribution of weighted CFG flow conservation gaps
+  Length     : 154
+  MAX        : 2.75%
+  TOP 1%     : 0.00%
+  TOP 5%     : 0.00%
+  TOP 10%    : 0.00%
+  TOP 20%    : 0.00%
+  TOP 50%    : 0.00%
+  TOP 80%    : 0.00%
+  MIN        : 0.00%
+Consider only blocks with execution counts > 500:
+distribution of worst block flow conservation gap per function 
+  Length     : 154
+  MAX        : 0.00%
+  TOP 1%     : 0.00%
+  TOP 5%     : 0.00%
+  TOP 10%    : 0.00%
+  TOP 20%    : 0.00%
+  TOP 50%    : 0.00%
+  TOP 80%    : 0.00%
+  MIN        : 0.00%
+distribution of worst block flow conservation gap (absolute value) per function
+  Length     : 154
+  MAX        : 0
+  TOP 1%     : 0
+  TOP 5%     : 0
+  TOP 10%    : 0
+  TOP 20%    : 0
+  TOP 50%    : 0
+  TOP 80%    : 0
+  MIN        : 0
+exception handling usage 0.00% (of total BBEC) 0.00% (of total InvokeEC)
+distribution of exception handling usage as a fraction of total BBEC of each function
+  Length     : 154
+  MAX        : 0.00%
+  TOP 1%     : 0.00%
+  TOP 5%     : 0.00%
+  TOP 10%    : 0.00%
+  TOP 20%    : 0.00%
+  TOP 50%    : 0.00%
+  TOP 80%    : 0.00%
+  MIN        : 0.00%
+distribution of exception handling usage as a fraction of total InvokeEC of each function
+  Length     : 154
+  MAX        : 0.00%
+  TOP 1%     : 0.00%
+  TOP 5%     : 0.00%
+  TOP 10%    : 0.00%
+  TOP 20%    : 0.00%
+  TOP 50%    : 0.00%
+  TOP 80%    : 0.00%
+  MIN        : 0.00%
+----------------
+|   Bucket 3:  |
+----------------
+execution counts of the 154 functions in the bucket: 176-1118
+function CFG discontinuity 0.00%; 
+abbreviations: EC = execution count, POS BBs = positive EC BBs
+distribution of NUM(unreachable POS BBs) per function
+  Length     : 154
+  MAX        : 0
+  TOP 1%     : 0
+  TOP 5%     : 0
+  TOP 10%    : 0
+  TOP 20%    : 0
+  TOP 50%    : 0
+  TOP 80%    : 0
+  MIN        : 0
+distribution of SUM_EC(unreachable POS BBs) per function
+  Length     : 154
+  MAX        : 0
+  TOP 1%     : 0
+  TOP 5%     : 0
+  TOP 10%    : 0
+  TOP 20%    : 0
+  TOP 50%    : 0
+  TOP 80%    : 0
+  MIN        : 0
+distribution of [(SUM_EC(unreachable POS BBs) / SUM_EC(all POS BBs))] per function
+  Length     : 154
+  MAX        : 0.00%
+  TOP 1%     : 0.00%
+  TOP 5%     : 0.00%
+  TOP 10%    : 0.00%
+  TOP 20%    : 0.00%
+  TOP 50%    : 0.00%
+  TOP 80%    : 0.00%
+  MIN        : 0.00%
+call graph flow conservation gap 0.00%; 
+distribution of function entry flow conservation gaps
+  Length     : 154
+  MAX        : 0.00%
+  TOP 1%     : 0.00%
+  TOP 5%     : 0.00%
+  TOP 10%    : 0.00%
+  TOP 20%    : 0.00%
+  TOP 50%    : 0.00%
+  TOP 80%    : 0.00%
+  MIN        : 0.00%
+CFG flow conservation gap 0.00% (weighted) 0.00% (worst); distribution of weighted CFG flow conservation gaps
+  Length     : 154
+  MAX        : 0.00%
+  TOP 1%     : 0.00%
+  TOP 5%     : 0.00%
+  TOP 10%    : 0.00%
+  TOP 20%    : 0.00%
+  TOP 50%    : 0.00%
+  TOP 80%    : 0.00%
+  MIN        : 0.00%
+Consider only blocks with execution counts > 500:
+distribution of worst block flow conservation gap per function 
+  Length     : 154
+  MAX        : 0.00%
+  TOP 1%     : 0.00%
+  TOP 5%     : 0.00%
+  TOP 10%    : 0.00%
+  TOP 20%    : 0.00%
+  TOP 50%    : 0.00%
+  TOP 80%    : 0.00%
+  MIN        : 0.00%
+distribution of worst block flow conservation gap (absolute value) per function
+  Length     : 154
+  MAX        : 0
+  TOP 1%     : 0
+  TOP 5%     : 0
+  TOP 10%    : 0
+  TOP 20%    : 0
+  TOP 50%    : 0
+  TOP 80%    : 0
+  MIN        : 0
+exception handling usage 0.00% (of total BBEC) 0.00% (of total InvokeEC)
+distribution of exception handling usage as a fraction of total BBEC of each function
+  Length     : 154
+  MAX        : 0.00%
+  TOP 1%     : 0.00%
+  TOP 5%     : 0.00%
+  TOP 10%    : 0.00%
+  TOP 20%    : 0.00%
+  TOP 50%    : 0.00%
+  TOP 80%    : 0.00%
+  MIN        : 0.00%
+distribution of exception handling usage as a fraction of total InvokeEC of each function
+  Length     : 154
+  MAX        : 0.00%
+  TOP 1%     : 0.00%
+  TOP 5%     : 0.00%
+  TOP 10%    : 0.00%
+  TOP 20%    : 0.00%
+  TOP 50%    : 0.00%
+  TOP 80%    : 0.00%
+  MIN        : 0.00%
+----------------
+|   Bucket 4:  |
+----------------
+execution counts of the 154 functions in the bucket: 16-169
+function CFG discontinuity 0.00%; 
+abbreviations: EC = execution count, POS BBs = positive EC BBs
+distribution of NUM(unreachable POS BBs) per function
+  Length     : 154
+  MAX        : 0
+  TOP 1%     : 0
+  TOP 5%     : 0
+  TOP 10%    : 0
+  TOP 20%    : 0
+  TOP 50%    : 0
+  TOP 80%    : 0
+  MIN        : 0
+distribution of SUM_EC(unreachable POS BBs) per function
+  Length     : 154
+  MAX        : 0
+  TOP 1%     : 0
+  TOP 5%     : 0
+  TOP 10%    : 0
+  TOP 20%    : 0
+  TOP 50%    : 0
+  TOP 80%    : 0
+  MIN        : 0
+distribution of [(SUM_EC(unreachable POS BBs) / SUM_EC(all POS BBs))] per function
+  Length     : 154
+  MAX        : 0.00%
+  TOP 1%     : 0.00%
+  TOP 5%     : 0.00%
+  TOP 10%    : 0.00%
+  TOP 20%    : 0.00%
+  TOP 50%    : 0.00%
+  TOP 80%    : 0.00%
+  MIN        : 0.00%
+call graph flow conservation gap 0.00%; 
+distribution of function entry flow conservation gaps
+  Length     : 154
+  MAX        : 0.00%
+  TOP 1%     : 0.00%
+  TOP 5%     : 0.00%
+  TOP 10%    : 0.00%
+  TOP 20%    : 0.00%
+  TOP 50%    : 0.00%
+  TOP 80%    : 0.00%
+  MIN        : 0.00%
+CFG flow conservation gap 0.00% (weighted) 0.00% (worst); distribution of weighted CFG flow conservation gaps
+  Length     : 154
+  MAX        : 0.00%
+  TOP 1%     : 0.00%
+  TOP 5%     : 0.00%
+  TOP 10%    : 0.00%
+  TOP 20%    : 0.00%
+  TOP 50%    : 0.00%
+  TOP 80%    : 0.00%
+  MIN        : 0.00%
+Consider only blocks with execution counts > 500:
+distribution of worst block flow conservation gap per function 
+  Length     : 154
+  MAX        : 0.00%
+  TOP 1%     : 0.00%
+  TOP 5%     : 0.00%
+  TOP 10%    : 0.00%
+  TOP 20%    : 0.00%
+  TOP 50%    : 0.00%
+  TOP 80%    : 0.00%
+  MIN        : 0.00%
+distribution of worst block flow conservation gap (absolute value) per function
+  Length     : 154
+  MAX        : 0
+  TOP 1%     : 0
+  TOP 5%     : 0
+  TOP 10%    : 0
+  TOP 20%    : 0
+  TOP 50%    : 0
+  TOP 80%    : 0
+  MIN        : 0
+exception handling usage 0.00% (of total BBEC) 0.00% (of total InvokeEC)
+distribution of exception handling usage as a fraction of total BBEC of each function
+  Length     : 154
+  MAX        : 0.00%
+  TOP 1%     : 0.00%
+  TOP 5%     : 0.00%
+  TOP 10%    : 0.00%
+  TOP 20%    : 0.00%
+  TOP 50%    : 0.00%
+  TOP 80%    : 0.00%
+  MIN        : 0.00%
+distribution of exception handling usage as a fraction of total InvokeEC of each function
+  Length     : 154
+  MAX        : 0.00%
+  TOP 1%     : 0.00%
+  TOP 5%     : 0.00%
+  TOP 10%    : 0.00%
+  TOP 20%    : 0.00%
+  TOP 50%    : 0.00%
+  TOP 80%    : 0.00%
+  MIN        : 0.00%
+----------------
+|   Bucket 5:  |
+----------------
+execution counts of the 154 functions in the bucket: 1-16
+function CFG discontinuity 0.00%; 
+abbreviations: EC = execution count, POS BBs = positive EC BBs
+distribution of NUM(unreachable POS BBs) per function
+  Length     : 154
+  MAX        : 0
+  TOP 1%     : 0
+  TOP 5%     : 0
+  TOP 10%    : 0
+  TOP 20%    : 0
+  TOP 50%    : 0
+  TOP 80%    : 0
+  MIN        : 0
+distribution of SUM_EC(unreachable POS BBs) per function
+  Length     : 154
+  MAX        : 0
+  TOP 1%     : 0
+  TOP 5%     : 0
+  TOP 10%    : 0
+  TOP 20%    : 0
+  TOP 50%    : 0
+  TOP 80%    : 0
+  MIN        : 0
+distribution of [(SUM_EC(unreachable POS BBs) / SUM_EC(all POS BBs))] per function
+  Length     : 154
+  MAX        : 0.00%
+  TOP 1%     : 0.00%
+  TOP 5%     : 0.00%
+  TOP 10%    : 0.00%
+  TOP 20%    : 0.00%
+  TOP 50%    : 0.00%
+  TOP 80%    : 0.00%
+  MIN        : 0.00%
+call graph flow conservation gap 0.00%; 
+distribution of function entry flow conservation gaps
+  Length     : 154
+  MAX        : 50.00%
+  TOP 1%     : 0.00%
+  TOP 5%     : 0.00%
+  TOP 10%    : 0.00%
+  TOP 20%    : 0.00%
+  TOP 50%    : 0.00%
+  TOP 80%    : 0.00%
+  MIN        : 0.00%
+CFG flow conservation gap 0.00% (weighted) 0.00% (worst); distribution of weighted CFG flow conservation gaps
+  Length     : 154
+  MAX        : 0.73%
+  TOP 1%     : 0.29%
+  TOP 5%     : 0.00%
+  TOP 10%    : 0.00%
+  TOP 20%    : 0.00%
+  TOP 50%    : 0.00%
+  TOP 80%    : 0.00%
+  MIN        : 0.00%
+Consider only blocks with execution counts > 500:
+distribution of worst block flow conservation gap per function 
+  Length     : 154
+  MAX        : 0.00%
+  TOP 1%     : 0.00%
+  TOP 5%     : 0.00%
+  TOP 10%    : 0.00%
+  TOP 20%    : 0.00%
+  TOP 50%    : 0.00%
+  TOP 80%    : 0.00%
+  MIN        : 0.00%
+distribution of worst block flow conservation gap (absolute value) per function
+  Length     : 154
+  MAX        : 0
+  TOP 1%     : 0
+  TOP 5%     : 0
+  TOP 10%    : 0
+  TOP 20%    : 0
+  TOP 50%    : 0
+  TOP 80%    : 0
+  MIN        : 0
+exception handling usage 0.00% (of total BBEC) 0.00% (of total InvokeEC)
+distribution of exception handling usage as a fraction of total BBEC of each function
+  Length     : 154
+  MAX        : 0.00%
+  TOP 1%     : 0.00%
+  TOP 5%     : 0.00%
+  TOP 10%    : 0.00%
+  TOP 20%    : 0.00%
+  TOP 50%    : 0.00%
+  TOP 80%    : 0.00%
+  MIN        : 0.00%
+distribution of exception handling usage as a fraction of total InvokeEC of each function
+  Length     : 154
+  MAX        : 0.00%
+  TOP 1%     : 0.00%
+  TOP 5%     : 0.00%
+  TOP 10%    : 0.00%
+  TOP 20%    : 0.00%
+  TOP 50%    : 0.00%
+  TOP 80%    : 0.00%
+  MIN        : 0.00%
+BOLT-INFO: Finished pass: profile-quality-stats
+BOLT-INFO: Starting pass: validate-internal-calls
+BOLT-INFO: Finished pass: validate-internal-calls
+BOLT-INFO: Starting pass: validate-mem-refs
+BOLT-INFO: Finished pass: validate-mem-refs
+BOLT-INFO: Starting pass: shorten-instructions
+BOLT-INFO: Finished pass: shorten-instructions
+BOLT-INFO: Starting pass: remove-nops
+BOLT-INFO: Finished pass: remove-nops
+BOLT-INFO: Starting pass: normalize CFG
+BOLT-INFO: Finished pass: normalize CFG
+BOLT-INFO: Starting pass: identical-code-folding
+BOLT-INFO: ICF folded 2 out of 1632 functions in 3 passes. 0 functions had jump tables.
+BOLT-INFO: Removing all identical functions will save 0.02 KB of code space. Folded functions were called 98025 times based on profile.
+BOLT-INFO: Finished pass: identical-code-folding
+BOLT-INFO: Starting pass: indirect-call-promotion
+BOLT-INFO: Finished pass: indirect-call-promotion
+BOLT-INFO: Starting pass: inlining
+BOLT-INFO: Finished pass: inlining
+BOLT-INFO: Starting pass: identical-code-folding
+BOLT-INFO: Finished pass: identical-code-folding
+BOLT-INFO: Starting pass: partial-inlining
+BOLT-INFO: buildCallGraph: 1632 nodes, 7492 callsites (108 recursive), density = 0.001453, 692 callsites not processed, 658 callsites with invalid profile, used perf data for 0 stale functions.
+BOLT-INFO: partial inlining: releaseAllSavepoints/1(*2) into pager_unlock/1(*2) (count 30805, p(fast) 0.999 callee, 0.999 site, 18 insns, 2 renamed regs, frame elided)
+BOLT-INFO: partial inlining: sqlite3BitvecDestroy/1(*2) into pager_unlock/1(*2) (count 30805, p(fast) 0.993 callee, 0.993 site, 1 insns, 0 renamed regs)
+BOLT-INFO: partial inlining: callFinaliser/1(*2) into vdbeCommit/1(*2) (count 29940, p(fast) 1.000 callee, 1.000 site, 2 insns, 1 renamed regs, frame elided)
+BOLT-INFO: partial inlining: sqlite3DbMallocRawNN/1(*2) into sqlite3VdbeMemGrow/1(*2) (count 385215, p(fast) 0.957 callee, 0.957 site, 22 insns, 0 renamed regs)
+BOLT-INFO: partial inlining: sqlite3DbMallocRawNN/1(*2) into allocateCursor/1(*2) (count 195354, p(fast) 0.957 callee, 0.957 site, 22 insns, 0 renamed regs)
+BOLT-INFO: partial inlining: sqlite3ExprDeleteNN/1(*2) into exprListDeleteNN/1(*2) (count 71057, p(fast) 0.713 callee, 0.713 site, 19 insns, 4 renamed regs, frame elided)
+BOLT-INFO: partial inlining: sqlite3DbMallocRawNN/1(*2) into sqlite3ExprListDup/1(*2) (count 29861, p(fast) 0.957 callee, 0.957 site, 22 insns, 0 renamed regs)
+BOLT-INFO: partial inlining: sqlite3DbMallocRawNN/1(*2) into exprDup/1(*2) (count 54581, p(fast) 0.957 callee, 0.957 site, 22 insns, 0 renamed regs)
+BOLT-INFO: partial inlining: sqlite3_value_numeric_type into sumStep/1(*2) (count 216932, p(fast) 0.908 callee, 0.908 site, 10 insns, 0 renamed regs)
+BOLT-INFO: partial inlining: sqlite3_column_count into speedtest1_run (count 75945, p(fast) 1.000 callee, 1.000 site, 2 insns, 0 renamed regs)
+BOLT-INFO: partial inlining: 7 callees with a fast region (3 with frame elision); inlined 10 call sites (3 with frame elision, 0 tail calls), 140 instructions copied, 7 registers renamed
+BOLT-INFO: partial inlining: estimated 1051010 calls avoided on fast paths (4.41% of profiled direct calls), 69485 slow-path calls re-execute the copied region
+BOLT-INFO: partial inlining: callees without a usable fast region: not-simple=17 entry-not-copyable=7 no-fast-exit=30 stack-access=1 side-effect=4 reg-clobber=2 too-large=3 cold-fast-path=7
+BOLT-INFO: Finished pass: partial-inlining
+BOLT-INFO: Starting pass: plt-call-optimization
+BOLT-INFO: Finished pass: plt-call-optimization
+BOLT-INFO: Starting pass: reorder-blocks
+BOLT-INFO: basic block reordering modified layout of 684 functions (88.37% of profiled, 41.91% of total)
+BOLT-INFO: Finished pass: reorder-blocks
+BOLT-INFO: Starting pass: eliminate-unreachable
+BOLT-INFO: removed 1 dead basic block(s) accounting for 4 bytes in function speedtest1_run
+BOLT-INFO: UCE removed 1 blocks and 4 bytes of code
+BOLT-INFO: Finished pass: eliminate-unreachable
+BOLT-INFO: Starting pass: split-functions
+BOLT-INFO: Finished pass: split-functions
+BOLT-INFO: Starting pass: loop-inversion-opt
+BOLT-INFO: 4 Functions were reordered by LoopInversionPass
+BOLT-INFO: Finished pass: loop-inversion-opt
+BOLT-INFO: Starting pass: tail-duplication
+BOLT-INFO: Finished pass: tail-duplication
+BOLT-INFO: Starting pass: fix-branches
+BOLT-INFO: Finished pass: fix-branches
+BOLT-INFO: Starting pass: reorder-functions
+BOLT-INFO: buildCallGraph: 795 nodes, 3776 callsites (72 recursive), density = 0.003153, 600 callsites not processed, 495 callsites with invalid profile, used perf data for 0 stale functions.
+BOLT-INFO: Function reordering stats
+BOLT-INFO:  Number of hot functions: 794
+BOLT-INFO:  Number of clusters: 1
+BOLT-INFO:  Final average call distance = 7110.8 (172575990387 / 24269573)
+BOLT-INFO:  Total Calls = 24269573
+BOLT-INFO:  Total Calls within 64B = 2488521 (10.25%)
+BOLT-INFO:  Total Calls within 4KB = 20199711 (83.23%)
+BOLT-INFO:  Total Calls within 2MB = 24269573 (100.00%)
+BOLT-INFO: Finished pass: reorder-functions
+BOLT-INFO: Starting pass: populate-output-functions
+BOLT-INFO: Finished pass: populate-output-functions
+BOLT-INFO: Starting pass: split-functions
+BOLT-INFO: Finished pass: split-functions
+BOLT-INFO: Starting pass: print dyno-stats after optimizations
+BOLT-INFO: program-wide dynostats after all optimizations before SCTC and FOP:
+
+           218645031 : executed forward branches
+            93332281 : taken forward branches
+            47312286 : executed backward branches
+            27222179 : taken backward branches
+            48222483 : executed unconditional branches
+            44069240 : all function calls
+            20198337 : indirect calls
+             8958540 : PLT calls
+          1839356281 : executed instructions
+           467148102 : executed load instructions
+           181239914 : executed store instructions
+                   0 : taken jump table branches
+                   0 : taken unknown indirect branches
+           314179800 : total branches
+           168776943 : taken branches
+           145402857 : non-taken conditional branches
+           120554460 : taken conditional branches
+           265957317 : all conditional branches
+                   0 : linker-inserted veneer calls
+
+           218522409 : executed forward branches (-0.1%)
+            14981568 : taken forward branches (-83.9%)
+            47557288 : executed backward branches (+0.5%)
+            29312260 : taken backward branches (+7.7%)
+            10897944 : executed unconditional branches (-77.4%)
+            43018230 : all function calls (-2.4%)
+            20198337 : indirect calls (=)
+             8958540 : PLT calls (=)
+          1789759038 : executed instructions (-2.7%)
+           466737458 : executed load instructions (-0.1%)
+           180724043 : executed store instructions (-0.3%)
+                   0 : taken jump table branches (=)
+                   0 : taken unknown indirect branches (=)
+           276977641 : total branches (-11.8%)
+            55191772 : taken branches (-67.3%)
+           221785869 : non-taken conditional branches (+52.5%)
+            44293828 : taken conditional branches (-63.3%)
+           266079697 : all conditional branches (+0.0%)
+                   0 : linker-inserted veneer calls (=)
+
+BOLT-INFO: Finished pass: print dyno-stats after optimizations
+BOLT-INFO: Starting pass: simplify-conditional-tail-calls
+BOLT-INFO: Finished pass: simplify-conditional-tail-calls
+BOLT-INFO: Starting pass: peepholes
+BOLT-INFO: Finished pass: peepholes
+BOLT-INFO: Starting pass: assign-sections
+BOLT-INFO: Finished pass: assign-sections
+BOLT-INFO: Starting pass: aligner
+BOLT-INFO: Finished pass: aligner
+BOLT-INFO: Starting pass: reorder-data
+BOLT-INFO: Finished pass: reorder-data
+BOLT-INFO: Starting pass: patch-entries
+BOLT-INFO: patching entries in original code
+BOLT-INFO: function sqlite3_bind_int too small to patch its entry point
+BOLT-WARNING: failed to patch entries in sqlite3_bind_int. The function will not be optimized
+BOLT-INFO: Finished pass: patch-entries
+BOLT-INFO: Starting pass: assign-sections
+BOLT-INFO: Finished pass: assign-sections
+BOLT-INFO: Starting pass: aarch64-relaxation
+BOLT-INFO: Finished pass: aarch64-relaxation
+BOLT-INFO: Starting pass: long-jmp
+BOLT-INFO: Starting stub-insertion pass
+BOLT-INFO: Inserted 512 stubs in the hot area and 239 stubs in the cold area. Shared 0 times, iterated 3 times.
+BOLT-INFO: Finished pass: long-jmp
+BOLT-INFO: Starting pass: pointer-auth-cfi-fixup
+BOLT-INFO: rewritten pac-ret DWARF info in 1 out of 1632 functions (0.06%).
+BOLT-INFO: Finished pass: pointer-auth-cfi-fixup
+BOLT-INFO: Starting pass: finalize-functions
+BOLT-INFO: Finished pass: finalize-functions
+BOLT-INFO: Starting pass: frame-optimizer
+BOLT-INFO: Finished pass: frame-optimizer
+BOLT-INFO: Starting pass: alloc-combiner
+BOLT-INFO: Finished pass: alloc-combiner
+BOLT-INFO: Starting pass: retpoline-insertion
+BOLT-INFO: Finished pass: retpoline-insertion
+BOLT-INFO: Starting pass: inst-lowering
+BOLT-INFO: Finished pass: inst-lowering
+BOLT-INFO: Starting pass: lower-annotations
+BOLT-INFO: Finished pass: lower-annotations
+BOLT-INFO: Starting pass: clean-mc-state
+BOLT-INFO: Finished pass: clean-mc-state
+BOLT-INFO: padding code to 0x600000 to accommodate hot text
+BOLT-INFO: patched build-id (flipped first and last bits)
+BOLT: writing new section .fini_array
+ data at 0xaaaaefc29dd0
+ of size 8
+ at offset 1208160 with content size 8
+BOLT: writing new section .init_array
+ data at 0xaaaaefbfa7d0
+ of size 8
+ at offset 1208168 with content size 8
+BOLT: writing new section .data.rel.ro
+ data at 0xaaaaf132f720
+ of size 5736
+ at offset 1208176 with content size 5736
+BOLT: writing new section .data
+ data at 0xaaaaf16d8510
+ of size 12525
+ at offset 1214400 with content size 12525
+BOLT: writing new section .text
+ data at 0xffff8ae00000
+ of size 366704
+ at offset 4194304 with content size 366704
+BOLT: writing new section .text.cold
+ data at 0xaaaaf2887b80
+ of size 265596
+ at offset 4561024 with content size 265596
+BOLT: writing new section .bolt.new.eh_frame
+ data at 0xaaaaf28c8910
+ of size 97192
+ at offset 6291456 with content size 97192
+BOLT: writing new section .relocated.eh_frame
+ data at 0xaaaaf26d75d0
+ of size 83612
+ at offset 6388648 with content size 83612
+BOLT-INFO: not writing section header for section .fini_array
+BOLT-INFO: not writing section header for section .init_array
+BOLT-INFO: not writing section header for section .data.rel.ro
+BOLT-INFO: not writing section header for section .data
+BOLT-INFO: writing section header for .text
+BOLT-INFO: writing section header for .text.cold
+BOLT-INFO: writing section header for .eh_frame
+BOLT-INFO: writing section header for .eh_frame_hdr
+BOLT-INFO: setting __hot_start to 0x400000
+BOLT-INFO: setting __hot_end to 0x459870
+BOLT-INFO: not writing section header for section .fini_array
+BOLT-INFO: not writing section header for section .init_array
+BOLT-INFO: not writing section header for section .data.rel.ro
+BOLT-INFO: not writing section header for section .data
+BOLT-INFO: writing section header for .text
+BOLT-INFO: writing section header for .text.cold
+BOLT-INFO: writing section header for .eh_frame
+BOLT-INFO: writing section header for .eh_frame_hdr
+BOLT-INFO: writing section header for .note.bolt_info

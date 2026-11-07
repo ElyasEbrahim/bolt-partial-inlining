@@ -1,0 +1,23 @@
+== 1. build x86-64 programs and runtime
+== 2. instrument
+== 3. train
+== 4. optimize
+bufwrite  0 callees with a fast region (0 with frame elision); inlined 0 call sites (0 with frame elision, 0 tail calls), 0 instructions copied, 0 registers renamed
+memo      0 callees with a fast region (0 with frame elision); inlined 0 call sites (0 with frame elision, 0 tail calls), 0 instructions copied, 0 registers renamed
+trace     1 callees with a fast region (0 with frame elision); inlined 2 call sites (0 with frame elision, 0 tail calls), 4 instructions copied, 0 registers renamed
+pool      2 callees with a fast region (0 with frame elision); inlined 2 call sites (0 with frame elision, 0 tail calls), 11 instructions copied, 0 registers renamed
+mixed     2 callees with a fast region (0 with frame elision); inlined 3 call sites (0 with frame elision, 0 tail calls), 30 instructions copied, 0 registers renamed
+unsafe    1 callees with a fast region (0 with frame elision); inlined 1 call sites (0 with frame elision, 0 tail calls), 4 instructions copied, 0 registers renamed
+compute   0 callees with a fast region (0 with frame elision); inlined 0 call sites (0 with frame elision, 0 tail calls), 0 instructions copied, 0 registers renamed
+e2e       3 callees with a fast region (0 with frame elision); inlined 3 call sites (0 with frame elision, 0 tail calls), 17 instructions copied, 0 registers renamed
+lua       6 callees with a fast region (0 with frame elision); inlined 10 call sites (0 with frame elision, 1 tail calls), 106 instructions copied, 0 registers renamed
+== 5. run and compare
+OK        bufwrite: original, bolt and bolt + --partial-inline produce identical output
+OK        memo: original, bolt and bolt + --partial-inline produce identical output
+OK        trace: original, bolt and bolt + --partial-inline produce identical output
+OK        pool: original, bolt and bolt + --partial-inline produce identical output
+OK        mixed: original, bolt and bolt + --partial-inline produce identical output
+OK        unsafe: original, bolt and bolt + --partial-inline produce identical output
+OK        compute: original, bolt and bolt + --partial-inline produce identical output
+OK        e2e: original, bolt and bolt + --partial-inline produce identical output
+OK        lua: original, bolt and bolt + --partial-inline produce identical output

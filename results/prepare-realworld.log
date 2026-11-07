@@ -1,0 +1,8 @@
+== sqlite
+BOLT-INFO: partial inlining: 7 callees with a fast region (3 with frame elision); inlined 8 call sites (3 with frame elision, 0 tail calls), 96 instructions copied, 7 registers renamed
+== lua
+BOLT-INFO: partial inlining: 11 callees with a fast region (3 with frame elision); inlined 14 call sites (4 with frame elision, 2 tail calls), 151 instructions copied, 3 registers renamed
+== cpython
+BOLT-INFO: partial inlining: 15 callees with a fast region (8 with frame elision); inlined 14 call sites (5 with frame elision, 1 tail calls), 158 instructions copied, 3 registers renamed
+== zstd
+BOLT-INFO: partial inlining: 5 callees with a fast region (0 with frame elision); inlined 5 call sites (0 with frame elision, 0 tail calls), 29 instructions copied, 0 registers renamed
