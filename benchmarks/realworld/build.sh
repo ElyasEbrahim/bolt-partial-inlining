@@ -2,7 +2,7 @@
 # Download (pinned, SHA-256 verified) and build the real-world workloads with
 # relocations preserved (-Wl,--emit-relocs) so that BOLT can rewrite them.
 #
-#   SRC=/work/src OUT=/work/rw ./build.sh [sqlite] [lua] [cpython] [zstd]
+#   SRC=/work/src OUT=/work/rw ./build.sh [sqlite] [lua] [cpython] [zstd] [jq] [libxml2]
 set -euo pipefail
 SRC=${SRC:-/work/src}
 OUT=${OUT:-/work/rw}
@@ -72,8 +72,45 @@ build_zstd() {
   cp programs/zstd ../zstd
 }
 
+# jq and libxml2 seed their hash tables from getentropy()/arc4random() in every
+# process, so profiles and executed instruction counts would differ from run
+# to run. A one-line patch makes each seed a constant (checked below, the
+# build fails if the patch does not apply). Both are linked statically
+# (--disable-shared) so that the library code is part of the binary BOLT
+# rewrites.
+build_jq() {
+  fetch https://github.com/jqlang/jq/releases/download/jq-1.8.2/jq-1.8.2.tar.gz \
+    71b8d6e8f5fe81f6c6d0d110e3892251f6ce76ed095abd315e26e6e1193af3af
+  local d=$OUT/jq/build; rm -rf "$d"; mkdir -p "$d"; cd "$d"
+  tar xzf "$SRC/jq-1.8.2.tar.gz" --strip-components=1
+  sed -i 's|^static void jvp_hash_seed_init(void) {$|&\n  hash_seed = 0; return; /* benchmark: fixed seed */|' src/jv.c
+  grep -q 'hash_seed = 0; return; /\* benchmark' src/jv.c
+  ./configure -q CC="$CC" --disable-shared --with-oniguruma=builtin --disable-docs \
+    LDFLAGS="$LDRELOC" > configure.log
+  make -s -j"$JOBS" > make.log 2>&1
+  cp jq ../jq
+}
+
+build_libxml2() {
+  fetch https://download.gnome.org/sources/libxml2/2.15/libxml2-2.15.4.tar.xz \
+    98087fd181d9070724f3fbc65c7377db03038eb92bd882374daff44940138821
+  local d=$OUT/libxml2/build; rm -rf "$d"; mkdir -p "$d"; cd "$d"
+  tar xJf "$SRC/libxml2-2.15.4.tar.xz" --strip-components=1
+  python3 -I -c 'import sys
+p = "dict.c"; s = open(p).read()
+old = "xmlInitRandom(void) {\n    xmlInitMutex(&xmlRngMutex);\n"
+new = old + "    globalRngState[0] = 0x6b8b4567; globalRngState[1] = 0x327b23c6;\n" \
+            "    return; /* benchmark: fixed seed */\n"
+if s.count(old) != 1: sys.exit("xmlInitRandom not found")
+open(p, "w").write(s.replace(old, new))'
+  ./configure -q CC="$CC" --disable-shared --without-python --without-readline \
+    --without-icu LDFLAGS="$LDRELOC" > configure.log
+  make -s -j"$JOBS" > make.log 2>&1
+  cp xmllint ../xmllint
+}
+
 targets=("$@")
-[ ${#targets[@]} -gt 0 ] || targets=(sqlite lua cpython zstd)
+[ ${#targets[@]} -gt 0 ] || targets=(sqlite lua cpython zstd jq libxml2)
 for t in "${targets[@]}"; do
   echo "== building $t"
   ( "build_$t" )

@@ -6,9 +6,21 @@ project uses [Semantic Versioning](https://semver.org/).
 
 ## [Unreleased]
 
+### Added
+
+- Real-world workloads jq 1.8.2 and libxml2 2.15.4 (`xmllint`), selected by a
+  screening of six candidate programs whose procedure and results are in the
+  design document; their hash seeds are made constant for reproducible
+  profiles.
+- Variant `bolt-pi-skip` (jq: partial inlining without the trivial callee
+  `jv_get_kind`) and a report table that separates the share of the speedup
+  that only partial inlining achieves from the share BOLT's existing
+  `-inline-all` achieves as well.
+
 ### Changed
 
 - CI uses `actions/checkout@v7` (Node.js 24).
+- The evaluation image installs `pkg-config` (needed by libxml2's build).
 
 ## [1.0.0] - 2026-11-07
 

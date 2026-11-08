@@ -13,6 +13,8 @@
 #   bolt-pi-nofe ablation: frame elision disabled (frameless fast paths only)
 #   bolt-inl     bolt + BOLT's existing whole-function inliner (-inline-all)
 #   bolt-inl-pi  bolt-inl + -partial-inline
+#   bolt-pi-skip only if PI_SKIP is set: bolt-pi with
+#                -partial-inline-skip=$PI_SKIP (analysis of single callees)
 # Logs (including -dyno-stats) are written next to each variant.
 set -euo pipefail
 BOLT_BIN=${BOLT_BIN:-/opt/bolt/bin}
@@ -59,4 +61,8 @@ opt bolt-pi-avg "${LAYOUT[@]}" "${PI[@]}" -partial-inline-profile-model=average
 opt bolt-pi-nofe "${LAYOUT[@]}" "${PI[@]}" -partial-inline-frame-elision=false
 opt bolt-inl    "${LAYOUT[@]}" "${INL[@]}"
 opt bolt-inl-pi "${LAYOUT[@]}" "${INL[@]}" "${PI[@]}"
+if [ -n "${PI_SKIP:-}" ]; then
+  opt bolt-pi-skip "${LAYOUT[@]}" "${PI[@]}" -partial-inline-skip="$PI_SKIP"
+  echo "$PI_SKIP" > "$out/bolt-pi-skip.skipped"
+fi
 grep -h "BOLT-INFO: partial inlining: [0-9]" "$out/bolt-pi.log" || true

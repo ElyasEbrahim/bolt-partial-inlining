@@ -477,8 +477,8 @@ BOLT-WARNING: failed to post-process indirect branches for subexpr/1(*2)
 BOLT-WARNING: failed to post-process indirect branches for statement/1(*2)
 BOLT-WARNING: failed to post-process indirect branches for luaE_warning/1(*2)
 BOLT-WARNING: failed to post-process indirect branches for luaK_dischargevars/1(*2)
-BOLT-WARNING: failed to post-process indirect branches for llex/1(*2)
 BOLT-WARNING: failed to post-process indirect branches for luaV_equalobj/1(*2)
+BOLT-WARNING: failed to post-process indirect branches for llex/1(*2)
 BOLT-WARNING: failed to post-process indirect branches for match_class/1(*2)
 BOLT-WARNING: failed to post-process indirect branches for luaV_execute/1(*2)
 BOLT-INFO: Starting pass: pointer-auth-cfi-analyzer
@@ -1349,31 +1349,31 @@ BOLT-INFO: Finished pass: clean-mc-state
 BOLT-INFO: padding code to 0x600000 to accommodate hot text
 BOLT-INFO: patched build-id (flipped first and last bits)
 BOLT: writing new section .fini_array
- data at 0xaaab067aa040
+ data at 0xaaaaf2c348b0
  of size 8
  at offset 291984 with content size 8
 BOLT: writing new section .init_array
- data at 0xaaab067bb990
+ data at 0xaaaaf2c34a70
  of size 8
  at offset 291992 with content size 8
 BOLT: writing new section .data.rel.ro
- data at 0xaaab0614efa0
+ data at 0xaaaaf2b0d570
  of size 4376
  at offset 292000 with content size 4376
 BOLT: writing new section .text
- data at 0xffff88200000
+ data at 0xffffb0400000
  of size 107108
  at offset 4194304 with content size 107108
 BOLT: writing new section .text.cold
- data at 0xaaab06bda6c0
+ data at 0xaaaaf352b680
  of size 58872
  at offset 4301440 with content size 58872
 BOLT: writing new section .bolt.new.eh_frame
- data at 0xaaab06c428d0
+ data at 0xaaaaf35938c0
  of size 33752
  at offset 6291456 with content size 33752
 BOLT: writing new section .relocated.eh_frame
- data at 0xaaab06be8cc0
+ data at 0xaaaaf3539c80
  of size 33116
  at offset 6325208 with content size 33116
 BOLT-INFO: not writing section header for section .fini_array

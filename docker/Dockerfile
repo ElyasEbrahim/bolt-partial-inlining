@@ -74,7 +74,7 @@ RUN for v in baseline patched; do \
 ############################################################################
 FROM base AS runtime
 ARG DEBIAN_FRONTEND=noninteractive
-RUN apt-get update && apt-get install -y --no-install-recommends valgrind \
+RUN apt-get update && apt-get install -y --no-install-recommends valgrind pkg-config \
  && rm -rf /var/lib/apt/lists/*
 COPY --from=builder /opt/bolt-baseline /opt/bolt-baseline
 COPY --from=builder /opt/bolt-patched /opt/bolt-patched

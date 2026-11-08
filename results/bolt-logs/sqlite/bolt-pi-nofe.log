@@ -873,10 +873,10 @@ BOLT-WARNING: failed to post-process indirect branches for sqlite3_free
 BOLT-WARNING: failed to post-process indirect branches for sqlite3GetToken/1(*2)
 BOLT-WARNING: failed to post-process indirect branches for sqlite3PcacheRelease/1(*2)
 BOLT-WARNING: failed to post-process indirect branches for sqlite3_step
-BOLT-WARNING: failed to post-process indirect branches for sqlite3_config
-BOLT-WARNING: failed to post-process indirect branches for sqlite3DbNNFreeNN/1(*2)
 BOLT-WARNING: failed to post-process indirect branches for releasePageNotNull/1(*2)
+BOLT-WARNING: failed to post-process indirect branches for sqlite3DbNNFreeNN/1(*2)
 BOLT-WARNING: failed to post-process indirect branches for getCellInfo/1(*2)
+BOLT-WARNING: failed to post-process indirect branches for sqlite3_config
 BOLT-WARNING: failed to post-process indirect branches for sqlite3_test_control
 BOLT-WARNING: failed to post-process indirect branches for vdbeCompareMemString/1(*2)
 BOLT-WARNING: failed to post-process indirect branches for sqlite3VdbeSerialGet/1(*2)
@@ -1750,35 +1750,35 @@ BOLT-INFO: Finished pass: clean-mc-state
 BOLT-INFO: padding code to 0x600000 to accommodate hot text
 BOLT-INFO: patched build-id (flipped first and last bits)
 BOLT: writing new section .fini_array
- data at 0xaaaafa3f0b00
+ data at 0xaaab0077c510
  of size 8
  at offset 1208160 with content size 8
 BOLT: writing new section .init_array
- data at 0xaaaafc164000
+ data at 0xaaab008beab0
  of size 8
  at offset 1208168 with content size 8
 BOLT: writing new section .data.rel.ro
- data at 0xaaaafaf311a0
+ data at 0xaaaaff1c3500
  of size 5736
  at offset 1208176 with content size 5736
 BOLT: writing new section .data
- data at 0xaaaafaf62060
+ data at 0xaaab00960100
  of size 12525
  at offset 1214400 with content size 12525
 BOLT: writing new section .text
- data at 0xffff84400000
+ data at 0xffff9c400000
  of size 366448
  at offset 4194304 with content size 366448
 BOLT: writing new section .text.cold
- data at 0xaaaafd097b80
+ data at 0xaaab01948b80
  of size 265532
  at offset 4560768 with content size 265532
 BOLT: writing new section .bolt.new.eh_frame
- data at 0xaaaafd0d88d0
+ data at 0xaaab019898d0
  of size 97192
  at offset 6291456 with content size 97192
 BOLT: writing new section .relocated.eh_frame
- data at 0xaaaafceff4e0
+ data at 0xaaab017b04e0
  of size 83612
  at offset 6388648 with content size 83612
 BOLT-INFO: not writing section header for section .fini_array

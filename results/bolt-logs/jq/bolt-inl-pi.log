@@ -1,0 +1,1861 @@
+BOLT-WARNING: specifying numeric value "1" for option -icf is deprecated
+BOLT-INFO: shared object or position-independent executable detected
+BOLT-INFO: Target architecture: aarch64
+BOLT-INFO: BOLT version: 0a0e65b2e8ff6043d85ab07c4d23ea18bf0b9b7d
+BOLT-INFO: first alloc address is 0x0
+BOLT-INFO: creating new program header table at address 0x200000, offset 0x200000
+BOLT-INFO: marking .fini_array as GNU_RELRO
+BOLT-INFO: marking .init_array as GNU_RELRO
+BOLT-INFO: marking .data.rel.ro as GNU_RELRO
+BOLT-INFO: marking .dynamic as GNU_RELRO
+BOLT-INFO: marking .got as GNU_RELRO
+BOLT-INFO: marking .relro_padding as GNU_RELRO
+BOLT-WARNING: debug info will be stripped from the binary. Use -update-debug-sections to keep it.
+BOLT-INFO: enabling relocation mode
+BOLT-INFO: enabling lite mode
+BOLT-INFO: setting size of function _init/1(*2) to 24 (was 0)
+BOLT-INFO: setting size of function _fini/1(*2) to 20 (was 0)
+BOLT-INFO: setting size of function __BOLT_PSEUDO_.plt to 32 (was 0)
+BOLT-INFO: setting size of function abort@PLT to 16 (was 0)
+BOLT-INFO: setting size of function __libc_start_main@PLT to 16 (was 0)
+BOLT-INFO: setting size of function __gmon_start__@PLT to 16 (was 0)
+BOLT-INFO: setting size of function __cxa_finalize@PLT to 16 (was 0)
+BOLT-INFO: setting size of function setlocale@PLT to 16 (was 0)
+BOLT-INFO: setting size of function perror@PLT to 16 (was 0)
+BOLT-INFO: setting size of function __ctype_b_loc@PLT to 16 (was 0)
+BOLT-INFO: setting size of function strcmp@PLT to 16 (was 0)
+BOLT-INFO: setting size of function __errno_location@PLT to 16 (was 0)
+BOLT-INFO: setting size of function __isoc23_strtol@PLT to 16 (was 0)
+BOLT-INFO: setting size of function isatty@PLT to 16 (was 0)
+BOLT-INFO: setting size of function getenv@PLT to 16 (was 0)
+BOLT-INFO: setting size of function fwrite@PLT to 16 (was 0)
+BOLT-INFO: setting size of function strdup@PLT to 16 (was 0)
+BOLT-INFO: setting size of function dirname@PLT to 16 (was 0)
+BOLT-INFO: setting size of function free@PLT to 16 (was 0)
+BOLT-INFO: setting size of function fprintf@PLT to 16 (was 0)
+BOLT-INFO: setting size of function strlen@PLT to 16 (was 0)
+BOLT-INFO: setting size of function ferror@PLT to 16 (was 0)
+BOLT-INFO: setting size of function fclose@PLT to 16 (was 0)
+BOLT-INFO: setting size of function strerror@PLT to 16 (was 0)
+BOLT-INFO: setting size of function exit@PLT to 16 (was 0)
+BOLT-INFO: setting size of function putchar@PLT to 16 (was 0)
+BOLT-INFO: setting size of function printf@PLT to 16 (was 0)
+BOLT-INFO: setting size of function puts@PLT to 16 (was 0)
+BOLT-INFO: setting size of function fputc@PLT to 16 (was 0)
+BOLT-INFO: setting size of function fputs@PLT to 16 (was 0)
+BOLT-INFO: setting size of function fflush@PLT to 16 (was 0)
+BOLT-INFO: setting size of function memmove@PLT to 16 (was 0)
+BOLT-INFO: setting size of function __assert_fail@PLT to 16 (was 0)
+BOLT-INFO: setting size of function acos@PLT to 16 (was 0)
+BOLT-INFO: setting size of function acosh@PLT to 16 (was 0)
+BOLT-INFO: setting size of function asin@PLT to 16 (was 0)
+BOLT-INFO: setting size of function asinh@PLT to 16 (was 0)
+BOLT-INFO: setting size of function atan@PLT to 16 (was 0)
+BOLT-INFO: setting size of function atan2@PLT to 16 (was 0)
+BOLT-INFO: setting size of function atanh@PLT to 16 (was 0)
+BOLT-INFO: setting size of function cbrt@PLT to 16 (was 0)
+BOLT-INFO: setting size of function cos@PLT to 16 (was 0)
+BOLT-INFO: setting size of function cosh@PLT to 16 (was 0)
+BOLT-INFO: setting size of function exp@PLT to 16 (was 0)
+BOLT-INFO: setting size of function exp2@PLT to 16 (was 0)
+BOLT-INFO: setting size of function hypot@PLT to 16 (was 0)
+BOLT-INFO: setting size of function j0@PLT to 16 (was 0)
+BOLT-INFO: setting size of function j1@PLT to 16 (was 0)
+BOLT-INFO: setting size of function log@PLT to 16 (was 0)
+BOLT-INFO: setting size of function log10@PLT to 16 (was 0)
+BOLT-INFO: setting size of function log2@PLT to 16 (was 0)
+BOLT-INFO: setting size of function pow@PLT to 16 (was 0)
+BOLT-INFO: setting size of function remainder@PLT to 16 (was 0)
+BOLT-INFO: setting size of function sin@PLT to 16 (was 0)
+BOLT-INFO: setting size of function sinh@PLT to 16 (was 0)
+BOLT-INFO: setting size of function sqrt@PLT to 16 (was 0)
+BOLT-INFO: setting size of function tan@PLT to 16 (was 0)
+BOLT-INFO: setting size of function tanh@PLT to 16 (was 0)
+BOLT-INFO: setting size of function tgamma@PLT to 16 (was 0)
+BOLT-INFO: setting size of function y0@PLT to 16 (was 0)
+BOLT-INFO: setting size of function y1@PLT to 16 (was 0)
+BOLT-INFO: setting size of function jn@PLT to 16 (was 0)
+BOLT-INFO: setting size of function yn@PLT to 16 (was 0)
+BOLT-INFO: setting size of function drem@PLT to 16 (was 0)
+BOLT-INFO: setting size of function erf@PLT to 16 (was 0)
+BOLT-INFO: setting size of function erfc@PLT to 16 (was 0)
+BOLT-INFO: setting size of function exp10@PLT to 16 (was 0)
+BOLT-INFO: setting size of function expm1@PLT to 16 (was 0)
+BOLT-INFO: setting size of function fdim@PLT to 16 (was 0)
+BOLT-INFO: setting size of function fmod@PLT to 16 (was 0)
+BOLT-INFO: setting size of function gamma@PLT to 16 (was 0)
+BOLT-INFO: setting size of function lgamma@PLT to 16 (was 0)
+BOLT-INFO: setting size of function log1p@PLT to 16 (was 0)
+BOLT-INFO: setting size of function logb@PLT to 16 (was 0)
+BOLT-INFO: setting size of function nextafter@PLT to 16 (was 0)
+BOLT-INFO: setting size of function nexttoward@PLT to 16 (was 0)
+BOLT-INFO: setting size of function scalb@PLT to 16 (was 0)
+BOLT-INFO: setting size of function scalbln@PLT to 16 (was 0)
+BOLT-INFO: setting size of function significand@PLT to 16 (was 0)
+BOLT-INFO: setting size of function ldexp@PLT to 16 (was 0)
+BOLT-INFO: setting size of function modf@PLT to 16 (was 0)
+BOLT-INFO: setting size of function frexp@PLT to 16 (was 0)
+BOLT-INFO: setting size of function lgamma_r@PLT to 16 (was 0)
+BOLT-INFO: setting size of function bcmp@PLT to 16 (was 0)
+BOLT-INFO: setting size of function strchr@PLT to 16 (was 0)
+BOLT-INFO: setting size of function strptime@PLT to 16 (was 0)
+BOLT-INFO: setting size of function strftime@PLT to 16 (was 0)
+BOLT-INFO: setting size of function timegm@PLT to 16 (was 0)
+BOLT-INFO: setting size of function gmtime_r@PLT to 16 (was 0)
+BOLT-INFO: setting size of function localtime_r@PLT to 16 (was 0)
+BOLT-INFO: setting size of function gettimeofday@PLT to 16 (was 0)
+BOLT-INFO: setting size of function time@PLT to 16 (was 0)
+BOLT-INFO: setting size of function memset@PLT to 16 (was 0)
+BOLT-INFO: setting size of function mktime@PLT to 16 (was 0)
+BOLT-INFO: setting size of function strcpy@PLT to 16 (was 0)
+BOLT-INFO: setting size of function strncmp@PLT to 16 (was 0)
+BOLT-INFO: setting size of function fopen@PLT to 16 (was 0)
+BOLT-INFO: setting size of function pthread_create@PLT to 16 (was 0)
+BOLT-INFO: setting size of function pthread_join@PLT to 16 (was 0)
+BOLT-INFO: setting size of function fgets@PLT to 16 (was 0)
+BOLT-INFO: setting size of function snprintf@PLT to 16 (was 0)
+BOLT-INFO: setting size of function pthread_getspecific@PLT to 16 (was 0)
+BOLT-INFO: setting size of function pthread_setspecific@PLT to 16 (was 0)
+BOLT-INFO: setting size of function pthread_key_create@PLT to 16 (was 0)
+BOLT-INFO: setting size of function pthread_once@PLT to 16 (was 0)
+BOLT-INFO: setting size of function malloc@PLT to 16 (was 0)
+BOLT-INFO: setting size of function memcpy@PLT to 16 (was 0)
+BOLT-INFO: setting size of function vsnprintf@PLT to 16 (was 0)
+BOLT-INFO: setting size of function calloc@PLT to 16 (was 0)
+BOLT-INFO: setting size of function realloc@PLT to 16 (was 0)
+BOLT-INFO: setting size of function qsort@PLT to 16 (was 0)
+BOLT-INFO: setting size of function memcmp@PLT to 16 (was 0)
+BOLT-INFO: setting size of function open@PLT to 16 (was 0)
+BOLT-INFO: setting size of function fstat@PLT to 16 (was 0)
+BOLT-INFO: setting size of function close@PLT to 16 (was 0)
+BOLT-INFO: setting size of function fdopen@PLT to 16 (was 0)
+BOLT-INFO: setting size of function feof@PLT to 16 (was 0)
+BOLT-INFO: setting size of function fread@PLT to 16 (was 0)
+BOLT-INFO: setting size of function strspn@PLT to 16 (was 0)
+BOLT-INFO: setting size of function strrchr@PLT to 16 (was 0)
+BOLT-INFO: setting size of function stat@PLT to 16 (was 0)
+BOLT-INFO: setting size of function pathconf@PLT to 16 (was 0)
+BOLT-INFO: setting size of function realpath@PLT to 16 (was 0)
+BOLT-INFO: setting size of function memmem@PLT to 16 (was 0)
+BOLT-INFO: setting size of function clearerr@PLT to 16 (was 0)
+BOLT-INFO: setting size of function memchr@PLT to 16 (was 0)
+BOLT-INFO: setting size of function raise@PLT to 16 (was 0)
+BOLT-INFO: setting size of function stpcpy@PLT to 16 (was 0)
+BOLT-INFO: setting size of function getc@PLT to 16 (was 0)
+BOLT-INFO: setting size of function fileno@PLT to 16 (was 0)
+BOLT-INFO: setting size of function __cxa_atexit@PLT to 16 (was 0)
+BOLT-INFO: pre-processing profile using branch profile reader
+BOLT-INFO: skipping processing main per user request
+BOLT-INFO: skipping processing usage/1(*2) per user request
+BOLT-INFO: skipping processing debug_cb/1(*2) per user request
+BOLT-INFO: skipping processing die/1(*2) per user request
+BOLT-INFO: skipping processing stderr_cb/1(*2) per user request
+BOLT-INFO: skipping processing stack_pop per user request
+BOLT-INFO: skipping processing stack_popn per user request
+BOLT-INFO: skipping processing stack_get_pos per user request
+BOLT-INFO: skipping processing _jq_path_append per user request
+BOLT-INFO: skipping processing jq_report_error per user request
+BOLT-INFO: skipping processing jq_format_error per user request
+BOLT-INFO: skipping processing default_err_cb/1(*2) per user request
+BOLT-INFO: skipping processing jq_set_error_cb per user request
+BOLT-INFO: skipping processing jq_get_error_cb per user request
+BOLT-INFO: skipping processing jq_set_nomem_handler per user request
+BOLT-INFO: skipping processing jq_compile per user request
+BOLT-INFO: skipping processing jq_get_attr per user request
+BOLT-INFO: skipping processing jq_get_lib_dirs per user request
+BOLT-INFO: skipping processing jq_set_attrs per user request
+BOLT-INFO: skipping processing jq_dump_disassembly per user request
+BOLT-INFO: skipping processing jq_get_input_cb per user request
+BOLT-INFO: skipping processing jq_get_debug_cb per user request
+BOLT-INFO: skipping processing jq_get_stderr_cb per user request
+BOLT-INFO: skipping processing jq_halt per user request
+BOLT-INFO: skipping processing jq_get_exit_code per user request
+BOLT-INFO: skipping processing jq_get_error_message per user request
+BOLT-INFO: skipping processing dump_disassembly per user request
+BOLT-INFO: skipping processing dump_operation per user request
+BOLT-INFO: skipping processing binop_mod per user request
+BOLT-INFO: skipping processing binop_equal per user request
+BOLT-INFO: skipping processing binop_notequal per user request
+BOLT-INFO: skipping processing binop_less per user request
+BOLT-INFO: skipping processing binop_greater per user request
+BOLT-INFO: skipping processing binop_lesseq per user request
+BOLT-INFO: skipping processing binop_greatereq per user request
+BOLT-INFO: skipping processing f_acos/1(*2) per user request
+BOLT-INFO: skipping processing f_acosh/1(*2) per user request
+BOLT-INFO: skipping processing f_asin/1(*2) per user request
+BOLT-INFO: skipping processing f_asinh/1(*2) per user request
+BOLT-INFO: skipping processing f_atan/1(*2) per user request
+BOLT-INFO: skipping processing f_atan2/1(*2) per user request
+BOLT-INFO: skipping processing f_atanh/1(*2) per user request
+BOLT-INFO: skipping processing f_cbrt/1(*2) per user request
+BOLT-INFO: skipping processing f_cos/1(*2) per user request
+BOLT-INFO: skipping processing f_cosh/1(*2) per user request
+BOLT-INFO: skipping processing f_exp/1(*2) per user request
+BOLT-INFO: skipping processing f_exp2/1(*2) per user request
+BOLT-INFO: skipping processing f_floor/1(*2) per user request
+BOLT-INFO: skipping processing f_hypot/1(*2) per user request
+BOLT-INFO: skipping processing f_j0/1(*2) per user request
+BOLT-INFO: skipping processing f_j1/1(*2) per user request
+BOLT-INFO: skipping processing f_log/1(*2) per user request
+BOLT-INFO: skipping processing f_log10/1(*2) per user request
+BOLT-INFO: skipping processing f_log2/1(*2) per user request
+BOLT-INFO: skipping processing f_pow/1(*2) per user request
+BOLT-INFO: skipping processing f_remainder/1(*2) per user request
+BOLT-INFO: skipping processing f_sin/1(*2) per user request
+BOLT-INFO: skipping processing f_sinh/1(*2) per user request
+BOLT-INFO: skipping processing f_sqrt/1(*2) per user request
+BOLT-INFO: skipping processing f_tan/1(*2) per user request
+BOLT-INFO: skipping processing f_tanh/1(*2) per user request
+BOLT-INFO: skipping processing f_tgamma/1(*2) per user request
+BOLT-INFO: skipping processing f_y0/1(*2) per user request
+BOLT-INFO: skipping processing f_y1/1(*2) per user request
+BOLT-INFO: skipping processing f_jn/1(*2) per user request
+BOLT-INFO: skipping processing f_yn/1(*2) per user request
+BOLT-INFO: skipping processing f_ceil/1(*2) per user request
+BOLT-INFO: skipping processing f_copysign/1(*2) per user request
+BOLT-INFO: skipping processing f_drem/1(*2) per user request
+BOLT-INFO: skipping processing f_erf/1(*2) per user request
+BOLT-INFO: skipping processing f_erfc/1(*2) per user request
+BOLT-INFO: skipping processing f_exp10/1(*2) per user request
+BOLT-INFO: skipping processing f_expm1/1(*2) per user request
+BOLT-INFO: skipping processing f_fabs/1(*2) per user request
+BOLT-INFO: skipping processing f_fdim/1(*2) per user request
+BOLT-INFO: skipping processing f_fma/1(*2) per user request
+BOLT-INFO: skipping processing f_fmax/1(*2) per user request
+BOLT-INFO: skipping processing f_fmin/1(*2) per user request
+BOLT-INFO: skipping processing f_fmod/1(*2) per user request
+BOLT-INFO: skipping processing f_gamma/1(*2) per user request
+BOLT-INFO: skipping processing f_lgamma/1(*2) per user request
+BOLT-INFO: skipping processing f_log1p/1(*2) per user request
+BOLT-INFO: skipping processing f_logb/1(*2) per user request
+BOLT-INFO: skipping processing f_nearbyint/1(*2) per user request
+BOLT-INFO: skipping processing f_nextafter/1(*2) per user request
+BOLT-INFO: skipping processing f_nexttoward/1(*2) per user request
+BOLT-INFO: skipping processing f_rint/1(*2) per user request
+BOLT-INFO: skipping processing f_round/1(*2) per user request
+BOLT-INFO: skipping processing f_scalb/1(*2) per user request
+BOLT-INFO: skipping processing f_scalbln/1(*2) per user request
+BOLT-INFO: skipping processing f_significand/1(*2) per user request
+BOLT-INFO: skipping processing f_trunc/1(*2) per user request
+BOLT-INFO: skipping processing f_ldexp/1(*2) per user request
+BOLT-INFO: skipping processing f_modf/1(*2) per user request
+BOLT-INFO: skipping processing f_frexp/1(*2) per user request
+BOLT-INFO: skipping processing f_lgamma_r/1(*2) per user request
+BOLT-INFO: skipping processing f_negate/1(*2) per user request
+BOLT-INFO: skipping processing f_mod/1(*2) per user request
+BOLT-INFO: skipping processing f_notequal/1(*2) per user request
+BOLT-INFO: skipping processing f_less/1(*2) per user request
+BOLT-INFO: skipping processing f_greatereq/1(*2) per user request
+BOLT-INFO: skipping processing f_dump/1(*2) per user request
+BOLT-INFO: skipping processing f_json_parse/1(*2) per user request
+BOLT-INFO: skipping processing f_tonumber/1(*2) per user request
+BOLT-INFO: skipping processing f_toboolean/1(*2) per user request
+BOLT-INFO: skipping processing f_tostring/1(*2) per user request
+BOLT-INFO: skipping processing f_keys/1(*2) per user request
+BOLT-INFO: skipping processing f_keys_unsorted/1(*2) per user request
+BOLT-INFO: skipping processing f_startswith/1(*2) per user request
+BOLT-INFO: skipping processing f_endswith/1(*2) per user request
+BOLT-INFO: skipping processing f_string_indexes/1(*2) per user request
+BOLT-INFO: skipping processing f_string_trim/1(*2) per user request
+BOLT-INFO: skipping processing f_string_ltrim/1(*2) per user request
+BOLT-INFO: skipping processing f_string_rtrim/1(*2) per user request
+BOLT-INFO: skipping processing f_setpath/1(*2) per user request
+BOLT-INFO: skipping processing f_getpath/1(*2) per user request
+BOLT-INFO: skipping processing f_delpaths/1(*2) per user request
+BOLT-INFO: skipping processing f_has/1(*2) per user request
+BOLT-INFO: skipping processing f_contains/1(*2) per user request
+BOLT-INFO: skipping processing f_utf8bytelength/1(*2) per user request
+BOLT-INFO: skipping processing f_isinfinite/1(*2) per user request
+BOLT-INFO: skipping processing f_isnan/1(*2) per user request
+BOLT-INFO: skipping processing f_isnormal/1(*2) per user request
+BOLT-INFO: skipping processing f_infinite/1(*2) per user request
+BOLT-INFO: skipping processing f_nan/1(*2) per user request
+BOLT-INFO: skipping processing f_sort/1(*2) per user request
+BOLT-INFO: skipping processing f_sort_by_impl/1(*2) per user request
+BOLT-INFO: skipping processing f_unique/1(*2) per user request
+BOLT-INFO: skipping processing f_unique_by_impl/1(*2) per user request
+BOLT-INFO: skipping processing f_bsearch/1(*2) per user request
+BOLT-INFO: skipping processing f_min/1(*2) per user request
+BOLT-INFO: skipping processing f_min_by_impl/1(*2) per user request
+BOLT-INFO: skipping processing f_max_by_impl/1(*2) per user request
+BOLT-INFO: skipping processing f_error/1(*2) per user request
+BOLT-INFO: skipping processing f_format/1(*2) per user request
+BOLT-INFO: skipping processing f_env/1(*2) per user request
+BOLT-INFO: skipping processing f_halt/1(*2) per user request
+BOLT-INFO: skipping processing f_halt_error/1(*2) per user request
+BOLT-INFO: skipping processing f_get_search_list/1(*2) per user request
+BOLT-INFO: skipping processing f_get_prog_origin/1(*2) per user request
+BOLT-INFO: skipping processing f_get_jq_origin/1(*2) per user request
+BOLT-INFO: skipping processing f_match/1(*2) per user request
+BOLT-INFO: skipping processing f_modulemeta/1(*2) per user request
+BOLT-INFO: skipping processing f_input/1(*2) per user request
+BOLT-INFO: skipping processing f_debug/1(*2) per user request
+BOLT-INFO: skipping processing f_stderr/1(*2) per user request
+BOLT-INFO: skipping processing f_strptime/1(*2) per user request
+BOLT-INFO: skipping processing f_strftime/1(*2) per user request
+BOLT-INFO: skipping processing f_strflocaltime/1(*2) per user request
+BOLT-INFO: skipping processing f_mktime/1(*2) per user request
+BOLT-INFO: skipping processing f_gmtime/1(*2) per user request
+BOLT-INFO: skipping processing f_localtime/1(*2) per user request
+BOLT-INFO: skipping processing f_now/1(*2) per user request
+BOLT-INFO: skipping processing f_current_filename/1(*2) per user request
+BOLT-INFO: skipping processing f_current_line/1(*2) per user request
+BOLT-INFO: skipping processing f_have_decnum/1(*2) per user request
+BOLT-INFO: skipping processing type_error/1(*2) per user request
+BOLT-INFO: skipping processing string_trim/1(*2) per user request
+BOLT-INFO: skipping processing escape_string/1(*2) per user request
+BOLT-INFO: skipping processing f_match_name_iter/1(*2) per user request
+BOLT-INFO: skipping processing tm2jv/1(*2) per user request
+BOLT-INFO: skipping processing jv2tm/1(*2) per user request
+BOLT-INFO: skipping processing gen_error per user request
+BOLT-INFO: skipping processing gen_const_global per user request
+BOLT-INFO: skipping processing gen_op_pushk_under per user request
+BOLT-INFO: skipping processing block_const_kind per user request
+BOLT-INFO: skipping processing gen_op_targetlater per user request
+BOLT-INFO: skipping processing inst_set_target per user request
+BOLT-INFO: skipping processing block_append per user request
+BOLT-INFO: skipping processing block_has_only_binders per user request
+BOLT-INFO: skipping processing block_bind_library per user request
+BOLT-INFO: skipping processing block_bind_self per user request
+BOLT-INFO: skipping processing gen_module per user request
+BOLT-INFO: skipping processing block_module_meta per user request
+BOLT-INFO: skipping processing block_is_funcdef per user request
+BOLT-INFO: skipping processing gen_destructure_alt per user request
+BOLT-INFO: skipping processing gen_array_matcher per user request
+BOLT-INFO: skipping processing block_get_unbound_vars/1(*2) per user request
+BOLT-INFO: skipping processing jq_testsuite per user request
+BOLT-INFO: skipping processing run_jq_tests/1(*2) per user request
+BOLT-INFO: skipping processing test_err_cb/1(*2) per user request
+BOLT-INFO: skipping processing test_jq_start_resets_state/1(*2) per user request
+BOLT-INFO: skipping processing test_start_state/1(*2) per user request
+BOLT-INFO: skipping processing compile_args_and_check/1(*2) per user request
+BOLT-INFO: skipping processing test_pthread_run/1(*2) per user request
+BOLT-INFO: skipping processing jv_invalid_get_msg per user request
+BOLT-INFO: skipping processing jv_number_has_literal per user request
+BOLT-INFO: skipping processing jv_is_integer per user request
+BOLT-INFO: skipping processing jv_number_abs per user request
+BOLT-INFO: skipping processing jv_number_negate per user request
+BOLT-INFO: skipping processing jv_array_concat per user request
+BOLT-INFO: skipping processing jv_array_slice per user request
+BOLT-INFO: skipping processing jv_array_indexes per user request
+BOLT-INFO: skipping processing jvp_string_copy_replace_bad/1(*2) per user request
+BOLT-INFO: skipping processing jv_string_indexes per user request
+BOLT-INFO: skipping processing jv_string_repeat per user request
+BOLT-INFO: skipping processing jv_get_refcnt per user request
+BOLT-INFO: skipping processing jv_string_implode per user request
+BOLT-INFO: skipping processing jv_string_hash per user request
+BOLT-INFO: skipping processing jv_string_append_str per user request
+BOLT-INFO: skipping processing jv_object_delete per user request
+BOLT-INFO: skipping processing jv_object_merge_recursive per user request
+BOLT-INFO: skipping processing jvp_object_merge_recursive/1(*2) per user request
+BOLT-INFO: skipping processing jv_identical per user request
+BOLT-INFO: skipping processing jv_contains per user request
+BOLT-INFO: skipping processing jvp_contains/1(*2) per user request
+BOLT-INFO: skipping processing memory_exhausted/1(*2) per user request
+BOLT-INFO: skipping processing jv_mem_calloc_unguarded per user request
+BOLT-INFO: skipping processing jv_mem_strdup_unguarded per user request
+BOLT-INFO: skipping processing tsd_fini_thread/1(*2) per user request
+BOLT-INFO: skipping processing jv_set per user request
+BOLT-INFO: skipping processing jv_has per user request
+BOLT-INFO: skipping processing jv_setpath per user request
+BOLT-INFO: skipping processing jv_getpath per user request
+BOLT-INFO: skipping processing jv_delpaths per user request
+BOLT-INFO: skipping processing jv_sort per user request
+BOLT-INFO: skipping processing delpaths_sorted/1(*2) per user request
+BOLT-INFO: skipping processing jv_keys per user request
+BOLT-INFO: skipping processing string_cmp/1(*2) per user request
+BOLT-INFO: skipping processing jv_unique per user request
+BOLT-INFO: skipping processing mult/1(*2) per user request
+BOLT-INFO: skipping processing jvp_freedtoa per user request
+BOLT-INFO: skipping processing b2d/1(*2) per user request
+BOLT-INFO: skipping processing stream_check_done/1(*2) per user request
+BOLT-INFO: skipping processing make_error/1(*2) per user request
+BOLT-INFO: skipping processing jv_parse per user request
+BOLT-INFO: skipping processing jv_parse_custom_flags per user request
+BOLT-INFO: skipping processing parse_check_done/1(*2) per user request
+BOLT-INFO: skipping processing stream_token/1(*2) per user request
+BOLT-INFO: skipping processing jv_dumpf per user request
+BOLT-INFO: skipping processing jv_show per user request
+BOLT-INFO: skipping processing jv_dump_string per user request
+BOLT-INFO: skipping processing jv_dump_string_trunc per user request
+BOLT-INFO: skipping processing put_refcnt/1(*2) per user request
+BOLT-INFO: skipping processing jvp_utf8_decode_length per user request
+BOLT-INFO: skipping processing jvp_utf8_encode_length per user request
+BOLT-INFO: skipping processing jvp_codepoint_is_whitespace per user request
+BOLT-INFO: skipping processing load_module_meta per user request
+BOLT-INFO: skipping processing load_library/1(*2) per user request
+BOLT-INFO: skipping processing locfile_get_line per user request
+BOLT-INFO: skipping processing locfile_locate per user request
+BOLT-INFO: skipping processing fprinter/1(*2) per user request
+BOLT-INFO: skipping processing jq_util_input_next_input_cb per user request
+BOLT-INFO: skipping processing jq_util_input_get_position per user request
+BOLT-INFO: skipping processing jq_util_input_get_current_filename per user request
+BOLT-INFO: skipping processing jq_util_input_get_current_line per user request
+BOLT-INFO: skipping processing tsd_dtoa_ctx_dtor/1(*2) per user request
+BOLT-INFO: skipping processing decContextSetStatus per user request
+BOLT-INFO: skipping processing decContextGetRounding per user request
+BOLT-INFO: skipping processing decContextGetStatus per user request
+BOLT-INFO: skipping processing decContextRestoreStatus per user request
+BOLT-INFO: skipping processing decContextSaveStatus per user request
+BOLT-INFO: skipping processing decContextSetRounding per user request
+BOLT-INFO: skipping processing decContextSetStatusFromString per user request
+BOLT-INFO: skipping processing decContextSetStatusFromStringQuiet per user request
+BOLT-INFO: skipping processing decContextSetStatusQuiet per user request
+BOLT-INFO: skipping processing decContextStatusToString per user request
+BOLT-INFO: skipping processing decContextTestEndian per user request
+BOLT-INFO: skipping processing decContextTestSavedStatus per user request
+BOLT-INFO: skipping processing decContextTestStatus per user request
+BOLT-INFO: skipping processing decContextZeroStatus per user request
+BOLT-INFO: skipping processing decNumberFromInt32 per user request
+BOLT-INFO: skipping processing decNumberFromUInt32 per user request
+BOLT-INFO: skipping processing decNumberZero per user request
+BOLT-INFO: skipping processing decGetDigits/1(*2) per user request
+BOLT-INFO: skipping processing decNumberToInt32 per user request
+BOLT-INFO: skipping processing decNumberToUInt32 per user request
+BOLT-INFO: skipping processing decNumberToEngString per user request
+BOLT-INFO: skipping processing decNumberAbs per user request
+BOLT-INFO: skipping processing decAddOp/1(*2) per user request
+BOLT-INFO: skipping processing decNumberAdd per user request
+BOLT-INFO: skipping processing decNumberAnd per user request
+BOLT-INFO: skipping processing decCompareOp/1(*2) per user request
+BOLT-INFO: skipping processing decNumberCompareSignal per user request
+BOLT-INFO: skipping processing decNumberCompareTotal per user request
+BOLT-INFO: skipping processing decNumberCompareTotalMag per user request
+BOLT-INFO: skipping processing decNumberCopy per user request
+BOLT-INFO: skipping processing decNumberDivide per user request
+BOLT-INFO: skipping processing decDivideOp/1(*2) per user request
+BOLT-INFO: skipping processing decNumberDivideInteger per user request
+BOLT-INFO: skipping processing decNumberExp per user request
+BOLT-INFO: skipping processing decExpOp/1(*2) per user request
+BOLT-INFO: skipping processing decNumberFMA per user request
+BOLT-INFO: skipping processing decMultiplyOp/1(*2) per user request
+BOLT-INFO: skipping processing decNumberInvert per user request
+BOLT-INFO: skipping processing decNumberLn per user request
+BOLT-INFO: skipping processing decLnOp/1(*2) per user request
+BOLT-INFO: skipping processing decNumberLogB per user request
+BOLT-INFO: skipping processing decNaNs/1(*2) per user request
+BOLT-INFO: skipping processing decNumberCopyAbs per user request
+BOLT-INFO: skipping processing decNumberPlus per user request
+BOLT-INFO: skipping processing decNumberLog10 per user request
+BOLT-INFO: skipping processing decNumberMax per user request
+BOLT-INFO: skipping processing decNumberMaxMag per user request
+BOLT-INFO: skipping processing decNumberMin per user request
+BOLT-INFO: skipping processing decNumberMinMag per user request
+BOLT-INFO: skipping processing decNumberMinus per user request
+BOLT-INFO: skipping processing decNumberNextMinus per user request
+BOLT-INFO: skipping processing decSetMaxValue/1(*2) per user request
+BOLT-INFO: skipping processing decNumberNextPlus per user request
+BOLT-INFO: skipping processing decNumberNextToward per user request
+BOLT-INFO: skipping processing decNumberCopySign per user request
+BOLT-INFO: skipping processing decNumberIsNormal per user request
+BOLT-INFO: skipping processing decNumberOr per user request
+BOLT-INFO: skipping processing decNumberMultiply per user request
+BOLT-INFO: skipping processing decNumberPower per user request
+BOLT-INFO: skipping processing decShiftToMost/1(*2) per user request
+BOLT-INFO: skipping processing decGetInt/1(*2) per user request
+BOLT-INFO: skipping processing decNumberQuantize per user request
+BOLT-INFO: skipping processing decQuantizeOp/1(*2) per user request
+BOLT-INFO: skipping processing decNumberNormalize per user request
+BOLT-INFO: skipping processing decNumberRescale per user request
+BOLT-INFO: skipping processing decNumberRemainder per user request
+BOLT-INFO: skipping processing decNumberRemainderNear per user request
+BOLT-INFO: skipping processing decNumberRotate per user request
+BOLT-INFO: skipping processing decNumberSameQuantum per user request
+BOLT-INFO: skipping processing decNumberScaleB per user request
+BOLT-INFO: skipping processing decNumberShift per user request
+BOLT-INFO: skipping processing decDecap/1(*2) per user request
+BOLT-INFO: skipping processing decNumberSquareRoot per user request
+BOLT-INFO: skipping processing decNumberSubtract per user request
+BOLT-INFO: skipping processing decNumberToIntegralExact per user request
+BOLT-INFO: skipping processing decNumberToIntegralValue per user request
+BOLT-INFO: skipping processing decNumberXor per user request
+BOLT-INFO: skipping processing decNumberClass per user request
+BOLT-INFO: skipping processing decNumberClassToString per user request
+BOLT-INFO: skipping processing decNumberCopyNegate per user request
+BOLT-INFO: skipping processing decNumberGetBCD per user request
+BOLT-INFO: skipping processing decNumberSetBCD per user request
+BOLT-INFO: skipping processing decNumberIsSubnormal per user request
+BOLT-INFO: skipping processing decNumberTrim per user request
+BOLT-INFO: skipping processing decNumberVersion per user request
+BOLT-INFO: skipping processing decUnitAddSub/1(*2) per user request
+BOLT-INFO: skipping processing decApplyRound/1(*2) per user request
+BOLT-INFO: skipping processing decSetOverflow/1(*2) per user request
+BOLT-INFO: skipping processing decSetSubnormal/1(*2) per user request
+BOLT-INFO: skipping processing yyerror per user request
+BOLT-INFO: skipping processing gen_definedor_assign/1(*2) per user request
+BOLT-INFO: skipping processing gen_format/1(*2) per user request
+BOLT-INFO: skipping processing gen_index_opt/1(*2) per user request
+BOLT-INFO: skipping processing gen_loc_object/1(*2) per user request
+BOLT-INFO: skipping processing yysyntax_error/1(*2) per user request
+BOLT-INFO: skipping processing yydestruct/1(*2) per user request
+BOLT-INFO: skipping processing jq_yy_create_buffer per user request
+BOLT-INFO: skipping processing jq_yyget_extra per user request
+BOLT-INFO: skipping processing jq_yyset_extra per user request
+BOLT-INFO: skipping processing jq_yyrestart per user request
+BOLT-INFO: skipping processing jq_yy_init_buffer/1(*2) per user request
+BOLT-INFO: skipping processing jq_yy_switch_to_buffer per user request
+BOLT-INFO: skipping processing jq_yyalloc per user request
+BOLT-INFO: skipping processing jq_yyfree per user request
+BOLT-INFO: skipping processing jq_yy_flush_buffer per user request
+BOLT-INFO: skipping processing jq_yypush_buffer_state per user request
+BOLT-INFO: skipping processing jq_yypop_buffer_state per user request
+BOLT-INFO: skipping processing jq_yy_scan_string per user request
+BOLT-INFO: skipping processing jq_yyget_lineno per user request
+BOLT-INFO: skipping processing jq_yyget_column per user request
+BOLT-INFO: skipping processing jq_yyget_in per user request
+BOLT-INFO: skipping processing jq_yyget_out per user request
+BOLT-INFO: skipping processing jq_yyget_leng per user request
+BOLT-INFO: skipping processing jq_yyget_text per user request
+BOLT-INFO: skipping processing jq_yyset_lineno per user request
+BOLT-INFO: skipping processing jq_yyset_column per user request
+BOLT-INFO: skipping processing jq_yyset_in per user request
+BOLT-INFO: skipping processing jq_yyset_out per user request
+BOLT-INFO: skipping processing jq_yyget_debug per user request
+BOLT-INFO: skipping processing jq_yyset_debug per user request
+BOLT-INFO: skipping processing jq_yyget_lval per user request
+BOLT-INFO: skipping processing jq_yyset_lval per user request
+BOLT-INFO: skipping processing jq_yyget_lloc per user request
+BOLT-INFO: skipping processing jq_yyset_lloc per user request
+BOLT-INFO: skipping processing jq_yylex_init per user request
+BOLT-INFO: skipping processing jq_yyrealloc per user request
+BOLT-INFO: skipping processing yy_fatal_error/1(*2) per user request
+BOLT-INFO: skipping processing onig_null_warn per user request
+BOLT-INFO: skipping processing onig_set_warn_func per user request
+BOLT-INFO: skipping processing onig_set_verb_warn_func per user request
+BOLT-INFO: skipping processing onig_warning per user request
+BOLT-INFO: skipping processing onig_set_capture_num_limit per user request
+BOLT-INFO: skipping processing onig_get_parse_depth_limit per user request
+BOLT-INFO: skipping processing onig_strncmp per user request
+BOLT-INFO: skipping processing onig_strcpy per user request
+BOLT-INFO: skipping processing onig_st_init_strend_table_with_size per user request
+BOLT-INFO: skipping processing str_end_cmp/1(*2) per user request
+BOLT-INFO: skipping processing str_end_hash/1(*2) per user request
+BOLT-INFO: skipping processing onig_st_lookup_strend per user request
+BOLT-INFO: skipping processing onig_st_insert_strend per user request
+BOLT-INFO: skipping processing onig_st_init_callout_name_table_with_size per user request
+BOLT-INFO: skipping processing callout_name_table_cmp/1(*2) per user request
+BOLT-INFO: skipping processing callout_name_table_hash/1(*2) per user request
+BOLT-INFO: skipping processing onig_st_lookup_callout_name_table per user request
+BOLT-INFO: skipping processing onig_names_free per user request
+BOLT-INFO: skipping processing onig_foreach_name per user request
+BOLT-INFO: skipping processing i_names/1(*2) per user request
+BOLT-INFO: skipping processing onig_renumber_name_table per user request
+BOLT-INFO: skipping processing i_renumber_name/1(*2) per user request
+BOLT-INFO: skipping processing onig_number_of_names per user request
+BOLT-INFO: skipping processing onig_name_to_group_numbers per user request
+BOLT-INFO: skipping processing onig_name_to_backref_number per user request
+BOLT-INFO: skipping processing onig_noname_group_capture_is_active per user request
+BOLT-INFO: skipping processing onig_set_callout_of_name per user request
+BOLT-INFO: skipping processing is_allowed_callout_name/1(*2) per user request
+BOLT-INFO: skipping processing callout_name_entry/1(*2) per user request
+BOLT-INFO: skipping processing make_callout_func_list/1(*2) per user request
+BOLT-INFO: skipping processing onig_get_callout_start_func per user request
+BOLT-INFO: skipping processing onig_reg_callout_list_at per user request
+BOLT-INFO: skipping processing onig_get_callout_tag_start per user request
+BOLT-INFO: skipping processing onig_get_callout_tag_end per user request
+BOLT-INFO: skipping processing onig_get_callout_type_by_name_id per user request
+BOLT-INFO: skipping processing onig_get_callout_start_func_by_name_id per user request
+BOLT-INFO: skipping processing onig_get_callout_end_func_by_name_id per user request
+BOLT-INFO: skipping processing onig_get_callout_in_by_name_id per user request
+BOLT-INFO: skipping processing onig_get_callout_name_by_name_id per user request
+BOLT-INFO: skipping processing onig_global_callout_names_free per user request
+BOLT-INFO: skipping processing onig_callout_tag_is_exist_at_callout_num per user request
+BOLT-INFO: skipping processing onig_callout_tag_table_free per user request
+BOLT-INFO: skipping processing onig_get_callout_num_by_tag per user request
+BOLT-INFO: skipping processing onig_node_free per user request
+BOLT-INFO: skipping processing node_free_body/1(*2) per user request
+BOLT-INFO: skipping processing onig_node_copy per user request
+BOLT-INFO: skipping processing onig_node_str_set per user request
+BOLT-INFO: skipping processing onig_node_new_list per user request
+BOLT-INFO: skipping processing onig_node_new_alt per user request
+BOLT-INFO: skipping processing onig_node_new_bag per user request
+BOLT-INFO: skipping processing onig_node_reset_fail per user request
+BOLT-INFO: skipping processing onig_free_reg_callout_list per user request
+BOLT-INFO: skipping processing onig_node_str_cat per user request
+BOLT-INFO: skipping processing onig_node_str_clear per user request
+BOLT-INFO: skipping processing onig_node_reset_empty per user request
+BOLT-INFO: skipping processing onig_node_new_str per user request
+BOLT-INFO: skipping processing onig_reduce_nested_quantifier per user request
+BOLT-INFO: skipping processing onig_new_cclass_with_code_list per user request
+BOLT-INFO: skipping processing add_code_range_to_buf/1(*2) per user request
+BOLT-INFO: skipping processing onig_parse_tree per user request
+BOLT-INFO: skipping processing onig_scan_env_set_error_string per user request
+BOLT-INFO: skipping processing i_free_name_entry/1(*2) per user request
+BOLT-INFO: skipping processing i_free_callout_name_entry/1(*2) per user request
+BOLT-INFO: skipping processing i_free_callout_tag_entry/1(*2) per user request
+BOLT-INFO: skipping processing bbuf_free/1(*2) per user request
+BOLT-INFO: skipping processing fetch_token/1(*2) per user request
+BOLT-INFO: skipping processing prs_alts/1(*2) per user request
+BOLT-INFO: skipping processing fetch_interval/1(*2) per user request
+BOLT-INFO: skipping processing scan_octal_number/1(*2) per user request
+BOLT-INFO: skipping processing scan_hexadecimal_number/1(*2) per user request
+BOLT-INFO: skipping processing check_code_point_sequence/1(*2) per user request
+BOLT-INFO: skipping processing scan_number/1(*2) per user request
+BOLT-INFO: skipping processing fetch_name_with_level/1(*2) per user request
+BOLT-INFO: skipping processing name_to_group_numbers/1(*2) per user request
+BOLT-INFO: skipping processing fetch_name/1(*2) per user request
+BOLT-INFO: skipping processing is_head_of_bre_subexp/1(*2) per user request
+BOLT-INFO: skipping processing is_end_of_bre_subexp/1(*2) per user request
+BOLT-INFO: skipping processing CLOSE_BRACKET_WITHOUT_ESC_WARN/1(*2) per user request
+BOLT-INFO: skipping processing scan_number_of_base/1(*2) per user request
+BOLT-INFO: skipping processing fetch_escaped_value_raw/1(*2) per user request
+BOLT-INFO: skipping processing prs_branch/1(*2) per user request
+BOLT-INFO: skipping processing prs_exp/1(*2) per user request
+BOLT-INFO: skipping processing node_new_str_with_options/1(*2) per user request
+BOLT-INFO: skipping processing node_new_ctype/1(*2) per user request
+BOLT-INFO: skipping processing add_ctype_to_cc/1(*2) per user request
+BOLT-INFO: skipping processing prs_cc/1(*2) per user request
+BOLT-INFO: skipping processing i_apply_case_fold/1(*2) per user request
+BOLT-INFO: skipping processing node_new_backref/1(*2) per user request
+BOLT-INFO: skipping processing node_str_remove_char/1(*2) per user request
+BOLT-INFO: skipping processing is_invalid_quantifier_target/1(*2) per user request
+BOLT-INFO: skipping processing scan_env_add_mem_entry/1(*2) per user request
+BOLT-INFO: skipping processing name_add/1(*2) per user request
+BOLT-INFO: skipping processing make_range_clear/1(*2) per user request
+BOLT-INFO: skipping processing make_absent_tree/1(*2) per user request
+BOLT-INFO: skipping processing prs_callout_of_contents/1(*2) per user request
+BOLT-INFO: skipping processing prs_callout_of_name/1(*2) per user request
+BOLT-INFO: skipping processing set_whole_options/1(*2) per user request
+BOLT-INFO: skipping processing make_list_or_alt/1(*2) per user request
+BOLT-INFO: skipping processing make_absent_engine/1(*2) per user request
+BOLT-INFO: skipping processing make_absent_tail/1(*2) per user request
+BOLT-INFO: skipping processing is_allowed_callout_tag_name/1(*2) per user request
+BOLT-INFO: skipping processing reg_callout_list_entry/1(*2) per user request
+BOLT-INFO: skipping processing callout_tag_entry/1(*2) per user request
+BOLT-INFO: skipping processing prs_callout_args/1(*2) per user request
+BOLT-INFO: skipping processing get_callout_name_id_by_name/1(*2) per user request
+BOLT-INFO: skipping processing prs_long/1(*2) per user request
+BOLT-INFO: skipping processing fetch_token_cc/1(*2) per user request
+BOLT-INFO: skipping processing CC_ESC_WARN/1(*2) per user request
+BOLT-INFO: skipping processing cc_char_next/1(*2) per user request
+BOLT-INFO: skipping processing and_cclass/1(*2) per user request
+BOLT-INFO: skipping processing check_code_point_sequence_cc/1(*2) per user request
+BOLT-INFO: skipping processing is_posix_bracket_start/1(*2) per user request
+BOLT-INFO: skipping processing or_code_range_buf/1(*2) per user request
+BOLT-INFO: skipping processing not_code_range_buf/1(*2) per user request
+BOLT-INFO: skipping processing i_callout_callout_list_set/1(*2) per user request
+BOLT-INFO: skipping processing onig_get_default_case_fold_flag per user request
+BOLT-INFO: skipping processing onig_set_default_case_fold_flag per user request
+BOLT-INFO: skipping processing onig_positive_int_multiply per user request
+BOLT-INFO: skipping processing onig_get_regex_ext per user request
+BOLT-INFO: skipping processing onig_ext_set_pattern per user request
+BOLT-INFO: skipping processing onig_free_body per user request
+BOLT-INFO: skipping processing onig_free per user request
+BOLT-INFO: skipping processing onig_compile per user request
+BOLT-INFO: skipping processing parse_and_tune/1(*2) per user request
+BOLT-INFO: skipping processing compile_tree/1(*2) per user request
+BOLT-INFO: skipping processing add_op/1(*2) per user request
+BOLT-INFO: skipping processing fix_unset_addr_list/1(*2) per user request
+BOLT-INFO: skipping processing ops_resize/1(*2) per user request
+BOLT-INFO: skipping processing ops_make_string_pool/1(*2) per user request
+BOLT-INFO: skipping processing onig_reg_init per user request
+BOLT-INFO: skipping processing onig_initialize per user request
+BOLT-INFO: skipping processing onig_new_without_alloc per user request
+BOLT-INFO: skipping processing onig_new per user request
+BOLT-INFO: skipping processing onig_add_end_call per user request
+BOLT-INFO: skipping processing onig_end per user request
+BOLT-INFO: skipping processing onig_is_in_code_range per user request
+BOLT-INFO: skipping processing onig_is_code_in_cc_len per user request
+BOLT-INFO: skipping processing onig_is_code_in_cc per user request
+BOLT-INFO: skipping processing onig_detect_can_be_slow_pattern per user request
+BOLT-INFO: skipping processing detect_can_be_slow/1(*2) per user request
+BOLT-INFO: skipping processing reduce_string_list/1(*2) per user request
+BOLT-INFO: skipping processing disable_noname_group_capture/1(*2) per user request
+BOLT-INFO: skipping processing numbered_ref_check/1(*2) per user request
+BOLT-INFO: skipping processing check_backrefs/1(*2) per user request
+BOLT-INFO: skipping processing tune_call/1(*2) per user request
+BOLT-INFO: skipping processing tune_call2/1(*2) per user request
+BOLT-INFO: skipping processing recursive_call_check_trav/1(*2) per user request
+BOLT-INFO: skipping processing infinite_recursive_call_check_trav/1(*2) per user request
+BOLT-INFO: skipping processing tune_called_state/1(*2) per user request
+BOLT-INFO: skipping processing tune_tree/1(*2) per user request
+BOLT-INFO: skipping processing set_parent_node_trav/1(*2) per user request
+BOLT-INFO: skipping processing set_empty_repeat_node_trav/1(*2) per user request
+BOLT-INFO: skipping processing set_empty_status_check_trav/1(*2) per user request
+BOLT-INFO: skipping processing make_named_capture_number_map/1(*2) per user request
+BOLT-INFO: skipping processing renumber_backref_traverse/1(*2) per user request
+BOLT-INFO: skipping processing tune_call2_call/1(*2) per user request
+BOLT-INFO: skipping processing recursive_call_check/1(*2) per user request
+BOLT-INFO: skipping processing infinite_recursive_call_check/1(*2) per user request
+BOLT-INFO: skipping processing node_min_byte_len/1(*2) per user request
+BOLT-INFO: skipping processing tune_called_state_call/1(*2) per user request
+BOLT-INFO: skipping processing get_tree_head_literal/1(*2) per user request
+BOLT-INFO: skipping processing is_exclusive/1(*2) per user request
+BOLT-INFO: skipping processing node_swap/1(*2) per user request
+BOLT-INFO: skipping processing quantifiers_memory_node_info/1(*2) per user request
+BOLT-INFO: skipping processing check_node_in_look_behind/1(*2) per user request
+BOLT-INFO: skipping processing divide_look_behind_alternatives/1(*2) per user request
+BOLT-INFO: skipping processing get_tree_tail_literal/1(*2) per user request
+BOLT-INFO: skipping processing check_called_node_in_look_behind/1(*2) per user request
+BOLT-INFO: skipping processing node_char_len1/1(*2) per user request
+BOLT-INFO: skipping processing mmcl_add/1(*2) per user request
+BOLT-INFO: skipping processing optimize_nodes/1(*2) per user request
+BOLT-INFO: skipping processing select_opt_exact/1(*2) per user request
+BOLT-INFO: skipping processing concat_left_node_opt_info/1(*2) per user request
+BOLT-INFO: skipping processing alt_merge_node_opt_info/1(*2) per user request
+BOLT-INFO: skipping processing node_max_byte_len/1(*2) per user request
+BOLT-INFO: skipping processing alt_merge_opt_exact/1(*2) per user request
+BOLT-INFO: skipping processing compile_length_tree/1(*2) per user request
+BOLT-INFO: skipping processing add_compile_string/1(*2) per user request
+BOLT-INFO: skipping processing compile_quant_body_with_empty_check/1(*2) per user request
+BOLT-INFO: skipping processing compile_anchor_look_behind_node/1(*2) per user request
+BOLT-INFO: skipping processing compile_anchor_look_behind_not_node/1(*2) per user request
+BOLT-INFO: skipping processing mostly_just_anychar/1(*2) per user request
+BOLT-INFO: skipping processing onig_set_match_stack_limit_size_of_match_param per user request
+BOLT-INFO: skipping processing onig_set_retry_limit_in_match_of_match_param per user request
+BOLT-INFO: skipping processing onig_set_retry_limit_in_search_of_match_param per user request
+BOLT-INFO: skipping processing onig_set_progress_callout_of_match_param per user request
+BOLT-INFO: skipping processing onig_set_retraction_callout_of_match_param per user request
+BOLT-INFO: skipping processing onig_set_callout_user_data_of_match_param per user request
+BOLT-INFO: skipping processing onig_get_capture_tree per user request
+BOLT-INFO: skipping processing onig_get_callback_each_match per user request
+BOLT-INFO: skipping processing onig_set_callback_each_match per user request
+BOLT-INFO: skipping processing onig_region_clear per user request
+BOLT-INFO: skipping processing onig_region_resize per user request
+BOLT-INFO: skipping processing onig_region_set per user request
+BOLT-INFO: skipping processing onig_region_init per user request
+BOLT-INFO: skipping processing onig_region_new per user request
+BOLT-INFO: skipping processing onig_region_free per user request
+BOLT-INFO: skipping processing onig_region_copy per user request
+BOLT-INFO: skipping processing history_tree_clone/1(*2) per user request
+BOLT-INFO: skipping processing onig_get_match_stack_limit_size per user request
+BOLT-INFO: skipping processing onig_set_match_stack_limit_size per user request
+BOLT-INFO: skipping processing onig_get_retry_limit_in_match per user request
+BOLT-INFO: skipping processing onig_set_retry_limit_in_match per user request
+BOLT-INFO: skipping processing onig_get_retry_limit_in_search per user request
+BOLT-INFO: skipping processing onig_set_retry_limit_in_search per user request
+BOLT-INFO: skipping processing onig_get_subexp_call_limit_in_search per user request
+BOLT-INFO: skipping processing onig_set_subexp_call_limit_in_search per user request
+BOLT-INFO: skipping processing onig_new_match_param per user request
+BOLT-INFO: skipping processing onig_initialize_match_param per user request
+BOLT-INFO: skipping processing onig_free_match_param_content per user request
+BOLT-INFO: skipping processing onig_free_match_param per user request
+BOLT-INFO: skipping processing onig_check_callout_data_and_clear_old_values per user request
+BOLT-INFO: skipping processing onig_get_callout_data_dont_clear_old per user request
+BOLT-INFO: skipping processing onig_get_callout_data_by_tag_dont_clear_old per user request
+BOLT-INFO: skipping processing onig_get_callout_data_by_callout_args_self_dont_clear_old per user request
+BOLT-INFO: skipping processing onig_get_callout_data per user request
+BOLT-INFO: skipping processing onig_get_callout_data_by_tag per user request
+BOLT-INFO: skipping processing onig_get_callout_data_by_callout_args per user request
+BOLT-INFO: skipping processing onig_get_callout_data_by_callout_args_self per user request
+BOLT-INFO: skipping processing onig_set_callout_data per user request
+BOLT-INFO: skipping processing onig_set_callout_data_by_tag per user request
+BOLT-INFO: skipping processing onig_set_callout_data_by_callout_args per user request
+BOLT-INFO: skipping processing onig_set_callout_data_by_callout_args_self per user request
+BOLT-INFO: skipping processing onig_regset_search_with_param per user request
+BOLT-INFO: skipping processing match_at/1(*2) per user request
+BOLT-INFO: skipping processing regset_search_body_position_lead/1(*2) per user request
+BOLT-INFO: skipping processing regset_search_body_regex_lead/1(*2) per user request
+BOLT-INFO: skipping processing onig_regset_search per user request
+BOLT-INFO: skipping processing onig_match per user request
+BOLT-INFO: skipping processing onig_match_with_param per user request
+BOLT-INFO: skipping processing onig_search per user request
+BOLT-INFO: skipping processing search_in_range/1(*2) per user request
+BOLT-INFO: skipping processing onig_search_with_param per user request
+BOLT-INFO: skipping processing onig_scan per user request
+BOLT-INFO: skipping processing onig_get_subexp_call_max_nest_level per user request
+BOLT-INFO: skipping processing onig_set_subexp_call_max_nest_level per user request
+BOLT-INFO: skipping processing onig_get_encoding per user request
+BOLT-INFO: skipping processing onig_get_options per user request
+BOLT-INFO: skipping processing onig_get_case_fold_flag per user request
+BOLT-INFO: skipping processing onig_get_syntax per user request
+BOLT-INFO: skipping processing onig_number_of_captures per user request
+BOLT-INFO: skipping processing onig_number_of_capture_histories per user request
+BOLT-INFO: skipping processing onig_copy_encoding per user request
+BOLT-INFO: skipping processing onig_regset_new per user request
+BOLT-INFO: skipping processing onig_regset_add per user request
+BOLT-INFO: skipping processing onig_regset_replace per user request
+BOLT-INFO: skipping processing onig_regset_free per user request
+BOLT-INFO: skipping processing onig_regset_number_of_regex per user request
+BOLT-INFO: skipping processing onig_regset_get_regex per user request
+BOLT-INFO: skipping processing onig_regset_get_region per user request
+BOLT-INFO: skipping processing onig_init_for_match_at per user request
+BOLT-INFO: skipping processing onig_get_progress_callout per user request
+BOLT-INFO: skipping processing onig_set_progress_callout per user request
+BOLT-INFO: skipping processing onig_get_retraction_callout per user request
+BOLT-INFO: skipping processing onig_set_retraction_callout per user request
+BOLT-INFO: skipping processing onig_get_callout_num_by_callout_args per user request
+BOLT-INFO: skipping processing onig_get_callout_in_by_callout_args per user request
+BOLT-INFO: skipping processing onig_get_name_id_by_callout_args per user request
+BOLT-INFO: skipping processing onig_get_contents_by_callout_args per user request
+BOLT-INFO: skipping processing onig_get_contents_end_by_callout_args per user request
+BOLT-INFO: skipping processing onig_get_args_num_by_callout_args per user request
+BOLT-INFO: skipping processing onig_get_passed_args_num_by_callout_args per user request
+BOLT-INFO: skipping processing onig_get_arg_by_callout_args per user request
+BOLT-INFO: skipping processing onig_get_string_by_callout_args per user request
+BOLT-INFO: skipping processing onig_get_string_end_by_callout_args per user request
+BOLT-INFO: skipping processing onig_get_start_by_callout_args per user request
+BOLT-INFO: skipping processing onig_get_right_range_by_callout_args per user request
+BOLT-INFO: skipping processing onig_get_current_by_callout_args per user request
+BOLT-INFO: skipping processing onig_get_regex_by_callout_args per user request
+BOLT-INFO: skipping processing onig_get_retry_counter_by_callout_args per user request
+BOLT-INFO: skipping processing onig_get_capture_range_in_callout per user request
+BOLT-INFO: skipping processing onig_get_used_stack_size_in_callout per user request
+BOLT-INFO: skipping processing onig_builtin_fail per user request
+BOLT-INFO: skipping processing onig_builtin_mismatch per user request
+BOLT-INFO: skipping processing onig_builtin_error per user request
+BOLT-INFO: skipping processing onig_builtin_skip per user request
+BOLT-INFO: skipping processing onig_builtin_count per user request
+BOLT-INFO: skipping processing onig_builtin_total_count per user request
+BOLT-INFO: skipping processing onig_builtin_max per user request
+BOLT-INFO: skipping processing onig_builtin_cmp per user request
+BOLT-INFO: skipping processing onig_setup_builtin_monitors_by_ascii_encoded_name per user request
+BOLT-INFO: skipping processing onig_builtin_monitor/1(*2) per user request
+BOLT-INFO: skipping processing history_tree_free/1(*2) per user request
+BOLT-INFO: skipping processing history_tree_clear/1(*2) per user request
+BOLT-INFO: skipping processing history_node_new/1(*2) per user request
+BOLT-INFO: skipping processing make_capture_history_tree/1(*2) per user request
+BOLT-INFO: skipping processing stack_double/1(*2) per user request
+BOLT-INFO: skipping processing string_cmp_ic/1(*2) per user request
+BOLT-INFO: skipping processing forward_search/1(*2) per user request
+BOLT-INFO: skipping processing backward_search/1(*2) per user request
+BOLT-INFO: skipping processing onigenc_init per user request
+BOLT-INFO: skipping processing onigenc_end per user request
+BOLT-INFO: skipping processing onig_initialize_encoding per user request
+BOLT-INFO: skipping processing onigenc_get_default_encoding per user request
+BOLT-INFO: skipping processing onigenc_set_default_encoding per user request
+BOLT-INFO: skipping processing onigenc_strdup per user request
+BOLT-INFO: skipping processing onigenc_get_right_adjust_char_head per user request
+BOLT-INFO: skipping processing onigenc_get_right_adjust_char_head_with_prev per user request
+BOLT-INFO: skipping processing onigenc_get_prev_char_head per user request
+BOLT-INFO: skipping processing onigenc_step_back per user request
+BOLT-INFO: skipping processing onigenc_step per user request
+BOLT-INFO: skipping processing onigenc_strlen per user request
+BOLT-INFO: skipping processing onigenc_strlen_null per user request
+BOLT-INFO: skipping processing onigenc_str_bytelen_null per user request
+BOLT-INFO: skipping processing onigenc_set_default_caseconv_table per user request
+BOLT-INFO: skipping processing onigenc_get_left_adjust_char_head per user request
+BOLT-INFO: skipping processing onigenc_ascii_apply_all_case_fold per user request
+BOLT-INFO: skipping processing onigenc_ascii_get_case_fold_codes_by_str per user request
+BOLT-INFO: skipping processing onigenc_apply_all_case_fold_with_map per user request
+BOLT-INFO: skipping processing onigenc_get_case_fold_codes_by_str_with_map per user request
+BOLT-INFO: skipping processing onigenc_not_support_get_ctype_code_range per user request
+BOLT-INFO: skipping processing onigenc_is_mbc_newline_0x0a per user request
+BOLT-INFO: skipping processing onigenc_ascii_mbc_case_fold per user request
+BOLT-INFO: skipping processing onigenc_single_byte_mbc_enc_len per user request
+BOLT-INFO: skipping processing onigenc_single_byte_mbc_to_code per user request
+BOLT-INFO: skipping processing onigenc_single_byte_code_to_mbclen per user request
+BOLT-INFO: skipping processing onigenc_single_byte_code_to_mbc per user request
+BOLT-INFO: skipping processing onigenc_single_byte_left_adjust_char_head per user request
+BOLT-INFO: skipping processing onigenc_always_true_is_allowed_reverse_match per user request
+BOLT-INFO: skipping processing onigenc_always_false_is_allowed_reverse_match per user request
+BOLT-INFO: skipping processing onigenc_always_true_is_valid_mbc_string per user request
+BOLT-INFO: skipping processing onigenc_length_check_is_valid_mbc_string per user request
+BOLT-INFO: skipping processing onigenc_is_valid_mbc_string per user request
+BOLT-INFO: skipping processing onigenc_mbn_mbc_to_code per user request
+BOLT-INFO: skipping processing onigenc_mbn_mbc_case_fold per user request
+BOLT-INFO: skipping processing onigenc_mb2_code_to_mbc per user request
+BOLT-INFO: skipping processing onigenc_mb4_code_to_mbc per user request
+BOLT-INFO: skipping processing onigenc_minimum_property_name_to_ctype per user request
+BOLT-INFO: skipping processing onigenc_with_ascii_strncmp per user request
+BOLT-INFO: skipping processing onigenc_is_mbc_word_ascii per user request
+BOLT-INFO: skipping processing onigenc_mb2_is_code_ctype per user request
+BOLT-INFO: skipping processing onigenc_mb4_is_code_ctype per user request
+BOLT-INFO: skipping processing onig_codes_cmp per user request
+BOLT-INFO: skipping processing onig_codes_byte_at per user request
+BOLT-INFO: skipping processing onig_error_code_to_format per user request
+BOLT-INFO: skipping processing onig_is_error_code_needs_param per user request
+BOLT-INFO: skipping processing onig_error_code_to_str per user request
+BOLT-INFO: skipping processing onig_snprintf_with_pattern per user request
+BOLT-INFO: skipping processing onig_set_default_syntax per user request
+BOLT-INFO: skipping processing onig_copy_syntax per user request
+BOLT-INFO: skipping processing onig_set_syntax_op per user request
+BOLT-INFO: skipping processing onig_set_syntax_op2 per user request
+BOLT-INFO: skipping processing onig_set_syntax_behavior per user request
+BOLT-INFO: skipping processing onig_set_syntax_options per user request
+BOLT-INFO: skipping processing onig_get_syntax_op per user request
+BOLT-INFO: skipping processing onig_get_syntax_op2 per user request
+BOLT-INFO: skipping processing onig_get_syntax_behavior per user request
+BOLT-INFO: skipping processing onig_get_syntax_options per user request
+BOLT-INFO: skipping processing onig_set_meta_char per user request
+BOLT-INFO: skipping processing onig_st_init_table_with_size per user request
+BOLT-INFO: skipping processing new_size/1(*2) per user request
+BOLT-INFO: skipping processing onig_st_init_table per user request
+BOLT-INFO: skipping processing onig_st_init_numtable per user request
+BOLT-INFO: skipping processing onig_st_init_numtable_with_size per user request
+BOLT-INFO: skipping processing onig_st_init_strtable per user request
+BOLT-INFO: skipping processing onig_st_init_strtable_with_size per user request
+BOLT-INFO: skipping processing onig_st_free_table per user request
+BOLT-INFO: skipping processing onig_st_lookup per user request
+BOLT-INFO: skipping processing onig_st_insert per user request
+BOLT-INFO: skipping processing onig_st_add_direct per user request
+BOLT-INFO: skipping processing onig_st_copy per user request
+BOLT-INFO: skipping processing onig_st_delete per user request
+BOLT-INFO: skipping processing onig_st_delete_safe per user request
+BOLT-INFO: skipping processing onig_st_cleanup_safe per user request
+BOLT-INFO: skipping processing onig_st_foreach per user request
+BOLT-INFO: skipping processing numcmp/1(*2) per user request
+BOLT-INFO: skipping processing numhash/1(*2) per user request
+BOLT-INFO: skipping processing str_cmp/1(*2) per user request
+BOLT-INFO: skipping processing str_hash/1(*2) per user request
+BOLT-INFO: skipping processing onigenc_unicode_mbc_case_fold per user request
+BOLT-INFO: skipping processing onigenc_unicode_apply_all_case_fold per user request
+BOLT-INFO: skipping processing apply_case_fold1/1(*2) per user request
+BOLT-INFO: skipping processing apply_case_fold3/1(*2) per user request
+BOLT-INFO: skipping processing onigenc_unicode_get_case_fold_codes_by_str per user request
+BOLT-INFO: skipping processing onigenc_wb_is_break_position per user request
+BOLT-INFO: skipping processing wb_get_type/1(*2) per user request
+BOLT-INFO: skipping processing onigenc_unicode_is_code_ctype per user request
+BOLT-INFO: skipping processing wb_get_next_main_code/1(*2) per user request
+BOLT-INFO: skipping processing onigenc_egcb_is_break_position per user request
+BOLT-INFO: skipping processing onig_unicode_define_user_property per user request
+BOLT-INFO: skipping processing onigenc_unicode_ctype_code_range per user request
+BOLT-INFO: skipping processing onigenc_utf16_32_get_ctype_code_range per user request
+BOLT-INFO: skipping processing onigenc_unicode_property_name_to_ctype per user request
+BOLT-INFO: skipping processing onigenc_unicode_unfold_key per user request
+BOLT-INFO: skipping processing onigenc_unicode_fold1_key per user request
+BOLT-INFO: skipping processing onigenc_unicode_fold2_key per user request
+BOLT-INFO: skipping processing onigenc_unicode_fold3_key per user request
+BOLT-INFO: skipping processing ascii_is_code_ctype/1(*2) per user request
+BOLT-INFO: skipping processing init/1(*2) per user request
+BOLT-INFO: skipping processing mbc_enc_len/1(*2) per user request
+BOLT-INFO: skipping processing mbc_to_code/1(*2) per user request
+BOLT-INFO: skipping processing code_to_mbclen/1(*2) per user request
+BOLT-INFO: skipping processing code_to_mbc/1(*2) per user request
+BOLT-INFO: skipping processing mbc_case_fold/1(*2) per user request
+BOLT-INFO: skipping processing get_case_fold_codes_by_str/1(*2) per user request
+BOLT-INFO: skipping processing get_ctype_code_range/1(*2) per user request
+BOLT-INFO: skipping processing left_adjust_char_head/1(*2) per user request
+BOLT-INFO: skipping processing is_valid_mbc_string/1(*2) per user request
+BOLT-INFO: skipping processing __extenddftf2/1(*2) per user request
+BOLT-INFO: skipping processing __sfp_handle_exceptions/1(*2) per user request
+BOLT-INFO: potentially escaped address 0x807b4 in function jq_next
+BOLT-INFO: potentially escaped address 0xb9e84 in function yyparse
+BOLT-INFO: potentially escaped address 0xbc420 in function jq_yylex
+BOLT-WARNING: failed to post-process indirect branches for deregister_tm_clones/1(*2)
+BOLT-WARNING: failed to post-process indirect branches for register_tm_clones/1(*2)
+BOLT-WARNING: failed to post-process indirect branches for jq_next
+BOLT-WARNING: failed to post-process indirect branches for jq_yylex
+BOLT-WARNING: failed to post-process indirect branches for yyparse
+BOLT-INFO: Starting pass: pointer-auth-cfi-analyzer
+BOLT-INFO: PointerAuthCFIAnalyzer ran on 1 functions. Ignored 0 functions (0.00%) because of CFI inconsistencies
+BOLT-INFO: Finished pass: pointer-auth-cfi-analyzer
+BOLT-INFO: Starting pass: estimate-edge-counts
+BOLT-INFO: Finished pass: estimate-edge-counts
+BOLT-INFO: Starting pass: set dyno-stats before optimizations
+BOLT-INFO: Finished pass: set dyno-stats before optimizations
+BOLT-INFO: Starting pass: fix-relaxations
+BOLT-INFO: Finished pass: fix-relaxations
+BOLT-INFO: Starting pass: veneer-elimination
+BOLT-INFO: number of removed linker-inserted veneers: 0
+BOLT-INFO: Finished pass: veneer-elimination
+BOLT-INFO: Starting pass: print-stats
+BOLT-INFO: 268 out of 1048 functions in the binary (25.6%) have non-empty execution profile
+BOLT-INFO: 5 functions with profile could not be optimized
+BOLT-INFO: profile for 1 objects was ignored
+BOLT-INFO: top called functions are:
+  jv_get_kind : 80165594
+  jv_mem_free : 34433892
+  jv_free : 32442649
+  stack_push : 26275897
+  jv_copy : 18038549
+  jvp_utf8_next : 7653839
+  jv_array_get : 5550568
+  jvp_string_hash/1(*2) : 3473782
+  check_literal/1(*2) : 2809962
+  jv_invalid : 2274554
+  jv_array_length : 2243669
+  jv_number_value : 2211680
+  jv_number : 2097222
+  jvp_number_is_nan : 1994954
+  jv_mem_alloc : 1987542
+  jvp_cmp/1(*2) : 1720546
+  jv_array_set : 1355402
+  jvp_object_find_slot/1(*2) : 1353516
+  path_append/1(*2) : 1305834
+  parse_token/1(*2) : 1179943
+  jvp_utf8_is_valid : 1106741
+  frame_pop/1(*2) : 1046830
+  jv_bool : 979476
+  frame_push/1(*2) : 942998
+  stack_restore : 926776
+  stack_save : 926772
+  jv_string_value : 914977
+  jv_string_length_bytes : 914209
+  jv_array_append : 904032
+  jv_cmp : 806388
+  jvp_number_cmp : 806388
+  jv_object_set : 766502
+  jvp_object_unshare/1(*2) : 766502
+  f_lesseq/1(*2) : 729660
+  jv_string_sized : 690048
+  jv_object_get : 586760
+  jv_get : 517528
+  jvp_string_append/1(*2) : 486035
+  sort_cmp/1(*2) : 457079
+  jv_mem_realloc : 438146
+  push/1(*2) : 420000
+  jv_null : 415746
+  jvp_utf8_encode : 382138
+  jv_string_append_codepoint : 382138
+  binop_minus : 347522
+  f_minus/1(*2) : 347522
+  jv_string : 277993
+  jvp_equal/1(*2) : 276926
+  jv_equal : 242311
+  tsd_dec_ctx_get/1(*2) : 222197
+  f_equal/1(*2) : 207696
+  jv_number_with_literal : 180077
+  decNumberFromString : 180077
+  decContextClearStatus : 180077
+  binop_plus : 173128
+  f_plus/1(*2) : 173080
+  f_type/1(*2) : 138464
+  jv_kind_name : 138464
+  jv_true : 111386
+  jv_string_concat : 103896
+  jv_string_length_codepoints : 103848
+  f_length/1(*2) : 69248
+  jv_string_slice : 69232
+  _jq_memmem : 69232
+  parse_slice/1(*2) : 69232
+  jv_array : 60139
+  jv_object : 60054
+  decCompare/1(*2) : 42120
+  decUnitCompare/1(*2) : 42120
+  f_greater/1(*2) : 42120
+  decNumberCompare : 42120
+  opcode_describe : 41260
+  tsd_dtoa_context_get : 34624
+  decContextDefault : 34624
+  decNumberReduce : 34623
+  jvp_strtod : 34623
+  decNumberToString : 34623
+  decTrim/1(*2) : 34623
+  decToString/1(*2) : 34623
+  jvp_literal_number_to_double/1(*2) : 34623
+  decSetCoeff/1(*2) : 34623
+  decFinalize/1(*2) : 34623
+  jv_string_split : 34617
+  f_multiply/1(*2) : 34616
+  jv_string_empty : 34616
+  f_string_split/1(*2) : 34616
+  f_string_explode/1(*2) : 34616
+  jv_string_explode : 34616
+  f_string_implode/1(*2) : 34616
+  binop_multiply : 34616
+  block_bind_subblock_inner/1(*2) : 22244
+  jv_false : 17927
+  inst_free/1(*2) : 3580
+  yylex : 2905
+  jv_parser_next : 2094
+  jv_invalid_has_msg : 2018
+  jq_util_input_read_more/1(*2) : 1940
+  jv_parser_remaining : 1940
+  jv_parser_set_buf : 1940
+  jvp_utf8_backtrack : 1939
+BOLT-INFO: Finished pass: print-stats
+BOLT-INFO: Starting pass: profile-quality-stats
+BOLT-INFO: profile quality metrics for the hottest 268 functions (reporting top 5% values): function CFG discontinuity 0.00%; 
+abbreviations: EC = execution count, POS BBs = positive EC BBs
+distribution of NUM(unreachable POS BBs) per function
+  Length     : 268
+  MAX        : 0
+  TOP 1%     : 0
+  TOP 5%     : 0
+  TOP 10%    : 0
+  TOP 20%    : 0
+  TOP 50%    : 0
+  TOP 80%    : 0
+  MIN        : 0
+distribution of SUM_EC(unreachable POS BBs) per function
+  Length     : 268
+  MAX        : 0
+  TOP 1%     : 0
+  TOP 5%     : 0
+  TOP 10%    : 0
+  TOP 20%    : 0
+  TOP 50%    : 0
+  TOP 80%    : 0
+  MIN        : 0
+distribution of [(SUM_EC(unreachable POS BBs) / SUM_EC(all POS BBs))] per function
+  Length     : 268
+  MAX        : 0.00%
+  TOP 1%     : 0.00%
+  TOP 5%     : 0.00%
+  TOP 10%    : 0.00%
+  TOP 20%    : 0.00%
+  TOP 50%    : 0.00%
+  TOP 80%    : 0.00%
+  MIN        : 0.00%
+call graph flow conservation gap 0.00%; 
+distribution of function entry flow conservation gaps
+  Length     : 268
+  MAX        : 33.33%
+  TOP 1%     : 0.00%
+  TOP 5%     : 0.00%
+  TOP 10%    : 0.00%
+  TOP 20%    : 0.00%
+  TOP 50%    : 0.00%
+  TOP 80%    : 0.00%
+  MIN        : 0.00%
+CFG flow conservation gap 0.00% (weighted) 0.00% (worst); distribution of weighted CFG flow conservation gaps
+  Length     : 268
+  MAX        : 0.00%
+  TOP 1%     : 0.00%
+  TOP 5%     : 0.00%
+  TOP 10%    : 0.00%
+  TOP 20%    : 0.00%
+  TOP 50%    : 0.00%
+  TOP 80%    : 0.00%
+  MIN        : 0.00%
+Consider only blocks with execution counts > 500:
+distribution of worst block flow conservation gap per function 
+  Length     : 268
+  MAX        : 0.00%
+  TOP 1%     : 0.00%
+  TOP 5%     : 0.00%
+  TOP 10%    : 0.00%
+  TOP 20%    : 0.00%
+  TOP 50%    : 0.00%
+  TOP 80%    : 0.00%
+  MIN        : 0.00%
+distribution of worst block flow conservation gap (absolute value) per function
+  Length     : 268
+  MAX        : 0
+  TOP 1%     : 0
+  TOP 5%     : 0
+  TOP 10%    : 0
+  TOP 20%    : 0
+  TOP 50%    : 0
+  TOP 80%    : 0
+  MIN        : 0
+exception handling usage 0.00% (of total BBEC) 0.00% (of total InvokeEC)
+distribution of exception handling usage as a fraction of total BBEC of each function
+  Length     : 268
+  MAX        : 0.00%
+  TOP 1%     : 0.00%
+  TOP 5%     : 0.00%
+  TOP 10%    : 0.00%
+  TOP 20%    : 0.00%
+  TOP 50%    : 0.00%
+  TOP 80%    : 0.00%
+  MIN        : 0.00%
+distribution of exception handling usage as a fraction of total InvokeEC of each function
+  Length     : 268
+  MAX        : 0.00%
+  TOP 1%     : 0.00%
+  TOP 5%     : 0.00%
+  TOP 10%    : 0.00%
+  TOP 20%    : 0.00%
+  TOP 50%    : 0.00%
+  TOP 80%    : 0.00%
+  MIN        : 0.00%
+Detailed stats for 5 buckets, each with  53 functions:
+----------------
+|   Bucket 1:  |
+----------------
+execution counts of the 53 functions in the bucket: 180077-80165594
+function CFG discontinuity 0.00%; 
+abbreviations: EC = execution count, POS BBs = positive EC BBs
+distribution of NUM(unreachable POS BBs) per function
+  Length     : 53
+  MAX        : 0
+  TOP 1%     : 0
+  TOP 5%     : 0
+  TOP 10%    : 0
+  TOP 20%    : 0
+  TOP 50%    : 0
+  TOP 80%    : 0
+  MIN        : 0
+distribution of SUM_EC(unreachable POS BBs) per function
+  Length     : 53
+  MAX        : 0
+  TOP 1%     : 0
+  TOP 5%     : 0
+  TOP 10%    : 0
+  TOP 20%    : 0
+  TOP 50%    : 0
+  TOP 80%    : 0
+  MIN        : 0
+distribution of [(SUM_EC(unreachable POS BBs) / SUM_EC(all POS BBs))] per function
+  Length     : 53
+  MAX        : 0.00%
+  TOP 1%     : 0.00%
+  TOP 5%     : 0.00%
+  TOP 10%    : 0.00%
+  TOP 20%    : 0.00%
+  TOP 50%    : 0.00%
+  TOP 80%    : 0.00%
+  MIN        : 0.00%
+call graph flow conservation gap 0.00%; 
+distribution of function entry flow conservation gaps
+  Length     : 53
+  MAX        : 0.00%
+  TOP 1%     : 0.00%
+  TOP 5%     : 0.00%
+  TOP 10%    : 0.00%
+  TOP 20%    : 0.00%
+  TOP 50%    : 0.00%
+  TOP 80%    : 0.00%
+  MIN        : 0.00%
+CFG flow conservation gap 0.00% (weighted) 0.00% (worst); distribution of weighted CFG flow conservation gaps
+  Length     : 53
+  MAX        : 0.00%
+  TOP 1%     : 0.00%
+  TOP 5%     : 0.00%
+  TOP 10%    : 0.00%
+  TOP 20%    : 0.00%
+  TOP 50%    : 0.00%
+  TOP 80%    : 0.00%
+  MIN        : 0.00%
+Consider only blocks with execution counts > 500:
+distribution of worst block flow conservation gap per function 
+  Length     : 53
+  MAX        : 0.00%
+  TOP 1%     : 0.00%
+  TOP 5%     : 0.00%
+  TOP 10%    : 0.00%
+  TOP 20%    : 0.00%
+  TOP 50%    : 0.00%
+  TOP 80%    : 0.00%
+  MIN        : 0.00%
+distribution of worst block flow conservation gap (absolute value) per function
+  Length     : 53
+  MAX        : 0
+  TOP 1%     : 0
+  TOP 5%     : 0
+  TOP 10%    : 0
+  TOP 20%    : 0
+  TOP 50%    : 0
+  TOP 80%    : 0
+  MIN        : 0
+exception handling usage 0.00% (of total BBEC) 0.00% (of total InvokeEC)
+distribution of exception handling usage as a fraction of total BBEC of each function
+  Length     : 53
+  MAX        : 0.00%
+  TOP 1%     : 0.00%
+  TOP 5%     : 0.00%
+  TOP 10%    : 0.00%
+  TOP 20%    : 0.00%
+  TOP 50%    : 0.00%
+  TOP 80%    : 0.00%
+  MIN        : 0.00%
+distribution of exception handling usage as a fraction of total InvokeEC of each function
+  Length     : 53
+  MAX        : 0.00%
+  TOP 1%     : 0.00%
+  TOP 5%     : 0.00%
+  TOP 10%    : 0.00%
+  TOP 20%    : 0.00%
+  TOP 50%    : 0.00%
+  TOP 80%    : 0.00%
+  MIN        : 0.00%
+----------------
+|   Bucket 2:  |
+----------------
+execution counts of the 53 functions in the bucket: 424-180077
+function CFG discontinuity 0.00%; 
+abbreviations: EC = execution count, POS BBs = positive EC BBs
+distribution of NUM(unreachable POS BBs) per function
+  Length     : 53
+  MAX        : 0
+  TOP 1%     : 0
+  TOP 5%     : 0
+  TOP 10%    : 0
+  TOP 20%    : 0
+  TOP 50%    : 0
+  TOP 80%    : 0
+  MIN        : 0
+distribution of SUM_EC(unreachable POS BBs) per function
+  Length     : 53
+  MAX        : 0
+  TOP 1%     : 0
+  TOP 5%     : 0
+  TOP 10%    : 0
+  TOP 20%    : 0
+  TOP 50%    : 0
+  TOP 80%    : 0
+  MIN        : 0
+distribution of [(SUM_EC(unreachable POS BBs) / SUM_EC(all POS BBs))] per function
+  Length     : 53
+  MAX        : 0.00%
+  TOP 1%     : 0.00%
+  TOP 5%     : 0.00%
+  TOP 10%    : 0.00%
+  TOP 20%    : 0.00%
+  TOP 50%    : 0.00%
+  TOP 80%    : 0.00%
+  MIN        : 0.00%
+call graph flow conservation gap 0.00%; 
+distribution of function entry flow conservation gaps
+  Length     : 53
+  MAX        : 0.00%
+  TOP 1%     : 0.00%
+  TOP 5%     : 0.00%
+  TOP 10%    : 0.00%
+  TOP 20%    : 0.00%
+  TOP 50%    : 0.00%
+  TOP 80%    : 0.00%
+  MIN        : 0.00%
+CFG flow conservation gap 0.00% (weighted) 0.00% (worst); distribution of weighted CFG flow conservation gaps
+  Length     : 53
+  MAX        : 0.00%
+  TOP 1%     : 0.00%
+  TOP 5%     : 0.00%
+  TOP 10%    : 0.00%
+  TOP 20%    : 0.00%
+  TOP 50%    : 0.00%
+  TOP 80%    : 0.00%
+  MIN        : 0.00%
+Consider only blocks with execution counts > 500:
+distribution of worst block flow conservation gap per function 
+  Length     : 53
+  MAX        : 0.00%
+  TOP 1%     : 0.00%
+  TOP 5%     : 0.00%
+  TOP 10%    : 0.00%
+  TOP 20%    : 0.00%
+  TOP 50%    : 0.00%
+  TOP 80%    : 0.00%
+  MIN        : 0.00%
+distribution of worst block flow conservation gap (absolute value) per function
+  Length     : 53
+  MAX        : 0
+  TOP 1%     : 0
+  TOP 5%     : 0
+  TOP 10%    : 0
+  TOP 20%    : 0
+  TOP 50%    : 0
+  TOP 80%    : 0
+  MIN        : 0
+exception handling usage 0.00% (of total BBEC) 0.00% (of total InvokeEC)
+distribution of exception handling usage as a fraction of total BBEC of each function
+  Length     : 53
+  MAX        : 0.00%
+  TOP 1%     : 0.00%
+  TOP 5%     : 0.00%
+  TOP 10%    : 0.00%
+  TOP 20%    : 0.00%
+  TOP 50%    : 0.00%
+  TOP 80%    : 0.00%
+  MIN        : 0.00%
+distribution of exception handling usage as a fraction of total InvokeEC of each function
+  Length     : 53
+  MAX        : 0.00%
+  TOP 1%     : 0.00%
+  TOP 5%     : 0.00%
+  TOP 10%    : 0.00%
+  TOP 20%    : 0.00%
+  TOP 50%    : 0.00%
+  TOP 80%    : 0.00%
+  MIN        : 0.00%
+----------------
+|   Bucket 3:  |
+----------------
+execution counts of the 53 functions in the bucket: 32-394
+function CFG discontinuity 0.00%; 
+abbreviations: EC = execution count, POS BBs = positive EC BBs
+distribution of NUM(unreachable POS BBs) per function
+  Length     : 53
+  MAX        : 0
+  TOP 1%     : 0
+  TOP 5%     : 0
+  TOP 10%    : 0
+  TOP 20%    : 0
+  TOP 50%    : 0
+  TOP 80%    : 0
+  MIN        : 0
+distribution of SUM_EC(unreachable POS BBs) per function
+  Length     : 53
+  MAX        : 0
+  TOP 1%     : 0
+  TOP 5%     : 0
+  TOP 10%    : 0
+  TOP 20%    : 0
+  TOP 50%    : 0
+  TOP 80%    : 0
+  MIN        : 0
+distribution of [(SUM_EC(unreachable POS BBs) / SUM_EC(all POS BBs))] per function
+  Length     : 53
+  MAX        : 0.00%
+  TOP 1%     : 0.00%
+  TOP 5%     : 0.00%
+  TOP 10%    : 0.00%
+  TOP 20%    : 0.00%
+  TOP 50%    : 0.00%
+  TOP 80%    : 0.00%
+  MIN        : 0.00%
+call graph flow conservation gap 0.00%; 
+distribution of function entry flow conservation gaps
+  Length     : 53
+  MAX        : 0.00%
+  TOP 1%     : 0.00%
+  TOP 5%     : 0.00%
+  TOP 10%    : 0.00%
+  TOP 20%    : 0.00%
+  TOP 50%    : 0.00%
+  TOP 80%    : 0.00%
+  MIN        : 0.00%
+CFG flow conservation gap 0.00% (weighted) 0.00% (worst); distribution of weighted CFG flow conservation gaps
+  Length     : 53
+  MAX        : 0.00%
+  TOP 1%     : 0.00%
+  TOP 5%     : 0.00%
+  TOP 10%    : 0.00%
+  TOP 20%    : 0.00%
+  TOP 50%    : 0.00%
+  TOP 80%    : 0.00%
+  MIN        : 0.00%
+Consider only blocks with execution counts > 500:
+distribution of worst block flow conservation gap per function 
+  Length     : 53
+  MAX        : 0.00%
+  TOP 1%     : 0.00%
+  TOP 5%     : 0.00%
+  TOP 10%    : 0.00%
+  TOP 20%    : 0.00%
+  TOP 50%    : 0.00%
+  TOP 80%    : 0.00%
+  MIN        : 0.00%
+distribution of worst block flow conservation gap (absolute value) per function
+  Length     : 53
+  MAX        : 0
+  TOP 1%     : 0
+  TOP 5%     : 0
+  TOP 10%    : 0
+  TOP 20%    : 0
+  TOP 50%    : 0
+  TOP 80%    : 0
+  MIN        : 0
+exception handling usage 0.00% (of total BBEC) 0.00% (of total InvokeEC)
+distribution of exception handling usage as a fraction of total BBEC of each function
+  Length     : 53
+  MAX        : 0.00%
+  TOP 1%     : 0.00%
+  TOP 5%     : 0.00%
+  TOP 10%    : 0.00%
+  TOP 20%    : 0.00%
+  TOP 50%    : 0.00%
+  TOP 80%    : 0.00%
+  MIN        : 0.00%
+distribution of exception handling usage as a fraction of total InvokeEC of each function
+  Length     : 53
+  MAX        : 0.00%
+  TOP 1%     : 0.00%
+  TOP 5%     : 0.00%
+  TOP 10%    : 0.00%
+  TOP 20%    : 0.00%
+  TOP 50%    : 0.00%
+  TOP 80%    : 0.00%
+  MIN        : 0.00%
+----------------
+|   Bucket 4:  |
+----------------
+execution counts of the 53 functions in the bucket: 1-32
+function CFG discontinuity 0.00%; 
+abbreviations: EC = execution count, POS BBs = positive EC BBs
+distribution of NUM(unreachable POS BBs) per function
+  Length     : 53
+  MAX        : 0
+  TOP 1%     : 0
+  TOP 5%     : 0
+  TOP 10%    : 0
+  TOP 20%    : 0
+  TOP 50%    : 0
+  TOP 80%    : 0
+  MIN        : 0
+distribution of SUM_EC(unreachable POS BBs) per function
+  Length     : 53
+  MAX        : 0
+  TOP 1%     : 0
+  TOP 5%     : 0
+  TOP 10%    : 0
+  TOP 20%    : 0
+  TOP 50%    : 0
+  TOP 80%    : 0
+  MIN        : 0
+distribution of [(SUM_EC(unreachable POS BBs) / SUM_EC(all POS BBs))] per function
+  Length     : 53
+  MAX        : 0.00%
+  TOP 1%     : 0.00%
+  TOP 5%     : 0.00%
+  TOP 10%    : 0.00%
+  TOP 20%    : 0.00%
+  TOP 50%    : 0.00%
+  TOP 80%    : 0.00%
+  MIN        : 0.00%
+call graph flow conservation gap 0.00%; 
+distribution of function entry flow conservation gaps
+  Length     : 53
+  MAX        : 33.33%
+  TOP 1%     : 33.33%
+  TOP 5%     : 0.00%
+  TOP 10%    : 0.00%
+  TOP 20%    : 0.00%
+  TOP 50%    : 0.00%
+  TOP 80%    : 0.00%
+  MIN        : 0.00%
+CFG flow conservation gap 0.00% (weighted) 0.00% (worst); distribution of weighted CFG flow conservation gaps
+  Length     : 53
+  MAX        : 0.00%
+  TOP 1%     : 0.00%
+  TOP 5%     : 0.00%
+  TOP 10%    : 0.00%
+  TOP 20%    : 0.00%
+  TOP 50%    : 0.00%
+  TOP 80%    : 0.00%
+  MIN        : 0.00%
+Consider only blocks with execution counts > 500:
+distribution of worst block flow conservation gap per function 
+  Length     : 53
+  MAX        : 0.00%
+  TOP 1%     : 0.00%
+  TOP 5%     : 0.00%
+  TOP 10%    : 0.00%
+  TOP 20%    : 0.00%
+  TOP 50%    : 0.00%
+  TOP 80%    : 0.00%
+  MIN        : 0.00%
+distribution of worst block flow conservation gap (absolute value) per function
+  Length     : 53
+  MAX        : 0
+  TOP 1%     : 0
+  TOP 5%     : 0
+  TOP 10%    : 0
+  TOP 20%    : 0
+  TOP 50%    : 0
+  TOP 80%    : 0
+  MIN        : 0
+exception handling usage 0.00% (of total BBEC) 0.00% (of total InvokeEC)
+distribution of exception handling usage as a fraction of total BBEC of each function
+  Length     : 53
+  MAX        : 0.00%
+  TOP 1%     : 0.00%
+  TOP 5%     : 0.00%
+  TOP 10%    : 0.00%
+  TOP 20%    : 0.00%
+  TOP 50%    : 0.00%
+  TOP 80%    : 0.00%
+  MIN        : 0.00%
+distribution of exception handling usage as a fraction of total InvokeEC of each function
+  Length     : 53
+  MAX        : 0.00%
+  TOP 1%     : 0.00%
+  TOP 5%     : 0.00%
+  TOP 10%    : 0.00%
+  TOP 20%    : 0.00%
+  TOP 50%    : 0.00%
+  TOP 80%    : 0.00%
+  MIN        : 0.00%
+----------------
+|   Bucket 5:  |
+----------------
+execution counts of the 53 functions in the bucket: 1-1
+function CFG discontinuity 0.00%; 
+abbreviations: EC = execution count, POS BBs = positive EC BBs
+distribution of NUM(unreachable POS BBs) per function
+  Length     : 53
+  MAX        : 0
+  TOP 1%     : 0
+  TOP 5%     : 0
+  TOP 10%    : 0
+  TOP 20%    : 0
+  TOP 50%    : 0
+  TOP 80%    : 0
+  MIN        : 0
+distribution of SUM_EC(unreachable POS BBs) per function
+  Length     : 53
+  MAX        : 0
+  TOP 1%     : 0
+  TOP 5%     : 0
+  TOP 10%    : 0
+  TOP 20%    : 0
+  TOP 50%    : 0
+  TOP 80%    : 0
+  MIN        : 0
+distribution of [(SUM_EC(unreachable POS BBs) / SUM_EC(all POS BBs))] per function
+  Length     : 53
+  MAX        : 0.00%
+  TOP 1%     : 0.00%
+  TOP 5%     : 0.00%
+  TOP 10%    : 0.00%
+  TOP 20%    : 0.00%
+  TOP 50%    : 0.00%
+  TOP 80%    : 0.00%
+  MIN        : 0.00%
+call graph flow conservation gap 0.00%; 
+distribution of function entry flow conservation gaps
+  Length     : 53
+  MAX        : 0.00%
+  TOP 1%     : 0.00%
+  TOP 5%     : 0.00%
+  TOP 10%    : 0.00%
+  TOP 20%    : 0.00%
+  TOP 50%    : 0.00%
+  TOP 80%    : 0.00%
+  MIN        : 0.00%
+CFG flow conservation gap 0.00% (weighted) 0.00% (worst); distribution of weighted CFG flow conservation gaps
+  Length     : 53
+  MAX        : 0.00%
+  TOP 1%     : 0.00%
+  TOP 5%     : 0.00%
+  TOP 10%    : 0.00%
+  TOP 20%    : 0.00%
+  TOP 50%    : 0.00%
+  TOP 80%    : 0.00%
+  MIN        : 0.00%
+Consider only blocks with execution counts > 500:
+distribution of worst block flow conservation gap per function 
+  Length     : 53
+  MAX        : 0.00%
+  TOP 1%     : 0.00%
+  TOP 5%     : 0.00%
+  TOP 10%    : 0.00%
+  TOP 20%    : 0.00%
+  TOP 50%    : 0.00%
+  TOP 80%    : 0.00%
+  MIN        : 0.00%
+distribution of worst block flow conservation gap (absolute value) per function
+  Length     : 53
+  MAX        : 0
+  TOP 1%     : 0
+  TOP 5%     : 0
+  TOP 10%    : 0
+  TOP 20%    : 0
+  TOP 50%    : 0
+  TOP 80%    : 0
+  MIN        : 0
+exception handling usage 0.00% (of total BBEC) 0.00% (of total InvokeEC)
+distribution of exception handling usage as a fraction of total BBEC of each function
+  Length     : 53
+  MAX        : 0.00%
+  TOP 1%     : 0.00%
+  TOP 5%     : 0.00%
+  TOP 10%    : 0.00%
+  TOP 20%    : 0.00%
+  TOP 50%    : 0.00%
+  TOP 80%    : 0.00%
+  MIN        : 0.00%
+distribution of exception handling usage as a fraction of total InvokeEC of each function
+  Length     : 53
+  MAX        : 0.00%
+  TOP 1%     : 0.00%
+  TOP 5%     : 0.00%
+  TOP 10%    : 0.00%
+  TOP 20%    : 0.00%
+  TOP 50%    : 0.00%
+  TOP 80%    : 0.00%
+  MIN        : 0.00%
+BOLT-INFO: Finished pass: profile-quality-stats
+BOLT-INFO: Starting pass: validate-internal-calls
+BOLT-INFO: Finished pass: validate-internal-calls
+BOLT-INFO: Starting pass: validate-mem-refs
+BOLT-INFO: Finished pass: validate-mem-refs
+BOLT-INFO: Starting pass: shorten-instructions
+BOLT-INFO: Finished pass: shorten-instructions
+BOLT-INFO: Starting pass: remove-nops
+BOLT-INFO: Finished pass: remove-nops
+BOLT-INFO: Starting pass: normalize CFG
+BOLT-INFO: Finished pass: normalize CFG
+BOLT-INFO: Starting pass: identical-code-folding
+BOLT-INFO: ICF folded 1 out of 1176 functions in 3 passes. 0 functions had jump tables.
+BOLT-INFO: Removing all identical functions will save 0.01 KB of code space. Folded functions were called 2275051 times based on profile.
+BOLT-INFO: Finished pass: identical-code-folding
+BOLT-INFO: Starting pass: indirect-call-promotion
+BOLT-INFO: Finished pass: indirect-call-promotion
+BOLT-INFO: Starting pass: inlining
+BOLT-INFO: inlined 88801387 calls at 636 call sites in 2 iteration(s). Change in binary size: 10528 bytes.
+BOLT-INFO: Finished pass: inlining
+BOLT-INFO: Starting pass: identical-code-folding
+BOLT-INFO: Finished pass: identical-code-folding
+BOLT-INFO: Starting pass: partial-inlining
+BOLT-INFO: buildCallGraph: 1176 nodes, 2682 callsites (20 recursive), density = 0.000868, 6 callsites not processed, 600 callsites with invalid profile, used perf data for 0 stale functions.
+BOLT-INFO: partial inlining: jvp_utf8_next into jv_string_length_codepoints (count 833508, p(fast) 1.000 callee, 1.000 site, 10 insns, 0 renamed regs, frame elided)
+BOLT-INFO: partial inlining: jvp_object_unshare/1(*2) into jv_object_set (count 766502, p(fast) 0.819 callee, 0.819 site, 15 insns, 4 renamed regs, frame elided)
+BOLT-INFO: partial inlining: jvp_number_is_nan into jvp_cmp/1(*2) (count 806388, p(fast) 1.000 callee, 1.000 site, 16 insns, 0 renamed regs, frame elided)
+BOLT-INFO: partial inlining: jvp_number_is_nan into jvp_cmp/1(*2) (count 806388, p(fast) 1.000 callee, 1.000 site, 16 insns, 0 renamed regs, frame elided)
+BOLT-INFO: partial inlining: check_literal/1(*2) into jv_parser_next (count 2809884, p(fast) 0.915 callee, 0.915 site, 3 insns, 0 renamed regs)
+BOLT-INFO: partial inlining: jvp_utf8_next into jvp_utf8_is_valid (count 6334102, p(fast) 1.000 callee, 1.000 site, 10 insns, 0 renamed regs, frame elided)
+BOLT-INFO: partial inlining: 5 callees with a fast region (4 with frame elision); inlined 6 call sites (5 with frame elision, 0 tail calls), 70 instructions copied, 4 registers renamed
+BOLT-INFO: partial inlining: estimated 11978228 calls avoided on fast paths (11.01% of profiled direct calls), 378544 slow-path calls re-execute the copied region
+BOLT-INFO: partial inlining: callees without a usable fast region: not-simple=5 entry-not-copyable=3 no-fast-exit=6 too-large=1
+BOLT-INFO: Finished pass: partial-inlining
+BOLT-INFO: Starting pass: plt-call-optimization
+BOLT-INFO: Finished pass: plt-call-optimization
+BOLT-INFO: Starting pass: reorder-blocks
+BOLT-INFO: basic block reordering modified layout of 152 functions (56.72% of profiled, 12.93% of total)
+BOLT-INFO: Finished pass: reorder-blocks
+BOLT-INFO: Starting pass: eliminate-unreachable
+BOLT-INFO: Finished pass: eliminate-unreachable
+BOLT-INFO: Starting pass: split-functions
+BOLT-INFO: Finished pass: split-functions
+BOLT-INFO: Starting pass: loop-inversion-opt
+BOLT-INFO: 2 Functions were reordered by LoopInversionPass
+BOLT-INFO: Finished pass: loop-inversion-opt
+BOLT-INFO: Starting pass: tail-duplication
+BOLT-INFO: Finished pass: tail-duplication
+BOLT-INFO: Starting pass: fix-branches
+BOLT-INFO: Finished pass: fix-branches
+BOLT-INFO: Starting pass: reorder-functions
+BOLT-INFO: buildCallGraph: 272 nodes, 1620 callsites (15 recursive), density = 0.007988, 285 callsites not processed, 500 callsites with invalid profile, used perf data for 0 stale functions.
+BOLT-INFO: Function reordering stats
+BOLT-INFO:  Number of hot functions: 255
+BOLT-INFO:  Number of clusters: 1
+BOLT-INFO:  Final average call distance = 1560.2 (85269322434 / 54653861)
+BOLT-INFO:  Total Calls = 54653861
+BOLT-INFO:  Total Calls within 64B = 8049643 (14.73%)
+BOLT-INFO:  Total Calls within 4KB = 48121669 (88.05%)
+BOLT-INFO:  Total Calls within 2MB = 54653861 (100.00%)
+BOLT-INFO: Finished pass: reorder-functions
+BOLT-INFO: Starting pass: populate-output-functions
+BOLT-INFO: Finished pass: populate-output-functions
+BOLT-INFO: Starting pass: split-functions
+BOLT-INFO: Finished pass: split-functions
+BOLT-INFO: Starting pass: print dyno-stats after optimizations
+BOLT-INFO: program-wide dynostats after all optimizations before SCTC and FOP:
+
+           490368957 : executed forward branches
+           188664738 : taken forward branches
+            94205626 : executed backward branches
+            56744748 : taken backward branches
+            66968143 : executed unconditional branches
+           239158776 : all function calls
+            41604781 : indirect calls
+            41604781 : PLT calls
+          4347714034 : executed instructions
+           843571805 : executed load instructions
+           696229671 : executed store instructions
+                   0 : taken jump table branches
+                   0 : taken unknown indirect branches
+           651542726 : total branches
+           312377629 : taken branches
+           339165097 : non-taken conditional branches
+           245409486 : taken conditional branches
+           584574583 : all conditional branches
+                   0 : linker-inserted veneer calls
+
+           494702779 : executed forward branches (+0.9%)
+            55502763 : taken forward branches (-70.6%)
+            90527295 : executed backward branches (-3.9%)
+            48298496 : taken backward branches (-14.9%)
+            21625638 : executed unconditional branches (-67.7%)
+           138379161 : all function calls (-42.1%)
+            41604781 : indirect calls (=)
+            41604781 : PLT calls (=)
+          4102716474 : executed instructions (-5.6%)
+           832657768 : executed load instructions (-1.3%)
+           684937093 : executed store instructions (-1.6%)
+                   0 : taken jump table branches (=)
+                   0 : taken unknown indirect branches (=)
+           606855712 : total branches (-6.9%)
+           125426897 : taken branches (-59.8%)
+           481428815 : non-taken conditional branches (+41.9%)
+           103801259 : taken conditional branches (-57.7%)
+           585230074 : all conditional branches (+0.1%)
+                   0 : linker-inserted veneer calls (=)
+
+BOLT-INFO: Finished pass: print dyno-stats after optimizations
+BOLT-INFO: Starting pass: simplify-conditional-tail-calls
+BOLT-INFO: Finished pass: simplify-conditional-tail-calls
+BOLT-INFO: Starting pass: peepholes
+BOLT-INFO: Finished pass: peepholes
+BOLT-INFO: Starting pass: assign-sections
+BOLT-INFO: Finished pass: assign-sections
+BOLT-INFO: Starting pass: aligner
+BOLT-INFO: Finished pass: aligner
+BOLT-INFO: Starting pass: reorder-data
+BOLT-INFO: Finished pass: reorder-data
+BOLT-INFO: Starting pass: patch-entries
+BOLT-INFO: patching entries in original code
+BOLT-INFO: function jq_set_input_cb too small to patch its entry point
+BOLT-WARNING: failed to patch entries in jq_set_input_cb. The function will not be optimized
+BOLT-INFO: function jq_set_debug_cb too small to patch its entry point
+BOLT-WARNING: failed to patch entries in jq_set_debug_cb. The function will not be optimized
+BOLT-INFO: function jq_set_stderr_cb too small to patch its entry point
+BOLT-WARNING: failed to patch entries in jq_set_stderr_cb. The function will not be optimized
+BOLT-INFO: function jq_halted too small to patch its entry point
+BOLT-WARNING: failed to patch entries in jq_halted. The function will not be optimized
+BOLT-INFO: function jv_get_kind too small to patch its entry point
+BOLT-WARNING: failed to patch entries in jv_get_kind. The function will not be optimized
+BOLT-INFO: function jv_equal too small to patch its entry point
+BOLT-WARNING: failed to patch entries in jv_equal. The function will not be optimized
+BOLT-INFO: function jv_mem_free too small to patch its entry point
+BOLT-WARNING: failed to patch entries in jv_mem_free. The function will not be optimized
+BOLT-INFO: function jv_cmp too small to patch its entry point
+BOLT-WARNING: failed to patch entries in jv_cmp. The function will not be optimized
+BOLT-INFO: function jv_parse_sized too small to patch its entry point
+BOLT-WARNING: failed to patch entries in jv_parse_sized. The function will not be optimized
+BOLT-INFO: function _jq_memmem too small to patch its entry point
+BOLT-WARNING: failed to patch entries in _jq_memmem. The function will not be optimized
+BOLT-INFO: function jq_util_input_errors too small to patch its entry point
+BOLT-WARNING: failed to patch entries in jq_util_input_errors. The function will not be optimized
+BOLT-INFO: Finished pass: patch-entries
+BOLT-INFO: Starting pass: assign-sections
+BOLT-INFO: Finished pass: assign-sections
+BOLT-INFO: Starting pass: aarch64-relaxation
+BOLT-INFO: Finished pass: aarch64-relaxation
+BOLT-INFO: Starting pass: long-jmp
+BOLT-INFO: Starting stub-insertion pass
+BOLT-INFO: Inserted 103 stubs in the hot area and 22 stubs in the cold area. Shared 0 times, iterated 3 times.
+BOLT-INFO: Finished pass: long-jmp
+BOLT-INFO: Starting pass: pointer-auth-cfi-fixup
+BOLT-INFO: rewritten pac-ret DWARF info in 1 out of 1176 functions (0.09%).
+BOLT-INFO: Finished pass: pointer-auth-cfi-fixup
+BOLT-INFO: Starting pass: finalize-functions
+BOLT-INFO: Finished pass: finalize-functions
+BOLT-INFO: Starting pass: frame-optimizer
+BOLT-INFO: Finished pass: frame-optimizer
+BOLT-INFO: Starting pass: alloc-combiner
+BOLT-INFO: Finished pass: alloc-combiner
+BOLT-INFO: Starting pass: retpoline-insertion
+BOLT-INFO: Finished pass: retpoline-insertion
+BOLT-INFO: Starting pass: inst-lowering
+BOLT-INFO: Finished pass: inst-lowering
+BOLT-INFO: Starting pass: lower-annotations
+BOLT-INFO: Finished pass: lower-annotations
+BOLT-INFO: Starting pass: clean-mc-state
+BOLT-INFO: Finished pass: clean-mc-state
+BOLT-INFO: padding code to 0x600000 to accommodate hot text
+BOLT-INFO: patched build-id (flipped first and last bits)
+BOLT: writing new section .fini_array
+ data at 0xaaaae6d7bc90
+ of size 8
+ at offset 870352 with content size 8
+BOLT: writing new section .init_array
+ data at 0xaaaae71f24f0
+ of size 8
+ at offset 870360 with content size 8
+BOLT: writing new section .data.rel.ro
+ data at 0xaaaae6f3fd50
+ of size 11776
+ at offset 870368 with content size 11776
+BOLT: writing new section .data
+ data at 0xaaaae7814b10
+ of size 19592
+ at offset 882816 with content size 19592
+BOLT: writing new section .text
+ data at 0xffff9c400000
+ of size 91456
+ at offset 4194304 with content size 91456
+BOLT: writing new section .text.cold
+ data at 0xaaaae782ad80
+ of size 53456
+ at offset 4285760 with content size 53456
+BOLT: writing new section .bolt.new.eh_frame
+ data at 0xaaaae78a77d0
+ of size 29240
+ at offset 6291456 with content size 29240
+BOLT: writing new section .relocated.eh_frame
+ data at 0xaaaae789afc0
+ of size 51208
+ at offset 6320696 with content size 51208
+BOLT-INFO: not writing section header for section .fini_array
+BOLT-INFO: not writing section header for section .init_array
+BOLT-INFO: not writing section header for section .data.rel.ro
+BOLT-INFO: not writing section header for section .data
+BOLT-INFO: writing section header for .text
+BOLT-INFO: writing section header for .text.cold
+BOLT-INFO: writing section header for .eh_frame
+BOLT-INFO: writing section header for .eh_frame_hdr
+BOLT-INFO: setting __hot_start to 0x400000
+BOLT-INFO: setting __hot_end to 0x416540
+BOLT-INFO: not writing section header for section .fini_array
+BOLT-INFO: not writing section header for section .init_array
+BOLT-INFO: not writing section header for section .data.rel.ro
+BOLT-INFO: not writing section header for section .data
+BOLT-INFO: writing section header for .text
+BOLT-INFO: writing section header for .text.cold
+BOLT-INFO: writing section header for .eh_frame
+BOLT-INFO: writing section header for .eh_frame_hdr
+BOLT-INFO: writing section header for .note.bolt_info

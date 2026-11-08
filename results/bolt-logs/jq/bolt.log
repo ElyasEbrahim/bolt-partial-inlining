@@ -1,0 +1,80 @@
+BOLT-WARNING: specifying numeric value "1" for option -icf is deprecated
+BOLT-INFO: shared object or position-independent executable detected
+BOLT-INFO: Target architecture: aarch64
+BOLT-INFO: BOLT version: 0a0e65b2e8ff6043d85ab07c4d23ea18bf0b9b7d
+BOLT-INFO: first alloc address is 0x0
+BOLT-INFO: creating new program header table at address 0x200000, offset 0x200000
+BOLT-WARNING: debug info will be stripped from the binary. Use -update-debug-sections to keep it.
+BOLT-INFO: enabling relocation mode
+BOLT-INFO: enabling lite mode
+BOLT-INFO: pre-processing profile using branch profile reader
+BOLT-INFO: PointerAuthCFIAnalyzer ran on 1 functions. Ignored 0 functions (0.00%) because of CFI inconsistencies
+BOLT-INFO: number of removed linker-inserted veneers: 0
+BOLT-INFO: 268 out of 1048 functions in the binary (25.6%) have non-empty execution profile
+BOLT-INFO: 5 functions with profile could not be optimized
+BOLT-INFO: profile for 1 objects was ignored
+BOLT-INFO: profile quality metrics for the hottest 268 functions (reporting top 5% values): function CFG discontinuity 0.00%; call graph flow conservation gap 0.00%; CFG flow conservation gap 0.00% (weighted) 0.00% (worst); exception handling usage 0.00% (of total BBEC) 0.00% (of total InvokeEC)
+BOLT-INFO: ICF folded 1 out of 1176 functions in 3 passes. 0 functions had jump tables.
+BOLT-INFO: Removing all identical functions will save 0.01 KB of code space. Folded functions were called 2275051 times based on profile.
+BOLT-INFO: basic block reordering modified layout of 146 functions (54.48% of profiled, 12.41% of total)
+BOLT-INFO: 3 Functions were reordered by LoopInversionPass
+BOLT-INFO: program-wide dynostats after all optimizations before SCTC and FOP:
+
+           490368957 : executed forward branches
+           188664738 : taken forward branches
+            94205626 : executed backward branches
+            56744748 : taken backward branches
+            66968143 : executed unconditional branches
+           239158776 : all function calls
+            41604781 : indirect calls
+            41604781 : PLT calls
+          4347714034 : executed instructions
+           843571805 : executed load instructions
+           696229671 : executed store instructions
+                   0 : taken jump table branches
+                   0 : taken unknown indirect branches
+           651542726 : total branches
+           312377629 : taken branches
+           339165097 : non-taken conditional branches
+           245409486 : taken conditional branches
+           584574583 : all conditional branches
+                   0 : linker-inserted veneer calls
+
+           495750995 : executed forward branches (+1.1%)
+            54747916 : taken forward branches (-71.0%)
+            88823588 : executed backward branches (-5.7%)
+            48424343 : taken backward branches (-14.7%)
+            20158655 : executed unconditional branches (-69.9%)
+           239158776 : all function calls (=)
+            41604781 : indirect calls (=)
+            41604781 : PLT calls (=)
+          4290920840 : executed instructions (-1.3%)
+           843571805 : executed load instructions (=)
+           696229671 : executed store instructions (=)
+                   0 : taken jump table branches (=)
+                   0 : taken unknown indirect branches (=)
+           604733238 : total branches (-7.2%)
+           123330914 : taken branches (-60.5%)
+           481402324 : non-taken conditional branches (+41.9%)
+           103172259 : taken conditional branches (-58.0%)
+           584574583 : all conditional branches (=)
+                   0 : linker-inserted veneer calls (=)
+
+BOLT-WARNING: failed to patch entries in jq_set_input_cb. The function will not be optimized
+BOLT-WARNING: failed to patch entries in jq_set_debug_cb. The function will not be optimized
+BOLT-WARNING: failed to patch entries in jq_set_stderr_cb. The function will not be optimized
+BOLT-WARNING: failed to patch entries in jq_halted. The function will not be optimized
+BOLT-WARNING: failed to patch entries in jv_get_kind. The function will not be optimized
+BOLT-WARNING: failed to patch entries in jv_equal. The function will not be optimized
+BOLT-WARNING: failed to patch entries in jv_mem_free. The function will not be optimized
+BOLT-WARNING: failed to patch entries in jv_cmp. The function will not be optimized
+BOLT-WARNING: failed to patch entries in jv_parse_sized. The function will not be optimized
+BOLT-WARNING: failed to patch entries in _jq_memmem. The function will not be optimized
+BOLT-WARNING: failed to patch entries in jq_util_input_errors. The function will not be optimized
+BOLT-INFO: Starting stub-insertion pass
+BOLT-INFO: Inserted 70 stubs in the hot area and 22 stubs in the cold area. Shared 0 times, iterated 3 times.
+BOLT-INFO: rewritten pac-ret DWARF info in 1 out of 1176 functions (0.09%).
+BOLT-INFO: padding code to 0x600000 to accommodate hot text
+BOLT-INFO: patched build-id (flipped first and last bits)
+BOLT-INFO: setting __hot_start to 0x400000
+BOLT-INFO: setting __hot_end to 0x414b50

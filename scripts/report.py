@@ -153,6 +153,27 @@ def main():
                  f"{t['bolt']['median']:.3f} | " +
                  " | ".join(fmt_speedup(t.get(v, {})) for v in TIMING_VARIANTS) +
                  f" | {pstr} |")
+    skip = [(n, e) for n, e in report.items() if "bolt-pi-skip" in e["timing"]]
+    if skip:
+        L.append("\n## Partial inlining without trivial callees\n")
+        L.append("`bolt-pi-skip` is `bolt-pi` with the named callees excluded "
+                 "(`-partial-inline-skip`): trivial functions that BOLT's existing "
+                 "`-inline-all` inlines as well. The difference to `bolt` is the "
+                 "share that only partial inlining achieves.\n")
+        L.append("| workload | excluded | bolt-pi | bolt-pi-skip | bolt-inl | bolt-inl-pi "
+                 "| calls avoided bolt-pi | calls avoided bolt-pi-skip | p (bolt-pi-skip) |")
+        L.append("|---|---|---|---|---|---|---:|---:|---:|")
+        for name, e in skip:
+            d = os.path.join(args.root, WORKLOADS[name].get("dir", name))
+            sk = open(os.path.join(d, "bolt-pi-skip.skipped")).read().strip()
+            ps = pi_stats(os.path.join(d, "bolt-pi-skip.log"))
+            t = e["timing"]
+            p = t["bolt-pi-skip"].get("wilcoxon_p")
+            L.append(f"| {name} | `{sk}` | " + " | ".join(
+                fmt_speedup(t.get(v, {})) for v in
+                ["bolt-pi", "bolt-pi-skip", "bolt-inl", "bolt-inl-pi"]) +
+                f" | {e['pi'].get('bolt-pi', {}).get('fast_calls_pct', 0):.2f}% | "
+                f"{ps.get('fast_calls_pct', 0):.2f}% | {p:.2g} |")
     if icounts:
         L.append("\n## Executed instructions (valgrind, smaller inputs; change vs. bolt)\n")
         L.append("All instructions of the process; every variant is executed from "

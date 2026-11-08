@@ -24,44 +24,44 @@ BOLT-INFO: UCE removed 18 blocks and 0 bytes of code
 BOLT-INFO: 3 Functions were reordered by LoopInversionPass
 BOLT-INFO: program-wide dynostats after all optimizations before SCTC and FOP:
 
-           258612885 : executed forward branches
-           113733791 : taken forward branches
-            33386653 : executed backward branches
-            17279224 : taken backward branches
+           258612691 : executed forward branches
+           113733654 : taken forward branches
+            33386520 : executed backward branches
+            17279035 : taken backward branches
             20559962 : executed unconditional branches
             74667696 : all function calls
             16633820 : indirect calls
              3875896 : PLT calls
-          2299646947 : executed instructions
-           593691163 : executed load instructions
-           337264810 : executed store instructions
+          2299645333 : executed instructions
+           593690865 : executed load instructions
+           337264796 : executed store instructions
                    0 : taken jump table branches
                    0 : taken unknown indirect branches
-           312559500 : total branches
-           151572977 : taken branches
-           160986523 : non-taken conditional branches
-           131013015 : taken conditional branches
-           291999538 : all conditional branches
+           312559173 : total branches
+           151572651 : taken branches
+           160986522 : non-taken conditional branches
+           131012689 : taken conditional branches
+           291999211 : all conditional branches
                    0 : linker-inserted veneer calls
 
-           271895230 : executed forward branches (+5.1%)
-            22860443 : taken forward branches (-79.9%)
-            20103558 : executed backward branches (-39.8%)
-             8726602 : taken backward branches (-49.5%)
-             3585801 : executed unconditional branches (-82.6%)
+           271895155 : executed forward branches (+5.1%)
+            22860490 : taken forward branches (-79.9%)
+            20103306 : executed backward branches (-39.8%)
+             8726529 : taken backward branches (-49.5%)
+             3585793 : executed unconditional branches (-82.6%)
             71535031 : all function calls (-4.2%)
             17117260 : indirect calls (+2.9%)
              3875896 : PLT calls (=)
-          2276940610 : executed instructions (-1.0%)
-           593690170 : executed load instructions (-0.0%)
-           337264424 : executed store instructions (-0.0%)
+          2276938990 : executed instructions (-1.0%)
+           593689872 : executed load instructions (-0.0%)
+           337264410 : executed store instructions (-0.0%)
                    0 : taken jump table branches (=)
                    0 : taken unknown indirect branches (=)
-           295584589 : total branches (-5.4%)
-            35172846 : taken branches (-76.8%)
-           260411743 : non-taken conditional branches (+61.8%)
-            31587045 : taken conditional branches (-75.9%)
-           291998788 : all conditional branches (-0.0%)
+           295584254 : total branches (-5.4%)
+            35172812 : taken branches (-76.8%)
+           260411442 : non-taken conditional branches (+61.8%)
+            31587019 : taken conditional branches (-75.9%)
+           291998461 : all conditional branches (-0.0%)
                    0 : linker-inserted veneer calls (=)
 
 BOLT-WARNING: failed to patch entries in _PyToken_Init/1(*2). The function will not be optimized

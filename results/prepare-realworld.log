@@ -6,3 +6,7 @@ BOLT-INFO: partial inlining: 11 callees with a fast region (3 with frame elision
 BOLT-INFO: partial inlining: 15 callees with a fast region (8 with frame elision); inlined 14 call sites (5 with frame elision, 1 tail calls), 158 instructions copied, 3 registers renamed
 == zstd
 BOLT-INFO: partial inlining: 5 callees with a fast region (0 with frame elision); inlined 5 call sites (0 with frame elision, 0 tail calls), 29 instructions copied, 0 registers renamed
+== jq
+BOLT-INFO: partial inlining: 9 callees with a fast region (4 with frame elision); inlined 21 call sites (5 with frame elision, 1 tail calls), 99 instructions copied, 4 registers renamed
+== libxml2
+BOLT-INFO: partial inlining: 6 callees with a fast region (3 with frame elision); inlined 7 call sites (5 with frame elision, 0 tail calls), 95 instructions copied, 0 registers renamed

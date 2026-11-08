@@ -5701,36 +5701,36 @@ BOLT-WARNING: failed to post-process indirect branches for deregister_tm_clones/
 BOLT-WARNING: failed to post-process indirect branches for register_tm_clones/1(*2)
 BOLT-WARNING: failed to post-process indirect branches for _PyToken_TwoChars
 BOLT-WARNING: failed to post-process indirect branches for PySequence_Contains
-BOLT-WARNING: failed to post-process indirect branches for PyObject_GetAttrString
-BOLT-WARNING: failed to post-process indirect branches for PyObject_SetAttrString
 BOLT-WARNING: failed to post-process indirect branches for PyMem_RawMalloc
 BOLT-WARNING: failed to post-process indirect branches for PyMem_RawCalloc
 BOLT-WARNING: failed to post-process indirect branches for PyMem_RawRealloc
+BOLT-WARNING: failed to post-process indirect branches for _Py_NewReference
+BOLT-WARNING: failed to post-process indirect branches for _Py_NewReferenceNoTotal
+BOLT-WARNING: failed to post-process indirect branches for PyObject_GetAttrString
 BOLT-WARNING: failed to post-process indirect branches for PyMem_Malloc
 BOLT-WARNING: failed to post-process indirect branches for PyMem_Calloc
 BOLT-WARNING: failed to post-process indirect branches for PyMem_Realloc
-BOLT-WARNING: failed to post-process indirect branches for _Py_NewReference
-BOLT-WARNING: failed to post-process indirect branches for _Py_NewReferenceNoTotal
+BOLT-WARNING: failed to post-process indirect branches for PyObject_SetAttrString
 BOLT-WARNING: failed to post-process indirect branches for PyObject_Malloc
 BOLT-WARNING: failed to post-process indirect branches for PyObject_Realloc
 BOLT-WARNING: failed to post-process indirect branches for unicode_from_format/1(*2)
-BOLT-WARNING: failed to post-process indirect branches for _PyUnicode_DecodeUnicodeEscapeInternal2
 BOLT-WARNING: failed to post-process indirect branches for PyUnicode_Format
+BOLT-WARNING: failed to post-process indirect branches for _PyUnicode_DecodeUnicodeEscapeInternal2
 BOLT-WARNING: failed to post-process indirect branches for astfold_expr/1(*2)
 BOLT-WARNING: failed to post-process indirect branches for astfold_stmt/1(*2)
 BOLT-WARNING: failed to post-process indirect branches for codegen_addcompare/1(*2)
+BOLT-WARNING: failed to post-process indirect branches for codegen_check_compare/1(*2)
 BOLT-WARNING: failed to post-process indirect branches for _PyOpcode_num_popped/1(*2)
 BOLT-WARNING: failed to post-process indirect branches for _PyOpcode_num_pushed/1(*2)
-BOLT-WARNING: failed to post-process indirect branches for codegen_check_compare/1(*2)
-BOLT-WARNING: failed to post-process indirect branches for codegen_visit_expr/1(*2)
 BOLT-WARNING: failed to post-process indirect branches for optimize_load_fast/1(*2)
+BOLT-WARNING: failed to post-process indirect branches for codegen_visit_expr/1(*2)
 BOLT-WARNING: failed to post-process indirect branches for skipitem/1(*2)
 BOLT-WARNING: failed to post-process indirect branches for codegen_visit_stmt/1(*2)
-BOLT-WARNING: failed to post-process indirect branches for convertitem/1(*2)
-BOLT-WARNING: failed to post-process indirect branches for _PyConfig_Read/1(*2)
 BOLT-WARNING: failed to post-process indirect branches for _PyCfg_OptimizeCodeUnit/1(*2)
 BOLT-WARNING: failed to post-process indirect branches for countformat/1(*2)
+BOLT-WARNING: failed to post-process indirect branches for convertitem/1(*2)
 BOLT-WARNING: failed to post-process indirect branches for r_object/1(*2)
+BOLT-WARNING: failed to post-process indirect branches for _PyConfig_Read/1(*2)
 BOLT-WARNING: failed to post-process indirect branches for do_mkvalue/1(*2)
 BOLT-WARNING: failed to post-process indirect branches for PyMember_GetOne
 BOLT-WARNING: failed to post-process indirect branches for symtable_visit_expr/1(*2)
@@ -6495,21 +6495,21 @@ BOLT-INFO: basic block reordering modified layout of 1590 functions (69.13% of p
 BOLT-INFO: Finished pass: reorder-blocks
 BOLT-INFO: Starting pass: eliminate-unreachable
 BOLT-INFO: removed 1 dead basic block(s) accounting for 0 bytes in function tok_get_normal_mode/1(*2)
-BOLT-INFO: removed 1 dead basic block(s) accounting for 0 bytes in function descr_dealloc/1(*2)
 BOLT-INFO: removed 1 dead basic block(s) accounting for 0 bytes in function wrapper_dealloc/1(*4)
+BOLT-INFO: removed 1 dead basic block(s) accounting for 0 bytes in function descr_dealloc/1(*2)
 BOLT-INFO: removed 1 dead basic block(s) accounting for 0 bytes in function gen_dealloc/1(*2)
 BOLT-INFO: removed 2 dead basic block(s) accounting for 0 bytes in function _PyGen_Finalize/1(*2)
 BOLT-INFO: removed 1 dead basic block(s) accounting for 0 bytes in function frame_dealloc/1(*2)
-BOLT-INFO: removed 1 dead basic block(s) accounting for 0 bytes in function listreviter_dealloc/1(*2)
 BOLT-INFO: removed 1 dead basic block(s) accounting for 0 bytes in function calliter_dealloc/1(*2)
+BOLT-INFO: removed 1 dead basic block(s) accounting for 0 bytes in function listreviter_dealloc/1(*2)
 BOLT-INFO: removed 1 dead basic block(s) accounting for 0 bytes in function dictiter_dealloc/1(*2)
 BOLT-INFO: removed 1 dead basic block(s) accounting for 0 bytes in function mbuf_dealloc/1(*2)
 BOLT-INFO: removed 1 dead basic block(s) accounting for 0 bytes in function Py_ReprLeave
 BOLT-INFO: removed 1 dead basic block(s) accounting for 0 bytes in function slice_dealloc/1(*2)
 BOLT-INFO: removed 1 dead basic block(s) accounting for 0 bytes in function PyUnicodeWriter_WriteStr
 BOLT-INFO: removed 1 dead basic block(s) accounting for 0 bytes in function PyUnicodeWriter_WriteRepr
-BOLT-INFO: removed 1 dead basic block(s) accounting for 0 bytes in function PyErr_GivenExceptionMatches
 BOLT-INFO: removed 1 dead basic block(s) accounting for 0 bytes in function _PyCompile_ExitScope/1(*2)
+BOLT-INFO: removed 1 dead basic block(s) accounting for 0 bytes in function PyErr_GivenExceptionMatches
 BOLT-INFO: removed 1 dead basic block(s) accounting for 0 bytes in function _PyLong_FormatAdvancedWriter/1(*2)
 BOLT-INFO: UCE removed 18 blocks and 0 bytes of code
 BOLT-INFO: Finished pass: eliminate-unreachable
@@ -6540,44 +6540,44 @@ BOLT-INFO: Finished pass: split-functions
 BOLT-INFO: Starting pass: print dyno-stats after optimizations
 BOLT-INFO: program-wide dynostats after all optimizations before SCTC and FOP:
 
-           258612885 : executed forward branches
-           113733791 : taken forward branches
-            33386653 : executed backward branches
-            17279224 : taken backward branches
+           258612691 : executed forward branches
+           113733654 : taken forward branches
+            33386520 : executed backward branches
+            17279035 : taken backward branches
             20559962 : executed unconditional branches
             74667696 : all function calls
             16633820 : indirect calls
              3875896 : PLT calls
-          2299646947 : executed instructions
-           593691163 : executed load instructions
-           337264810 : executed store instructions
+          2299645333 : executed instructions
+           593690865 : executed load instructions
+           337264796 : executed store instructions
                    0 : taken jump table branches
                    0 : taken unknown indirect branches
-           312559500 : total branches
-           151572977 : taken branches
-           160986523 : non-taken conditional branches
-           131013015 : taken conditional branches
-           291999538 : all conditional branches
+           312559173 : total branches
+           151572651 : taken branches
+           160986522 : non-taken conditional branches
+           131012689 : taken conditional branches
+           291999211 : all conditional branches
                    0 : linker-inserted veneer calls
 
-           271895457 : executed forward branches (+5.1%)
-            22860553 : taken forward branches (-79.9%)
-            20103558 : executed backward branches (-39.8%)
-             8726602 : taken backward branches (-49.5%)
-             3585913 : executed unconditional branches (-82.6%)
+           271895382 : executed forward branches (+5.1%)
+            22860600 : taken forward branches (-79.9%)
+            20103306 : executed backward branches (-39.8%)
+             8726529 : taken backward branches (-49.5%)
+             3585905 : executed unconditional branches (-82.6%)
             70661359 : all function calls (-5.4%)
             17117260 : indirect calls (+2.9%)
              3875896 : PLT calls (=)
-          2265918044 : executed instructions (-1.5%)
-           589140066 : executed load instructions (-0.8%)
-           332714086 : executed store instructions (-1.3%)
+          2265916424 : executed instructions (-1.5%)
+           589139768 : executed load instructions (-0.8%)
+           332714072 : executed store instructions (-1.3%)
                    0 : taken jump table branches (=)
                    0 : taken unknown indirect branches (=)
-           295584928 : total branches (-5.4%)
-            35173068 : taken branches (-76.8%)
-           260411860 : non-taken conditional branches (+61.8%)
-            31587155 : taken conditional branches (-75.9%)
-           291999015 : all conditional branches (-0.0%)
+           295584593 : total branches (-5.4%)
+            35173034 : taken branches (-76.8%)
+           260411559 : non-taken conditional branches (+61.8%)
+            31587129 : taken conditional branches (-75.9%)
+           291998688 : all conditional branches (-0.0%)
                    0 : linker-inserted veneer calls (=)
 
 BOLT-INFO: Finished pass: print dyno-stats after optimizations
@@ -6674,39 +6674,39 @@ BOLT-INFO: Finished pass: clean-mc-state
 BOLT-INFO: padding code to 0xc00000 to accommodate hot text
 BOLT-INFO: patched build-id (flipped first and last bits)
 BOLT: writing new section .fini_array
- data at 0xaaaaf4e81ad0
+ data at 0xaaab1d46b600
  of size 16
  at offset 4995896 with content size 16
 BOLT: writing new section .init_array
- data at 0xaaaaf6082360
+ data at 0xaaab20d43610
  of size 24
  at offset 4995912 with content size 24
 BOLT: writing new section .data.rel.ro
- data at 0xaaaaf8231140
+ data at 0xaaab23e93300
  of size 353096
  at offset 4995968 with content size 353096
 BOLT: writing new section .data
- data at 0xaaaaf82874c0
+ data at 0xaaab23ee9680
  of size 256816
  at offset 5351360 with content size 256816
 BOLT: writing new section .PyRuntime
- data at 0xaaaaf82c6000
+ data at 0xaaab23f281c0
  of size 316632
  at offset 5608176 with content size 316632
 BOLT: writing new section .text
- data at 0xffff89c00000
+ data at 0xffff97c00000
  of size 733104
  at offset 10485760 with content size 733104
 BOLT: writing new section .text.cold
- data at 0xaaaaf7e700c0
+ data at 0xaaab23ad22c0
  of size 619088
  at offset 11218880 with content size 619088
 BOLT: writing new section .bolt.new.eh_frame
- data at 0xaaaaf83a5210
+ data at 0xaaab240073d0
  of size 292808
  at offset 12582912 with content size 292808
 BOLT: writing new section .relocated.eh_frame
- data at 0xaaaaf83134e0
+ data at 0xaaab23f756a0
  of size 461276
  at offset 12875720 with content size 461276
 BOLT-INFO: not writing section header for section .fini_array

@@ -49,6 +49,11 @@ WORKLOADS = {
     "zstd-decompress": {"class": "real", "dir": "zstd",
                         "eval": ["@BIN@", "-q", "-d", "-f", "-o", "/dev/null",
                                  "@RW@/corpus/eval16.txt.zst"]},
+    "jq": {"class": "real",
+           "eval": ["@BIN@", "-f", "@WL@/jq/bench.jq", "@RW@/corpus/data-eval.json"]},
+    "libxml2": {"class": "real",
+                "eval": ["@BIN@", "--noout", "--xpath", "count(//item[@kind='b'])",
+                         "@RW@/corpus/data-eval.xml"]},
 }
 
 # Smaller inputs for the instruction counts measured with valgrind (icount.py).
@@ -66,6 +71,9 @@ ICOUNT = {
     "cpython": ["@BIN@", "-S", "@WL@/python/bench.py", "1"],
     "zstd-compress": ["@BIN@", "-q", "-3", "-c", "@RW@/corpus/eval.txt"],
     "zstd-decompress": ["@BIN@", "-q", "-d", "-c", "@RW@/corpus/eval.txt.zst"],
+    "jq": ["@BIN@", "-f", "@WL@/jq/bench.jq", "@RW@/corpus/data-icount.json"],
+    "libxml2": ["@BIN@", "--noout", "--xpath", "count(//item[@kind='b'])",
+                "@RW@/corpus/data-icount.xml"],
 }
 
 

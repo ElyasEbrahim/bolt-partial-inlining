@@ -184,7 +184,7 @@ def main():
     ap.add_argument("--only", nargs="*", help="subset of workloads")
     ap.add_argument("--variants",
                     default="orig,bolt,bolt-copy,bolt-pi,bolt-pi-avg,bolt-pi-nofe,"
-                            "bolt-inl,bolt-inl-pi")
+                            "bolt-inl,bolt-inl-pi,bolt-pi-skip")
     ap.add_argument("--rounds", type=int, default=15)
     ap.add_argument("--warmup", type=int, default=1)
     ap.add_argument("--stage-dir",

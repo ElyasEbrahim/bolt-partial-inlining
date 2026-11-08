@@ -1,0 +1,2959 @@
+BOLT-WARNING: specifying numeric value "1" for option -icf is deprecated
+BOLT-INFO: shared object or position-independent executable detected
+BOLT-INFO: Target architecture: aarch64
+BOLT-INFO: BOLT version: 0a0e65b2e8ff6043d85ab07c4d23ea18bf0b9b7d
+BOLT-INFO: first alloc address is 0x0
+BOLT-INFO: creating new program header table at address 0x200000, offset 0x200000
+BOLT-INFO: marking .fini_array as GNU_RELRO
+BOLT-INFO: marking .init_array as GNU_RELRO
+BOLT-INFO: marking .data.rel.ro as GNU_RELRO
+BOLT-INFO: marking .dynamic as GNU_RELRO
+BOLT-INFO: marking .got as GNU_RELRO
+BOLT-INFO: marking .relro_padding as GNU_RELRO
+BOLT-WARNING: debug info will be stripped from the binary. Use -update-debug-sections to keep it.
+BOLT-INFO: enabling relocation mode
+BOLT-INFO: enabling lite mode
+BOLT-INFO: setting size of function _init/1(*2) to 24 (was 0)
+BOLT-INFO: setting size of function _fini/1(*2) to 20 (was 0)
+BOLT-INFO: setting size of function __BOLT_PSEUDO_.plt to 32 (was 0)
+BOLT-INFO: setting size of function abort@PLT to 16 (was 0)
+BOLT-INFO: setting size of function __libc_start_main@PLT to 16 (was 0)
+BOLT-INFO: setting size of function __gmon_start__@PLT to 16 (was 0)
+BOLT-INFO: setting size of function __cxa_finalize@PLT to 16 (was 0)
+BOLT-INFO: setting size of function memset@PLT to 16 (was 0)
+BOLT-INFO: setting size of function strcmp@PLT to 16 (was 0)
+BOLT-INFO: setting size of function fprintf@PLT to 16 (was 0)
+BOLT-INFO: setting size of function getenv@PLT to 16 (was 0)
+BOLT-INFO: setting size of function fwrite@PLT to 16 (was 0)
+BOLT-INFO: setting size of function gettimeofday@PLT to 16 (was 0)
+BOLT-INFO: setting size of function stat64@PLT to 16 (was 0)
+BOLT-INFO: setting size of function open64@PLT to 16 (was 0)
+BOLT-INFO: setting size of function mmap64@PLT to 16 (was 0)
+BOLT-INFO: setting size of function munmap@PLT to 16 (was 0)
+BOLT-INFO: setting size of function close@PLT to 16 (was 0)
+BOLT-INFO: setting size of function strlen@PLT to 16 (was 0)
+BOLT-INFO: setting size of function memcpy@PLT to 16 (was 0)
+BOLT-INFO: setting size of function vfprintf@PLT to 16 (was 0)
+BOLT-INFO: setting size of function putchar@PLT to 16 (was 0)
+BOLT-INFO: setting size of function printf@PLT to 16 (was 0)
+BOLT-INFO: setting size of function fopen64@PLT to 16 (was 0)
+BOLT-INFO: setting size of function fclose@PLT to 16 (was 0)
+BOLT-INFO: setting size of function write@PLT to 16 (was 0)
+BOLT-INFO: setting size of function __errno_location@PLT to 16 (was 0)
+BOLT-INFO: setting size of function strtoul@PLT to 16 (was 0)
+BOLT-INFO: setting size of function fputc@PLT to 16 (was 0)
+BOLT-INFO: setting size of function fputs@PLT to 16 (was 0)
+BOLT-INFO: setting size of function fread@PLT to 16 (was 0)
+BOLT-INFO: setting size of function free@PLT to 16 (was 0)
+BOLT-INFO: setting size of function snprintf@PLT to 16 (was 0)
+BOLT-INFO: setting size of function fflush@PLT to 16 (was 0)
+BOLT-INFO: setting size of function fgets@PLT to 16 (was 0)
+BOLT-INFO: setting size of function malloc@PLT to 16 (was 0)
+BOLT-INFO: setting size of function pthread_key_create@PLT to 16 (was 0)
+BOLT-INFO: setting size of function pthread_getspecific@PLT to 16 (was 0)
+BOLT-INFO: setting size of function pthread_key_delete@PLT to 16 (was 0)
+BOLT-INFO: setting size of function calloc@PLT to 16 (was 0)
+BOLT-INFO: setting size of function pthread_setspecific@PLT to 16 (was 0)
+BOLT-INFO: setting size of function realloc@PLT to 16 (was 0)
+BOLT-INFO: setting size of function strncmp@PLT to 16 (was 0)
+BOLT-INFO: setting size of function memmove@PLT to 16 (was 0)
+BOLT-INFO: setting size of function strstr@PLT to 16 (was 0)
+BOLT-INFO: setting size of function memchr@PLT to 16 (was 0)
+BOLT-INFO: setting size of function __ctype_toupper_loc@PLT to 16 (was 0)
+BOLT-INFO: setting size of function iconv_open@PLT to 16 (was 0)
+BOLT-INFO: setting size of function iconv_close@PLT to 16 (was 0)
+BOLT-INFO: setting size of function iconv@PLT to 16 (was 0)
+BOLT-INFO: setting size of function pthread_mutex_init@PLT to 16 (was 0)
+BOLT-INFO: setting size of function pthread_mutex_destroy@PLT to 16 (was 0)
+BOLT-INFO: setting size of function pthread_mutex_lock@PLT to 16 (was 0)
+BOLT-INFO: setting size of function pthread_mutex_unlock@PLT to 16 (was 0)
+BOLT-INFO: setting size of function pthread_cond_init@PLT to 16 (was 0)
+BOLT-INFO: setting size of function pthread_cond_destroy@PLT to 16 (was 0)
+BOLT-INFO: setting size of function pthread_self@PLT to 16 (was 0)
+BOLT-INFO: setting size of function pthread_cond_wait@PLT to 16 (was 0)
+BOLT-INFO: setting size of function pthread_cond_signal@PLT to 16 (was 0)
+BOLT-INFO: setting size of function pthread_once@PLT to 16 (was 0)
+BOLT-INFO: setting size of function strcat@PLT to 16 (was 0)
+BOLT-INFO: setting size of function ferror@PLT to 16 (was 0)
+BOLT-INFO: setting size of function dup@PLT to 16 (was 0)
+BOLT-INFO: setting size of function read@PLT to 16 (was 0)
+BOLT-INFO: setting size of function strncpy@PLT to 16 (was 0)
+BOLT-INFO: setting size of function vsnprintf@PLT to 16 (was 0)
+BOLT-INFO: setting size of function strchr@PLT to 16 (was 0)
+BOLT-INFO: setting size of function __isoc99_sscanf@PLT to 16 (was 0)
+BOLT-INFO: setting size of function log10@PLT to 16 (was 0)
+BOLT-INFO: setting size of function pow@PLT to 16 (was 0)
+BOLT-INFO: setting size of function fmod@PLT to 16 (was 0)
+BOLT-INFO: setting size of function exit@PLT to 16 (was 0)
+BOLT-INFO: pre-processing profile using branch profile reader
+BOLT-INFO: skipping processing myFreeFunc/1(*2) per user request
+BOLT-INFO: skipping processing myMallocFunc/1(*2) per user request
+BOLT-INFO: skipping processing myReallocFunc/1(*2) per user request
+BOLT-INFO: skipping processing myStrdupFunc/1(*2) per user request
+BOLT-INFO: skipping processing endTimer/1(*2) per user request
+BOLT-INFO: skipping processing usage/1(*2) per user request
+BOLT-INFO: skipping processing parseInteger/1(*2) per user request
+BOLT-INFO: skipping processing showVersion/1(*2) per user request
+BOLT-INFO: skipping processing parsePath/1(*2) per user request
+BOLT-INFO: skipping processing processNode/1(*2) per user request
+BOLT-INFO: skipping processing internalSubsetDebug/1(*2) per user request
+BOLT-INFO: skipping processing isStandaloneDebug/1(*2) per user request
+BOLT-INFO: skipping processing hasInternalSubsetDebug/1(*2) per user request
+BOLT-INFO: skipping processing hasExternalSubsetDebug/1(*2) per user request
+BOLT-INFO: skipping processing resolveEntityDebug/1(*2) per user request
+BOLT-INFO: skipping processing getEntityDebug/1(*2) per user request
+BOLT-INFO: skipping processing entityDeclDebug/1(*2) per user request
+BOLT-INFO: skipping processing notationDeclDebug/1(*2) per user request
+BOLT-INFO: skipping processing attributeDeclDebug/1(*2) per user request
+BOLT-INFO: skipping processing elementDeclDebug/1(*2) per user request
+BOLT-INFO: skipping processing unparsedEntityDeclDebug/1(*2) per user request
+BOLT-INFO: skipping processing setDocumentLocatorDebug/1(*2) per user request
+BOLT-INFO: skipping processing startDocumentDebug/1(*2) per user request
+BOLT-INFO: skipping processing endDocumentDebug/1(*2) per user request
+BOLT-INFO: skipping processing startElementDebug/1(*2) per user request
+BOLT-INFO: skipping processing endElementDebug/1(*2) per user request
+BOLT-INFO: skipping processing referenceDebug/1(*2) per user request
+BOLT-INFO: skipping processing charactersDebug/1(*2) per user request
+BOLT-INFO: skipping processing ignorableWhitespaceDebug/1(*2) per user request
+BOLT-INFO: skipping processing processingInstructionDebug/1(*2) per user request
+BOLT-INFO: skipping processing commentDebug/1(*2) per user request
+BOLT-INFO: skipping processing warningDebug/1(*2) per user request
+BOLT-INFO: skipping processing errorDebug/1(*2) per user request
+BOLT-INFO: skipping processing fatalErrorDebug/1(*2) per user request
+BOLT-INFO: skipping processing getParameterEntityDebug/1(*2) per user request
+BOLT-INFO: skipping processing cdataBlockDebug/1(*2) per user request
+BOLT-INFO: skipping processing externalSubsetDebug/1(*2) per user request
+BOLT-INFO: skipping processing startElementNsDebug/1(*2) per user request
+BOLT-INFO: skipping processing endElementNsDebug/1(*2) per user request
+BOLT-INFO: skipping processing parseHtml/1(*2) per user request
+BOLT-INFO: skipping processing xmllintShell per user request
+BOLT-INFO: skipping processing xmllintShellPwd/1(*2) per user request
+BOLT-INFO: skipping processing xmllintShellDu/1(*2) per user request
+BOLT-INFO: skipping processing xmllintShellBase/1(*2) per user request
+BOLT-INFO: skipping processing xmllintShellSetContent/1(*2) per user request
+BOLT-INFO: skipping processing xmllintShellRegisterNamespace/1(*2) per user request
+BOLT-INFO: skipping processing xmllintShellRegisterRootNamespaces/1(*2) per user request
+BOLT-INFO: skipping processing xmllintShellDir/1(*2) per user request
+BOLT-INFO: skipping processing xmllintShellList/1(*2) per user request
+BOLT-INFO: skipping processing xmllintShellCat/1(*2) per user request
+BOLT-INFO: skipping processing xmllintShellPrintf/1(*2) per user request
+BOLT-INFO: skipping processing xmllintLsOneNode/1(*2) per user request
+BOLT-INFO: skipping processing xmlGenericErrorDefaultFunc/1(*2) per user request
+BOLT-INFO: skipping processing xmlSetGenericErrorFunc per user request
+BOLT-INFO: skipping processing xmlSetStructuredErrorFunc per user request
+BOLT-INFO: skipping processing xmlParserPrintFileInfo per user request
+BOLT-INFO: skipping processing xmlParserPrintFileContext per user request
+BOLT-INFO: skipping processing xmlFormatError per user request
+BOLT-INFO: skipping processing xmlRaiseMemoryError/1(*2) per user request
+BOLT-INFO: skipping processing xmlResetLastError per user request
+BOLT-INFO: skipping processing xmlVRaiseError/1(*2) per user request
+BOLT-INFO: skipping processing xmlCopyError per user request
+BOLT-INFO: skipping processing xmlParserError per user request
+BOLT-INFO: skipping processing xmlParserWarning per user request
+BOLT-INFO: skipping processing xmlParserValidityError per user request
+BOLT-INFO: skipping processing xmlParserValidityWarning per user request
+BOLT-INFO: skipping processing xmlRaiseError/1(*2) per user request
+BOLT-INFO: skipping processing xmlVFormatLegacyError/1(*2) per user request
+BOLT-INFO: skipping processing xmlGetLastError per user request
+BOLT-INFO: skipping processing xmlSetError/1(*2) per user request
+BOLT-INFO: skipping processing xmlErrString/1(*2) per user request
+BOLT-INFO: skipping processing xmlVSetError/1(*2) per user request
+BOLT-INFO: skipping processing xmlVPrintErrorMessage/1(*2) per user request
+BOLT-INFO: skipping processing xmlPrintErrorMessage/1(*2) per user request
+BOLT-INFO: skipping processing xmlAbort/1(*2) per user request
+BOLT-INFO: skipping processing xmlInitGlobals per user request
+BOLT-INFO: skipping processing xmlFreeGlobalState/1(*2) per user request
+BOLT-INFO: skipping processing xmlCleanupGlobals per user request
+BOLT-INFO: skipping processing __xmlLastError per user request
+BOLT-INFO: skipping processing __xmlLineNumbersDefaultValue per user request
+BOLT-INFO: skipping processing __xmlIndentTreeOutput per user request
+BOLT-INFO: skipping processing __xmlTreeIndentString per user request
+BOLT-INFO: skipping processing __xmlSaveNoEmptyTags per user request
+BOLT-INFO: skipping processing __xmlGenericError per user request
+BOLT-INFO: skipping processing __xmlGenericErrorContext per user request
+BOLT-INFO: skipping processing __xmlStructuredError per user request
+BOLT-INFO: skipping processing __xmlStructuredErrorContext per user request
+BOLT-INFO: skipping processing __xmlRegisterNodeDefaultValue per user request
+BOLT-INFO: skipping processing __xmlDeregisterNodeDefaultValue per user request
+BOLT-INFO: skipping processing __xmlOutputBufferCreateFilenameValue per user request
+BOLT-INFO: skipping processing xmlCheckThreadLocalStorage per user request
+BOLT-INFO: skipping processing xmlGetLastErrorInternal/1(*2) per user request
+BOLT-INFO: skipping processing xmlThrDefSetGenericErrorFunc per user request
+BOLT-INFO: skipping processing xmlThrDefSetStructuredErrorFunc per user request
+BOLT-INFO: skipping processing xmlThrDefDoValidityCheckingDefaultValue per user request
+BOLT-INFO: skipping processing xmlThrDefGetWarningsDefaultValue per user request
+BOLT-INFO: skipping processing xmlThrDefIndentTreeOutput per user request
+BOLT-INFO: skipping processing xmlThrDefTreeIndentString per user request
+BOLT-INFO: skipping processing xmlThrDefSaveNoEmptyTags per user request
+BOLT-INFO: skipping processing xmlThrDefKeepBlanksDefaultValue per user request
+BOLT-INFO: skipping processing xmlThrDefLineNumbersDefaultValue per user request
+BOLT-INFO: skipping processing xmlThrDefLoadExtDtdDefaultValue per user request
+BOLT-INFO: skipping processing xmlThrDefPedanticParserDefaultValue per user request
+BOLT-INFO: skipping processing xmlThrDefSubstituteEntitiesDefaultValue per user request
+BOLT-INFO: skipping processing xmlThrDefRegisterNodeDefault per user request
+BOLT-INFO: skipping processing xmlThrDefDeregisterNodeDefault per user request
+BOLT-INFO: skipping processing xmlThrDefParserInputBufferCreateFilenameDefault per user request
+BOLT-INFO: skipping processing xmlThrDefOutputBufferCreateFilenameDefault per user request
+BOLT-INFO: skipping processing xmlInitializeDict per user request
+BOLT-INFO: skipping processing xmlDictCleanup per user request
+BOLT-INFO: skipping processing xmlRandom/1(*2) per user request
+BOLT-INFO: skipping processing xmlDictCreateSub per user request
+BOLT-INFO: skipping processing xmlDictSize per user request
+BOLT-INFO: skipping processing xmlDictGetUsage per user request
+BOLT-INFO: skipping processing xmlDictComputeHash/1(*2) per user request
+BOLT-INFO: skipping processing xmlDictHashName/1(*2) per user request
+BOLT-INFO: skipping processing xmlDictExists per user request
+BOLT-INFO: skipping processing xmlDictQLookup per user request
+BOLT-INFO: skipping processing xmlDictHashQName/1(*2) per user request
+BOLT-INFO: skipping processing xmlDictFindEntry/1(*2) per user request
+BOLT-INFO: skipping processing xmlDictAddQString/1(*2) per user request
+BOLT-INFO: skipping processing xmlWarningMsg/1(*2) per user request
+BOLT-INFO: skipping processing xmlHasFeature per user request
+BOLT-INFO: skipping processing xmlAttrNormalizeSpace/1(*2) per user request
+BOLT-INFO: skipping processing xmlAttrNormalize/1(*2) per user request
+BOLT-INFO: skipping processing xmlCheckLanguageID per user request
+BOLT-INFO: skipping processing xmlParserNsLookupSax/1(*2) per user request
+BOLT-INFO: skipping processing xmlParserNsUpdateSax/1(*2) per user request
+BOLT-INFO: skipping processing xmlPopInput per user request
+BOLT-INFO: skipping processing xmlPushInput per user request
+BOLT-INFO: skipping processing xmlParseCharRef per user request
+BOLT-INFO: skipping processing xmlParserHandlePEReference per user request
+BOLT-INFO: skipping processing xmlParsePERefInternal/1(*2) per user request
+BOLT-INFO: skipping processing xmlStringLenDecodeEntities per user request
+BOLT-INFO: skipping processing xmlExpandEntitiesInAttValue/1(*2) per user request
+BOLT-INFO: skipping processing xmlStringDecodeEntities per user request
+BOLT-INFO: skipping processing xmlSplitQName per user request
+BOLT-INFO: skipping processing xmlParseName per user request
+BOLT-INFO: skipping processing xmlParseNmtoken per user request
+BOLT-INFO: skipping processing xmlParseEntityValue per user request
+BOLT-INFO: skipping processing xmlExpandPEsInEntityValue/1(*2) per user request
+BOLT-INFO: skipping processing xmlExpandEntityInAttValue/1(*2) per user request
+BOLT-INFO: skipping processing xmlParseAttValue per user request
+BOLT-INFO: skipping processing xmlParseSystemLiteral per user request
+BOLT-INFO: skipping processing xmlParsePubidLiteral per user request
+BOLT-INFO: skipping processing xmlParseCharData per user request
+BOLT-INFO: skipping processing xmlParseExternalID per user request
+BOLT-INFO: skipping processing xmlParseComment per user request
+BOLT-INFO: skipping processing xmlParseCommentComplex/1(*2) per user request
+BOLT-INFO: skipping processing xmlParsePITarget per user request
+BOLT-INFO: skipping processing xmlParsePI per user request
+BOLT-INFO: skipping processing xmlParseCatalogPI/1(*2) per user request
+BOLT-INFO: skipping processing xmlParseNotationDecl per user request
+BOLT-INFO: skipping processing xmlSkipBlankCharsPE/1(*2) per user request
+BOLT-INFO: skipping processing xmlParseEntityDecl per user request
+BOLT-INFO: skipping processing xmlParseDefaultDecl per user request
+BOLT-INFO: skipping processing xmlParseNotationType per user request
+BOLT-INFO: skipping processing xmlParseEnumerationType per user request
+BOLT-INFO: skipping processing xmlParseEnumeratedType per user request
+BOLT-INFO: skipping processing xmlParseAttributeType per user request
+BOLT-INFO: skipping processing xmlParseAttributeListDecl per user request
+BOLT-INFO: skipping processing xmlAddDefAttrs/1(*2) per user request
+BOLT-INFO: skipping processing xmlAddSpecialAttr/1(*2) per user request
+BOLT-INFO: skipping processing xmlParseElementMixedContentDecl per user request
+BOLT-INFO: skipping processing xmlSkipBlankCharsPEBalanced/1(*2) per user request
+BOLT-INFO: skipping processing xmlParseElementChildrenContentDecl per user request
+BOLT-INFO: skipping processing xmlParseElementChildrenContentDeclPriv/1(*2) per user request
+BOLT-INFO: skipping processing xmlParseElementContentDecl per user request
+BOLT-INFO: skipping processing xmlParseElementDecl per user request
+BOLT-INFO: skipping processing xmlParseMarkupDecl per user request
+BOLT-INFO: skipping processing xmlParseTextDecl per user request
+BOLT-INFO: skipping processing xmlParseExternalSubset per user request
+BOLT-INFO: skipping processing xmlPopPE/1(*2) per user request
+BOLT-INFO: skipping processing xmlParseConditionalSections/1(*2) per user request
+BOLT-INFO: skipping processing xmlParseReference per user request
+BOLT-INFO: skipping processing xmlParseEntityRefInternal/1(*2) per user request
+BOLT-INFO: skipping processing xmlLookupGeneralEntity/1(*2) per user request
+BOLT-INFO: skipping processing xmlCtxtParseEntity/1(*2) per user request
+BOLT-INFO: skipping processing xmlParserEntityCheck/1(*2) per user request
+BOLT-INFO: skipping processing xmlParseEntityRef per user request
+BOLT-INFO: skipping processing xmlParsePEReference per user request
+BOLT-INFO: skipping processing xmlParseDocTypeDecl per user request
+BOLT-INFO: skipping processing xmlParseAttribute per user request
+BOLT-INFO: skipping processing xmlParseStartTag per user request
+BOLT-INFO: skipping processing xmlParseEndTag per user request
+BOLT-INFO: skipping processing xmlParseEndTag1/1(*2) per user request
+BOLT-INFO: skipping processing xmlParseContent per user request
+BOLT-INFO: skipping processing xmlParseSDDecl per user request
+BOLT-INFO: skipping processing xmlCtxtGetVersion per user request
+BOLT-INFO: skipping processing xmlCtxtGetStandalone per user request
+BOLT-INFO: skipping processing xmlParseInternalSubset/1(*2) per user request
+BOLT-INFO: skipping processing xmlCleanSpecialAttr/1(*2) per user request
+BOLT-INFO: skipping processing xmlFinishDocument/1(*2) per user request
+BOLT-INFO: skipping processing xmlParseExtParsedEnt per user request
+BOLT-INFO: skipping processing xmlParseChunk per user request
+BOLT-INFO: skipping processing xmlCreatePushParserCtxt per user request
+BOLT-INFO: skipping processing xmlStopParser per user request
+BOLT-INFO: skipping processing xmlCreateIOParserCtxt per user request
+BOLT-INFO: skipping processing xmlCtxtParseDtd per user request
+BOLT-INFO: skipping processing xmlIOParseDTD per user request
+BOLT-INFO: skipping processing xmlCtxtSetOptions per user request
+BOLT-INFO: skipping processing xmlSAXParseDTD per user request
+BOLT-INFO: skipping processing xmlParseDTD per user request
+BOLT-INFO: skipping processing xmlParseCtxtExternalEntity per user request
+BOLT-INFO: skipping processing xmlCtxtParseContentInternal/1(*2) per user request
+BOLT-INFO: skipping processing xmlParseExternalEntity per user request
+BOLT-INFO: skipping processing xmlParseBalancedChunkMemory per user request
+BOLT-INFO: skipping processing xmlParseBalancedChunkMemoryRecover per user request
+BOLT-INFO: skipping processing xmlCtxtParseContent per user request
+BOLT-INFO: skipping processing xmlParserNsPush/1(*2) per user request
+BOLT-INFO: skipping processing xmlParserNsPop/1(*2) per user request
+BOLT-INFO: skipping processing xmlParseInNodeContext per user request
+BOLT-INFO: skipping processing xmlSAXParseEntity per user request
+BOLT-INFO: skipping processing xmlCreateFileParserCtxt per user request
+BOLT-INFO: skipping processing xmlParseEntity per user request
+BOLT-INFO: skipping processing xmlCreateEntityParserCtxt per user request
+BOLT-INFO: skipping processing xmlCreateURLParserCtxt per user request
+BOLT-INFO: skipping processing xmlSAXParseFileWithData per user request
+BOLT-INFO: skipping processing xmlSAXParseFile per user request
+BOLT-INFO: skipping processing xmlRecoverDoc per user request
+BOLT-INFO: skipping processing xmlSAXParseDoc per user request
+BOLT-INFO: skipping processing xmlParseFile per user request
+BOLT-INFO: skipping processing xmlRecoverFile per user request
+BOLT-INFO: skipping processing xmlSetupParserForBuffer per user request
+BOLT-INFO: skipping processing xmlSAXUserParseFile per user request
+BOLT-INFO: skipping processing xmlCreateMemoryParserCtxt per user request
+BOLT-INFO: skipping processing xmlSAXParseMemoryWithData per user request
+BOLT-INFO: skipping processing xmlSAXParseMemory per user request
+BOLT-INFO: skipping processing xmlParseMemory per user request
+BOLT-INFO: skipping processing xmlRecoverMemory per user request
+BOLT-INFO: skipping processing xmlSAXUserParseMemory per user request
+BOLT-INFO: skipping processing xmlCreateDocParserCtxt per user request
+BOLT-INFO: skipping processing xmlParseDoc per user request
+BOLT-INFO: skipping processing xmlCtxtResetPush per user request
+BOLT-INFO: skipping processing xmlCtxtGetOptions per user request
+BOLT-INFO: skipping processing xmlCtxtSetMaxAmplification per user request
+BOLT-INFO: skipping processing xmlReadDoc per user request
+BOLT-INFO: skipping processing xmlReadFile per user request
+BOLT-INFO: skipping processing xmlReadMemory per user request
+BOLT-INFO: skipping processing xmlReadFd per user request
+BOLT-INFO: skipping processing xmlReadIO per user request
+BOLT-INFO: skipping processing xmlCtxtReadDoc per user request
+BOLT-INFO: skipping processing xmlCtxtReadMemory per user request
+BOLT-INFO: skipping processing xmlCtxtReadFd per user request
+BOLT-INFO: skipping processing xmlCtxtReadIO per user request
+BOLT-INFO: skipping processing xmlUTF8MultibyteLen/1(*2) per user request
+BOLT-INFO: skipping processing xmlSBufAddString/1(*2) per user request
+BOLT-INFO: skipping processing xmlParseStringCharRef/1(*2) per user request
+BOLT-INFO: skipping processing xmlHandleUndeclaredEntity/1(*2) per user request
+BOLT-INFO: skipping processing xmlParseStringEntityRef/1(*2) per user request
+BOLT-INFO: skipping processing xmlCheckEntityInAttValue/1(*2) per user request
+BOLT-INFO: skipping processing xmlParseCharDataComplex/1(*2) per user request
+BOLT-INFO: skipping processing xmlCleanSpecialAttrCallback/1(*2) per user request
+BOLT-INFO: skipping processing xmlParseLookupString/1(*2) per user request
+BOLT-INFO: skipping processing xmlParseLookupGt/1(*2) per user request
+BOLT-INFO: skipping processing xmlCharInRange per user request
+BOLT-INFO: skipping processing xmlIsBaseChar per user request
+BOLT-INFO: skipping processing xmlIsBlank per user request
+BOLT-INFO: skipping processing xmlIsChar per user request
+BOLT-INFO: skipping processing xmlIsCombining per user request
+BOLT-INFO: skipping processing xmlIsDigit per user request
+BOLT-INFO: skipping processing xmlIsExtender per user request
+BOLT-INFO: skipping processing xmlIsIdeographic per user request
+BOLT-INFO: skipping processing xmlIsPubidChar per user request
+BOLT-INFO: skipping processing xmlBufCreateMem/1(*2) per user request
+BOLT-INFO: skipping processing xmlBufDetach/1(*2) per user request
+BOLT-INFO: skipping processing xmlBufEmpty/1(*2) per user request
+BOLT-INFO: skipping processing xmlBufContent per user request
+BOLT-INFO: skipping processing xmlBufUse per user request
+BOLT-INFO: skipping processing xmlBufAvail/1(*2) per user request
+BOLT-INFO: skipping processing xmlBufIsEmpty/1(*2) per user request
+BOLT-INFO: skipping processing xmlBufAdd/1(*2) per user request
+BOLT-INFO: skipping processing xmlBufCat/1(*2) per user request
+BOLT-INFO: skipping processing xmlBufFromBuffer/1(*2) per user request
+BOLT-INFO: skipping processing xmlBufBackToBuffer/1(*2) per user request
+BOLT-INFO: skipping processing xmlSetBufferAllocationScheme per user request
+BOLT-INFO: skipping processing xmlGetBufferAllocationScheme per user request
+BOLT-INFO: skipping processing xmlBufferCreate per user request
+BOLT-INFO: skipping processing xmlBufferCreateSize per user request
+BOLT-INFO: skipping processing xmlBufferDetach per user request
+BOLT-INFO: skipping processing xmlBufferCreateStatic per user request
+BOLT-INFO: skipping processing xmlBufferAdd per user request
+BOLT-INFO: skipping processing xmlBufferFree per user request
+BOLT-INFO: skipping processing xmlBufferSetAllocationScheme per user request
+BOLT-INFO: skipping processing xmlBufferEmpty per user request
+BOLT-INFO: skipping processing xmlBufferShrink per user request
+BOLT-INFO: skipping processing xmlBufferGrow per user request
+BOLT-INFO: skipping processing xmlBufferDump per user request
+BOLT-INFO: skipping processing xmlBufferContent per user request
+BOLT-INFO: skipping processing xmlBufferLength per user request
+BOLT-INFO: skipping processing xmlBufferResize per user request
+BOLT-INFO: skipping processing xmlBufferAddHead per user request
+BOLT-INFO: skipping processing xmlBufferCat per user request
+BOLT-INFO: skipping processing xmlBufferCCat per user request
+BOLT-INFO: skipping processing xmlBufferWriteCHAR per user request
+BOLT-INFO: skipping processing xmlBufferWriteChar per user request
+BOLT-INFO: skipping processing xmlBufferWriteQuotedString per user request
+BOLT-INFO: skipping processing xmlHashCreate per user request
+BOLT-INFO: skipping processing xmlHashCreateDict per user request
+BOLT-INFO: skipping processing xmlHashDefaultDeallocator per user request
+BOLT-INFO: skipping processing xmlHashAdd per user request
+BOLT-INFO: skipping processing xmlHashUpdateInternal/1(*2) per user request
+BOLT-INFO: skipping processing xmlHashAdd2 per user request
+BOLT-INFO: skipping processing xmlHashAdd3 per user request
+BOLT-INFO: skipping processing xmlHashAddEntry per user request
+BOLT-INFO: skipping processing xmlHashAddEntry2 per user request
+BOLT-INFO: skipping processing xmlHashAddEntry3 per user request
+BOLT-INFO: skipping processing xmlHashUpdateEntry per user request
+BOLT-INFO: skipping processing xmlHashUpdateEntry2 per user request
+BOLT-INFO: skipping processing xmlHashUpdateEntry3 per user request
+BOLT-INFO: skipping processing xmlHashLookup per user request
+BOLT-INFO: skipping processing xmlHashLookup3 per user request
+BOLT-INFO: skipping processing xmlHashLookup2 per user request
+BOLT-INFO: skipping processing xmlHashQLookup per user request
+BOLT-INFO: skipping processing xmlHashQLookup3 per user request
+BOLT-INFO: skipping processing xmlHashQLookup2 per user request
+BOLT-INFO: skipping processing xmlHashValue/1(*2) per user request
+BOLT-INFO: skipping processing xmlHashFindEntry/1(*2) per user request
+BOLT-INFO: skipping processing xmlHashScan per user request
+BOLT-INFO: skipping processing xmlHashScanFull per user request
+BOLT-INFO: skipping processing stubHashScannerFull/1(*2) per user request
+BOLT-INFO: skipping processing xmlHashScan3 per user request
+BOLT-INFO: skipping processing xmlHashScanFull3 per user request
+BOLT-INFO: skipping processing xmlHashCopySafe per user request
+BOLT-INFO: skipping processing xmlHashCopy per user request
+BOLT-INFO: skipping processing xmlHashSize per user request
+BOLT-INFO: skipping processing xmlHashRemoveEntry per user request
+BOLT-INFO: skipping processing xmlHashRemoveEntry3 per user request
+BOLT-INFO: skipping processing xmlHashRemoveEntry2 per user request
+BOLT-INFO: skipping processing xmlFreeEntity per user request
+BOLT-INFO: skipping processing xmlAddEntity per user request
+BOLT-INFO: skipping processing xmlGetPredefinedEntity per user request
+BOLT-INFO: skipping processing xmlCreateEntity/1(*2) per user request
+BOLT-INFO: skipping processing xmlAddDtdEntity per user request
+BOLT-INFO: skipping processing xmlAddDocEntity per user request
+BOLT-INFO: skipping processing xmlNewEntity per user request
+BOLT-INFO: skipping processing xmlGetParameterEntity per user request
+BOLT-INFO: skipping processing xmlGetDtdEntity per user request
+BOLT-INFO: skipping processing xmlGetDocEntity per user request
+BOLT-INFO: skipping processing xmlEncodeEntitiesReentrant per user request
+BOLT-INFO: skipping processing xmlEncodeSpecialChars per user request
+BOLT-INFO: skipping processing xmlCreateEntitiesTable per user request
+BOLT-INFO: skipping processing xmlFreeEntitiesTable per user request
+BOLT-INFO: skipping processing xmlFreeEntityWrapper/1(*2) per user request
+BOLT-INFO: skipping processing xmlCopyEntitiesTable per user request
+BOLT-INFO: skipping processing xmlCopyEntity/1(*2) per user request
+BOLT-INFO: skipping processing xmlDumpEntityDecl per user request
+BOLT-INFO: skipping processing xmlDumpEntitiesTable per user request
+BOLT-INFO: skipping processing xmlDumpEntityDeclScan/1(*2) per user request
+BOLT-INFO: skipping processing xmlDetectCharEncoding per user request
+BOLT-INFO: skipping processing xmlCleanupEncodingAliases per user request
+BOLT-INFO: skipping processing xmlGetEncodingAlias per user request
+BOLT-INFO: skipping processing xmlAddEncodingAlias per user request
+BOLT-INFO: skipping processing xmlDelEncodingAlias per user request
+BOLT-INFO: skipping processing xmlParseCharEncoding per user request
+BOLT-INFO: skipping processing xmlGetCharEncodingName per user request
+BOLT-INFO: skipping processing xmlNewCharEncodingHandler per user request
+BOLT-INFO: skipping processing xmlRegisterCharEncodingHandler per user request
+BOLT-INFO: skipping processing xmlCharEncNewCustomHandler per user request
+BOLT-INFO: skipping processing xmlInitCharEncodingHandlers per user request
+BOLT-INFO: skipping processing xmlLookupCharEncodingHandler per user request
+BOLT-INFO: skipping processing xmlFindExtraHandler/1(*2) per user request
+BOLT-INFO: skipping processing xmlGetCharEncodingHandler per user request
+BOLT-INFO: skipping processing xmlOpenCharEncodingHandler per user request
+BOLT-INFO: skipping processing xmlFindCharEncodingHandler per user request
+BOLT-INFO: skipping processing xmlEncInputChunk/1(*2) per user request
+BOLT-INFO: skipping processing xmlCharEncFirstLine per user request
+BOLT-INFO: skipping processing xmlCharEncInFunc per user request
+BOLT-INFO: skipping processing xmlCharEncInput/1(*2) per user request
+BOLT-INFO: skipping processing xmlCharEncOutput/1(*2) per user request
+BOLT-INFO: skipping processing xmlCharEncOutFunc per user request
+BOLT-INFO: skipping processing xmlCharEncCloseFunc per user request
+BOLT-INFO: skipping processing xmlByteConsumed per user request
+BOLT-INFO: skipping processing xmlIsolat1ToUTF8 per user request
+BOLT-INFO: skipping processing latin1ToUTF8/1(*2) per user request
+BOLT-INFO: skipping processing xmlUTF8ToIsolat1 per user request
+BOLT-INFO: skipping processing UTF8ToLatin1/1(*2) per user request
+BOLT-INFO: skipping processing UTF8ToUTF8/1(*2) per user request
+BOLT-INFO: skipping processing UTF16LEToUTF8/1(*2) per user request
+BOLT-INFO: skipping processing UTF8ToUTF16LE/1(*2) per user request
+BOLT-INFO: skipping processing UTF16BEToUTF8/1(*2) per user request
+BOLT-INFO: skipping processing UTF8ToUTF16BE/1(*2) per user request
+BOLT-INFO: skipping processing asciiToAscii/1(*2) per user request
+BOLT-INFO: skipping processing UTF8ToUTF16/1(*2) per user request
+BOLT-INFO: skipping processing UTF8ToHtmlWrapper/1(*2) per user request
+BOLT-INFO: skipping processing EightBitToUtf8/1(*2) per user request
+BOLT-INFO: skipping processing Utf8ToEightBit/1(*2) per user request
+BOLT-INFO: skipping processing xmlIconvConvert/1(*2) per user request
+BOLT-INFO: skipping processing xmlIconvFree/1(*2) per user request
+BOLT-INFO: skipping processing xmlCtxtSetErrorHandler per user request
+BOLT-INFO: skipping processing xmlCtxtGetLastError per user request
+BOLT-INFO: skipping processing xmlCtxtResetLastError per user request
+BOLT-INFO: skipping processing xmlCtxtErrMemory per user request
+BOLT-INFO: skipping processing xmlCtxtErrIO/1(*2) per user request
+BOLT-INFO: skipping processing xmlCtxtErr/1(*2) per user request
+BOLT-INFO: skipping processing xmlCtxtIsCatastrophicError/1(*2) per user request
+BOLT-INFO: skipping processing xmlCtxtVErr/1(*2) per user request
+BOLT-INFO: skipping processing xmlFatalErr/1(*2) per user request
+BOLT-INFO: skipping processing xmlParserInputGetWindow/1(*2) per user request
+BOLT-INFO: skipping processing xmlIsLetter per user request
+BOLT-INFO: skipping processing xmlParserInputRead per user request
+BOLT-INFO: skipping processing xmlParserInputGrow per user request
+BOLT-INFO: skipping processing xmlParserInputShrink per user request
+BOLT-INFO: skipping processing xmlStringCurrentChar per user request
+BOLT-INFO: skipping processing xmlCopyCharMultiByte per user request
+BOLT-INFO: skipping processing xmlCopyChar per user request
+BOLT-INFO: skipping processing xmlCtxtSetCharEncConvImpl per user request
+BOLT-INFO: skipping processing xmlSwitchEncoding per user request
+BOLT-INFO: skipping processing xmlSwitchToEncoding per user request
+BOLT-INFO: skipping processing xmlSwitchEncodingName per user request
+BOLT-INFO: skipping processing xmlSwitchInputEncodingName/1(*2) per user request
+BOLT-INFO: skipping processing xmlSwitchInputEncoding per user request
+BOLT-INFO: skipping processing xmlCtxtGetDeclaredEncoding per user request
+BOLT-INFO: skipping processing xmlNewInputStream per user request
+BOLT-INFO: skipping processing xmlNewInputFromMemory per user request
+BOLT-INFO: skipping processing xmlCtxtNewInputFromMemory/1(*2) per user request
+BOLT-INFO: skipping processing xmlNewInputFromString per user request
+BOLT-INFO: skipping processing xmlCtxtNewInputFromString/1(*2) per user request
+BOLT-INFO: skipping processing xmlNewInputFromFd per user request
+BOLT-INFO: skipping processing xmlCtxtNewInputFromFd/1(*2) per user request
+BOLT-INFO: skipping processing xmlNewInputFromIO per user request
+BOLT-INFO: skipping processing xmlCtxtNewInputFromIO/1(*2) per user request
+BOLT-INFO: skipping processing xmlNewPushInput/1(*2) per user request
+BOLT-INFO: skipping processing xmlNewIOInputStream per user request
+BOLT-INFO: skipping processing xmlNewEntityInputStream per user request
+BOLT-INFO: skipping processing xmlNewStringInputStream per user request
+BOLT-INFO: skipping processing xmlCheckHTTPInput per user request
+BOLT-INFO: skipping processing xmlNewInputFromFile per user request
+BOLT-INFO: skipping processing xmlNoNetExternalEntityLoader per user request
+BOLT-INFO: skipping processing xmlDefaultExternalEntityLoader/1(*2) per user request
+BOLT-INFO: skipping processing xmlSetExternalEntityLoader per user request
+BOLT-INFO: skipping processing xmlGetExternalEntityLoader per user request
+BOLT-INFO: skipping processing xmlLoadExternalEntity per user request
+BOLT-INFO: skipping processing xmlInitParserCtxt per user request
+BOLT-INFO: skipping processing xmlNewSAXParserCtxt per user request
+BOLT-INFO: skipping processing xmlCtxtGetPrivate per user request
+BOLT-INFO: skipping processing xmlCtxtSetPrivate per user request
+BOLT-INFO: skipping processing xmlCtxtGetCatalogs per user request
+BOLT-INFO: skipping processing xmlCtxtSetCatalogs per user request
+BOLT-INFO: skipping processing xmlCtxtGetDict per user request
+BOLT-INFO: skipping processing xmlCtxtSetDict per user request
+BOLT-INFO: skipping processing xmlCtxtGetSaxHandler per user request
+BOLT-INFO: skipping processing xmlCtxtSetSaxHandler per user request
+BOLT-INFO: skipping processing xmlCtxtIsHtml per user request
+BOLT-INFO: skipping processing xmlCtxtIsStopped per user request
+BOLT-INFO: skipping processing xmlCtxtIsInSubset per user request
+BOLT-INFO: skipping processing xmlCtxtGetValidCtxt per user request
+BOLT-INFO: skipping processing xmlCtxtGetUserData per user request
+BOLT-INFO: skipping processing xmlCtxtGetNode per user request
+BOLT-INFO: skipping processing xmlCtxtGetDocTypeDecl per user request
+BOLT-INFO: skipping processing xmlCtxtGetInputPosition per user request
+BOLT-INFO: skipping processing xmlCtxtGetInputWindow per user request
+BOLT-INFO: skipping processing xmlClearParserCtxt per user request
+BOLT-INFO: skipping processing xmlParserFindNodeInfo per user request
+BOLT-INFO: skipping processing xmlParserFindNodeInfoIndex per user request
+BOLT-INFO: skipping processing xmlClearNodeInfoSeq per user request
+BOLT-INFO: skipping processing xmlParserAddNodeInfo per user request
+BOLT-INFO: skipping processing xmlPedanticParserDefault per user request
+BOLT-INFO: skipping processing xmlLineNumbersDefault per user request
+BOLT-INFO: skipping processing xmlSubstituteEntitiesDefault per user request
+BOLT-INFO: skipping processing xmlKeepBlanksDefault per user request
+BOLT-INFO: skipping processing xmlSAX2GetPublicId per user request
+BOLT-INFO: skipping processing xmlSAX2GetSystemId per user request
+BOLT-INFO: skipping processing xmlSAX2GetLineNumber per user request
+BOLT-INFO: skipping processing xmlSAX2GetColumnNumber per user request
+BOLT-INFO: skipping processing xmlSAX2IsStandalone per user request
+BOLT-INFO: skipping processing xmlSAX2HasInternalSubset per user request
+BOLT-INFO: skipping processing xmlSAX2HasExternalSubset per user request
+BOLT-INFO: skipping processing xmlSAX2InternalSubset per user request
+BOLT-INFO: skipping processing xmlSAX2ExternalSubset per user request
+BOLT-INFO: skipping processing xmlSAX2ResolveEntity per user request
+BOLT-INFO: skipping processing xmlSAX2GetEntity per user request
+BOLT-INFO: skipping processing xmlSAX2GetParameterEntity per user request
+BOLT-INFO: skipping processing xmlSAX2EntityDecl per user request
+BOLT-INFO: skipping processing xmlSAX2AttributeDecl per user request
+BOLT-INFO: skipping processing xmlSAX2ElementDecl per user request
+BOLT-INFO: skipping processing xmlSAX2NotationDecl per user request
+BOLT-INFO: skipping processing xmlSAX2UnparsedEntityDecl per user request
+BOLT-INFO: skipping processing xmlSAX2StartElement per user request
+BOLT-INFO: skipping processing xmlSAX2EndElement per user request
+BOLT-INFO: skipping processing xmlSAX2Reference per user request
+BOLT-INFO: skipping processing xmlSAX2IgnorableWhitespace per user request
+BOLT-INFO: skipping processing xmlSAX2ProcessingInstruction per user request
+BOLT-INFO: skipping processing xmlSAX2Comment per user request
+BOLT-INFO: skipping processing xmlSAXDefaultVersion per user request
+BOLT-INFO: skipping processing xmlSAX2InitDefaultSAXHandler per user request
+BOLT-INFO: skipping processing xmlDefaultSAXHandlerInit per user request
+BOLT-INFO: skipping processing xmlSAX2InitHtmlDefaultSAXHandler per user request
+BOLT-INFO: skipping processing htmlDefaultSAXHandlerInit per user request
+BOLT-INFO: skipping processing xmlSAX1Attribute/1(*2) per user request
+BOLT-INFO: skipping processing xmlNewMutex per user request
+BOLT-INFO: skipping processing xmlFreeMutex per user request
+BOLT-INFO: skipping processing xmlNewRMutex per user request
+BOLT-INFO: skipping processing xmlFreeRMutex per user request
+BOLT-INFO: skipping processing xmlLockLibrary per user request
+BOLT-INFO: skipping processing xmlUnlockLibrary per user request
+BOLT-INFO: skipping processing xmlInitThreads per user request
+BOLT-INFO: skipping processing xmlCleanupThreads per user request
+BOLT-INFO: skipping processing xmlBuildQName per user request
+BOLT-INFO: skipping processing xmlSplitQName2 per user request
+BOLT-INFO: skipping processing xmlSplitQName3 per user request
+BOLT-INFO: skipping processing xmlSplitQName4/1(*2) per user request
+BOLT-INFO: skipping processing xmlValidateNCName per user request
+BOLT-INFO: skipping processing xmlValidateQName per user request
+BOLT-INFO: skipping processing xmlValidateName per user request
+BOLT-INFO: skipping processing xmlValidateNMToken per user request
+BOLT-INFO: skipping processing xmlNewNs per user request
+BOLT-INFO: skipping processing xmlFreeNs per user request
+BOLT-INFO: skipping processing xmlSetNs per user request
+BOLT-INFO: skipping processing xmlFreeNsList per user request
+BOLT-INFO: skipping processing xmlNewDtd per user request
+BOLT-INFO: skipping processing xmlFreeDtd per user request
+BOLT-INFO: skipping processing xmlGetIntSubset per user request
+BOLT-INFO: skipping processing xmlCreateIntSubset per user request
+BOLT-INFO: skipping processing xmlUnlinkNodeInternal/1(*2) per user request
+BOLT-INFO: skipping processing xmlFreeNode per user request
+BOLT-INFO: skipping processing xmlNodeParseAttValue/1(*2) per user request
+BOLT-INFO: skipping processing xmlNewDocText per user request
+BOLT-INFO: skipping processing xmlNewEntityRef/1(*2) per user request
+BOLT-INFO: skipping processing xmlStringLenGetNodeList per user request
+BOLT-INFO: skipping processing xmlStringGetNodeList per user request
+BOLT-INFO: skipping processing xmlNodeListGetStringInternal/1(*2) per user request
+BOLT-INFO: skipping processing xmlBufGetNodeContent per user request
+BOLT-INFO: skipping processing xmlNodeListGetString per user request
+BOLT-INFO: skipping processing xmlNodeListGetRawString per user request
+BOLT-INFO: skipping processing xmlNewProp per user request
+BOLT-INFO: skipping processing xmlNewPropInternal/1(*2) per user request
+BOLT-INFO: skipping processing xmlNewNsProp per user request
+BOLT-INFO: skipping processing xmlNewNsPropEatName per user request
+BOLT-INFO: skipping processing xmlNewDocProp per user request
+BOLT-INFO: skipping processing xmlFreePropList per user request
+BOLT-INFO: skipping processing xmlRemoveProp per user request
+BOLT-INFO: skipping processing xmlNewDocPI per user request
+BOLT-INFO: skipping processing xmlNewPI per user request
+BOLT-INFO: skipping processing xmlNewNode per user request
+BOLT-INFO: skipping processing xmlNewDocNode per user request
+BOLT-INFO: skipping processing xmlNewNodeEatName per user request
+BOLT-INFO: skipping processing xmlNewDocRawNode per user request
+BOLT-INFO: skipping processing xmlNewDocFragment per user request
+BOLT-INFO: skipping processing xmlNewText per user request
+BOLT-INFO: skipping processing xmlNewTextChild per user request
+BOLT-INFO: skipping processing xmlNewCharRef per user request
+BOLT-INFO: skipping processing xmlNewReference per user request
+BOLT-INFO: skipping processing xmlNewTextLen per user request
+BOLT-INFO: skipping processing xmlNewDocTextLen per user request
+BOLT-INFO: skipping processing xmlNewComment per user request
+BOLT-INFO: skipping processing xmlNewDocComment per user request
+BOLT-INFO: skipping processing xmlSetTreeDoc per user request
+BOLT-INFO: skipping processing xmlSetListDoc per user request
+BOLT-INFO: skipping processing xmlNodeSetDoc/1(*2) per user request
+BOLT-INFO: skipping processing xmlNewChild per user request
+BOLT-INFO: skipping processing xmlAddNextSibling per user request
+BOLT-INFO: skipping processing xmlInsertNode/1(*2) per user request
+BOLT-INFO: skipping processing xmlAddPrevSibling per user request
+BOLT-INFO: skipping processing xmlAddSibling per user request
+BOLT-INFO: skipping processing xmlAddChildList per user request
+BOLT-INFO: skipping processing xmlTextAddContent/1(*2) per user request
+BOLT-INFO: skipping processing xmlAddChild per user request
+BOLT-INFO: skipping processing xmlGetLastChild per user request
+BOLT-INFO: skipping processing xmlChildElementCount per user request
+BOLT-INFO: skipping processing xmlFirstElementChild per user request
+BOLT-INFO: skipping processing xmlLastElementChild per user request
+BOLT-INFO: skipping processing xmlPreviousElementSibling per user request
+BOLT-INFO: skipping processing xmlNextElementSibling per user request
+BOLT-INFO: skipping processing xmlUnlinkNode per user request
+BOLT-INFO: skipping processing xmlRemoveEntity/1(*2) per user request
+BOLT-INFO: skipping processing xmlReplaceNode per user request
+BOLT-INFO: skipping processing xmlCopyNamespace per user request
+BOLT-INFO: skipping processing xmlCopyNamespaceList per user request
+BOLT-INFO: skipping processing xmlCopyProp per user request
+BOLT-INFO: skipping processing xmlCopyPropInternal/1(*2) per user request
+BOLT-INFO: skipping processing xmlCopyPropList per user request
+BOLT-INFO: skipping processing xmlStaticCopyNode/1(*2) per user request
+BOLT-INFO: skipping processing xmlCopyDtd per user request
+BOLT-INFO: skipping processing xmlCopyDoc per user request
+BOLT-INFO: skipping processing xmlSearchNsSafe/1(*2) per user request
+BOLT-INFO: skipping processing xmlNewReconciledNs/1(*2) per user request
+BOLT-INFO: skipping processing xmlStaticCopyNodeList/1(*2) per user request
+BOLT-INFO: skipping processing xmlCopyNode per user request
+BOLT-INFO: skipping processing xmlDocCopyNode per user request
+BOLT-INFO: skipping processing xmlDocCopyNodeList per user request
+BOLT-INFO: skipping processing xmlCopyNodeList per user request
+BOLT-INFO: skipping processing xmlGetLineNo per user request
+BOLT-INFO: skipping processing xmlGetLineNoInternal/1(*2) per user request
+BOLT-INFO: skipping processing xmlGetNodePath per user request
+BOLT-INFO: skipping processing xmlDocSetRootElement per user request
+BOLT-INFO: skipping processing xmlNodeSetLang per user request
+BOLT-INFO: skipping processing xmlSearchNsByHrefSafe/1(*2) per user request
+BOLT-INFO: skipping processing xmlSetNsProp per user request
+BOLT-INFO: skipping processing xmlNodeGetLang per user request
+BOLT-INFO: skipping processing xmlNodeGetAttrValue per user request
+BOLT-INFO: skipping processing xmlNodeSetSpacePreserve per user request
+BOLT-INFO: skipping processing xmlNodeGetSpacePreserve per user request
+BOLT-INFO: skipping processing xmlNodeSetName per user request
+BOLT-INFO: skipping processing xmlNodeSetBase per user request
+BOLT-INFO: skipping processing xmlNodeGetBaseSafe per user request
+BOLT-INFO: skipping processing xmlNodeGetBase per user request
+BOLT-INFO: skipping processing xmlNodeBufGetContent per user request
+BOLT-INFO: skipping processing xmlBufGetChildContent/1(*2) per user request
+BOLT-INFO: skipping processing xmlNodeSetContent per user request
+BOLT-INFO: skipping processing xmlNodeSetContentInternal/1(*2) per user request
+BOLT-INFO: skipping processing xmlNodeSetContentLen per user request
+BOLT-INFO: skipping processing xmlNodeAddContentLen per user request
+BOLT-INFO: skipping processing xmlNodeAddContent per user request
+BOLT-INFO: skipping processing xmlTextMerge per user request
+BOLT-INFO: skipping processing xmlGetNsListSafe per user request
+BOLT-INFO: skipping processing xmlGetNsList per user request
+BOLT-INFO: skipping processing xmlTreeEnsureXMLDecl/1(*2) per user request
+BOLT-INFO: skipping processing xmlNewXmlNs/1(*2) per user request
+BOLT-INFO: skipping processing xmlSearchNs per user request
+BOLT-INFO: skipping processing xmlSearchNsByHref per user request
+BOLT-INFO: skipping processing xmlReconciliateNs per user request
+BOLT-INFO: skipping processing xmlHasProp per user request
+BOLT-INFO: skipping processing xmlHasNsProp per user request
+BOLT-INFO: skipping processing xmlGetPropNodeInternal/1(*2) per user request
+BOLT-INFO: skipping processing xmlGetProp per user request
+BOLT-INFO: skipping processing xmlGetNoNsProp per user request
+BOLT-INFO: skipping processing xmlGetNsProp per user request
+BOLT-INFO: skipping processing xmlUnsetProp per user request
+BOLT-INFO: skipping processing xmlUnsetNsProp per user request
+BOLT-INFO: skipping processing xmlSetProp per user request
+BOLT-INFO: skipping processing xmlNodeIsText per user request
+BOLT-INFO: skipping processing xmlIsBlankNode per user request
+BOLT-INFO: skipping processing xmlTextConcat per user request
+BOLT-INFO: skipping processing xmlGetDocCompressMode per user request
+BOLT-INFO: skipping processing xmlSetDocCompressMode per user request
+BOLT-INFO: skipping processing xmlGetCompressMode per user request
+BOLT-INFO: skipping processing xmlSetCompressMode per user request
+BOLT-INFO: skipping processing xmlDOMWrapNewCtxt per user request
+BOLT-INFO: skipping processing xmlDOMWrapFreeCtxt per user request
+BOLT-INFO: skipping processing xmlDOMWrapRemoveNode per user request
+BOLT-INFO: skipping processing xmlDOMWrapStoreNs/1(*2) per user request
+BOLT-INFO: skipping processing xmlDOMWrapReconcileNamespaces per user request
+BOLT-INFO: skipping processing xmlDOMWrapNSNormGatherInScopeNs/1(*2) per user request
+BOLT-INFO: skipping processing xmlDOMWrapNsMapAddItem/1(*2) per user request
+BOLT-INFO: skipping processing xmlDOMWrapNSNormAcquireNormalizedNs/1(*2) per user request
+BOLT-INFO: skipping processing xmlDOMWrapCloneNode per user request
+BOLT-INFO: skipping processing xmlDOMWrapAdoptNode per user request
+BOLT-INFO: skipping processing xmlDOMWrapAdoptBranch/1(*2) per user request
+BOLT-INFO: skipping processing xmlDOMWrapAdoptAttr/1(*2) per user request
+BOLT-INFO: skipping processing xmlIsXHTML per user request
+BOLT-INFO: skipping processing xmlRegisterNodeDefault per user request
+BOLT-INFO: skipping processing xmlDeregisterNodeDefault per user request
+BOLT-INFO: skipping processing xmlTextSetContent/1(*2) per user request
+BOLT-INFO: skipping processing xmlDOMWrapNSNormDeclareNsForced/1(*2) per user request
+BOLT-INFO: skipping processing xmlParseURISafe per user request
+BOLT-INFO: skipping processing xmlCreateURI per user request
+BOLT-INFO: skipping processing xmlParse3986URIReference/1(*2) per user request
+BOLT-INFO: skipping processing xmlFreeURI per user request
+BOLT-INFO: skipping processing xmlParseURI per user request
+BOLT-INFO: skipping processing xmlParseURIReference per user request
+BOLT-INFO: skipping processing xmlParseURIRaw per user request
+BOLT-INFO: skipping processing xmlSaveUri per user request
+BOLT-INFO: skipping processing xmlSaveUriRealloc/1(*2) per user request
+BOLT-INFO: skipping processing xmlPrintURI per user request
+BOLT-INFO: skipping processing xmlNormalizeURIPath per user request
+BOLT-INFO: skipping processing xmlNormalizePath/1(*2) per user request
+BOLT-INFO: skipping processing xmlURIUnescapeString per user request
+BOLT-INFO: skipping processing xmlURIEscapeStr per user request
+BOLT-INFO: skipping processing xmlURIEscape per user request
+BOLT-INFO: skipping processing xmlBuildURISafe per user request
+BOLT-INFO: skipping processing xmlBuildURI per user request
+BOLT-INFO: skipping processing xmlBuildRelativeURISafe per user request
+BOLT-INFO: skipping processing xmlParseUriOrPath/1(*2) per user request
+BOLT-INFO: skipping processing xmlBuildRelativeURI per user request
+BOLT-INFO: skipping processing xmlCanonicPath per user request
+BOLT-INFO: skipping processing xmlCleanURI/1(*2) per user request
+BOLT-INFO: skipping processing xmlParse3986Query/1(*2) per user request
+BOLT-INFO: skipping processing xmlParse3986Fragment/1(*2) per user request
+BOLT-INFO: skipping processing xmlParse3986Authority/1(*2) per user request
+BOLT-INFO: skipping processing xmlParse3986PathAbEmpty/1(*2) per user request
+BOLT-INFO: skipping processing xmlParse3986PathAbsolute/1(*2) per user request
+BOLT-INFO: skipping processing xmlIsUnreserved/1(*2) per user request
+BOLT-INFO: skipping processing xmlParse3986DecOctet/1(*2) per user request
+BOLT-INFO: skipping processing xmlParse3986Segment/1(*2) per user request
+BOLT-INFO: skipping processing xmlValidBuildContentModel per user request
+BOLT-INFO: skipping processing xmlVErrMemory/1(*2) per user request
+BOLT-INFO: skipping processing xmlValidBuildAContentModel/1(*2) per user request
+BOLT-INFO: skipping processing xmlSnprintfElementContent per user request
+BOLT-INFO: skipping processing xmlNewValidCtxt per user request
+BOLT-INFO: skipping processing xmlFreeValidCtxt per user request
+BOLT-INFO: skipping processing xmlNewDocElementContent per user request
+BOLT-INFO: skipping processing xmlFreeDocElementContent per user request
+BOLT-INFO: skipping processing xmlNewElementContent per user request
+BOLT-INFO: skipping processing xmlCopyDocElementContent per user request
+BOLT-INFO: skipping processing xmlFreeElementContent per user request
+BOLT-INFO: skipping processing xmlCopyElementContent per user request
+BOLT-INFO: skipping processing xmlSprintfElementContent per user request
+BOLT-INFO: skipping processing xmlAddElementDecl per user request
+BOLT-INFO: skipping processing xmlFreeElement/1(*2) per user request
+BOLT-INFO: skipping processing xmlFreeElementTable per user request
+BOLT-INFO: skipping processing xmlFreeElementTableEntry/1(*2) per user request
+BOLT-INFO: skipping processing xmlCopyElementTable per user request
+BOLT-INFO: skipping processing xmlCopyElement/1(*2) per user request
+BOLT-INFO: skipping processing xmlDumpElementDecl per user request
+BOLT-INFO: skipping processing xmlDumpElementTable per user request
+BOLT-INFO: skipping processing xmlDumpElementDeclScan/1(*2) per user request
+BOLT-INFO: skipping processing xmlCreateEnumeration per user request
+BOLT-INFO: skipping processing xmlFreeEnumeration per user request
+BOLT-INFO: skipping processing xmlCopyEnumeration per user request
+BOLT-INFO: skipping processing xmlAddAttributeDecl per user request
+BOLT-INFO: skipping processing xmlValidateAttributeValueInternal/1(*2) per user request
+BOLT-INFO: skipping processing xmlFreeAttribute/1(*2) per user request
+BOLT-INFO: skipping processing xmlFreeAttributeTable per user request
+BOLT-INFO: skipping processing xmlFreeAttributeTableEntry/1(*2) per user request
+BOLT-INFO: skipping processing xmlCopyAttributeTable per user request
+BOLT-INFO: skipping processing xmlCopyAttribute/1(*2) per user request
+BOLT-INFO: skipping processing xmlDumpAttributeDecl per user request
+BOLT-INFO: skipping processing xmlDumpAttributeTable per user request
+BOLT-INFO: skipping processing xmlDumpAttributeDeclScan/1(*2) per user request
+BOLT-INFO: skipping processing xmlAddNotationDecl per user request
+BOLT-INFO: skipping processing xmlFreeNotation/1(*2) per user request
+BOLT-INFO: skipping processing xmlFreeNotationTable per user request
+BOLT-INFO: skipping processing xmlFreeNotationTableEntry/1(*2) per user request
+BOLT-INFO: skipping processing xmlCopyNotationTable per user request
+BOLT-INFO: skipping processing xmlCopyNotation/1(*2) per user request
+BOLT-INFO: skipping processing xmlDumpNotationDecl per user request
+BOLT-INFO: skipping processing xmlDumpNotationTable per user request
+BOLT-INFO: skipping processing xmlAddIDSafe per user request
+BOLT-INFO: skipping processing xmlAddIDInternal/1(*2) per user request
+BOLT-INFO: skipping processing xmlAddID per user request
+BOLT-INFO: skipping processing xmlFreeIDTable per user request
+BOLT-INFO: skipping processing xmlFreeIDTableEntry/1(*2) per user request
+BOLT-INFO: skipping processing xmlGetDtdQAttrDesc per user request
+BOLT-INFO: skipping processing xmlRemoveID per user request
+BOLT-INFO: skipping processing xmlGetID per user request
+BOLT-INFO: skipping processing xmlAddRef per user request
+BOLT-INFO: skipping processing xmlFreeRef/1(*2) per user request
+BOLT-INFO: skipping processing xmlDummyCompare/1(*2) per user request
+BOLT-INFO: skipping processing xmlFreeRefTable per user request
+BOLT-INFO: skipping processing xmlFreeRefTableEntry/1(*2) per user request
+BOLT-INFO: skipping processing xmlRemoveRef per user request
+BOLT-INFO: skipping processing xmlWalkRemoveRef/1(*2) per user request
+BOLT-INFO: skipping processing xmlGetRefs per user request
+BOLT-INFO: skipping processing xmlGetDtdElementDesc per user request
+BOLT-INFO: skipping processing xmlGetDtdQElementDesc per user request
+BOLT-INFO: skipping processing xmlGetDtdAttrDesc per user request
+BOLT-INFO: skipping processing xmlGetDtdNotationDesc per user request
+BOLT-INFO: skipping processing xmlValidateNotationUse per user request
+BOLT-INFO: skipping processing xmlIsMixedElement per user request
+BOLT-INFO: skipping processing xmlValidateNameValue per user request
+BOLT-INFO: skipping processing xmlValidateNamesValue per user request
+BOLT-INFO: skipping processing xmlValidateNmtokenValue per user request
+BOLT-INFO: skipping processing xmlValidateNmtokensValue per user request
+BOLT-INFO: skipping processing xmlValidateNotationDecl per user request
+BOLT-INFO: skipping processing xmlValidateAttributeValue per user request
+BOLT-INFO: skipping processing xmlValidCtxtNormalizeAttributeValue per user request
+BOLT-INFO: skipping processing xmlValidNormalizeAttributeValue per user request
+BOLT-INFO: skipping processing xmlValidateAttributeDecl per user request
+BOLT-INFO: skipping processing xmlValidateAttributeIdCallback/1(*2) per user request
+BOLT-INFO: skipping processing xmlValidateElementDecl per user request
+BOLT-INFO: skipping processing xmlValidateOneAttribute per user request
+BOLT-INFO: skipping processing xmlValidateAttributeValue2/1(*2) per user request
+BOLT-INFO: skipping processing xmlValidateOneNamespace per user request
+BOLT-INFO: skipping processing xmlValidatePushElement per user request
+BOLT-INFO: skipping processing xmlValidGetElemDecl/1(*2) per user request
+BOLT-INFO: skipping processing xmlValidatePushCData per user request
+BOLT-INFO: skipping processing xmlValidatePopElement per user request
+BOLT-INFO: skipping processing xmlValidateOneElement per user request
+BOLT-INFO: skipping processing xmlValidateOneCdataElement/1(*2) per user request
+BOLT-INFO: skipping processing xmlValidateElementContent/1(*2) per user request
+BOLT-INFO: skipping processing xmlValidateRoot per user request
+BOLT-INFO: skipping processing xmlValidateElement per user request
+BOLT-INFO: skipping processing xmlValidateDocumentFinal per user request
+BOLT-INFO: skipping processing xmlValidateCheckRefCallback/1(*2) per user request
+BOLT-INFO: skipping processing xmlValidateDtd per user request
+BOLT-INFO: skipping processing xmlCtxtValidateDtd per user request
+BOLT-INFO: skipping processing xmlValidateDtdFinal per user request
+BOLT-INFO: skipping processing xmlValidateAttributeCallback/1(*2) per user request
+BOLT-INFO: skipping processing xmlValidateNotationCallback/1(*2) per user request
+BOLT-INFO: skipping processing xmlValidateDocument per user request
+BOLT-INFO: skipping processing xmlValidateDocumentInternal/1(*2) per user request
+BOLT-INFO: skipping processing xmlCtxtValidateDocument per user request
+BOLT-INFO: skipping processing xmlValidGetPotentialChildren per user request
+BOLT-INFO: skipping processing xmlValidGetValidElements per user request
+BOLT-INFO: skipping processing xmlNoValidityErr/1(*2) per user request
+BOLT-INFO: skipping processing xmlDoErrValid/1(*2) per user request
+BOLT-INFO: skipping processing xmlFreeID/1(*2) per user request
+BOLT-INFO: skipping processing nodeVPush/1(*2) per user request
+BOLT-INFO: skipping processing xmlWalkValidateList/1(*2) per user request
+BOLT-INFO: skipping processing xmlListCreate per user request
+BOLT-INFO: skipping processing xmlLinkCompare/1(*2) per user request
+BOLT-INFO: skipping processing xmlListSearch per user request
+BOLT-INFO: skipping processing xmlListReverseSearch per user request
+BOLT-INFO: skipping processing xmlListInsert per user request
+BOLT-INFO: skipping processing xmlListAppend per user request
+BOLT-INFO: skipping processing xmlListDelete per user request
+BOLT-INFO: skipping processing xmlListClear per user request
+BOLT-INFO: skipping processing xmlListRemoveFirst per user request
+BOLT-INFO: skipping processing xmlListRemoveLast per user request
+BOLT-INFO: skipping processing xmlListRemoveAll per user request
+BOLT-INFO: skipping processing xmlListEmpty per user request
+BOLT-INFO: skipping processing xmlListFront per user request
+BOLT-INFO: skipping processing xmlListEnd per user request
+BOLT-INFO: skipping processing xmlListSize per user request
+BOLT-INFO: skipping processing xmlListPopFront per user request
+BOLT-INFO: skipping processing xmlListPopBack per user request
+BOLT-INFO: skipping processing xmlListPushFront per user request
+BOLT-INFO: skipping processing xmlListPushBack per user request
+BOLT-INFO: skipping processing xmlLinkGetData per user request
+BOLT-INFO: skipping processing xmlListReverse per user request
+BOLT-INFO: skipping processing xmlListSort per user request
+BOLT-INFO: skipping processing xmlListDup per user request
+BOLT-INFO: skipping processing xmlListMerge per user request
+BOLT-INFO: skipping processing xmlListWalk per user request
+BOLT-INFO: skipping processing xmlListReverseWalk per user request
+BOLT-INFO: skipping processing xmlListCopy per user request
+BOLT-INFO: skipping processing xmlEscapeText/1(*2) per user request
+BOLT-INFO: skipping processing xmlSerializeText/1(*2) per user request
+BOLT-INFO: skipping processing xmlOutputBufferWrite per user request
+BOLT-INFO: skipping processing xmlNormalizeWindowsPath per user request
+BOLT-INFO: skipping processing xmlCheckFilename per user request
+BOLT-INFO: skipping processing xmlFileMatch per user request
+BOLT-INFO: skipping processing xmlFileOpen per user request
+BOLT-INFO: skipping processing xmlFileRead per user request
+BOLT-INFO: skipping processing xmlIOErr/1(*2) per user request
+BOLT-INFO: skipping processing xmlFileClose per user request
+BOLT-INFO: skipping processing xmlFileFlush/1(*2) per user request
+BOLT-INFO: skipping processing xmlInputFromFd/1(*2) per user request
+BOLT-INFO: skipping processing xmlAllocOutputBuffer per user request
+BOLT-INFO: skipping processing xmlOutputBufferClose per user request
+BOLT-INFO: skipping processing xmlOutputBufferFlush per user request
+BOLT-INFO: skipping processing xmlIODefaultMatch/1(*2) per user request
+BOLT-INFO: skipping processing __xmlParserInputBufferCreateFilename per user request
+BOLT-INFO: skipping processing xmlParserInputBufferCreateFilename per user request
+BOLT-INFO: skipping processing __xmlOutputBufferCreateFilename per user request
+BOLT-INFO: skipping processing xmlOutputBufferCreateFilename per user request
+BOLT-INFO: skipping processing xmlParserInputBufferCreateFile per user request
+BOLT-INFO: skipping processing xmlOutputBufferCreateFile per user request
+BOLT-INFO: skipping processing xmlFileWrite/1(*2) per user request
+BOLT-INFO: skipping processing xmlOutputBufferCreateBuffer per user request
+BOLT-INFO: skipping processing xmlOutputBufferCreateIO per user request
+BOLT-INFO: skipping processing xmlBufferWrite/1(*2) per user request
+BOLT-INFO: skipping processing xmlOutputBufferGetContent per user request
+BOLT-INFO: skipping processing xmlOutputBufferGetSize per user request
+BOLT-INFO: skipping processing xmlParserInputBufferCreateFd per user request
+BOLT-INFO: skipping processing xmlFdFree/1(*2) per user request
+BOLT-INFO: skipping processing xmlNewInputBufferMemory/1(*2) per user request
+BOLT-INFO: skipping processing xmlMemRead/1(*2) per user request
+BOLT-INFO: skipping processing xmlMemClose/1(*2) per user request
+BOLT-INFO: skipping processing xmlParserInputBufferCreateMem per user request
+BOLT-INFO: skipping processing xmlParserInputBufferCreateStatic per user request
+BOLT-INFO: skipping processing xmlNewInputBufferString/1(*2) per user request
+BOLT-INFO: skipping processing xmlOutputBufferCreateFd per user request
+BOLT-INFO: skipping processing xmlFdWrite/1(*2) per user request
+BOLT-INFO: skipping processing xmlParserInputBufferCreateIO per user request
+BOLT-INFO: skipping processing xmlParserInputBufferCreateFilenameDefault per user request
+BOLT-INFO: skipping processing xmlOutputBufferCreateFilenameDefault per user request
+BOLT-INFO: skipping processing xmlParserInputBufferPush per user request
+BOLT-INFO: skipping processing xmlParserInputBufferRead per user request
+BOLT-INFO: skipping processing xmlOutputBufferWriteEscape per user request
+BOLT-INFO: skipping processing xmlOutputBufferWriteString per user request
+BOLT-INFO: skipping processing xmlOutputBufferWriteQuotedString/1(*2) per user request
+BOLT-INFO: skipping processing xmlRegisterInputCallbacks per user request
+BOLT-INFO: skipping processing xmlRegisterDefaultInputCallbacks per user request
+BOLT-INFO: skipping processing xmlPopInputCallbacks per user request
+BOLT-INFO: skipping processing xmlCleanupInputCallbacks per user request
+BOLT-INFO: skipping processing xmlRegisterOutputCallbacks per user request
+BOLT-INFO: skipping processing xmlRegisterDefaultOutputCallbacks per user request
+BOLT-INFO: skipping processing xmlPopOutputCallbacks per user request
+BOLT-INFO: skipping processing xmlCleanupOutputCallbacks per user request
+BOLT-INFO: skipping processing xmlMallocLoc per user request
+BOLT-INFO: skipping processing xmlMemMalloc per user request
+BOLT-INFO: skipping processing xmlMallocAtomicLoc per user request
+BOLT-INFO: skipping processing xmlReallocLoc per user request
+BOLT-INFO: skipping processing xmlMemRealloc per user request
+BOLT-INFO: skipping processing xmlMemFree per user request
+BOLT-INFO: skipping processing xmlMemStrdupLoc per user request
+BOLT-INFO: skipping processing xmlMemoryStrdup per user request
+BOLT-INFO: skipping processing xmlMemSize per user request
+BOLT-INFO: skipping processing xmlMemUsed per user request
+BOLT-INFO: skipping processing xmlMemBlocks per user request
+BOLT-INFO: skipping processing xmlMemDisplayLast per user request
+BOLT-INFO: skipping processing xmlMemDisplay per user request
+BOLT-INFO: skipping processing xmlMemShow per user request
+BOLT-INFO: skipping processing xmlMemoryDump per user request
+BOLT-INFO: skipping processing xmlGrowArray/1(*2) per user request
+BOLT-INFO: skipping processing xmlInitMemory per user request
+BOLT-INFO: skipping processing xmlCleanupMemory per user request
+BOLT-INFO: skipping processing xmlMemSetup per user request
+BOLT-INFO: skipping processing xmlMemGet per user request
+BOLT-INFO: skipping processing xmlGcMemSetup per user request
+BOLT-INFO: skipping processing xmlGcMemGet per user request
+BOLT-INFO: skipping processing xmlCharStrndup per user request
+BOLT-INFO: skipping processing xmlStrcmp per user request
+BOLT-INFO: skipping processing xmlStrQEqual per user request
+BOLT-INFO: skipping processing xmlStrncmp per user request
+BOLT-INFO: skipping processing xmlStrchr per user request
+BOLT-INFO: skipping processing xmlStrcasestr per user request
+BOLT-INFO: skipping processing xmlStrsub per user request
+BOLT-INFO: skipping processing xmlStrncat per user request
+BOLT-INFO: skipping processing xmlStrncatNew per user request
+BOLT-INFO: skipping processing xmlStrcat per user request
+BOLT-INFO: skipping processing xmlStrPrintf per user request
+BOLT-INFO: skipping processing xmlStrVPrintf per user request
+BOLT-INFO: skipping processing xmlStrVASPrintf/1(*2) per user request
+BOLT-INFO: skipping processing xmlStrASPrintf/1(*2) per user request
+BOLT-INFO: skipping processing xmlUTF8Size per user request
+BOLT-INFO: skipping processing xmlUTF8Charcmp per user request
+BOLT-INFO: skipping processing xmlUTF8Strlen per user request
+BOLT-INFO: skipping processing xmlCheckUTF8 per user request
+BOLT-INFO: skipping processing xmlUTF8Strsize per user request
+BOLT-INFO: skipping processing xmlUTF8Strndup per user request
+BOLT-INFO: skipping processing xmlUTF8Strpos per user request
+BOLT-INFO: skipping processing xmlUTF8Strloc per user request
+BOLT-INFO: skipping processing xmlUTF8Strsub per user request
+BOLT-INFO: skipping processing xmlEscapeFormatString/1(*2) per user request
+BOLT-INFO: skipping processing xmlC14NExecute per user request
+BOLT-INFO: skipping processing xmlC14NProcessNodeList/1(*2) per user request
+BOLT-INFO: skipping processing xmlC14NFreeCtx/1(*2) per user request
+BOLT-INFO: skipping processing xmlC14NDocSaveTo per user request
+BOLT-INFO: skipping processing xmlC14NIsNodeInNodeset/1(*2) per user request
+BOLT-INFO: skipping processing xmlC14NDocDumpMemory per user request
+BOLT-INFO: skipping processing xmlC14NDocSave per user request
+BOLT-INFO: skipping processing xmlC14NErrFull/1(*2) per user request
+BOLT-INFO: skipping processing xmlC11NNormalizeString/1(*2) per user request
+BOLT-INFO: skipping processing xmlC14NNsCompare/1(*2) per user request
+BOLT-INFO: skipping processing xmlC14NVisibleNsStackFind/1(*2) per user request
+BOLT-INFO: skipping processing xmlC14NPrintNamespaces/1(*2) per user request
+BOLT-INFO: skipping processing xmlC14NPrintNamespacesWalker/1(*2) per user request
+BOLT-INFO: skipping processing xmlExcC14NVisibleNsStackFind/1(*2) per user request
+BOLT-INFO: skipping processing xmlC14NAttrsCompare/1(*2) per user request
+BOLT-INFO: skipping processing xmlC14NFindHiddenParentAttr/1(*2) per user request
+BOLT-INFO: skipping processing xmlC14NPrintAttrs/1(*2) per user request
+BOLT-INFO: skipping processing xmlFreeCatalog per user request
+BOLT-INFO: skipping processing xmlFreeCatalogEntry/1(*2) per user request
+BOLT-INFO: skipping processing xmlConvertSGMLCatalog per user request
+BOLT-INFO: skipping processing xmlCatalogPrintDebug/1(*2) per user request
+BOLT-INFO: skipping processing xmlCatalogConvertEntry/1(*2) per user request
+BOLT-INFO: skipping processing xmlParseCatalogFile per user request
+BOLT-INFO: skipping processing xmlLoadSGMLSuperCatalog per user request
+BOLT-INFO: skipping processing xmlLoadFileContent/1(*2) per user request
+BOLT-INFO: skipping processing xmlParseSGMLCatalog/1(*2) per user request
+BOLT-INFO: skipping processing xmlLoadACatalog per user request
+BOLT-INFO: skipping processing xmlNewCatalogEntry/1(*2) per user request
+BOLT-INFO: skipping processing xmlACatalogResolveSystem per user request
+BOLT-INFO: skipping processing xmlCatalogListXMLResolveInitial/1(*2) per user request
+BOLT-INFO: skipping processing xmlACatalogResolvePublic per user request
+BOLT-INFO: skipping processing xmlCatalogGetSGMLPublic/1(*2) per user request
+BOLT-INFO: skipping processing xmlACatalogResolve per user request
+BOLT-INFO: skipping processing xmlACatalogResolveURI per user request
+BOLT-INFO: skipping processing xmlCatalogListXMLResolveURIInitial/1(*2) per user request
+BOLT-INFO: skipping processing xmlACatalogDump per user request
+BOLT-INFO: skipping processing xmlCatalogDumpEntry/1(*2) per user request
+BOLT-INFO: skipping processing xmlACatalogAdd per user request
+BOLT-INFO: skipping processing xmlACatalogRemove per user request
+BOLT-INFO: skipping processing xmlNewCatalog per user request
+BOLT-INFO: skipping processing xmlCatalogIsEmpty per user request
+BOLT-INFO: skipping processing xmlInitializeCatalog per user request
+BOLT-INFO: skipping processing xmlLoadCatalog per user request
+BOLT-INFO: skipping processing xmlExpandCatalog/1(*2) per user request
+BOLT-INFO: skipping processing xmlLoadCatalogs per user request
+BOLT-INFO: skipping processing xmlFreeCatalogHashEntryList/1(*2) per user request
+BOLT-INFO: skipping processing xmlCatalogResolveSystem per user request
+BOLT-INFO: skipping processing xmlCatalogResolvePublic per user request
+BOLT-INFO: skipping processing xmlCatalogResolve per user request
+BOLT-INFO: skipping processing xmlCatalogResolveURI per user request
+BOLT-INFO: skipping processing xmlCatalogDump per user request
+BOLT-INFO: skipping processing xmlCatalogDumpDoc per user request
+BOLT-INFO: skipping processing xmlDumpXMLCatalogToDoc/1(*2) per user request
+BOLT-INFO: skipping processing xmlCatalogAdd per user request
+BOLT-INFO: skipping processing xmlCatalogRemove per user request
+BOLT-INFO: skipping processing xmlCatalogConvert per user request
+BOLT-INFO: skipping processing xmlCatalogSetDefaults per user request
+BOLT-INFO: skipping processing xmlCatalogSetDefaultPrefer per user request
+BOLT-INFO: skipping processing xmlCatalogSetDebug per user request
+BOLT-INFO: skipping processing xmlCatalogFreeLocal per user request
+BOLT-INFO: skipping processing xmlCatalogAddLocal per user request
+BOLT-INFO: skipping processing xmlCatalogLocalResolve per user request
+BOLT-INFO: skipping processing xmlCatalogLocalResolveURI per user request
+BOLT-INFO: skipping processing xmlCatalogGetSystem per user request
+BOLT-INFO: skipping processing xmlCatalogGetPublic per user request
+BOLT-INFO: skipping processing xmlParseSGMLCatalogName/1(*2) per user request
+BOLT-INFO: skipping processing xmlParseSGMLCatalogPubid/1(*2) per user request
+BOLT-INFO: skipping processing xmlCatalogNormalizePublic/1(*2) per user request
+BOLT-INFO: skipping processing xmlCatalogListXMLResolve/1(*2) per user request
+BOLT-INFO: skipping processing xmlCatalogUnWrapURN/1(*2) per user request
+BOLT-INFO: skipping processing xmlFetchXMLCatalogFile/1(*2) per user request
+BOLT-INFO: skipping processing xmlCatalogErr/1(*2) per user request
+BOLT-INFO: skipping processing xmlParseXMLCatalogNodeList/1(*2) per user request
+BOLT-INFO: skipping processing xmlParseXMLCatalogOneNode/1(*2) per user request
+BOLT-INFO: skipping processing xmlCatalogListXMLResolveURI/1(*2) per user request
+BOLT-INFO: skipping processing xmlDumpXMLCatalogNode/1(*2) per user request
+BOLT-INFO: skipping processing xmlDebugDumpString per user request
+BOLT-INFO: skipping processing xmlDebugDumpAttr per user request
+BOLT-INFO: skipping processing xmlCtxtDumpAttr/1(*2) per user request
+BOLT-INFO: skipping processing xmlDebugDumpEntities per user request
+BOLT-INFO: skipping processing xmlDebugDumpAttrList per user request
+BOLT-INFO: skipping processing xmlDebugDumpOneNode per user request
+BOLT-INFO: skipping processing xmlCtxtDumpOneNode/1(*2) per user request
+BOLT-INFO: skipping processing xmlDebugDumpNode per user request
+BOLT-INFO: skipping processing xmlDebugDumpNodeList per user request
+BOLT-INFO: skipping processing xmlCtxtDumpNodeList/1(*2) per user request
+BOLT-INFO: skipping processing xmlDebugDumpDocumentHead per user request
+BOLT-INFO: skipping processing xmlCtxtDumpDocumentHead/1(*2) per user request
+BOLT-INFO: skipping processing xmlDebugDumpDocument per user request
+BOLT-INFO: skipping processing xmlDebugDumpDTD per user request
+BOLT-INFO: skipping processing xmlDebugCheckDocument per user request
+BOLT-INFO: skipping processing xmlCtxtDumpSpaces/1(*2) per user request
+BOLT-INFO: skipping processing xmlCtxtDumpString/1(*2) per user request
+BOLT-INFO: skipping processing xmlCtxtGenericNodeCheck/1(*2) per user request
+BOLT-INFO: skipping processing xmlCtxtNsCheckScope/1(*2) per user request
+BOLT-INFO: skipping processing xmlCtxtCheckName/1(*2) per user request
+BOLT-INFO: skipping processing xmlCtxtDumpDocHead/1(*2) per user request
+BOLT-INFO: skipping processing xmlCtxtDumpEntityCallback/1(*2) per user request
+BOLT-INFO: skipping processing xmlCtxtDumpDtdNode/1(*2) per user request
+BOLT-INFO: skipping processing xmlCtxtDumpNamespace/1(*2) per user request
+BOLT-INFO: skipping processing htmlInitAutoClose per user request
+BOLT-INFO: skipping processing htmlTagLookup per user request
+BOLT-INFO: skipping processing htmlAutoCloseTag per user request
+BOLT-INFO: skipping processing htmlIsAutoClosed per user request
+BOLT-INFO: skipping processing htmlIsScriptAttribute per user request
+BOLT-INFO: skipping processing htmlEntityLookup per user request
+BOLT-INFO: skipping processing htmlEntityValueLookup per user request
+BOLT-INFO: skipping processing htmlUTF8ToHtml per user request
+BOLT-INFO: skipping processing htmlEncodeEntities per user request
+BOLT-INFO: skipping processing htmlNewDocNoDtD per user request
+BOLT-INFO: skipping processing htmlNewDoc per user request
+BOLT-INFO: skipping processing htmlParseEntityRef per user request
+BOLT-INFO: skipping processing htmlParseCharRef per user request
+BOLT-INFO: skipping processing htmlParseElement per user request
+BOLT-INFO: skipping processing htmlParseElementInternal/1(*2) per user request
+BOLT-INFO: skipping processing htmlParseContent/1(*2) per user request
+BOLT-INFO: skipping processing htmlAutoCloseOnEnd/1(*2) per user request
+BOLT-INFO: skipping processing htmlCtxtParseContentInternal/1(*2) per user request
+BOLT-INFO: skipping processing htmlnamePush/1(*2) per user request
+BOLT-INFO: skipping processing htmlParseDocument per user request
+BOLT-INFO: skipping processing htmlSkipBlankChars/1(*2) per user request
+BOLT-INFO: skipping processing htmlParseComment/1(*2) per user request
+BOLT-INFO: skipping processing htmlParseDocTypeDecl/1(*2) per user request
+BOLT-INFO: skipping processing htmlFreeParserCtxt per user request
+BOLT-INFO: skipping processing htmlNewParserCtxt per user request
+BOLT-INFO: skipping processing htmlNewSAXParserCtxt per user request
+BOLT-INFO: skipping processing htmlCreateMemoryParserCtxt per user request
+BOLT-INFO: skipping processing htmlParseChunk per user request
+BOLT-INFO: skipping processing htmlCreatePushParserCtxt per user request
+BOLT-INFO: skipping processing htmlSAXParseDoc per user request
+BOLT-INFO: skipping processing htmlParseDoc per user request
+BOLT-INFO: skipping processing htmlCreateFileParserCtxt per user request
+BOLT-INFO: skipping processing htmlSAXParseFile per user request
+BOLT-INFO: skipping processing htmlParseFile per user request
+BOLT-INFO: skipping processing htmlHandleOmittedElem per user request
+BOLT-INFO: skipping processing htmlElementAllowedHere per user request
+BOLT-INFO: skipping processing htmlElementStatusHere per user request
+BOLT-INFO: skipping processing htmlAttrAllowed per user request
+BOLT-INFO: skipping processing htmlNodeStatus per user request
+BOLT-INFO: skipping processing htmlCtxtReset per user request
+BOLT-INFO: skipping processing htmlCtxtSetOptions per user request
+BOLT-INFO: skipping processing htmlCtxtUseOptions per user request
+BOLT-INFO: skipping processing htmlCtxtParseDocument per user request
+BOLT-INFO: skipping processing htmlReadDoc per user request
+BOLT-INFO: skipping processing htmlReadFile per user request
+BOLT-INFO: skipping processing htmlReadMemory per user request
+BOLT-INFO: skipping processing htmlReadFd per user request
+BOLT-INFO: skipping processing htmlReadIO per user request
+BOLT-INFO: skipping processing htmlCtxtReadDoc per user request
+BOLT-INFO: skipping processing htmlCtxtReadFile per user request
+BOLT-INFO: skipping processing htmlCtxtReadMemory per user request
+BOLT-INFO: skipping processing htmlCtxtReadFd per user request
+BOLT-INFO: skipping processing htmlCtxtReadIO per user request
+BOLT-INFO: skipping processing htmlParserFinishElementParsing/1(*2) per user request
+BOLT-INFO: skipping processing htmlParseHTMLName/1(*2) per user request
+BOLT-INFO: skipping processing htmlAutoClose/1(*2) per user request
+BOLT-INFO: skipping processing htmlCheckImplied/1(*2) per user request
+BOLT-INFO: skipping processing htmlParseAttribute/1(*2) per user request
+BOLT-INFO: skipping processing htmlValidateUtf8/1(*2) per user request
+BOLT-INFO: skipping processing htmlParseData/1(*2) per user request
+BOLT-INFO: skipping processing htmlFindEntityPrefix/1(*2) per user request
+BOLT-INFO: skipping processing htmlFindEncoding/1(*2) per user request
+BOLT-INFO: skipping processing htmlParseEndTag/1(*2) per user request
+BOLT-INFO: skipping processing htmlParseCharData/1(*2) per user request
+BOLT-INFO: skipping processing htmlAutoCloseOnClose/1(*2) per user request
+BOLT-INFO: skipping processing htmlGetEndPriority/1(*2) per user request
+BOLT-INFO: skipping processing htmlCharDataSAXCallback/1(*2) per user request
+BOLT-INFO: skipping processing areBlanks/1(*2) per user request
+BOLT-INFO: skipping processing htmlParseDoctypeLiteral/1(*2) per user request
+BOLT-INFO: skipping processing htmlParseLookupGt/1(*2) per user request
+BOLT-INFO: skipping processing htmlParseLookupCommentEnd/1(*2) per user request
+BOLT-INFO: skipping processing htmlParseLookupString/1(*2) per user request
+BOLT-INFO: skipping processing htmlParseContentType/1(*2) per user request
+BOLT-INFO: skipping processing htmlGetMetaEncoding per user request
+BOLT-INFO: skipping processing htmlParseMetaEncoding/1(*2) per user request
+BOLT-INFO: skipping processing htmlSetMetaEncoding per user request
+BOLT-INFO: skipping processing htmlIsBooleanAttr per user request
+BOLT-INFO: skipping processing htmlNodeDump per user request
+BOLT-INFO: skipping processing htmlNodeDumpFileFormat per user request
+BOLT-INFO: skipping processing htmlNodeDumpInternal/1(*2) per user request
+BOLT-INFO: skipping processing htmlNodeDumpFile per user request
+BOLT-INFO: skipping processing htmlDocDumpMemoryFormat per user request
+BOLT-INFO: skipping processing htmlDocContentDumpFormatOutput per user request
+BOLT-INFO: skipping processing htmlDocDumpMemory per user request
+BOLT-INFO: skipping processing htmlFindMetaEncodingAttr/1(*2) per user request
+BOLT-INFO: skipping processing htmlAttrDumpOutput/1(*2) per user request
+BOLT-INFO: skipping processing htmlNodeDumpFormatOutput per user request
+BOLT-INFO: skipping processing htmlNodeDumpOutput per user request
+BOLT-INFO: skipping processing htmlDocContentDumpOutput per user request
+BOLT-INFO: skipping processing htmlDocDump per user request
+BOLT-INFO: skipping processing htmlSaveFile per user request
+BOLT-INFO: skipping processing htmlSaveFileFormat per user request
+BOLT-INFO: skipping processing htmlSaveFileEnc per user request
+BOLT-INFO: skipping processing xmlSaveSetIndentString per user request
+BOLT-INFO: skipping processing xmlNsListDumpOutput/1(*2) per user request
+BOLT-INFO: skipping processing xmlNsDumpOutput/1(*2) per user request
+BOLT-INFO: skipping processing xmlSaveToFd per user request
+BOLT-INFO: skipping processing xmlNewSaveCtxt/1(*2) per user request
+BOLT-INFO: skipping processing xmlSaveToFilename per user request
+BOLT-INFO: skipping processing xmlSaveToBuffer per user request
+BOLT-INFO: skipping processing xmlSaveToIO per user request
+BOLT-INFO: skipping processing xmlSaveDoc per user request
+BOLT-INFO: skipping processing xmlSaveDocInternal/1(*2) per user request
+BOLT-INFO: skipping processing xmlSaveTree per user request
+BOLT-INFO: skipping processing xhtmlNodeDumpOutput/1(*2) per user request
+BOLT-INFO: skipping processing xmlNodeDumpOutputInternal/1(*2) per user request
+BOLT-INFO: skipping processing xmlSaveNotationDecl/1(*2) per user request
+BOLT-INFO: skipping processing xmlBufDumpNotationDecl/1(*2) per user request
+BOLT-INFO: skipping processing xmlSaveNotationTable/1(*2) per user request
+BOLT-INFO: skipping processing xmlSaveFlush per user request
+BOLT-INFO: skipping processing xmlSaveClose per user request
+BOLT-INFO: skipping processing xmlSaveFinish per user request
+BOLT-INFO: skipping processing xmlSaveSetEscape per user request
+BOLT-INFO: skipping processing xmlSaveSetAttrEscape per user request
+BOLT-INFO: skipping processing xmlBufAttrSerializeTxtContent/1(*2) per user request
+BOLT-INFO: skipping processing xmlAttrSerializeTxtContent per user request
+BOLT-INFO: skipping processing xmlNodeDump per user request
+BOLT-INFO: skipping processing xmlBufNodeDump per user request
+BOLT-INFO: skipping processing xmlNodeDumpOutput per user request
+BOLT-INFO: skipping processing xmlElemDump per user request
+BOLT-INFO: skipping processing xmlDocDumpFormatMemoryEnc per user request
+BOLT-INFO: skipping processing xmlDocDumpInternal/1(*2) per user request
+BOLT-INFO: skipping processing xmlDocDumpMemory per user request
+BOLT-INFO: skipping processing xmlDocDumpFormatMemory per user request
+BOLT-INFO: skipping processing xmlDocDumpMemoryEnc per user request
+BOLT-INFO: skipping processing xmlDocFormatDump per user request
+BOLT-INFO: skipping processing xmlDocDump per user request
+BOLT-INFO: skipping processing xmlSaveFileTo per user request
+BOLT-INFO: skipping processing xmlSaveFormatFileTo per user request
+BOLT-INFO: skipping processing xmlSaveFormatFileEnc per user request
+BOLT-INFO: skipping processing xmlSaveFileEnc per user request
+BOLT-INFO: skipping processing xmlSaveFormatFile per user request
+BOLT-INFO: skipping processing xmlSaveFile per user request
+BOLT-INFO: skipping processing xmlOutputBufferWriteWSNonSig/1(*2) per user request
+BOLT-INFO: skipping processing xmlSaveErr/1(*2) per user request
+BOLT-INFO: skipping processing xmlSaveSwitchEncoding/1(*2) per user request
+BOLT-INFO: skipping processing xmlDtdDumpOutput/1(*2) per user request
+BOLT-INFO: skipping processing xmlBufDumpElementDecl/1(*2) per user request
+BOLT-INFO: skipping processing xmlSaveWriteAttributeDecl/1(*2) per user request
+BOLT-INFO: skipping processing xmlBufDumpEntityDecl/1(*2) per user request
+BOLT-INFO: skipping processing xmlSaveWriteIndent/1(*2) per user request
+BOLT-INFO: skipping processing xhtmlIsEmpty/1(*2) per user request
+BOLT-INFO: skipping processing xmlAttrDumpOutput/1(*2) per user request
+BOLT-INFO: skipping processing xmlSaveWriteAttrContent/1(*2) per user request
+BOLT-INFO: skipping processing xmlBufDumpNotationDeclScan/1(*2) per user request
+BOLT-INFO: skipping processing xmlFreePattern per user request
+BOLT-INFO: skipping processing xmlFreePatternList per user request
+BOLT-INFO: skipping processing xmlFreeStreamCtxt per user request
+BOLT-INFO: skipping processing xmlStreamPush per user request
+BOLT-INFO: skipping processing xmlStreamPushInternal/1(*2) per user request
+BOLT-INFO: skipping processing xmlStreamPushNode per user request
+BOLT-INFO: skipping processing xmlStreamPushAttr per user request
+BOLT-INFO: skipping processing xmlStreamPop per user request
+BOLT-INFO: skipping processing xmlStreamWantsAnyNode per user request
+BOLT-INFO: skipping processing xmlPatternCompileSafe per user request
+BOLT-INFO: skipping processing xmlPatterncompile per user request
+BOLT-INFO: skipping processing xmlPatternMatch per user request
+BOLT-INFO: skipping processing xmlPatternGetStreamCtxt per user request
+BOLT-INFO: skipping processing xmlPatternStreamable per user request
+BOLT-INFO: skipping processing xmlPatternMaxDepth per user request
+BOLT-INFO: skipping processing xmlPatternMinDepth per user request
+BOLT-INFO: skipping processing xmlPatternFromRoot per user request
+BOLT-INFO: skipping processing xmlPatternAdd/1(*2) per user request
+BOLT-INFO: skipping processing xmlCompileStepPattern/1(*2) per user request
+BOLT-INFO: skipping processing xmlCompileAttributeTest/1(*2) per user request
+BOLT-INFO: skipping processing xmlPatScanName/1(*2) per user request
+BOLT-INFO: skipping processing xmlTextReaderRead per user request
+BOLT-INFO: skipping processing xmlTextReaderPushData/1(*2) per user request
+BOLT-INFO: skipping processing xmlTextReaderValidatePop/1(*2) per user request
+BOLT-INFO: skipping processing xmlTextReaderFreeNode/1(*2) per user request
+BOLT-INFO: skipping processing xmlTextReaderExpand per user request
+BOLT-INFO: skipping processing xmlTextReaderErrMemory/1(*2) per user request
+BOLT-INFO: skipping processing xmlTextReaderStructuredRelay/1(*2) per user request
+BOLT-INFO: skipping processing xmlTextReaderEntPush/1(*2) per user request
+BOLT-INFO: skipping processing xmlTextReaderValidateEntity/1(*2) per user request
+BOLT-INFO: skipping processing xmlTextReaderValidatePush/1(*2) per user request
+BOLT-INFO: skipping processing xmlTextReaderValidateCData/1(*2) per user request
+BOLT-INFO: skipping processing xmlTextReaderPreserve per user request
+BOLT-INFO: skipping processing xmlTextReaderReadState per user request
+BOLT-INFO: skipping processing xmlTextReaderNext per user request
+BOLT-INFO: skipping processing xmlTextReaderNextTree/1(*2) per user request
+BOLT-INFO: skipping processing xmlTextReaderReadInnerXml per user request
+BOLT-INFO: skipping processing xmlTextReaderDumpCopy/1(*2) per user request
+BOLT-INFO: skipping processing xmlTextReaderReadOuterXml per user request
+BOLT-INFO: skipping processing xmlTextReaderReadString per user request
+BOLT-INFO: skipping processing xmlTextReaderNextSibling per user request
+BOLT-INFO: skipping processing xmlNewTextReader per user request
+BOLT-INFO: skipping processing xmlTextReaderStartElement/1(*2) per user request
+BOLT-INFO: skipping processing xmlTextReaderEndElement/1(*2) per user request
+BOLT-INFO: skipping processing xmlTextReaderStartElementNs/1(*2) per user request
+BOLT-INFO: skipping processing xmlTextReaderEndElementNs/1(*2) per user request
+BOLT-INFO: skipping processing xmlTextReaderCharacters/1(*2) per user request
+BOLT-INFO: skipping processing xmlTextReaderCDataBlock/1(*2) per user request
+BOLT-INFO: skipping processing xmlNewTextReaderFilename per user request
+BOLT-INFO: skipping processing xmlTextReaderErr/1(*2) per user request
+BOLT-INFO: skipping processing xmlFreeTextReader per user request
+BOLT-INFO: skipping processing xmlTextReaderClose per user request
+BOLT-INFO: skipping processing xmlTextReaderFreeDoc/1(*2) per user request
+BOLT-INFO: skipping processing xmlTextReaderGetAttributeNo per user request
+BOLT-INFO: skipping processing readerStrdup/1(*2) per user request
+BOLT-INFO: skipping processing xmlTextReaderGetAttribute per user request
+BOLT-INFO: skipping processing xmlTextReaderGetAttributeNs per user request
+BOLT-INFO: skipping processing xmlTextReaderGetRemainder per user request
+BOLT-INFO: skipping processing xmlTextReaderLookupNamespace per user request
+BOLT-INFO: skipping processing xmlTextReaderMoveToAttributeNo per user request
+BOLT-INFO: skipping processing xmlTextReaderMoveToAttribute per user request
+BOLT-INFO: skipping processing xmlTextReaderMoveToAttributeNs per user request
+BOLT-INFO: skipping processing xmlTextReaderMoveToFirstAttribute per user request
+BOLT-INFO: skipping processing xmlTextReaderMoveToNextAttribute per user request
+BOLT-INFO: skipping processing xmlTextReaderMoveToElement per user request
+BOLT-INFO: skipping processing xmlTextReaderReadAttributeValue per user request
+BOLT-INFO: skipping processing xmlTextReaderConstEncoding per user request
+BOLT-INFO: skipping processing constString/1(*2) per user request
+BOLT-INFO: skipping processing xmlTextReaderAttributeCount per user request
+BOLT-INFO: skipping processing xmlTextReaderNodeType per user request
+BOLT-INFO: skipping processing xmlTextReaderIsEmptyElement per user request
+BOLT-INFO: skipping processing xmlTextReaderLocalName per user request
+BOLT-INFO: skipping processing xmlTextReaderName per user request
+BOLT-INFO: skipping processing xmlTextReaderConstLocalName per user request
+BOLT-INFO: skipping processing xmlTextReaderConstName per user request
+BOLT-INFO: skipping processing constQString/1(*2) per user request
+BOLT-INFO: skipping processing xmlTextReaderPrefix per user request
+BOLT-INFO: skipping processing xmlTextReaderConstPrefix per user request
+BOLT-INFO: skipping processing xmlTextReaderNamespaceUri per user request
+BOLT-INFO: skipping processing xmlTextReaderConstNamespaceUri per user request
+BOLT-INFO: skipping processing xmlTextReaderBaseUri per user request
+BOLT-INFO: skipping processing xmlTextReaderConstBaseUri per user request
+BOLT-INFO: skipping processing xmlTextReaderDepth per user request
+BOLT-INFO: skipping processing xmlTextReaderHasAttributes per user request
+BOLT-INFO: skipping processing xmlTextReaderHasValue per user request
+BOLT-INFO: skipping processing xmlTextReaderValue per user request
+BOLT-INFO: skipping processing xmlTextReaderConstValue per user request
+BOLT-INFO: skipping processing xmlTextReaderIsDefault per user request
+BOLT-INFO: skipping processing xmlTextReaderQuoteChar per user request
+BOLT-INFO: skipping processing xmlTextReaderXmlLang per user request
+BOLT-INFO: skipping processing xmlTextReaderConstXmlLang per user request
+BOLT-INFO: skipping processing xmlTextReaderConstString per user request
+BOLT-INFO: skipping processing xmlTextReaderNormalization per user request
+BOLT-INFO: skipping processing xmlTextReaderSetParserProp per user request
+BOLT-INFO: skipping processing xmlTextReaderGetParserProp per user request
+BOLT-INFO: skipping processing xmlTextReaderGetParserLineNumber per user request
+BOLT-INFO: skipping processing xmlTextReaderGetParserColumnNumber per user request
+BOLT-INFO: skipping processing xmlTextReaderCurrentNode per user request
+BOLT-INFO: skipping processing xmlTextReaderPreservePattern per user request
+BOLT-INFO: skipping processing xmlTextReaderCurrentDoc per user request
+BOLT-INFO: skipping processing xmlTextReaderRelaxNGSetSchema per user request
+BOLT-INFO: skipping processing xmlTextReaderSetSchema per user request
+BOLT-INFO: skipping processing xmlTextReaderLocator/1(*2) per user request
+BOLT-INFO: skipping processing xmlTextReaderSchemaValidateCtxt per user request
+BOLT-INFO: skipping processing xmlTextReaderSchemaValidateInternal/1(*2) per user request
+BOLT-INFO: skipping processing xmlTextReaderSchemaValidate per user request
+BOLT-INFO: skipping processing xmlTextReaderRelaxNGValidateCtxt per user request
+BOLT-INFO: skipping processing xmlTextReaderRelaxNGValidateInternal/1(*2) per user request
+BOLT-INFO: skipping processing xmlTextReaderRelaxNGValidate per user request
+BOLT-INFO: skipping processing xmlTextReaderIsNamespaceDecl per user request
+BOLT-INFO: skipping processing xmlTextReaderConstXmlVersion per user request
+BOLT-INFO: skipping processing xmlTextReaderStandalone per user request
+BOLT-INFO: skipping processing xmlTextReaderLocatorLineNumber per user request
+BOLT-INFO: skipping processing xmlTextReaderLocatorBaseURI per user request
+BOLT-INFO: skipping processing xmlTextReaderSetErrorHandler per user request
+BOLT-INFO: skipping processing xmlTextReaderSetStructuredErrorHandler per user request
+BOLT-INFO: skipping processing xmlTextReaderGetErrorHandler per user request
+BOLT-INFO: skipping processing xmlTextReaderSetResourceLoader per user request
+BOLT-INFO: skipping processing xmlTextReaderIsValid per user request
+BOLT-INFO: skipping processing xmlTextReaderSetup per user request
+BOLT-INFO: skipping processing xmlTextReaderSetMaxAmplification per user request
+BOLT-INFO: skipping processing xmlTextReaderGetLastError per user request
+BOLT-INFO: skipping processing xmlTextReaderByteConsumed per user request
+BOLT-INFO: skipping processing xmlReaderWalker per user request
+BOLT-INFO: skipping processing xmlReaderForDoc per user request
+BOLT-INFO: skipping processing xmlReaderForMemory per user request
+BOLT-INFO: skipping processing xmlReaderForFile per user request
+BOLT-INFO: skipping processing xmlReaderForFd per user request
+BOLT-INFO: skipping processing xmlReaderForIO per user request
+BOLT-INFO: skipping processing xmlReaderNewWalker per user request
+BOLT-INFO: skipping processing xmlReaderNewDoc per user request
+BOLT-INFO: skipping processing xmlReaderNewMemory per user request
+BOLT-INFO: skipping processing xmlReaderNewFile per user request
+BOLT-INFO: skipping processing xmlReaderNewFd per user request
+BOLT-INFO: skipping processing xmlReaderNewIO per user request
+BOLT-INFO: skipping processing xmlTextReaderFreeProp/1(*2) per user request
+BOLT-INFO: skipping processing xmlTextReaderFreeNodeList/1(*2) per user request
+BOLT-INFO: skipping processing xmlRegNewExecCtxt per user request
+BOLT-INFO: skipping processing xmlRegFreeExecCtxt per user request
+BOLT-INFO: skipping processing xmlRegExecPushString per user request
+BOLT-INFO: skipping processing xmlRegExecPushStringInternal/1(*2) per user request
+BOLT-INFO: skipping processing xmlRegExecPushString2 per user request
+BOLT-INFO: skipping processing xmlRegCompactPushString/1(*2) per user request
+BOLT-INFO: skipping processing xmlRegExecNextValues per user request
+BOLT-INFO: skipping processing xmlRegExecGetValues/1(*2) per user request
+BOLT-INFO: skipping processing xmlRegExecErrInfo per user request
+BOLT-INFO: skipping processing xmlRegExecClearErrors/1(*2) per user request
+BOLT-INFO: skipping processing xmlRegexpPrint per user request
+BOLT-INFO: skipping processing xmlRegexpCompile per user request
+BOLT-INFO: skipping processing xmlRegStatePush/1(*2) per user request
+BOLT-INFO: skipping processing xmlRegexpErrCompile/1(*2) per user request
+BOLT-INFO: skipping processing xmlFAEliminateEpsilonTransitions/1(*2) per user request
+BOLT-INFO: skipping processing xmlRegEpxFromParse/1(*2) per user request
+BOLT-INFO: skipping processing xmlRegFreeParserCtxt/1(*2) per user request
+BOLT-INFO: skipping processing xmlRegexpExec per user request
+BOLT-INFO: skipping processing xmlRegexpIsDeterminist per user request
+BOLT-INFO: skipping processing xmlNewAutomata per user request
+BOLT-INFO: skipping processing xmlRegFreeState/1(*2) per user request
+BOLT-INFO: skipping processing xmlFAComputesDeterminism/1(*2) per user request
+BOLT-INFO: skipping processing xmlFreeAutomata per user request
+BOLT-INFO: skipping processing xmlRegFreeRegexp per user request
+BOLT-INFO: skipping processing xmlRegFreeAtom/1(*2) per user request
+BOLT-INFO: skipping processing xmlAutomataSetFlags/1(*2) per user request
+BOLT-INFO: skipping processing xmlAutomataGetInitState per user request
+BOLT-INFO: skipping processing xmlAutomataSetFinalState per user request
+BOLT-INFO: skipping processing xmlAutomataNewTransition per user request
+BOLT-INFO: skipping processing xmlRegNewAtom/1(*2) per user request
+BOLT-INFO: skipping processing xmlFAGenerateTransitions/1(*2) per user request
+BOLT-INFO: skipping processing xmlAutomataNewTransition2 per user request
+BOLT-INFO: skipping processing xmlAutomataNewNegTrans per user request
+BOLT-INFO: skipping processing xmlAutomataNewCountTrans2 per user request
+BOLT-INFO: skipping processing xmlRegGetCounter/1(*2) per user request
+BOLT-INFO: skipping processing xmlRegStateAddTrans/1(*2) per user request
+BOLT-INFO: skipping processing xmlRegAtomPush/1(*2) per user request
+BOLT-INFO: skipping processing xmlAutomataNewCountTrans per user request
+BOLT-INFO: skipping processing xmlAutomataNewOnceTrans2 per user request
+BOLT-INFO: skipping processing xmlAutomataNewOnceTrans per user request
+BOLT-INFO: skipping processing xmlAutomataNewState per user request
+BOLT-INFO: skipping processing xmlAutomataNewEpsilon per user request
+BOLT-INFO: skipping processing xmlAutomataNewAllTrans per user request
+BOLT-INFO: skipping processing xmlAutomataNewCounter per user request
+BOLT-INFO: skipping processing xmlAutomataNewCountedTrans per user request
+BOLT-INFO: skipping processing xmlFAGenerateCountedEpsilonTransition/1(*2) per user request
+BOLT-INFO: skipping processing xmlAutomataNewCounterTrans per user request
+BOLT-INFO: skipping processing xmlAutomataCompile per user request
+BOLT-INFO: skipping processing xmlAutomataIsDeterminist per user request
+BOLT-INFO: skipping processing xmlFARegExecSaveInputString/1(*2) per user request
+BOLT-INFO: skipping processing xmlRegStrEqualWildcard/1(*2) per user request
+BOLT-INFO: skipping processing xmlFARegExecSave/1(*2) per user request
+BOLT-INFO: skipping processing xmlFAParseBranch/1(*2) per user request
+BOLT-INFO: skipping processing xmlFAParseAtom/1(*2) per user request
+BOLT-INFO: skipping processing xmlFAParseQuantifier/1(*2) per user request
+BOLT-INFO: skipping processing xmlFAParseCharGroup/1(*2) per user request
+BOLT-INFO: skipping processing xmlFAParseCharClassEsc/1(*2) per user request
+BOLT-INFO: skipping processing xmlFAParsePosCharGroup/1(*2) per user request
+BOLT-INFO: skipping processing xmlFAParseCharRange/1(*2) per user request
+BOLT-INFO: skipping processing parse_escaped_codepoint/1(*2) per user request
+BOLT-INFO: skipping processing xmlRegAtomAddRange/1(*2) per user request
+BOLT-INFO: skipping processing parse_escaped_codeunit/1(*2) per user request
+BOLT-INFO: skipping processing xmlFAParseCharProp/1(*2) per user request
+BOLT-INFO: skipping processing xmlFAReduceEpsilonTransitions/1(*2) per user request
+BOLT-INFO: skipping processing xmlFAFinishReduceEpsilonTransitions/1(*2) per user request
+BOLT-INFO: skipping processing xmlRegCheckCharacter/1(*2) per user request
+BOLT-INFO: skipping processing xmlRegCheckCharacterRange/1(*2) per user request
+BOLT-INFO: skipping processing xmlUCSIsCatNl/1(*2) per user request
+BOLT-INFO: skipping processing xmlUCSIsCatPc/1(*2) per user request
+BOLT-INFO: skipping processing xmlUCSIsCatZs/1(*2) per user request
+BOLT-INFO: skipping processing xmlUCSIsBlock/1(*2) per user request
+BOLT-INFO: skipping processing xmlFACompareAtoms/1(*2) per user request
+BOLT-INFO: skipping processing xmlFARecurseDeterminism/1(*2) per user request
+BOLT-INFO: skipping processing xmlFAFinishRecurseDeterminism/1(*2) per user request
+BOLT-INFO: skipping processing xmlRegCopyAtom/1(*2) per user request
+BOLT-INFO: skipping processing xmlRelaxNGFree per user request
+BOLT-INFO: skipping processing xmlRelaxNGFreeGrammar/1(*2) per user request
+BOLT-INFO: skipping processing xmlRelaxNGFreeDefine/1(*2) per user request
+BOLT-INFO: skipping processing xmlRelaxParserSetFlag per user request
+BOLT-INFO: skipping processing xmlRelaxParserSetIncLImit per user request
+BOLT-INFO: skipping processing xmlRelaxNGInitTypes per user request
+BOLT-INFO: skipping processing xmlRelaxNGRegisterTypeLibrary/1(*2) per user request
+BOLT-INFO: skipping processing xmlRelaxNGSchemaTypeHave/1(*2) per user request
+BOLT-INFO: skipping processing xmlRelaxNGSchemaTypeCheck/1(*2) per user request
+BOLT-INFO: skipping processing xmlRelaxNGSchemaTypeCompare/1(*2) per user request
+BOLT-INFO: skipping processing xmlRelaxNGSchemaFacetCheck/1(*2) per user request
+BOLT-INFO: skipping processing xmlRelaxNGSchemaFreeValue/1(*2) per user request
+BOLT-INFO: skipping processing xmlRelaxNGDefaultTypeHave/1(*2) per user request
+BOLT-INFO: skipping processing xmlRelaxNGDefaultTypeCheck/1(*2) per user request
+BOLT-INFO: skipping processing xmlRelaxNGDefaultTypeCompare/1(*2) per user request
+BOLT-INFO: skipping processing xmlRelaxNGFreeTypeLibrary/1(*2) per user request
+BOLT-INFO: skipping processing xmlRelaxNGNewParserCtxt per user request
+BOLT-INFO: skipping processing xmlRngPErrMemory/1(*2) per user request
+BOLT-INFO: skipping processing xmlRelaxNGNewMemParserCtxt per user request
+BOLT-INFO: skipping processing xmlRelaxNGNewDocParserCtxt per user request
+BOLT-INFO: skipping processing xmlRelaxNGFreeParserCtxt per user request
+BOLT-INFO: skipping processing xmlRelaxNGFreeDocument/1(*2) per user request
+BOLT-INFO: skipping processing xmlRelaxNGParse per user request
+BOLT-INFO: skipping processing xmlRngPErr/1(*2) per user request
+BOLT-INFO: skipping processing xmlRelaxReadFile/1(*2) per user request
+BOLT-INFO: skipping processing xmlRelaxNGParseDocument/1(*2) per user request
+BOLT-INFO: skipping processing xmlRelaxNGComputeInterleaves/1(*2) per user request
+BOLT-INFO: skipping processing xmlRelaxNGNewDefine/1(*2) per user request
+BOLT-INFO: skipping processing xmlRelaxNGTryCompile/1(*2) per user request
+BOLT-INFO: skipping processing xmlRelaxNGSetParserErrors per user request
+BOLT-INFO: skipping processing xmlRelaxNGGetParserErrors per user request
+BOLT-INFO: skipping processing xmlRelaxNGSetParserStructuredErrors per user request
+BOLT-INFO: skipping processing xmlRelaxNGSetResourceLoader per user request
+BOLT-INFO: skipping processing xmlRelaxNGDump per user request
+BOLT-INFO: skipping processing xmlRelaxNGDumpTree per user request
+BOLT-INFO: skipping processing xmlRelaxNGValidatePushElement per user request
+BOLT-INFO: skipping processing xmlRelaxNGAddValidError/1(*2) per user request
+BOLT-INFO: skipping processing xmlRelaxNGValidateProgressiveCallback/1(*2) per user request
+BOLT-INFO: skipping processing xmlRelaxNGElemPush/1(*2) per user request
+BOLT-INFO: skipping processing xmlRelaxNGValidatePushCData per user request
+BOLT-INFO: skipping processing xmlRelaxNGValidatePopElement per user request
+BOLT-INFO: skipping processing xmlRelaxNGValidateFullElement per user request
+BOLT-INFO: skipping processing xmlRelaxNGNewValidState/1(*2) per user request
+BOLT-INFO: skipping processing xmlRelaxNGValidateDefinition/1(*2) per user request
+BOLT-INFO: skipping processing xmlRelaxNGFreeValidState/1(*2) per user request
+BOLT-INFO: skipping processing xmlRelaxNGValidCtxtClearErrors per user request
+BOLT-INFO: skipping processing xmlRelaxNGPopErrors/1(*2) per user request
+BOLT-INFO: skipping processing xmlRelaxNGNewValidCtxt per user request
+BOLT-INFO: skipping processing xmlRngVErrMemory/1(*2) per user request
+BOLT-INFO: skipping processing xmlRelaxNGFreeValidCtxt per user request
+BOLT-INFO: skipping processing xmlRelaxNGFreeStates/1(*2) per user request
+BOLT-INFO: skipping processing xmlRelaxNGSetValidErrors per user request
+BOLT-INFO: skipping processing xmlRelaxNGSetValidStructuredErrors per user request
+BOLT-INFO: skipping processing xmlRelaxNGGetValidErrors per user request
+BOLT-INFO: skipping processing xmlRelaxNGValidateDoc per user request
+BOLT-INFO: skipping processing xmlRelaxNGNormalize/1(*2) per user request
+BOLT-INFO: skipping processing xmlRelaxNGCleanupTree/1(*2) per user request
+BOLT-INFO: skipping processing xmlRelaxNGRemoveRedefine/1(*2) per user request
+BOLT-INFO: skipping processing xmlRelaxNGNormExtSpace/1(*2) per user request
+BOLT-INFO: skipping processing xmlRelaxNGParseGrammar/1(*2) per user request
+BOLT-INFO: skipping processing xmlRelaxNGParseStart/1(*2) per user request
+BOLT-INFO: skipping processing xmlRelaxNGCheckCycles/1(*2) per user request
+BOLT-INFO: skipping processing xmlRelaxNGSimplify/1(*2) per user request
+BOLT-INFO: skipping processing xmlRelaxNGCheckRules/1(*2) per user request
+BOLT-INFO: skipping processing xmlRelaxNGParseGrammarContent/1(*2) per user request
+BOLT-INFO: skipping processing xmlRelaxNGCheckCombine/1(*2) per user request
+BOLT-INFO: skipping processing xmlRelaxNGCheckReference/1(*2) per user request
+BOLT-INFO: skipping processing xmlRelaxNGParsePatterns/1(*2) per user request
+BOLT-INFO: skipping processing xmlRelaxNGParseElement/1(*2) per user request
+BOLT-INFO: skipping processing xmlRelaxNGParsePattern/1(*2) per user request
+BOLT-INFO: skipping processing xmlRelaxNGParseNameClass/1(*2) per user request
+BOLT-INFO: skipping processing xmlRelaxNGParseExceptNameClass/1(*2) per user request
+BOLT-INFO: skipping processing xmlRelaxNGParseInterleave/1(*2) per user request
+BOLT-INFO: skipping processing xmlRelaxNGProcessExternalRef/1(*2) per user request
+BOLT-INFO: skipping processing xmlRelaxNGGetDataTypeLibrary/1(*2) per user request
+BOLT-INFO: skipping processing xmlRelaxNGParseImportRef/1(*2) per user request
+BOLT-INFO: skipping processing xmlRelaxNGCheckGroupAttrs/1(*2) per user request
+BOLT-INFO: skipping processing xmlRelaxNGCheckChoiceDeterminism/1(*2) per user request
+BOLT-INFO: skipping processing xmlRelaxNGGetElements/1(*2) per user request
+BOLT-INFO: skipping processing xmlRelaxNGCompareNameClasses/1(*2) per user request
+BOLT-INFO: skipping processing xmlRelaxNGElementMatch/1(*2) per user request
+BOLT-INFO: skipping processing xmlRelaxNGDumpValidError/1(*2) per user request
+BOLT-INFO: skipping processing xmlRelaxNGShowValidError/1(*2) per user request
+BOLT-INFO: skipping processing xmlRngVErr/1(*2) per user request
+BOLT-INFO: skipping processing xmlRelaxNGIsNullable/1(*2) per user request
+BOLT-INFO: skipping processing xmlRelaxNGIsCompilable/1(*2) per user request
+BOLT-INFO: skipping processing xmlRelaxNGCompile/1(*2) per user request
+BOLT-INFO: skipping processing xmlRelaxNGDumpDefine/1(*2) per user request
+BOLT-INFO: skipping processing xmlRelaxNGValidateAttributeList/1(*2) per user request
+BOLT-INFO: skipping processing xmlRelaxNGValidateElementEnd/1(*2) per user request
+BOLT-INFO: skipping processing xmlRelaxNGLogBestError/1(*2) per user request
+BOLT-INFO: skipping processing xmlRelaxNGValidateAttribute/1(*2) per user request
+BOLT-INFO: skipping processing xmlRelaxNGAttributeMatch/1(*2) per user request
+BOLT-INFO: skipping processing xmlRelaxNGValidateValue/1(*2) per user request
+BOLT-INFO: skipping processing xmlRelaxNGValidateDatatype/1(*2) per user request
+BOLT-INFO: skipping processing xmlRelaxNGSkipIgnored/1(*2) per user request
+BOLT-INFO: skipping processing xmlRelaxNGNewStates/1(*2) per user request
+BOLT-INFO: skipping processing xmlRelaxNGValidateState/1(*2) per user request
+BOLT-INFO: skipping processing xmlRelaxNGAddStates/1(*2) per user request
+BOLT-INFO: skipping processing xmlRelaxNGValidateCompiledContent/1(*2) per user request
+BOLT-INFO: skipping processing xmlRelaxNGValidateDefinitionList/1(*2) per user request
+BOLT-INFO: skipping processing xmlRelaxNGCopyValidState/1(*2) per user request
+BOLT-INFO: skipping processing xmlRelaxNGValidateCompiledCallback/1(*2) per user request
+BOLT-INFO: skipping processing xmlRelaxNGNodeMatchesList/1(*2) per user request
+BOLT-INFO: skipping processing xmlRelaxNGCheckRules.specialized.1/1(*2) per user request
+BOLT-INFO: skipping processing xmlRelaxNGCheckRules.specialized.3/1(*2) per user request
+BOLT-INFO: skipping processing xmlRelaxNGCheckRules.specialized.4/1(*2) per user request
+BOLT-INFO: skipping processing xmlRelaxNGCheckRules.specialized.5/1(*2) per user request
+BOLT-INFO: skipping processing xmlRelaxNGCheckRules.specialized.6/1(*2) per user request
+BOLT-INFO: skipping processing xmlRelaxNGCheckRules.specialized.7/1(*2) per user request
+BOLT-INFO: skipping processing xmlRelaxNGCheckRules.specialized.8/1(*2) per user request
+BOLT-INFO: skipping processing xmlSchemaNewFacet per user request
+BOLT-INFO: skipping processing xmlSchemaFreeWildcard per user request
+BOLT-INFO: skipping processing xmlSchemaFreeFacet per user request
+BOLT-INFO: skipping processing xmlSchemaFreeType per user request
+BOLT-INFO: skipping processing xmlSchemaFree per user request
+BOLT-INFO: skipping processing xmlSchemaBucketFreeEntry/1(*2) per user request
+BOLT-INFO: skipping processing xmlSchemaBucketFree/1(*2) per user request
+BOLT-INFO: skipping processing xmlSchemaDump per user request
+BOLT-INFO: skipping processing xmlSchemaTypeDumpEntry/1(*2) per user request
+BOLT-INFO: skipping processing xmlSchemaElementDump/1(*2) per user request
+BOLT-INFO: skipping processing xmlSchemaNewParserCtxt per user request
+BOLT-INFO: skipping processing xmlSchemaNewMemParserCtxt per user request
+BOLT-INFO: skipping processing xmlSchemaNewDocParserCtxt per user request
+BOLT-INFO: skipping processing xmlSchemaFreeParserCtxt per user request
+BOLT-INFO: skipping processing xmlSchemaFreeValidCtxt per user request
+BOLT-INFO: skipping processing xmlSchemaConstructionCtxtFree/1(*2) per user request
+BOLT-INFO: skipping processing xmlSchemaCheckFacet per user request
+BOLT-INFO: skipping processing xmlSchemaInternalErr/1(*2) per user request
+BOLT-INFO: skipping processing xmlSchemaVCheckCVCSimpleType/1(*2) per user request
+BOLT-INFO: skipping processing xmlSchemaFacetTypeToString/1(*2) per user request
+BOLT-INFO: skipping processing xmlSchemaFormatQName/1(*2) per user request
+BOLT-INFO: skipping processing xmlSchemaCustomErr4/1(*2) per user request
+BOLT-INFO: skipping processing xmlSchemaParse per user request
+BOLT-INFO: skipping processing xmlSchemaNewSchema/1(*2) per user request
+BOLT-INFO: skipping processing xmlSchemaConstructionCtxtCreate/1(*2) per user request
+BOLT-INFO: skipping processing xmlSchemaAddSchemaDoc/1(*2) per user request
+BOLT-INFO: skipping processing xmlSchemaParseNewDocWithContext/1(*2) per user request
+BOLT-INFO: skipping processing xmlSchemaFixupComponents/1(*2) per user request
+BOLT-INFO: skipping processing xmlSchemaSetParserErrors per user request
+BOLT-INFO: skipping processing xmlSchemaSetValidErrors per user request
+BOLT-INFO: skipping processing xmlSchemaSetParserStructuredErrors per user request
+BOLT-INFO: skipping processing xmlSchemaSetValidStructuredErrors per user request
+BOLT-INFO: skipping processing xmlSchemaGetParserErrors per user request
+BOLT-INFO: skipping processing xmlSchemaSetResourceLoader per user request
+BOLT-INFO: skipping processing xmlSchemaNewValidCtxt per user request
+BOLT-INFO: skipping processing xmlSchemaVErrMemory/1(*2) per user request
+BOLT-INFO: skipping processing xmlSchemaItemListCreate/1(*2) per user request
+BOLT-INFO: skipping processing xmlSchemaValidateSetFilename per user request
+BOLT-INFO: skipping processing xmlSchemaClearAttrInfos/1(*2) per user request
+BOLT-INFO: skipping processing xmlSchemaClearElemInfo/1(*2) per user request
+BOLT-INFO: skipping processing xmlSchemaIsValid per user request
+BOLT-INFO: skipping processing xmlSchemaGetValidErrors per user request
+BOLT-INFO: skipping processing xmlSchemaSetValidOptions per user request
+BOLT-INFO: skipping processing xmlSchemaValidCtxtGetOptions per user request
+BOLT-INFO: skipping processing xmlSchemaValidateOneElement per user request
+BOLT-INFO: skipping processing xmlSchemaVStart/1(*2) per user request
+BOLT-INFO: skipping processing xmlSchemaValidateDoc per user request
+BOLT-INFO: skipping processing xmlSchemaSAXPlug per user request
+BOLT-INFO: skipping processing xmlSchemaSAXHandleStartElementNs/1(*2) per user request
+BOLT-INFO: skipping processing xmlSchemaSAXHandleEndElementNs/1(*2) per user request
+BOLT-INFO: skipping processing xmlSchemaSAXHandleText/1(*2) per user request
+BOLT-INFO: skipping processing xmlSchemaSAXHandleCDataSection/1(*2) per user request
+BOLT-INFO: skipping processing xmlSchemaSAXHandleReference/1(*2) per user request
+BOLT-INFO: skipping processing internalSubsetSplit/1(*2) per user request
+BOLT-INFO: skipping processing isStandaloneSplit/1(*2) per user request
+BOLT-INFO: skipping processing hasInternalSubsetSplit/1(*2) per user request
+BOLT-INFO: skipping processing hasExternalSubsetSplit/1(*2) per user request
+BOLT-INFO: skipping processing resolveEntitySplit/1(*2) per user request
+BOLT-INFO: skipping processing getEntitySplit/1(*2) per user request
+BOLT-INFO: skipping processing entityDeclSplit/1(*2) per user request
+BOLT-INFO: skipping processing notationDeclSplit/1(*2) per user request
+BOLT-INFO: skipping processing attributeDeclSplit/1(*2) per user request
+BOLT-INFO: skipping processing elementDeclSplit/1(*2) per user request
+BOLT-INFO: skipping processing unparsedEntityDeclSplit/1(*2) per user request
+BOLT-INFO: skipping processing setDocumentLocatorSplit/1(*2) per user request
+BOLT-INFO: skipping processing startDocumentSplit/1(*2) per user request
+BOLT-INFO: skipping processing endDocumentSplit/1(*2) per user request
+BOLT-INFO: skipping processing processingInstructionSplit/1(*2) per user request
+BOLT-INFO: skipping processing commentSplit/1(*2) per user request
+BOLT-INFO: skipping processing warningSplit/1(*2) per user request
+BOLT-INFO: skipping processing errorSplit/1(*2) per user request
+BOLT-INFO: skipping processing fatalErrorSplit/1(*2) per user request
+BOLT-INFO: skipping processing getParameterEntitySplit/1(*2) per user request
+BOLT-INFO: skipping processing externalSubsetSplit/1(*2) per user request
+BOLT-INFO: skipping processing charactersSplit/1(*2) per user request
+BOLT-INFO: skipping processing ignorableWhitespaceSplit/1(*2) per user request
+BOLT-INFO: skipping processing cdataBlockSplit/1(*2) per user request
+BOLT-INFO: skipping processing referenceSplit/1(*2) per user request
+BOLT-INFO: skipping processing startElementNsSplit/1(*2) per user request
+BOLT-INFO: skipping processing endElementNsSplit/1(*2) per user request
+BOLT-INFO: skipping processing xmlSchemaPreRun/1(*2) per user request
+BOLT-INFO: skipping processing xmlSchemaSAXUnplug per user request
+BOLT-INFO: skipping processing xmlSchemaPostRun/1(*2) per user request
+BOLT-INFO: skipping processing xmlSchemaValidateSetLocator per user request
+BOLT-INFO: skipping processing xmlSchemaValidateStream per user request
+BOLT-INFO: skipping processing xmlSchemaValidateStreamInternal/1(*2) per user request
+BOLT-INFO: skipping processing xmlSchemaValidateFile per user request
+BOLT-INFO: skipping processing xmlSchemaValidCtxtGetParserCtxt per user request
+BOLT-INFO: skipping processing xmlSchemaComponentListFree/1(*2) per user request
+BOLT-INFO: skipping processing xmlSchemaTypeDump/1(*2) per user request
+BOLT-INFO: skipping processing xmlSchemaContentModelDump/1(*2) per user request
+BOLT-INFO: skipping processing xmlSchemaPErrMemory/1(*2) per user request
+BOLT-INFO: skipping processing xmlSchemaSubstGroupFreeEntry/1(*2) per user request
+BOLT-INFO: skipping processing xmlSchemaErr4Line/1(*2) per user request
+BOLT-INFO: skipping processing xmlSchemaVErrFull/1(*2) per user request
+BOLT-INFO: skipping processing xmlSchemaPErrFull/1(*2) per user request
+BOLT-INFO: skipping processing xmlSchemaGetComponentNode/1(*2) per user request
+BOLT-INFO: skipping processing xmlSchemaFormatItemForReport/1(*2) per user request
+BOLT-INFO: skipping processing xmlSchemaFormatNodeForError/1(*2) per user request
+BOLT-INFO: skipping processing xmlSchemaGetComponentQName/1(*2) per user request
+BOLT-INFO: skipping processing xmlSchemaGetComponentDesignation/1(*2) per user request
+BOLT-INFO: skipping processing xmlSchemaItemTypeToStr/1(*2) per user request
+BOLT-INFO: skipping processing xmlSchemaGetSchemaBucketByTNS/1(*2) per user request
+BOLT-INFO: skipping processing xmlSchemaCustomWarning/1(*2) per user request
+BOLT-INFO: skipping processing xmlSchemaGetChameleonSchemaBucket/1(*2) per user request
+BOLT-INFO: skipping processing xmlSchemaItemListAdd/1(*2) per user request
+BOLT-INFO: skipping processing xmlSchemaGetPropNode/1(*2) per user request
+BOLT-INFO: skipping processing xmlSchemaPValAttrNode/1(*2) per user request
+BOLT-INFO: skipping processing xmlSchemaGetNodeContent/1(*2) per user request
+BOLT-INFO: skipping processing xmlSchemaPSimpleTypeErr/1(*2) per user request
+BOLT-INFO: skipping processing xmlSchemaPValAttrBlockFinal/1(*2) per user request
+BOLT-INFO: skipping processing xmlSchemaPValAttrNodeID/1(*2) per user request
+BOLT-INFO: skipping processing xmlSchemaPValAttrNodeValue/1(*2) per user request
+BOLT-INFO: skipping processing xmlSchemaParseAnnotation/1(*2) per user request
+BOLT-INFO: skipping processing xmlSchemaParseComplexType/1(*2) per user request
+BOLT-INFO: skipping processing xmlSchemaParseSimpleType/1(*2) per user request
+BOLT-INFO: skipping processing xmlSchemaParseElement/1(*2) per user request
+BOLT-INFO: skipping processing xmlSchemaParseAttributeGroupDefinition/1(*2) per user request
+BOLT-INFO: skipping processing xmlSchemaParseModelGroupDefinition/1(*2) per user request
+BOLT-INFO: skipping processing xmlSchemaPContentErr/1(*2) per user request
+BOLT-INFO: skipping processing xmlSchemaPIllegalAttrErr/1(*2) per user request
+BOLT-INFO: skipping processing xmlSchemaPValAttr/1(*2) per user request
+BOLT-INFO: skipping processing xmlSchemaParseNewDoc/1(*2) per user request
+BOLT-INFO: skipping processing xmlSchemaPCustomErrExt/1(*2) per user request
+BOLT-INFO: skipping processing xmlSchemaNewParserCtxtUseDict/1(*2) per user request
+BOLT-INFO: skipping processing xmlSchemaParseIncludeOrRedefine/1(*2) per user request
+BOLT-INFO: skipping processing xmlSchemaAddType/1(*2) per user request
+BOLT-INFO: skipping processing xmlSchemaPGetBoolNodeValue/1(*2) per user request
+BOLT-INFO: skipping processing xmlSchemaParseModelGroup/1(*2) per user request
+BOLT-INFO: skipping processing xmlSchemaParseModelGroupDefRef/1(*2) per user request
+BOLT-INFO: skipping processing xmlSchemaParseLocalAttributes/1(*2) per user request
+BOLT-INFO: skipping processing xmlSchemaParseAnyAttribute/1(*2) per user request
+BOLT-INFO: skipping processing xmlSchemaAddItemSize/1(*2) per user request
+BOLT-INFO: skipping processing xmlSchemaAddAnnotation/1(*2) per user request
+BOLT-INFO: skipping processing xmlSchemaParseRestriction/1(*2) per user request
+BOLT-INFO: skipping processing xmlSchemaParseExtension/1(*2) per user request
+BOLT-INFO: skipping processing xmlSchemaPValAttrNodeQName/1(*2) per user request
+BOLT-INFO: skipping processing xmlSchemaPValAttrNodeQNameValue/1(*2) per user request
+BOLT-INFO: skipping processing xmlGetBooleanProp/1(*2) per user request
+BOLT-INFO: skipping processing xmlSchemaAddModelGroup/1(*2) per user request
+BOLT-INFO: skipping processing xmlGetMinOccurs/1(*2) per user request
+BOLT-INFO: skipping processing xmlGetMaxOccurs/1(*2) per user request
+BOLT-INFO: skipping processing xmlSchemaPCheckParticleCorrect_2/1(*2) per user request
+BOLT-INFO: skipping processing xmlSchemaAddParticle/1(*2) per user request
+BOLT-INFO: skipping processing xmlSchemaPCustomAttrErr/1(*2) per user request
+BOLT-INFO: skipping processing xmlSchemaAddWildcard/1(*2) per user request
+BOLT-INFO: skipping processing xmlSchemaParseWildcardNs/1(*2) per user request
+BOLT-INFO: skipping processing xmlSchemaNewWildcardNsConstraint/1(*2) per user request
+BOLT-INFO: skipping processing xmlSchemaCheckReference/1(*2) per user request
+BOLT-INFO: skipping processing xmlSchemaNewQNameRef/1(*2) per user request
+BOLT-INFO: skipping processing xmlSchemaPMutualExclAttrErr/1(*2) per user request
+BOLT-INFO: skipping processing xmlSchemaAddAttributeUse/1(*2) per user request
+BOLT-INFO: skipping processing xmlSchemaAddAttribute/1(*2) per user request
+BOLT-INFO: skipping processing xmlSchemaAddAttributeUseProhib/1(*2) per user request
+BOLT-INFO: skipping processing xmlSchemaParseUnion/1(*2) per user request
+BOLT-INFO: skipping processing xmlSchemaParseIDCSelectorAndField/1(*2) per user request
+BOLT-INFO: skipping processing xmlSchemaAddComponents/1(*2) per user request
+BOLT-INFO: skipping processing xmlSchemaResolveElementReferences/1(*2) per user request
+BOLT-INFO: skipping processing xmlSchemaFixupSimpleTypeStageOne/1(*2) per user request
+BOLT-INFO: skipping processing xmlSchemaFixupSimpleTypeStageTwo/1(*2) per user request
+BOLT-INFO: skipping processing xmlSchemaCheckAttrPropsCorrect/1(*2) per user request
+BOLT-INFO: skipping processing xmlSchemaCheckAttrUsePropsCorrect/1(*2) per user request
+BOLT-INFO: skipping processing xmlSchemaCheckAGPropsCorrect/1(*2) per user request
+BOLT-INFO: skipping processing xmlSchemaCheckSRCRedefineSecond/1(*2) per user request
+BOLT-INFO: skipping processing xmlSchemaFixupComplexType/1(*2) per user request
+BOLT-INFO: skipping processing xmlSchemaCheckElementDeclComponent/1(*2) per user request
+BOLT-INFO: skipping processing xmlSchemaBuildContentModel/1(*2) per user request
+BOLT-INFO: skipping processing xmlSchemaFindRedefCompInGraph/1(*2) per user request
+BOLT-INFO: skipping processing xmlSchemaGetType/1(*2) per user request
+BOLT-INFO: skipping processing xmlSchemaPResCompAttrErr/1(*2) per user request
+BOLT-INFO: skipping processing xmlSchemaGetElem/1(*2) per user request
+BOLT-INFO: skipping processing xmlSchemaGetNamedComponent/1(*2) per user request
+BOLT-INFO: skipping processing xmlSchemaGetAttributeDecl/1(*2) per user request
+BOLT-INFO: skipping processing xmlSchemaCheckTypeDefCircularInternal/1(*2) per user request
+BOLT-INFO: skipping processing xmlSchemaGetCircModelGrDefRef/1(*2) per user request
+BOLT-INFO: skipping processing xmlSchemaCheckAttrGroupCircularRecur/1(*2) per user request
+BOLT-INFO: skipping processing xmlSchemaExpandAttributeGroupRefs/1(*2) per user request
+BOLT-INFO: skipping processing xmlSchemaCloneWildcardNsConstraints/1(*2) per user request
+BOLT-INFO: skipping processing xmlSchemaCheckUnionTypeDefCircularRecur/1(*2) per user request
+BOLT-INFO: skipping processing xmlSchemaTypeFixup/1(*2) per user request
+BOLT-INFO: skipping processing xmlSchemaCheckFacetValues/1(*2) per user request
+BOLT-INFO: skipping processing xmlSchemaDeriveAndValidateFacets/1(*2) per user request
+BOLT-INFO: skipping processing xmlSchemaTypeFixupWhitespace/1(*2) per user request
+BOLT-INFO: skipping processing xmlSchemaTypeFixupOptimFacets/1(*2) per user request
+BOLT-INFO: skipping processing xmlSchemaPIllegalFacetAtomicErr/1(*2) per user request
+BOLT-INFO: skipping processing xmlSchemaPIllegalFacetListUnionErr/1(*2) per user request
+BOLT-INFO: skipping processing xmlSchemaCheckCOSSTDerivedOK/1(*2) per user request
+BOLT-INFO: skipping processing xmlSchemaDeriveFacetErr/1(*2) per user request
+BOLT-INFO: skipping processing xmlSchemaAreValuesEqual/1(*2) per user request
+BOLT-INFO: skipping processing xmlSchemaCheckDerivationOKRestriction2to4/1(*2) per user request
+BOLT-INFO: skipping processing xmlSchemaPAttrUseErr4/1(*2) per user request
+BOLT-INFO: skipping processing xmlSchemaCheckCTComponent/1(*2) per user request
+BOLT-INFO: skipping processing xmlSchemaIsParticleEmptiable/1(*2) per user request
+BOLT-INFO: skipping processing xmlSchemaGetParticleEmptiable/1(*2) per user request
+BOLT-INFO: skipping processing xmlSchemaCheckSubstGroupCircular/1(*2) per user request
+BOLT-INFO: skipping processing xmlSchemaBuildAContentModel/1(*2) per user request
+BOLT-INFO: skipping processing xmlSchemaBuildContentModelForSubstGroup/1(*2) per user request
+BOLT-INFO: skipping processing xmlSchemaNormalizeValue/1(*2) per user request
+BOLT-INFO: skipping processing xmlSchemaValidateNotation/1(*2) per user request
+BOLT-INFO: skipping processing xmlSchemaValidateFacets/1(*2) per user request
+BOLT-INFO: skipping processing xmlSchemaSimpleTypeErr/1(*2) per user request
+BOLT-INFO: skipping processing xmlSchemaLookupNamespace/1(*2) per user request
+BOLT-INFO: skipping processing xmlSchemaGetNotation/1(*2) per user request
+BOLT-INFO: skipping processing xmlSchemaFacetErr/1(*2) per user request
+BOLT-INFO: skipping processing xmlSchemaGetCanonValueWhtspExt_1/1(*2) per user request
+BOLT-INFO: skipping processing xmlFreeIDCHashEntry/1(*2) per user request
+BOLT-INFO: skipping processing xmlSchemaIDCFreeBinding/1(*2) per user request
+BOLT-INFO: skipping processing xmlSchemaValidatorPushElem/1(*2) per user request
+BOLT-INFO: skipping processing xmlSchemaValidatorPushAttribute/1(*2) per user request
+BOLT-INFO: skipping processing xmlSchemaValidateElem/1(*2) per user request
+BOLT-INFO: skipping processing xmlSchemaVPushText/1(*2) per user request
+BOLT-INFO: skipping processing xmlSchemaValidatorPopElem/1(*2) per user request
+BOLT-INFO: skipping processing xmlSchemaGetFreshAttrInfo/1(*2) per user request
+BOLT-INFO: skipping processing xmlSchemaAugmentImportedIDC/1(*2) per user request
+BOLT-INFO: skipping processing xmlSchemaXPathEvaluate/1(*2) per user request
+BOLT-INFO: skipping processing xmlSchemaVAttributesComplex/1(*2) per user request
+BOLT-INFO: skipping processing xmlSchemaVAttributesSimple/1(*2) per user request
+BOLT-INFO: skipping processing xmlSchemaAugmentIDC/1(*2) per user request
+BOLT-INFO: skipping processing xmlSchemaProcessXSIType/1(*2) per user request
+BOLT-INFO: skipping processing xmlSchemaVContentModelCallback/1(*2) per user request
+BOLT-INFO: skipping processing xmlSchemaComplexTypeErr/1(*2) per user request
+BOLT-INFO: skipping processing xmlSchemaIDCAddStateObject/1(*2) per user request
+BOLT-INFO: skipping processing xmlSchemaXPathProcessHistory/1(*2) per user request
+BOLT-INFO: skipping processing xmlSchemaIllegalAttrErr/1(*2) per user request
+BOLT-INFO: skipping processing xmlSchemaIDCStoreNodeTableItem/1(*2) per user request
+BOLT-INFO: skipping processing xmlSchemaVAddNodeQName/1(*2) per user request
+BOLT-INFO: skipping processing xmlSchemaFormatIDCKeySequence_1/1(*2) per user request
+BOLT-INFO: skipping processing xmlSchemaVCheckINodeDataType/1(*2) per user request
+BOLT-INFO: skipping processing xmlSchemaCheckCOSValidDefault/1(*2) per user request
+BOLT-INFO: skipping processing xmlSchemaKeyrefErr/1(*2) per user request
+BOLT-INFO: skipping processing xmlSchemaValidateStreamLocator/1(*2) per user request
+BOLT-INFO: skipping processing xmlSchemaInitTypes per user request
+BOLT-INFO: skipping processing xmlSchemaInitBasicType/1(*2) per user request
+BOLT-INFO: skipping processing xmlSchemaCleanupTypesInternal/1(*2) per user request
+BOLT-INFO: skipping processing xmlSchemaIsBuiltInTypeFacet per user request
+BOLT-INFO: skipping processing xmlSchemaGetBuiltInType per user request
+BOLT-INFO: skipping processing xmlSchemaValueAppend per user request
+BOLT-INFO: skipping processing xmlSchemaValueGetNext per user request
+BOLT-INFO: skipping processing xmlSchemaValueGetAsString per user request
+BOLT-INFO: skipping processing xmlSchemaValueGetAsBoolean per user request
+BOLT-INFO: skipping processing xmlSchemaNewStringValue per user request
+BOLT-INFO: skipping processing xmlSchemaNewNOTATIONValue per user request
+BOLT-INFO: skipping processing xmlSchemaNewQNameValue per user request
+BOLT-INFO: skipping processing xmlSchemaFreeValue per user request
+BOLT-INFO: skipping processing xmlSchemaGetPredefinedType per user request
+BOLT-INFO: skipping processing xmlSchemaGetBuiltInListSimpleTypeItemType per user request
+BOLT-INFO: skipping processing xmlSchemaWhiteSpaceReplace per user request
+BOLT-INFO: skipping processing xmlSchemaCollapseString per user request
+BOLT-INFO: skipping processing xmlSchemaValPredefTypeNode per user request
+BOLT-INFO: skipping processing xmlSchemaValAtomicType/1(*2) per user request
+BOLT-INFO: skipping processing xmlSchemaValPredefTypeNodeNoNorm per user request
+BOLT-INFO: skipping processing xmlSchemaValidatePredefinedType per user request
+BOLT-INFO: skipping processing xmlSchemaCopyValue per user request
+BOLT-INFO: skipping processing xmlSchemaCompareValues per user request
+BOLT-INFO: skipping processing xmlSchemaCompareValuesInternal/1(*2) per user request
+BOLT-INFO: skipping processing xmlSchemaCompareValuesWhtsp per user request
+BOLT-INFO: skipping processing xmlSchemaGetFacetValueAsULong per user request
+BOLT-INFO: skipping processing xmlSchemaValidateListSimpleTypeFacet per user request
+BOLT-INFO: skipping processing xmlSchemaValidateFacet per user request
+BOLT-INFO: skipping processing xmlSchemaValidateLengthFacet per user request
+BOLT-INFO: skipping processing xmlSchemaValidateLengthFacetInternal/1(*2) per user request
+BOLT-INFO: skipping processing xmlSchemaValidateLengthFacetWhtsp per user request
+BOLT-INFO: skipping processing xmlSchemaValidateFacetInternal/1(*2) per user request
+BOLT-INFO: skipping processing xmlSchemaValidateFacetWhtsp per user request
+BOLT-INFO: skipping processing xmlSchemaGetCanonValue per user request
+BOLT-INFO: skipping processing xmlSchemaDateNormalize/1(*2) per user request
+BOLT-INFO: skipping processing xmlSchemaGetCanonValueWhtsp per user request
+BOLT-INFO: skipping processing xmlSchemaGetValType per user request
+BOLT-INFO: skipping processing xmlSchemaFreeTypeEntry/1(*2) per user request
+BOLT-INFO: skipping processing xmlSchemaValidateDuration/1(*2) per user request
+BOLT-INFO: skipping processing xmlSchemaCheckLanguageType/1(*2) per user request
+BOLT-INFO: skipping processing xmlSchemaValAtomicListNode/1(*2) per user request
+BOLT-INFO: skipping processing xmlSchemaStrip/1(*2) per user request
+BOLT-INFO: skipping processing _xmlSchemaBase64Decode/1(*2) per user request
+BOLT-INFO: skipping processing xmlSchemaValDecimalCompareWithInteger/1(*2) per user request
+BOLT-INFO: skipping processing xmlSchemaValDecimalCompare/1(*2) per user request
+BOLT-INFO: skipping processing _xmlSchemaParseGDay/1(*2) per user request
+BOLT-INFO: skipping processing _xmlSchemaParseTimeZone/1(*2) per user request
+BOLT-INFO: skipping processing _xmlSchemaParseTime/1(*2) per user request
+BOLT-INFO: skipping processing xmlSchemaCompareDurations/1(*2) per user request
+BOLT-INFO: skipping processing xmlSchemaComparePreserveReplaceStrings/1(*2) per user request
+BOLT-INFO: skipping processing xmlSchemaComparePreserveCollapseStrings/1(*2) per user request
+BOLT-INFO: skipping processing xmlSchemaCompareReplacedStrings/1(*2) per user request
+BOLT-INFO: skipping processing xmlSchemaCompareReplaceCollapseStrings/1(*2) per user request
+BOLT-INFO: skipping processing xmlSchemaCompareNormStrings/1(*2) per user request
+BOLT-INFO: skipping processing _xmlSchemaDateCastYMToDays/1(*2) per user request
+BOLT-INFO: skipping processing xmlSchemaNormLen/1(*2) per user request
+BOLT-INFO: skipping processing xmlSchemaValDecimalGetSignificantDigitCount/1(*2) per user request
+BOLT-INFO: skipping processing xmlXIncludeNewContext per user request
+BOLT-INFO: skipping processing xmlXIncludeFreeContext per user request
+BOLT-INFO: skipping processing xmlXIncludeFreeRef/1(*2) per user request
+BOLT-INFO: skipping processing xmlXIncludeGetLastError per user request
+BOLT-INFO: skipping processing xmlXIncludeSetErrorHandler per user request
+BOLT-INFO: skipping processing xmlXIncludeSetResourceLoader per user request
+BOLT-INFO: skipping processing xmlXIncludeSetFlags per user request
+BOLT-INFO: skipping processing xmlXIncludeSetStreamingMode/1(*2) per user request
+BOLT-INFO: skipping processing xmlXIncludeProcessTreeFlagsData per user request
+BOLT-INFO: skipping processing xmlXIncludeProcessFlagsData per user request
+BOLT-INFO: skipping processing xmlXIncludeProcessFlags per user request
+BOLT-INFO: skipping processing xmlXIncludeProcess per user request
+BOLT-INFO: skipping processing xmlXIncludeProcessTreeFlags per user request
+BOLT-INFO: skipping processing xmlXIncludeProcessTree per user request
+BOLT-INFO: skipping processing xmlXIncludeProcessNode per user request
+BOLT-INFO: skipping processing xmlXIncludeDoProcess/1(*2) per user request
+BOLT-INFO: skipping processing xmlXIncludeExpandNode/1(*2) per user request
+BOLT-INFO: skipping processing xmlXIncludeErr/1(*2) per user request
+BOLT-INFO: skipping processing xmlXIncludeErrMemory/1(*2) per user request
+BOLT-INFO: skipping processing xmlXIncludeGetProp/1(*2) per user request
+BOLT-INFO: skipping processing xmlXIncludeLoadTxt/1(*2) per user request
+BOLT-INFO: skipping processing xmlXIncludeLoadFallback/1(*2) per user request
+BOLT-INFO: skipping processing xmlXIncludeBaseFixup/1(*2) per user request
+BOLT-INFO: skipping processing xmlXIncludeCopyXPointer/1(*2) per user request
+BOLT-INFO: skipping processing xmlXIncludeMergeEntity/1(*2) per user request
+BOLT-INFO: skipping processing xmlXIncludeCopyNode/1(*2) per user request
+BOLT-INFO: skipping processing xmlXPathInit per user request
+BOLT-INFO: skipping processing libxml_domnode_binary_insertion_sort/1(*2) per user request
+BOLT-INFO: skipping processing libxml_domnode_binary_insertion_sort_start/1(*2) per user request
+BOLT-INFO: skipping processing libxml_domnode_tim_sort/1(*2) per user request
+BOLT-INFO: skipping processing PUSH_NEXT/1(*2) per user request
+BOLT-INFO: skipping processing xmlXPathErrMemory/1(*2) per user request
+BOLT-INFO: skipping processing xmlXPathPErrMemory/1(*2) per user request
+BOLT-INFO: skipping processing xmlXPathErr per user request
+BOLT-INFO: skipping processing xmlXPathErrFmt/1(*2) per user request
+BOLT-INFO: skipping processing xmlXPatherror per user request
+BOLT-INFO: skipping processing xmlXPathDebugDumpObject per user request
+BOLT-INFO: skipping processing xmlXPathDebugDumpCompExpr per user request
+BOLT-INFO: skipping processing xmlXPathDebugDumpStepOp/1(*2) per user request
+BOLT-INFO: skipping processing xmlXPathContextSetCache per user request
+BOLT-INFO: skipping processing xmlXPathValuePop per user request
+BOLT-INFO: skipping processing xmlXPathPopBoolean per user request
+BOLT-INFO: skipping processing xmlXPathCastToBoolean per user request
+BOLT-INFO: skipping processing xmlXPathPopNumber per user request
+BOLT-INFO: skipping processing xmlXPathCastToNumberInternal/1(*2) per user request
+BOLT-INFO: skipping processing xmlXPathPopString per user request
+BOLT-INFO: skipping processing xmlXPathCastToString per user request
+BOLT-INFO: skipping processing xmlXPathPopNodeSet per user request
+BOLT-INFO: skipping processing xmlXPathPopExternal per user request
+BOLT-INFO: skipping processing xmlXPathCmpNodes per user request
+BOLT-INFO: skipping processing xmlXPathNodeSetSort per user request
+BOLT-INFO: skipping processing xmlXPathNodeSetFreeNs per user request
+BOLT-INFO: skipping processing xmlXPathFreeNodeSet per user request
+BOLT-INFO: skipping processing xmlXPathNodeSetContains per user request
+BOLT-INFO: skipping processing xmlXPathNodeSetAddNs per user request
+BOLT-INFO: skipping processing xmlXPathNodeSetAdd per user request
+BOLT-INFO: skipping processing xmlXPathNodeSetMerge per user request
+BOLT-INFO: skipping processing xmlXPathNodeSetDel per user request
+BOLT-INFO: skipping processing xmlXPathNodeSetRemove per user request
+BOLT-INFO: skipping processing xmlXPathNewNodeSet per user request
+BOLT-INFO: skipping processing xmlXPathNewValueTree per user request
+BOLT-INFO: skipping processing xmlXPathNewNodeSetList per user request
+BOLT-INFO: skipping processing xmlXPathFreeNodeSetList per user request
+BOLT-INFO: skipping processing xmlXPathDifference per user request
+BOLT-INFO: skipping processing xmlXPathIntersection per user request
+BOLT-INFO: skipping processing xmlXPathDistinctSorted per user request
+BOLT-INFO: skipping processing xmlXPathCastNodeToString per user request
+BOLT-INFO: skipping processing xmlXPathDistinct per user request
+BOLT-INFO: skipping processing xmlXPathHasSameNodes per user request
+BOLT-INFO: skipping processing xmlXPathNodeLeadingSorted per user request
+BOLT-INFO: skipping processing xmlXPathNodeLeading per user request
+BOLT-INFO: skipping processing xmlXPathLeadingSorted per user request
+BOLT-INFO: skipping processing xmlXPathLeading per user request
+BOLT-INFO: skipping processing xmlXPathNodeTrailingSorted per user request
+BOLT-INFO: skipping processing xmlXPathNodeTrailing per user request
+BOLT-INFO: skipping processing xmlXPathTrailingSorted per user request
+BOLT-INFO: skipping processing xmlXPathTrailing per user request
+BOLT-INFO: skipping processing xmlXPathRegisterFunc per user request
+BOLT-INFO: skipping processing xmlXPathRegisterFuncNS per user request
+BOLT-INFO: skipping processing xmlXPathRegisterFuncLookup per user request
+BOLT-INFO: skipping processing xmlXPathFunctionLookup per user request
+BOLT-INFO: skipping processing xmlXPathRegisteredFuncsCleanup per user request
+BOLT-INFO: skipping processing xmlXPathRegisterVariable per user request
+BOLT-INFO: skipping processing xmlXPathRegisterVariableNS per user request
+BOLT-INFO: skipping processing xmlXPathFreeObjectEntry/1(*2) per user request
+BOLT-INFO: skipping processing xmlXPathRegisterVariableLookup per user request
+BOLT-INFO: skipping processing xmlXPathVariableLookup per user request
+BOLT-INFO: skipping processing xmlXPathVariableLookupNS per user request
+BOLT-INFO: skipping processing xmlXPathRegisteredVariablesCleanup per user request
+BOLT-INFO: skipping processing xmlXPathRegisterNs per user request
+BOLT-INFO: skipping processing xmlXPathNsLookup per user request
+BOLT-INFO: skipping processing xmlXPathRegisteredNsCleanup per user request
+BOLT-INFO: skipping processing xmlXPathNewFloat per user request
+BOLT-INFO: skipping processing xmlXPathNewBoolean per user request
+BOLT-INFO: skipping processing xmlXPathNewString per user request
+BOLT-INFO: skipping processing xmlXPathWrapString per user request
+BOLT-INFO: skipping processing xmlXPathNewCString per user request
+BOLT-INFO: skipping processing xmlXPathWrapCString per user request
+BOLT-INFO: skipping processing xmlXPathWrapExternal per user request
+BOLT-INFO: skipping processing xmlXPathCastBooleanToString per user request
+BOLT-INFO: skipping processing xmlXPathCastNumberToString per user request
+BOLT-INFO: skipping processing xmlXPathCastNodeSetToString per user request
+BOLT-INFO: skipping processing xmlXPathConvertString per user request
+BOLT-INFO: skipping processing xmlXPathCastBooleanToNumber per user request
+BOLT-INFO: skipping processing xmlXPathCastStringToNumber per user request
+BOLT-INFO: skipping processing xmlXPathStringEvalNumber per user request
+BOLT-INFO: skipping processing xmlXPathCastNodeToNumber per user request
+BOLT-INFO: skipping processing xmlXPathCastNodeSetToNumber per user request
+BOLT-INFO: skipping processing xmlXPathCastToNumber per user request
+BOLT-INFO: skipping processing xmlXPathConvertNumber per user request
+BOLT-INFO: skipping processing xmlXPathCastNumberToBoolean per user request
+BOLT-INFO: skipping processing xmlXPathCastStringToBoolean per user request
+BOLT-INFO: skipping processing xmlXPathCastNodeSetToBoolean per user request
+BOLT-INFO: skipping processing xmlXPathConvertBoolean per user request
+BOLT-INFO: skipping processing xmlXPathSetErrorHandler per user request
+BOLT-INFO: skipping processing xmlXPathFreeParserContext per user request
+BOLT-INFO: skipping processing xmlXPathEqualNodeSets/1(*2) per user request
+BOLT-INFO: skipping processing xmlXPathEqualNodeSetFloat/1(*2) per user request
+BOLT-INFO: skipping processing xmlXPathEqualValuesCommon/1(*2) per user request
+BOLT-INFO: skipping processing xmlXPathNotEqualValues per user request
+BOLT-INFO: skipping processing xmlXPathCompareValues per user request
+BOLT-INFO: skipping processing xmlXPathCompareNodeSets/1(*2) per user request
+BOLT-INFO: skipping processing xmlXPathCompareNodeSetValue/1(*2) per user request
+BOLT-INFO: skipping processing xmlXPathNumberFunction per user request
+BOLT-INFO: skipping processing xmlXPathValueFlipSign per user request
+BOLT-INFO: skipping processing xmlXPathAddValues per user request
+BOLT-INFO: skipping processing xmlXPathSubValues per user request
+BOLT-INFO: skipping processing xmlXPathMultValues per user request
+BOLT-INFO: skipping processing xmlXPathDivValues per user request
+BOLT-INFO: skipping processing xmlXPathModValues per user request
+BOLT-INFO: skipping processing xmlXPathNextSelf per user request
+BOLT-INFO: skipping processing xmlXPathNextChild per user request
+BOLT-INFO: skipping processing xmlXPathNextDescendant per user request
+BOLT-INFO: skipping processing xmlXPathNextParent per user request
+BOLT-INFO: skipping processing xmlXPathNextAncestor per user request
+BOLT-INFO: skipping processing xmlXPathNextAncestorOrSelf per user request
+BOLT-INFO: skipping processing xmlXPathNextFollowingSibling per user request
+BOLT-INFO: skipping processing xmlXPathNextPrecedingSibling per user request
+BOLT-INFO: skipping processing xmlXPathNextFollowing per user request
+BOLT-INFO: skipping processing xmlXPathNextPreceding per user request
+BOLT-INFO: skipping processing xmlXPathNextNamespace per user request
+BOLT-INFO: skipping processing xmlXPathLastFunction per user request
+BOLT-INFO: skipping processing xmlXPathPositionFunction per user request
+BOLT-INFO: skipping processing xmlXPathIdFunction per user request
+BOLT-INFO: skipping processing xmlXPathGetElementsByIds/1(*2) per user request
+BOLT-INFO: skipping processing xmlXPathLocalNameFunction per user request
+BOLT-INFO: skipping processing xmlXPathNamespaceURIFunction per user request
+BOLT-INFO: skipping processing xmlXPathStringFunction per user request
+BOLT-INFO: skipping processing xmlXPathCacheWrapString/1(*2) per user request
+BOLT-INFO: skipping processing xmlXPathStringLengthFunction per user request
+BOLT-INFO: skipping processing xmlXPathConcatFunction per user request
+BOLT-INFO: skipping processing xmlXPathContainsFunction per user request
+BOLT-INFO: skipping processing xmlXPathStartsWithFunction per user request
+BOLT-INFO: skipping processing xmlXPathSubstringFunction per user request
+BOLT-INFO: skipping processing xmlXPathSubstringBeforeFunction per user request
+BOLT-INFO: skipping processing xmlXPathSubstringAfterFunction per user request
+BOLT-INFO: skipping processing xmlXPathNormalizeFunction per user request
+BOLT-INFO: skipping processing xmlXPathTranslateFunction per user request
+BOLT-INFO: skipping processing xmlXPathCheckOpLimit/1(*2) per user request
+BOLT-INFO: skipping processing xmlXPathBooleanFunction per user request
+BOLT-INFO: skipping processing xmlXPathNotFunction per user request
+BOLT-INFO: skipping processing xmlXPathTrueFunction per user request
+BOLT-INFO: skipping processing xmlXPathFalseFunction per user request
+BOLT-INFO: skipping processing xmlXPathLangFunction per user request
+BOLT-INFO: skipping processing xmlXPathSumFunction per user request
+BOLT-INFO: skipping processing xmlXPathFloorFunction per user request
+BOLT-INFO: skipping processing xmlXPathCeilingFunction per user request
+BOLT-INFO: skipping processing xmlXPathRoundFunction per user request
+BOLT-INFO: skipping processing xmlXPathParseName per user request
+BOLT-INFO: skipping processing xmlXPathEvalPredicate per user request
+BOLT-INFO: skipping processing xmlXPathEvaluatePredicateResult per user request
+BOLT-INFO: skipping processing xmlXPathCompile per user request
+BOLT-INFO: skipping processing xmlXPathCompiledEvalToBoolean per user request
+BOLT-INFO: skipping processing xmlXPathEvalExpr per user request
+BOLT-INFO: skipping processing xmlXPathEval per user request
+BOLT-INFO: skipping processing xmlXPathSetContextNode per user request
+BOLT-INFO: skipping processing xmlXPathNodeEval per user request
+BOLT-INFO: skipping processing xmlXPathEvalExpression per user request
+BOLT-INFO: skipping processing xmlXPathRegisterAllFunctions per user request
+BOLT-INFO: skipping processing xmlXPathNameFunction/1(*2) per user request
+BOLT-INFO: skipping processing xmlXPathCmpNodesExt/1(*2) per user request
+BOLT-INFO: skipping processing libxml_domnode_tim_sort_merge/1(*2) per user request
+BOLT-INFO: skipping processing xmlXPathNodeCollectAndTest/1(*2) per user request
+BOLT-INFO: skipping processing xmlXPathNodeSetMergeAndClear/1(*2) per user request
+BOLT-INFO: skipping processing xmlXPathNodeSetMergeAndClearNoDupls/1(*2) per user request
+BOLT-INFO: skipping processing xmlXPathNextPrecedingInternal/1(*2) per user request
+BOLT-INFO: skipping processing xmlXPathNodeSetClearFromPos/1(*2) per user request
+BOLT-INFO: skipping processing xmlXPathCompOpEvalFirst/1(*2) per user request
+BOLT-INFO: skipping processing xmlXPathCompOpEvalLast/1(*2) per user request
+BOLT-INFO: skipping processing xmlXPathNodeSetKeepLast/1(*2) per user request
+BOLT-INFO: skipping processing xmlXPathCompOpEvalFilterFirst/1(*2) per user request
+BOLT-INFO: skipping processing xmlXPtrNewContext per user request
+BOLT-INFO: skipping processing xmlXPtrEval per user request
+BOLT-INFO: skipping processing xmlXPtrErr/1(*2) per user request
+BOLT-INFO: skipping processing xmlXPtrEvalChildSeq/1(*2) per user request
+BOLT-INFO: potentially escaped address 0x12406c in function xmlXPathCompOpEval/1(*2)
+BOLT-WARNING: failed to post-process indirect branches for deregister_tm_clones/1(*2)
+BOLT-WARNING: failed to post-process indirect branches for register_tm_clones/1(*2)
+BOLT-WARNING: failed to post-process indirect branches for xmlParserNsFree/1(*2)
+BOLT-WARNING: failed to post-process indirect branches for xmlXPathCompOpEval/1(*2)
+BOLT-INFO: Starting pass: pointer-auth-cfi-analyzer
+BOLT-INFO: PointerAuthCFIAnalyzer ran on 1 functions. Ignored 0 functions (0.00%) because of CFI inconsistencies
+BOLT-INFO: Finished pass: pointer-auth-cfi-analyzer
+BOLT-INFO: Starting pass: estimate-edge-counts
+BOLT-INFO: Finished pass: estimate-edge-counts
+BOLT-INFO: Starting pass: set dyno-stats before optimizations
+BOLT-INFO: Finished pass: set dyno-stats before optimizations
+BOLT-INFO: Starting pass: fix-relaxations
+BOLT-INFO: Finished pass: fix-relaxations
+BOLT-INFO: Starting pass: veneer-elimination
+BOLT-INFO: number of removed linker-inserted veneers: 0
+BOLT-INFO: Finished pass: veneer-elimination
+BOLT-INFO: Starting pass: print-stats
+BOLT-INFO: 229 out of 2192 functions in the binary (10.4%) have non-empty execution profile
+BOLT-INFO: 4 functions with profile could not be optimized
+BOLT-INFO: profile for 1 objects was ignored
+BOLT-INFO: top called functions are:
+  xmlCurrentChar : 3007820
+  xmlBufUpdateInput/1(*2) : 1203736
+  xmlXPathNextChildElement/1(*2) : 1200004
+  xmlParserShrink/1(*2) : 1200001
+  xmlBufShrink : 1200000
+  xmlXPathNodeSetAddUnique : 1020003
+  xmlXPathNextDescendantOrSelf : 900004
+  xmlSAX2TextNode/1(*2) : 780001
+  xmlDictOwns : 660417
+  xmlSAX2Text/1(*2) : 600001
+  xmlDictLookupInternal/1(*2) : 540004
+  xmlCharacters/1(*2) : 540001
+  xmlSAX2Characters : 540001
+  xmlDictLookupHashed/1(*2) : 540001
+  xmlParseCharDataInternal/1(*2) : 540001
+  xmlParseQNameHashed/1(*2) : 540001
+  xmlParseNCName/1(*2) : 540001
+  xmlStrEqual : 500156
+  xmlParseEndTag2/1(*2) : 300001
+  nodePush/1(*2) : 300001
+  xmlSAX2EndElementNs : 300001
+  xmlNewDocNodeEatName : 300001
+  nodePop/1(*2) : 300001
+  xmlParseElementStart/1(*2) : 300001
+  nameNsPush/1(*2) : 300001
+  xmlParseStartTag2/1(*2) : 300001
+  xmlSAX2StartElementNs : 300001
+  xmlParseElementEnd/1(*2) : 300001
+  xmlNextChar : 240014
+  xmlXPathFreeObject : 240005
+  xmlXPathValuePush : 240004
+  xmlXPathReleaseObject/1(*2) : 240003
+  xmlFreeNodeList : 240001
+  xmlParseAttValueInternal/1(*2) : 240000
+  xmlIsID : 240000
+  xmlIsRef : 240000
+  xmlSAX2AttributeNs/1(*2) : 240000
+  xmlFreeProp : 240000
+  xmlXPathNextAttribute : 240000
+  xmlDictCombineHash/1(*2) : 180000
+  xmlStrndup : 120421
+  xmlStrdup : 80153
+  xmlXPathWrapNodeSet : 60002
+  xmlXPathNodeSetCreate : 60001
+  xmlXPathCacheNewNodeSet/1(*2) : 60001
+  xmlParseCDSect : 60000
+  xmlXPathEqualValues : 60000
+  xmlXPathEqualNodeSetString/1(*2) : 60000
+  xmlXPathCacheObjectCopy/1(*2) : 60000
+  xmlXPathNodeValHash/1(*2) : 60000
+  xmlSAX2CDataBlock : 60000
+  xmlNewCDataBlock : 60000
+  xmlXPathCacheNewBoolean/1(*2) : 60000
+  xmlXPathCompOpEvalToBoolean/1(*2) : 60000
+  xmlXPathObjectCopy : 60000
+  xmlNodeGetContent : 20148
+  xmlParserGrow/1(*2) : 3737
+  xmlBufAddLen/1(*2) : 3736
+  xmlParserInputBufferGrow : 3736
+  xmlBufEnd : 3736
+  xmlBufGrow/1(*2) : 3736
+  xmlFdRead/1(*2) : 3604
+  xmlBufGrowInternal/1(*2) : 3602
+  endOfInput/1(*2) : 132
+  xmlIsNameChar/1(*2) : 18
+  xmlInitParser : 14
+  xmlDictAddString/1(*2) : 13
+  xmlXPathCompExprAdd/1(*2) : 11
+  xmlXPathOptimizeExpression/1(*2) : 11
+  xmlMutexUnlock : 9
+  xmlMutexLock : 9
+  xmlGetThreadLocalStorage/1(*2) : 8
+  xmlStrcasecmp : 7
+  xmlStrncasecmp : 6
+  xmlCleanupMutex/1(*2) : 6
+  xmlInitMutex/1(*2) : 6
+  xmlSkipBlankChars : 5
+  xmlScanName/1(*2) : 5
+  xmlIsNameStartChar/1(*2) : 5
+  xmlXPathCompRelationalExpr/1(*2) : 4
+  xmlXPathCompPathExpr/1(*2) : 4
+  xmlXPathParseNCName : 4
+  xmlXPathCompUnaryExpr/1(*2) : 4
+  xmlXPathCompMultiplicativeExpr/1(*2) : 4
+  xmlXPathCompAdditiveExpr/1(*2) : 4
+  xmlXPathCompEqualityExpr/1(*2) : 3
+  xmlHashFree : 3
+  xmlDictLookup : 3
+  xmlXPathCompAndExpr/1(*2) : 3
+  xmlResetError : 3
+  xmlXPathCompileExpr/1(*2) : 3
+  xmlCharStrdup : 2
+  xmlSchemaCleanupTypes : 2
+  xmlStrstr : 2
+  xmlRMutexLock : 2
+  xmlXPathCompStep/1(*2) : 2
+  xmlPosixStrdup/1(*2) : 2
+  xmlXPathCompRelativeLocationPath/1(*2) : 2
+  xmlDictFree : 2
+  xmlGlobalRandom/1(*2) : 2
+BOLT-INFO: Finished pass: print-stats
+BOLT-INFO: Starting pass: profile-quality-stats
+BOLT-INFO: profile quality metrics for the hottest 229 functions (reporting top 5% values): function CFG discontinuity 0.00%; 
+abbreviations: EC = execution count, POS BBs = positive EC BBs
+distribution of NUM(unreachable POS BBs) per function
+  Length     : 229
+  MAX        : 0
+  TOP 1%     : 0
+  TOP 5%     : 0
+  TOP 10%    : 0
+  TOP 20%    : 0
+  TOP 50%    : 0
+  TOP 80%    : 0
+  MIN        : 0
+distribution of SUM_EC(unreachable POS BBs) per function
+  Length     : 229
+  MAX        : 0
+  TOP 1%     : 0
+  TOP 5%     : 0
+  TOP 10%    : 0
+  TOP 20%    : 0
+  TOP 50%    : 0
+  TOP 80%    : 0
+  MIN        : 0
+distribution of [(SUM_EC(unreachable POS BBs) / SUM_EC(all POS BBs))] per function
+  Length     : 229
+  MAX        : 0.00%
+  TOP 1%     : 0.00%
+  TOP 5%     : 0.00%
+  TOP 10%    : 0.00%
+  TOP 20%    : 0.00%
+  TOP 50%    : 0.00%
+  TOP 80%    : 0.00%
+  MIN        : 0.00%
+call graph flow conservation gap 0.00%; 
+distribution of function entry flow conservation gaps
+  Length     : 229
+  MAX        : 0.00%
+  TOP 1%     : 0.00%
+  TOP 5%     : 0.00%
+  TOP 10%    : 0.00%
+  TOP 20%    : 0.00%
+  TOP 50%    : 0.00%
+  TOP 80%    : 0.00%
+  MIN        : 0.00%
+CFG flow conservation gap 0.00% (weighted) 0.00% (worst); distribution of weighted CFG flow conservation gaps
+  Length     : 229
+  MAX        : 0.00%
+  TOP 1%     : 0.00%
+  TOP 5%     : 0.00%
+  TOP 10%    : 0.00%
+  TOP 20%    : 0.00%
+  TOP 50%    : 0.00%
+  TOP 80%    : 0.00%
+  MIN        : 0.00%
+Consider only blocks with execution counts > 500:
+distribution of worst block flow conservation gap per function 
+  Length     : 229
+  MAX        : 0.00%
+  TOP 1%     : 0.00%
+  TOP 5%     : 0.00%
+  TOP 10%    : 0.00%
+  TOP 20%    : 0.00%
+  TOP 50%    : 0.00%
+  TOP 80%    : 0.00%
+  MIN        : 0.00%
+distribution of worst block flow conservation gap (absolute value) per function
+  Length     : 229
+  MAX        : 0
+  TOP 1%     : 0
+  TOP 5%     : 0
+  TOP 10%    : 0
+  TOP 20%    : 0
+  TOP 50%    : 0
+  TOP 80%    : 0
+  MIN        : 0
+exception handling usage 0.00% (of total BBEC) 0.00% (of total InvokeEC)
+distribution of exception handling usage as a fraction of total BBEC of each function
+  Length     : 229
+  MAX        : 0.00%
+  TOP 1%     : 0.00%
+  TOP 5%     : 0.00%
+  TOP 10%    : 0.00%
+  TOP 20%    : 0.00%
+  TOP 50%    : 0.00%
+  TOP 80%    : 0.00%
+  MIN        : 0.00%
+distribution of exception handling usage as a fraction of total InvokeEC of each function
+  Length     : 229
+  MAX        : 0.00%
+  TOP 1%     : 0.00%
+  TOP 5%     : 0.00%
+  TOP 10%    : 0.00%
+  TOP 20%    : 0.00%
+  TOP 50%    : 0.00%
+  TOP 80%    : 0.00%
+  MIN        : 0.00%
+Detailed stats for 5 buckets, each with  45 functions:
+----------------
+|   Bucket 1:  |
+----------------
+execution counts of the 45 functions in the bucket: 60001-3007820
+function CFG discontinuity 0.00%; 
+abbreviations: EC = execution count, POS BBs = positive EC BBs
+distribution of NUM(unreachable POS BBs) per function
+  Length     : 45
+  MAX        : 0
+  TOP 1%     : 0
+  TOP 5%     : 0
+  TOP 10%    : 0
+  TOP 20%    : 0
+  TOP 50%    : 0
+  TOP 80%    : 0
+  MIN        : 0
+distribution of SUM_EC(unreachable POS BBs) per function
+  Length     : 45
+  MAX        : 0
+  TOP 1%     : 0
+  TOP 5%     : 0
+  TOP 10%    : 0
+  TOP 20%    : 0
+  TOP 50%    : 0
+  TOP 80%    : 0
+  MIN        : 0
+distribution of [(SUM_EC(unreachable POS BBs) / SUM_EC(all POS BBs))] per function
+  Length     : 45
+  MAX        : 0.00%
+  TOP 1%     : 0.00%
+  TOP 5%     : 0.00%
+  TOP 10%    : 0.00%
+  TOP 20%    : 0.00%
+  TOP 50%    : 0.00%
+  TOP 80%    : 0.00%
+  MIN        : 0.00%
+call graph flow conservation gap 0.00%; 
+distribution of function entry flow conservation gaps
+  Length     : 45
+  MAX        : 0.00%
+  TOP 1%     : 0.00%
+  TOP 5%     : 0.00%
+  TOP 10%    : 0.00%
+  TOP 20%    : 0.00%
+  TOP 50%    : 0.00%
+  TOP 80%    : 0.00%
+  MIN        : 0.00%
+CFG flow conservation gap 0.00% (weighted) 0.00% (worst); distribution of weighted CFG flow conservation gaps
+  Length     : 45
+  MAX        : 0.00%
+  TOP 1%     : 0.00%
+  TOP 5%     : 0.00%
+  TOP 10%    : 0.00%
+  TOP 20%    : 0.00%
+  TOP 50%    : 0.00%
+  TOP 80%    : 0.00%
+  MIN        : 0.00%
+Consider only blocks with execution counts > 500:
+distribution of worst block flow conservation gap per function 
+  Length     : 45
+  MAX        : 0.00%
+  TOP 1%     : 0.00%
+  TOP 5%     : 0.00%
+  TOP 10%    : 0.00%
+  TOP 20%    : 0.00%
+  TOP 50%    : 0.00%
+  TOP 80%    : 0.00%
+  MIN        : 0.00%
+distribution of worst block flow conservation gap (absolute value) per function
+  Length     : 45
+  MAX        : 0
+  TOP 1%     : 0
+  TOP 5%     : 0
+  TOP 10%    : 0
+  TOP 20%    : 0
+  TOP 50%    : 0
+  TOP 80%    : 0
+  MIN        : 0
+exception handling usage 0.00% (of total BBEC) 0.00% (of total InvokeEC)
+distribution of exception handling usage as a fraction of total BBEC of each function
+  Length     : 45
+  MAX        : 0.00%
+  TOP 1%     : 0.00%
+  TOP 5%     : 0.00%
+  TOP 10%    : 0.00%
+  TOP 20%    : 0.00%
+  TOP 50%    : 0.00%
+  TOP 80%    : 0.00%
+  MIN        : 0.00%
+distribution of exception handling usage as a fraction of total InvokeEC of each function
+  Length     : 45
+  MAX        : 0.00%
+  TOP 1%     : 0.00%
+  TOP 5%     : 0.00%
+  TOP 10%    : 0.00%
+  TOP 20%    : 0.00%
+  TOP 50%    : 0.00%
+  TOP 80%    : 0.00%
+  MIN        : 0.00%
+----------------
+|   Bucket 2:  |
+----------------
+execution counts of the 45 functions in the bucket: 3-60000
+function CFG discontinuity 0.00%; 
+abbreviations: EC = execution count, POS BBs = positive EC BBs
+distribution of NUM(unreachable POS BBs) per function
+  Length     : 45
+  MAX        : 0
+  TOP 1%     : 0
+  TOP 5%     : 0
+  TOP 10%    : 0
+  TOP 20%    : 0
+  TOP 50%    : 0
+  TOP 80%    : 0
+  MIN        : 0
+distribution of SUM_EC(unreachable POS BBs) per function
+  Length     : 45
+  MAX        : 0
+  TOP 1%     : 0
+  TOP 5%     : 0
+  TOP 10%    : 0
+  TOP 20%    : 0
+  TOP 50%    : 0
+  TOP 80%    : 0
+  MIN        : 0
+distribution of [(SUM_EC(unreachable POS BBs) / SUM_EC(all POS BBs))] per function
+  Length     : 45
+  MAX        : 0.00%
+  TOP 1%     : 0.00%
+  TOP 5%     : 0.00%
+  TOP 10%    : 0.00%
+  TOP 20%    : 0.00%
+  TOP 50%    : 0.00%
+  TOP 80%    : 0.00%
+  MIN        : 0.00%
+call graph flow conservation gap 0.00%; 
+distribution of function entry flow conservation gaps
+  Length     : 45
+  MAX        : 0.00%
+  TOP 1%     : 0.00%
+  TOP 5%     : 0.00%
+  TOP 10%    : 0.00%
+  TOP 20%    : 0.00%
+  TOP 50%    : 0.00%
+  TOP 80%    : 0.00%
+  MIN        : 0.00%
+CFG flow conservation gap 0.00% (weighted) 0.00% (worst); distribution of weighted CFG flow conservation gaps
+  Length     : 45
+  MAX        : 0.00%
+  TOP 1%     : 0.00%
+  TOP 5%     : 0.00%
+  TOP 10%    : 0.00%
+  TOP 20%    : 0.00%
+  TOP 50%    : 0.00%
+  TOP 80%    : 0.00%
+  MIN        : 0.00%
+Consider only blocks with execution counts > 500:
+distribution of worst block flow conservation gap per function 
+  Length     : 45
+  MAX        : 0.00%
+  TOP 1%     : 0.00%
+  TOP 5%     : 0.00%
+  TOP 10%    : 0.00%
+  TOP 20%    : 0.00%
+  TOP 50%    : 0.00%
+  TOP 80%    : 0.00%
+  MIN        : 0.00%
+distribution of worst block flow conservation gap (absolute value) per function
+  Length     : 45
+  MAX        : 0
+  TOP 1%     : 0
+  TOP 5%     : 0
+  TOP 10%    : 0
+  TOP 20%    : 0
+  TOP 50%    : 0
+  TOP 80%    : 0
+  MIN        : 0
+exception handling usage 0.00% (of total BBEC) 0.00% (of total InvokeEC)
+distribution of exception handling usage as a fraction of total BBEC of each function
+  Length     : 45
+  MAX        : 0.00%
+  TOP 1%     : 0.00%
+  TOP 5%     : 0.00%
+  TOP 10%    : 0.00%
+  TOP 20%    : 0.00%
+  TOP 50%    : 0.00%
+  TOP 80%    : 0.00%
+  MIN        : 0.00%
+distribution of exception handling usage as a fraction of total InvokeEC of each function
+  Length     : 45
+  MAX        : 0.00%
+  TOP 1%     : 0.00%
+  TOP 5%     : 0.00%
+  TOP 10%    : 0.00%
+  TOP 20%    : 0.00%
+  TOP 50%    : 0.00%
+  TOP 80%    : 0.00%
+  MIN        : 0.00%
+----------------
+|   Bucket 3:  |
+----------------
+execution counts of the 45 functions in the bucket: 1-3
+function CFG discontinuity 0.00%; 
+abbreviations: EC = execution count, POS BBs = positive EC BBs
+distribution of NUM(unreachable POS BBs) per function
+  Length     : 45
+  MAX        : 0
+  TOP 1%     : 0
+  TOP 5%     : 0
+  TOP 10%    : 0
+  TOP 20%    : 0
+  TOP 50%    : 0
+  TOP 80%    : 0
+  MIN        : 0
+distribution of SUM_EC(unreachable POS BBs) per function
+  Length     : 45
+  MAX        : 0
+  TOP 1%     : 0
+  TOP 5%     : 0
+  TOP 10%    : 0
+  TOP 20%    : 0
+  TOP 50%    : 0
+  TOP 80%    : 0
+  MIN        : 0
+distribution of [(SUM_EC(unreachable POS BBs) / SUM_EC(all POS BBs))] per function
+  Length     : 45
+  MAX        : 0.00%
+  TOP 1%     : 0.00%
+  TOP 5%     : 0.00%
+  TOP 10%    : 0.00%
+  TOP 20%    : 0.00%
+  TOP 50%    : 0.00%
+  TOP 80%    : 0.00%
+  MIN        : 0.00%
+call graph flow conservation gap 0.00%; 
+distribution of function entry flow conservation gaps
+  Length     : 45
+  MAX        : 0.00%
+  TOP 1%     : 0.00%
+  TOP 5%     : 0.00%
+  TOP 10%    : 0.00%
+  TOP 20%    : 0.00%
+  TOP 50%    : 0.00%
+  TOP 80%    : 0.00%
+  MIN        : 0.00%
+CFG flow conservation gap 0.00% (weighted) 0.00% (worst); distribution of weighted CFG flow conservation gaps
+  Length     : 45
+  MAX        : 0.00%
+  TOP 1%     : 0.00%
+  TOP 5%     : 0.00%
+  TOP 10%    : 0.00%
+  TOP 20%    : 0.00%
+  TOP 50%    : 0.00%
+  TOP 80%    : 0.00%
+  MIN        : 0.00%
+Consider only blocks with execution counts > 500:
+distribution of worst block flow conservation gap per function 
+  Length     : 45
+  MAX        : 0.00%
+  TOP 1%     : 0.00%
+  TOP 5%     : 0.00%
+  TOP 10%    : 0.00%
+  TOP 20%    : 0.00%
+  TOP 50%    : 0.00%
+  TOP 80%    : 0.00%
+  MIN        : 0.00%
+distribution of worst block flow conservation gap (absolute value) per function
+  Length     : 45
+  MAX        : 0
+  TOP 1%     : 0
+  TOP 5%     : 0
+  TOP 10%    : 0
+  TOP 20%    : 0
+  TOP 50%    : 0
+  TOP 80%    : 0
+  MIN        : 0
+exception handling usage 0.00% (of total BBEC) 0.00% (of total InvokeEC)
+distribution of exception handling usage as a fraction of total BBEC of each function
+  Length     : 45
+  MAX        : 0.00%
+  TOP 1%     : 0.00%
+  TOP 5%     : 0.00%
+  TOP 10%    : 0.00%
+  TOP 20%    : 0.00%
+  TOP 50%    : 0.00%
+  TOP 80%    : 0.00%
+  MIN        : 0.00%
+distribution of exception handling usage as a fraction of total InvokeEC of each function
+  Length     : 45
+  MAX        : 0.00%
+  TOP 1%     : 0.00%
+  TOP 5%     : 0.00%
+  TOP 10%    : 0.00%
+  TOP 20%    : 0.00%
+  TOP 50%    : 0.00%
+  TOP 80%    : 0.00%
+  MIN        : 0.00%
+----------------
+|   Bucket 4:  |
+----------------
+execution counts of the 45 functions in the bucket: 1-1
+function CFG discontinuity 0.00%; 
+abbreviations: EC = execution count, POS BBs = positive EC BBs
+distribution of NUM(unreachable POS BBs) per function
+  Length     : 45
+  MAX        : 0
+  TOP 1%     : 0
+  TOP 5%     : 0
+  TOP 10%    : 0
+  TOP 20%    : 0
+  TOP 50%    : 0
+  TOP 80%    : 0
+  MIN        : 0
+distribution of SUM_EC(unreachable POS BBs) per function
+  Length     : 45
+  MAX        : 0
+  TOP 1%     : 0
+  TOP 5%     : 0
+  TOP 10%    : 0
+  TOP 20%    : 0
+  TOP 50%    : 0
+  TOP 80%    : 0
+  MIN        : 0
+distribution of [(SUM_EC(unreachable POS BBs) / SUM_EC(all POS BBs))] per function
+  Length     : 45
+  MAX        : 0.00%
+  TOP 1%     : 0.00%
+  TOP 5%     : 0.00%
+  TOP 10%    : 0.00%
+  TOP 20%    : 0.00%
+  TOP 50%    : 0.00%
+  TOP 80%    : 0.00%
+  MIN        : 0.00%
+call graph flow conservation gap 0.00%; 
+distribution of function entry flow conservation gaps
+  Length     : 45
+  MAX        : 0.00%
+  TOP 1%     : 0.00%
+  TOP 5%     : 0.00%
+  TOP 10%    : 0.00%
+  TOP 20%    : 0.00%
+  TOP 50%    : 0.00%
+  TOP 80%    : 0.00%
+  MIN        : 0.00%
+CFG flow conservation gap 0.00% (weighted) 0.00% (worst); distribution of weighted CFG flow conservation gaps
+  Length     : 45
+  MAX        : 0.00%
+  TOP 1%     : 0.00%
+  TOP 5%     : 0.00%
+  TOP 10%    : 0.00%
+  TOP 20%    : 0.00%
+  TOP 50%    : 0.00%
+  TOP 80%    : 0.00%
+  MIN        : 0.00%
+Consider only blocks with execution counts > 500:
+distribution of worst block flow conservation gap per function 
+  Length     : 45
+  MAX        : 0.00%
+  TOP 1%     : 0.00%
+  TOP 5%     : 0.00%
+  TOP 10%    : 0.00%
+  TOP 20%    : 0.00%
+  TOP 50%    : 0.00%
+  TOP 80%    : 0.00%
+  MIN        : 0.00%
+distribution of worst block flow conservation gap (absolute value) per function
+  Length     : 45
+  MAX        : 0
+  TOP 1%     : 0
+  TOP 5%     : 0
+  TOP 10%    : 0
+  TOP 20%    : 0
+  TOP 50%    : 0
+  TOP 80%    : 0
+  MIN        : 0
+exception handling usage 0.00% (of total BBEC) 0.00% (of total InvokeEC)
+distribution of exception handling usage as a fraction of total BBEC of each function
+  Length     : 45
+  MAX        : 0.00%
+  TOP 1%     : 0.00%
+  TOP 5%     : 0.00%
+  TOP 10%    : 0.00%
+  TOP 20%    : 0.00%
+  TOP 50%    : 0.00%
+  TOP 80%    : 0.00%
+  MIN        : 0.00%
+distribution of exception handling usage as a fraction of total InvokeEC of each function
+  Length     : 45
+  MAX        : 0.00%
+  TOP 1%     : 0.00%
+  TOP 5%     : 0.00%
+  TOP 10%    : 0.00%
+  TOP 20%    : 0.00%
+  TOP 50%    : 0.00%
+  TOP 80%    : 0.00%
+  MIN        : 0.00%
+----------------
+|   Bucket 5:  |
+----------------
+execution counts of the 45 functions in the bucket: 1-1
+function CFG discontinuity 0.00%; 
+abbreviations: EC = execution count, POS BBs = positive EC BBs
+distribution of NUM(unreachable POS BBs) per function
+  Length     : 45
+  MAX        : 0
+  TOP 1%     : 0
+  TOP 5%     : 0
+  TOP 10%    : 0
+  TOP 20%    : 0
+  TOP 50%    : 0
+  TOP 80%    : 0
+  MIN        : 0
+distribution of SUM_EC(unreachable POS BBs) per function
+  Length     : 45
+  MAX        : 0
+  TOP 1%     : 0
+  TOP 5%     : 0
+  TOP 10%    : 0
+  TOP 20%    : 0
+  TOP 50%    : 0
+  TOP 80%    : 0
+  MIN        : 0
+distribution of [(SUM_EC(unreachable POS BBs) / SUM_EC(all POS BBs))] per function
+  Length     : 45
+  MAX        : 0.00%
+  TOP 1%     : 0.00%
+  TOP 5%     : 0.00%
+  TOP 10%    : 0.00%
+  TOP 20%    : 0.00%
+  TOP 50%    : 0.00%
+  TOP 80%    : 0.00%
+  MIN        : 0.00%
+call graph flow conservation gap 0.00%; 
+distribution of function entry flow conservation gaps
+  Length     : 45
+  MAX        : 0.00%
+  TOP 1%     : 0.00%
+  TOP 5%     : 0.00%
+  TOP 10%    : 0.00%
+  TOP 20%    : 0.00%
+  TOP 50%    : 0.00%
+  TOP 80%    : 0.00%
+  MIN        : 0.00%
+CFG flow conservation gap 0.00% (weighted) 0.00% (worst); distribution of weighted CFG flow conservation gaps
+  Length     : 45
+  MAX        : 0.00%
+  TOP 1%     : 0.00%
+  TOP 5%     : 0.00%
+  TOP 10%    : 0.00%
+  TOP 20%    : 0.00%
+  TOP 50%    : 0.00%
+  TOP 80%    : 0.00%
+  MIN        : 0.00%
+Consider only blocks with execution counts > 500:
+distribution of worst block flow conservation gap per function 
+  Length     : 45
+  MAX        : 0.00%
+  TOP 1%     : 0.00%
+  TOP 5%     : 0.00%
+  TOP 10%    : 0.00%
+  TOP 20%    : 0.00%
+  TOP 50%    : 0.00%
+  TOP 80%    : 0.00%
+  MIN        : 0.00%
+distribution of worst block flow conservation gap (absolute value) per function
+  Length     : 45
+  MAX        : 0
+  TOP 1%     : 0
+  TOP 5%     : 0
+  TOP 10%    : 0
+  TOP 20%    : 0
+  TOP 50%    : 0
+  TOP 80%    : 0
+  MIN        : 0
+exception handling usage 0.00% (of total BBEC) 0.00% (of total InvokeEC)
+distribution of exception handling usage as a fraction of total BBEC of each function
+  Length     : 45
+  MAX        : 0.00%
+  TOP 1%     : 0.00%
+  TOP 5%     : 0.00%
+  TOP 10%    : 0.00%
+  TOP 20%    : 0.00%
+  TOP 50%    : 0.00%
+  TOP 80%    : 0.00%
+  MIN        : 0.00%
+distribution of exception handling usage as a fraction of total InvokeEC of each function
+  Length     : 45
+  MAX        : 0.00%
+  TOP 1%     : 0.00%
+  TOP 5%     : 0.00%
+  TOP 10%    : 0.00%
+  TOP 20%    : 0.00%
+  TOP 50%    : 0.00%
+  TOP 80%    : 0.00%
+  MIN        : 0.00%
+BOLT-INFO: Finished pass: profile-quality-stats
+BOLT-INFO: Starting pass: validate-internal-calls
+BOLT-INFO: Finished pass: validate-internal-calls
+BOLT-INFO: Starting pass: validate-mem-refs
+BOLT-INFO: Finished pass: validate-mem-refs
+BOLT-INFO: Starting pass: shorten-instructions
+BOLT-INFO: Finished pass: shorten-instructions
+BOLT-INFO: Starting pass: remove-nops
+BOLT-INFO: Finished pass: remove-nops
+BOLT-INFO: Starting pass: normalize CFG
+BOLT-INFO: Finished pass: normalize CFG
+BOLT-INFO: Starting pass: identical-code-folding
+BOLT-INFO: ICF folded 1 out of 2261 functions in 3 passes. 0 functions had jump tables.
+BOLT-INFO: Removing all identical functions will save 0.00 KB of code space. Folded functions were called 2 times based on profile.
+BOLT-INFO: Finished pass: identical-code-folding
+BOLT-INFO: Starting pass: indirect-call-promotion
+BOLT-INFO: Finished pass: indirect-call-promotion
+BOLT-INFO: Starting pass: inlining
+BOLT-INFO: Finished pass: inlining
+BOLT-INFO: Starting pass: identical-code-folding
+BOLT-INFO: Finished pass: identical-code-folding
+BOLT-INFO: Starting pass: partial-inlining
+BOLT-INFO: partial inlining: xmlDictCombineHash/1(*2) into xmlParseStartTag2/1(*2) (count 180000, p(fast) 1.000 callee, 1.000 site, 5 insns, 0 renamed regs)
+BOLT-INFO: partial inlining: xmlBufShrink into xmlParserShrink/1(*2) (count 1200000, p(fast) 1.000 callee, 1.000 site, 17 insns, 0 renamed regs)
+BOLT-INFO: partial inlining: 3 callees with a fast region (0 with frame elision); inlined 2 call sites (0 with frame elision, 0 tail calls), 22 instructions copied, 0 registers renamed
+BOLT-INFO: partial inlining: estimated 1380000 calls avoided on fast paths (7.29% of profiled direct calls), 0 slow-path calls re-execute the copied region
+BOLT-INFO: partial inlining: callees without a usable fast region: not-simple=5 entry-not-copyable=3 no-fast-exit=27 stack-access=6 side-effect=1
+BOLT-INFO: Finished pass: partial-inlining
+BOLT-INFO: Starting pass: plt-call-optimization
+BOLT-INFO: Finished pass: plt-call-optimization
+BOLT-INFO: Starting pass: reorder-blocks
+BOLT-INFO: basic block reordering modified layout of 157 functions (68.56% of profiled, 6.94% of total)
+BOLT-INFO: Finished pass: reorder-blocks
+BOLT-INFO: Starting pass: eliminate-unreachable
+BOLT-INFO: removed 1 dead basic block(s) accounting for 4 bytes in function xmlParseStartTag2/1(*2)
+BOLT-INFO: UCE removed 1 blocks and 4 bytes of code
+BOLT-INFO: Finished pass: eliminate-unreachable
+BOLT-INFO: Starting pass: split-functions
+BOLT-INFO: Finished pass: split-functions
+BOLT-INFO: Starting pass: loop-inversion-opt
+BOLT-INFO: 0 Functions were reordered by LoopInversionPass
+BOLT-INFO: Finished pass: loop-inversion-opt
+BOLT-INFO: Starting pass: tail-duplication
+BOLT-INFO: Finished pass: tail-duplication
+BOLT-INFO: Starting pass: fix-branches
+BOLT-INFO: Finished pass: fix-branches
+BOLT-INFO: Starting pass: reorder-functions
+BOLT-INFO: buildCallGraph: 232 nodes, 723 callsites (25 recursive), density = 0.005871, 353 callsites not processed, 22 callsites with invalid profile, used perf data for 0 stale functions.
+BOLT-INFO: Function reordering stats
+BOLT-INFO:  Number of hot functions: 230
+BOLT-INFO:  Number of clusters: 1
+BOLT-INFO:  Final average call distance = 480.0 (8227559279 / 17139248)
+BOLT-INFO:  Total Calls = 17139248
+BOLT-INFO:  Total Calls within 64B = 5244659 (30.60%)
+BOLT-INFO:  Total Calls within 4KB = 16832577 (98.21%)
+BOLT-INFO:  Total Calls within 2MB = 17139248 (100.00%)
+BOLT-INFO: Finished pass: reorder-functions
+BOLT-INFO: Starting pass: populate-output-functions
+BOLT-INFO: Finished pass: populate-output-functions
+BOLT-INFO: Starting pass: split-functions
+BOLT-INFO: Finished pass: split-functions
+BOLT-INFO: Starting pass: print dyno-stats after optimizations
+BOLT-INFO: program-wide dynostats after all optimizations before SCTC and FOP:
+
+           208469081 : executed forward branches
+            74750895 : taken forward branches
+            39349063 : executed backward branches
+            23163561 : taken backward branches
+            31173822 : executed unconditional branches
+            26156161 : all function calls
+             6752841 : indirect calls
+             1607818 : PLT calls
+          1233322025 : executed instructions
+           289702532 : executed load instructions
+           135929266 : executed store instructions
+                   0 : taken jump table branches
+                   0 : taken unknown indirect branches
+           278991966 : total branches
+           129088278 : taken branches
+           149903688 : non-taken conditional branches
+            97914456 : taken conditional branches
+           247818144 : all conditional branches
+                   0 : linker-inserted veneer calls
+
+           216013812 : executed forward branches (+3.6%)
+             7923911 : taken forward branches (-89.4%)
+            31804332 : executed backward branches (-19.2%)
+            16778406 : taken backward branches (-27.6%)
+             8234950 : executed unconditional branches (-73.6%)
+            24776161 : all function calls (-5.3%)
+             6752841 : indirect calls (=)
+             1607818 : PLT calls (=)
+          1201954351 : executed instructions (-2.5%)
+           289702532 : executed load instructions (=)
+           135929266 : executed store instructions (=)
+                   0 : taken jump table branches (=)
+                   0 : taken unknown indirect branches (=)
+           256053094 : total branches (-8.2%)
+            32937267 : taken branches (-74.5%)
+           223115827 : non-taken conditional branches (+48.8%)
+            24702317 : taken conditional branches (-74.8%)
+           247818144 : all conditional branches (=)
+                   0 : linker-inserted veneer calls (=)
+
+BOLT-INFO: Finished pass: print dyno-stats after optimizations
+BOLT-INFO: Starting pass: simplify-conditional-tail-calls
+BOLT-INFO: Finished pass: simplify-conditional-tail-calls
+BOLT-INFO: Starting pass: peepholes
+BOLT-INFO: Finished pass: peepholes
+BOLT-INFO: Starting pass: assign-sections
+BOLT-INFO: Finished pass: assign-sections
+BOLT-INFO: Starting pass: aligner
+BOLT-INFO: Finished pass: aligner
+BOLT-INFO: Starting pass: reorder-data
+BOLT-INFO: Finished pass: reorder-data
+BOLT-INFO: Starting pass: patch-entries
+BOLT-INFO: patching entries in original code
+BOLT-INFO: function xmlGetLocalRngState/1(*2) too small to patch its entry point
+BOLT-WARNING: failed to patch entries in xmlGetLocalRngState/1(*2). The function will not be optimized
+BOLT-INFO: Finished pass: patch-entries
+BOLT-INFO: Starting pass: assign-sections
+BOLT-INFO: Finished pass: assign-sections
+BOLT-INFO: Starting pass: aarch64-relaxation
+BOLT-INFO: Finished pass: aarch64-relaxation
+BOLT-INFO: Starting pass: long-jmp
+BOLT-INFO: Starting stub-insertion pass
+BOLT-INFO: Inserted 83 stubs in the hot area and 66 stubs in the cold area. Shared 0 times, iterated 3 times.
+BOLT-INFO: Finished pass: long-jmp
+BOLT-INFO: Starting pass: pointer-auth-cfi-fixup
+BOLT-INFO: rewritten pac-ret DWARF info in 1 out of 2261 functions (0.04%).
+BOLT-INFO: Finished pass: pointer-auth-cfi-fixup
+BOLT-INFO: Starting pass: finalize-functions
+BOLT-INFO: Finished pass: finalize-functions
+BOLT-INFO: Starting pass: frame-optimizer
+BOLT-INFO: Finished pass: frame-optimizer
+BOLT-INFO: Starting pass: alloc-combiner
+BOLT-INFO: Finished pass: alloc-combiner
+BOLT-INFO: Starting pass: retpoline-insertion
+BOLT-INFO: Finished pass: retpoline-insertion
+BOLT-INFO: Starting pass: inst-lowering
+BOLT-INFO: Finished pass: inst-lowering
+BOLT-INFO: Starting pass: lower-annotations
+BOLT-INFO: Finished pass: lower-annotations
+BOLT-INFO: Starting pass: clean-mc-state
+BOLT-INFO: Finished pass: clean-mc-state
+BOLT-INFO: padding code to 0x600000 to accommodate hot text
+BOLT-INFO: patched build-id (flipped first and last bits)
+BOLT: writing new section .fini_array
+ data at 0xaaaaf87d3320
+ of size 16
+ at offset 1147504 with content size 16
+BOLT: writing new section .init_array
+ data at 0xaaaaf87d0ce0
+ of size 8
+ at offset 1147520 with content size 8
+BOLT: writing new section .data.rel.ro
+ data at 0xaaaaf905e420
+ of size 29344
+ at offset 1147528 with content size 29344
+BOLT: writing new section .data
+ data at 0xaaaaf8d35cf0
+ of size 836
+ at offset 1177568 with content size 836
+BOLT: writing new section .text
+ data at 0xffff76e00000
+ of size 44944
+ at offset 4194304 with content size 44944
+BOLT: writing new section .text.cold
+ data at 0xaaaaf9076640
+ of size 56464
+ at offset 4239296 with content size 56464
+BOLT: writing new section .bolt.new.eh_frame
+ data at 0xaaaaf90656d0
+ of size 22952
+ at offset 6291456 with content size 22952
+BOLT: writing new section .relocated.eh_frame
+ data at 0xaaaaf90e6680
+ of size 108608
+ at offset 6314408 with content size 108608
+BOLT-INFO: not writing section header for section .fini_array
+BOLT-INFO: not writing section header for section .init_array
+BOLT-INFO: not writing section header for section .data.rel.ro
+BOLT-INFO: not writing section header for section .data
+BOLT-INFO: writing section header for .text
+BOLT-INFO: writing section header for .text.cold
+BOLT-INFO: writing section header for .eh_frame
+BOLT-INFO: writing section header for .eh_frame_hdr
+BOLT-INFO: setting __hot_start to 0x400000
+BOLT-INFO: setting __hot_end to 0x40af90
+BOLT-INFO: not writing section header for section .fini_array
+BOLT-INFO: not writing section header for section .init_array
+BOLT-INFO: not writing section header for section .data.rel.ro
+BOLT-INFO: not writing section header for section .data
+BOLT-INFO: writing section header for .text
+BOLT-INFO: writing section header for .text.cold
+BOLT-INFO: writing section header for .eh_frame
+BOLT-INFO: writing section header for .eh_frame_hdr
+BOLT-INFO: writing section header for .note.bolt_info

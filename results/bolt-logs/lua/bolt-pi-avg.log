@@ -474,9 +474,9 @@ BOLT-WARNING: failed to post-process indirect branches for deregister_tm_clones/
 BOLT-WARNING: failed to post-process indirect branches for register_tm_clones/1(*2)
 BOLT-WARNING: failed to post-process indirect branches for lua_gc
 BOLT-WARNING: failed to post-process indirect branches for subexpr/1(*2)
+BOLT-WARNING: failed to post-process indirect branches for luaE_warning/1(*2)
 BOLT-WARNING: failed to post-process indirect branches for luaK_dischargevars/1(*2)
 BOLT-WARNING: failed to post-process indirect branches for statement/1(*2)
-BOLT-WARNING: failed to post-process indirect branches for luaE_warning/1(*2)
 BOLT-WARNING: failed to post-process indirect branches for llex/1(*2)
 BOLT-WARNING: failed to post-process indirect branches for luaV_equalobj/1(*2)
 BOLT-WARNING: failed to post-process indirect branches for match_class/1(*2)
@@ -1359,31 +1359,31 @@ BOLT-INFO: Finished pass: clean-mc-state
 BOLT-INFO: padding code to 0x600000 to accommodate hot text
 BOLT-INFO: patched build-id (flipped first and last bits)
 BOLT: writing new section .fini_array
- data at 0xaaaaeca6a860
+ data at 0xaaab284328a0
  of size 8
  at offset 291984 with content size 8
 BOLT: writing new section .init_array
- data at 0xaaaaec86e4f0
+ data at 0xaaab2822b1b0
  of size 8
  at offset 291992 with content size 8
 BOLT: writing new section .data.rel.ro
- data at 0xaaaaec8e7f60
+ data at 0xaaab2867f290
  of size 4376
  at offset 292000 with content size 4376
 BOLT: writing new section .text
- data at 0xffffb0600000
+ data at 0xffff94200000
  of size 95132
  at offset 4194304 with content size 95132
 BOLT: writing new section .text.cold
- data at 0xaaaaece73c40
+ data at 0xaaab28ca3c40
  of size 36896
  at offset 4289472 with content size 36896
 BOLT: writing new section .bolt.new.eh_frame
- data at 0xaaaaececc010
+ data at 0xaaab28cfc010
  of size 32792
  at offset 6291456 with content size 32792
 BOLT: writing new section .relocated.eh_frame
- data at 0xaaaaecec3ea0
+ data at 0xaaab28cf3ea0
  of size 33116
  at offset 6324248 with content size 33116
 BOLT-INFO: not writing section header for section .fini_array

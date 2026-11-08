@@ -873,13 +873,13 @@ BOLT-WARNING: failed to post-process indirect branches for sqlite3_free
 BOLT-WARNING: failed to post-process indirect branches for sqlite3GetToken/1(*2)
 BOLT-WARNING: failed to post-process indirect branches for sqlite3PcacheRelease/1(*2)
 BOLT-WARNING: failed to post-process indirect branches for sqlite3_step
-BOLT-WARNING: failed to post-process indirect branches for sqlite3_config
 BOLT-WARNING: failed to post-process indirect branches for releasePageNotNull/1(*2)
-BOLT-WARNING: failed to post-process indirect branches for sqlite3DbNNFreeNN/1(*2)
+BOLT-WARNING: failed to post-process indirect branches for sqlite3_config
 BOLT-WARNING: failed to post-process indirect branches for getCellInfo/1(*2)
+BOLT-WARNING: failed to post-process indirect branches for sqlite3DbNNFreeNN/1(*2)
+BOLT-WARNING: failed to post-process indirect branches for sqlite3VdbeSerialGet/1(*2)
 BOLT-WARNING: failed to post-process indirect branches for sqlite3_test_control
 BOLT-WARNING: failed to post-process indirect branches for vdbeCompareMemString/1(*2)
-BOLT-WARNING: failed to post-process indirect branches for sqlite3VdbeSerialGet/1(*2)
 BOLT-WARNING: failed to post-process indirect branches for sqlite3_str_vappendf
 BOLT-WARNING: failed to post-process indirect branches for jsonUnescapeOneChar/1(*2)
 BOLT-WARNING: failed to post-process indirect branches for jsonTranslateBlobToText/1(*2)
@@ -1639,8 +1639,8 @@ BOLT-INFO: basic block reordering modified layout of 668 functions (86.30% of pr
 BOLT-INFO: Finished pass: reorder-blocks
 BOLT-INFO: Starting pass: eliminate-unreachable
 BOLT-INFO: removed 1 dead basic block(s) accounting for 0 bytes in function sqlite3DecOrHexToI64/1(*2)
-BOLT-INFO: removed 1 dead basic block(s) accounting for 0 bytes in function jsonBlobExpandAndAppendNode/1(*2)
 BOLT-INFO: removed 1 dead basic block(s) accounting for 0 bytes in function sqlite3FindTable/1(*2)
+BOLT-INFO: removed 1 dead basic block(s) accounting for 0 bytes in function jsonBlobExpandAndAppendNode/1(*2)
 BOLT-INFO: removed 1 dead basic block(s) accounting for 0 bytes in function codeINTerm/1(*2)
 BOLT-INFO: removed 1 dead basic block(s) accounting for 0 bytes in function sumStep/1(*2)
 BOLT-INFO: UCE removed 5 blocks and 0 bytes of code
@@ -1756,35 +1756,35 @@ BOLT-INFO: Finished pass: clean-mc-state
 BOLT-INFO: padding code to 0x600000 to accommodate hot text
 BOLT-INFO: patched build-id (flipped first and last bits)
 BOLT: writing new section .fini_array
- data at 0xaaaad0365d30
+ data at 0xaaab08b3f2b0
  of size 8
  at offset 1208160 with content size 8
 BOLT: writing new section .init_array
- data at 0xaaaad0365eb0
+ data at 0xaaab08b3f410
  of size 8
  at offset 1208168 with content size 8
 BOLT: writing new section .data.rel.ro
- data at 0xaaaad0190b10
+ data at 0xaaab097bcec0
  of size 5736
  at offset 1208176 with content size 5736
 BOLT: writing new section .data
- data at 0xaaaad0e35250
+ data at 0xaaab0a0a4a00
  of size 12525
  at offset 1214400 with content size 12525
 BOLT: writing new section .text
- data at 0xffffa0200000
+ data at 0xffff9c600000
  of size 405804
  at offset 4194304 with content size 405804
 BOLT: writing new section .text.cold
- data at 0xaaaad3459c40
+ data at 0xaaab0bb9dcc0
  of size 326800
  at offset 4600128 with content size 326800
 BOLT: writing new section .bolt.new.eh_frame
- data at 0xaaaad34a98e0
+ data at 0xaaab0bbed960
  of size 97736
  at offset 6291456 with content size 97736
 BOLT: writing new section .relocated.eh_frame
- data at 0xaaaad32c15a0
+ data at 0xaaab0ba05620
  of size 83612
  at offset 6389192 with content size 83612
 BOLT-INFO: not writing section header for section .fini_array

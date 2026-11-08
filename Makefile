@@ -66,7 +66,7 @@ lint:
 	  apt-get update -qq >/dev/null && \
 	  apt-get install -y -qq shellcheck python3-pyflakes >/dev/null && \
 	  shellcheck -S warning scripts/*.sh benchmarks/realworld/build.sh && \
-	  python3 -m pyflakes scripts/*.py benchmarks/realworld/python/bench.py'
+	  python3 -m pyflakes scripts/*.py benchmarks/realworld/python/bench.py benchmarks/realworld/datagen.py'
 
 clean:
 	rm -rf $(CURDIR)/.work

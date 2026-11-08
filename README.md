@@ -39,23 +39,28 @@ see [`results/REPORT.md`](results/REPORT.md) and
 
 | Workload | Pattern | Speedup | Executed instructions |
 |---|---|---|---:|
-| `mixed` | always-fast and always-slow call sites of one callee | **2.715x** [2.670, 2.745] | -13.0% |
-| `trace` | disabled tracing hook | **1.667x** [1.639, 1.681] | -16.0% |
-| `memo` | memoization cache hit, callee not shrink-wrapped | **1.016x** [1.005, 1.021] | -16.3% |
-| `bufwrite` | buffered writer, bound by a store-to-load chain | 1.001x [0.988, 1.012] | -23.9% |
-| `pool` | free-list allocator, ext-tsp layout interaction | 0.949x [0.936, 0.953] | -25.0% |
-| `unsafe`, `memo-lowhit`, `compute` | unsafe, too cold, or no calls | 0.999-1.002x | 0.00% |
-| SQLite 3.54, Lua 5.5, CPython 3.14, zstd 1.5 | real programs | 0.995-1.008x, all CIs include 1.0 | -0.41% to 0.00% |
-| A/A control | byte-identical copy of the baseline | 0.991-1.007x | - |
+| `mixed` | always-fast and always-slow call sites of one callee | **2.720x** [2.712, 2.742] | -13.0% |
+| `trace` | disabled tracing hook | **1.668x** [1.662, 1.673] | -16.0% |
+| `memo` | memoization cache hit, callee not shrink-wrapped | **1.019x** [1.008, 1.031] | -16.3% |
+| `bufwrite` | buffered writer, bound by a store-to-load chain | 1.004x [0.990, 1.014] | -23.9% |
+| `pool` | free-list allocator, ext-tsp layout interaction | 0.952x [0.944, 0.961] | -25.0% |
+| `unsafe`, `memo-lowhit`, `compute` | unsafe, too cold, or no calls | 0.999-1.005x | 0.00% |
+| jq 1.8 | JSON processor, 26% of direct calls avoided | **1.068x** [1.060, 1.077] | -2.0% |
+| jq 1.8, without the trivial callee `jv_get_kind` | share no existing BOLT pass achieves | **1.022x** [1.009, 1.025] | -0.9% |
+| SQLite 3.54, Lua 5.5, CPython 3.14, zstd 1.5, libxml2 2.15 | real programs | 0.983-1.005x, all CIs include 1.0 | -1.5% to 0.0% |
+| A/A control | byte-identical copy of the baseline | 0.995-1.006x | - |
 
 The pass removes the call, return and frame overhead of hot fast paths and is
-effective where such calls dominate the run time. On the four real programs
-it removes up to 12.7% of the direct calls (Lua), but the saved instructions
-(at most 0.41%) are below the resolution of the measurement (about +-1%, see
-the A/A control). Without `--partial-inline`, the patched `llvm-bolt` writes
+effective where such calls dominate the run time. Among six real programs it
+speeds up jq by 6.8%. Most of that comes from a one-instruction callee that
+BOLT's existing `-inline-all` inlines as well (1.102x on its own, 1.119x
+together with `--partial-inline`). On the other real programs the saved
+instructions (at most 1.5%) are below the resolution of the measurement
+(about +-1%, see the A/A control). jq and libxml2 were chosen by a screening of
+six candidate programs whose procedure and results are in the design
+document. Without `--partial-inline`, the patched `llvm-bolt` writes
 byte-identical binaries to upstream, and no existing BOLT test changes its
 result.
-
 
 ## Repository layout
 
@@ -63,7 +68,7 @@ result.
 |---|---|
 | [`patches/`](patches/) | the LLVM patch (pass, target hooks, 7 lit tests, documentation) and the LLVM commit it applies to |
 | [`docs/design.md`](docs/design.md) | design document: problem, design, correctness argument, implementation, evaluation, limitations |
-| [`benchmarks/`](benchmarks/) | microbenchmarks and build scripts for SQLite, Lua, CPython and zstd |
+| [`benchmarks/`](benchmarks/) | microbenchmarks and build scripts for SQLite, Lua, CPython, zstd, jq and libxml2 |
 | [`scripts/`](scripts/) | profiling, BOLT variant generation, benchmarking, checks and reporting |
 | [`results/`](results/) | the measurements of one complete evaluation run, see [`results/README.md`](results/README.md) |
 | [`docker/`](docker/) | reproducible evaluation image and development environment |
@@ -117,7 +122,7 @@ and `docker load` it, or build it:
 ```bash
 make image          # upstream and patched BOLT, BOLT test suite for both, workloads
 make check-bolt     # results/check-bolt/: test results of both builds, compared
-make experiments    # complete evaluation in one run (about 35 min), updates results/
+make experiments    # complete evaluation in one run (about 50 min), updates results/
 make x86-validate   # functional validation on x86-64 under emulation
 ```
 
@@ -167,4 +172,5 @@ See [CONTRIBUTING.md](CONTRIBUTING.md). Changes are listed in
 Apache License v2.0 with LLVM Exceptions, the license of the LLVM project; see
 [LICENSE](LICENSE). The evaluation downloads and builds third-party software
 under its own license: SQLite (public domain), Lua (MIT), CPython (PSF
-License) and zstd (BSD or GPLv2).
+License), zstd (BSD or GPLv2), jq (MIT; bundled Oniguruma: BSD) and libxml2
+(MIT).

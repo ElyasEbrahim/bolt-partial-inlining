@@ -23,8 +23,8 @@ BOLT-INFO: setting size of function malloc@PLT to 16 (was 0)
 BOLT-INFO: setting size of function printf@PLT to 16 (was 0)
 BOLT-INFO: setting size of function memset@PLT to 16 (was 0)
 BOLT-INFO: pre-processing profile using branch profile reader
-BOLT-WARNING: failed to post-process indirect branches for BOLT-WARNING: failed to post-process indirect branches for deregister_tm_clones/1(*2)register_tm_clones/1(*2)
-
+BOLT-WARNING: failed to post-process indirect branches for register_tm_clones/1(*2)
+BOLT-WARNING: failed to post-process indirect branches for deregister_tm_clones/1(*2)
 BOLT-INFO: Starting pass: pointer-auth-cfi-analyzer
 BOLT-INFO: PointerAuthCFIAnalyzer ran on 1 functions. Ignored 0 functions (0.00%) because of CFI inconsistencies
 BOLT-INFO: Finished pass: pointer-auth-cfi-analyzer
@@ -774,27 +774,27 @@ BOLT-INFO: Finished pass: clean-mc-state
 BOLT-INFO: padding code to 0x600000 to accommodate hot text
 BOLT-INFO: patched build-id (flipped first and last bits)
 BOLT: writing new section .fini_array
- data at 0xaaaaf1f7e1b0
+ data at 0xaaab19b5b1b0
  of size 8
  at offset 3280 with content size 8
 BOLT: writing new section .init_array
- data at 0xaaaaf1f82520
+ data at 0xaaab19b5dfe0
  of size 8
  at offset 3288 with content size 8
 BOLT: writing new section .text
- data at 0xffff9c400000
+ data at 0xffffb4400000
  of size 896
  at offset 4194304 with content size 896
 BOLT: writing new section .text.cold
- data at 0xaaaaf1f649c0
+ data at 0xaaab19b419c0
  of size 88
  at offset 4195200 with content size 88
 BOLT: writing new section .bolt.new.eh_frame
- data at 0xaaaaf1f7ffb0
+ data at 0xaaab19b6a5a0
  of size 368
  at offset 6291456 with content size 368
 BOLT: writing new section .relocated.eh_frame
- data at 0xaaaaf1f792f0
+ data at 0xaaab19b562f0
  of size 308
  at offset 6291824 with content size 308
 BOLT-INFO: not writing section header for section .fini_array

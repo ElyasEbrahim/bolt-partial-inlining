@@ -5701,9 +5701,9 @@ BOLT-WARNING: failed to post-process indirect branches for deregister_tm_clones/
 BOLT-WARNING: failed to post-process indirect branches for register_tm_clones/1(*2)
 BOLT-WARNING: failed to post-process indirect branches for _PyToken_TwoChars
 BOLT-WARNING: failed to post-process indirect branches for PySequence_Contains
+BOLT-WARNING: failed to post-process indirect branches for PyObject_GetAttrString
 BOLT-WARNING: failed to post-process indirect branches for _Py_NewReference
 BOLT-WARNING: failed to post-process indirect branches for _Py_NewReferenceNoTotal
-BOLT-WARNING: failed to post-process indirect branches for PyObject_GetAttrString
 BOLT-WARNING: failed to post-process indirect branches for PyObject_SetAttrString
 BOLT-WARNING: failed to post-process indirect branches for PyMem_RawMalloc
 BOLT-WARNING: failed to post-process indirect branches for PyMem_RawCalloc
@@ -5727,13 +5727,13 @@ BOLT-WARNING: failed to post-process indirect branches for skipitem/1(*2)
 BOLT-WARNING: failed to post-process indirect branches for optimize_load_fast/1(*2)
 BOLT-WARNING: failed to post-process indirect branches for codegen_visit_stmt/1(*2)
 BOLT-WARNING: failed to post-process indirect branches for convertitem/1(*2)
-BOLT-WARNING: failed to post-process indirect branches for _PyCfg_OptimizeCodeUnit/1(*2)
 BOLT-WARNING: failed to post-process indirect branches for countformat/1(*2)
-BOLT-WARNING: failed to post-process indirect branches for r_object/1(*2)
+BOLT-WARNING: failed to post-process indirect branches for _PyCfg_OptimizeCodeUnit/1(*2)
 BOLT-WARNING: failed to post-process indirect branches for _PyConfig_Read/1(*2)
+BOLT-WARNING: failed to post-process indirect branches for r_object/1(*2)
 BOLT-WARNING: failed to post-process indirect branches for do_mkvalue/1(*2)
-BOLT-WARNING: failed to post-process indirect branches for symtable_visit_expr/1(*2)
 BOLT-WARNING: failed to post-process indirect branches for PyMember_GetOne
+BOLT-WARNING: failed to post-process indirect branches for symtable_visit_expr/1(*2)
 BOLT-WARNING: failed to post-process indirect branches for PyMember_SetOne
 BOLT-WARNING: failed to post-process indirect branches for symtable_visit_stmt/1(*2)
 BOLT-WARNING: failed to post-process indirect branches for sre_category/1(*2)
@@ -6532,44 +6532,44 @@ BOLT-INFO: Finished pass: split-functions
 BOLT-INFO: Starting pass: print dyno-stats after optimizations
 BOLT-INFO: program-wide dynostats after all optimizations before SCTC and FOP:
 
-           258612885 : executed forward branches
-           113733791 : taken forward branches
-            33386653 : executed backward branches
-            17279224 : taken backward branches
+           258612691 : executed forward branches
+           113733654 : taken forward branches
+            33386520 : executed backward branches
+            17279035 : taken backward branches
             20559962 : executed unconditional branches
             74667696 : all function calls
             16633820 : indirect calls
              3875896 : PLT calls
-          2299646947 : executed instructions
-           593691163 : executed load instructions
-           337264810 : executed store instructions
+          2299645333 : executed instructions
+           593690865 : executed load instructions
+           337264796 : executed store instructions
                    0 : taken jump table branches
                    0 : taken unknown indirect branches
-           312559500 : total branches
-           151572977 : taken branches
-           160986523 : non-taken conditional branches
-           131013015 : taken conditional branches
-           291999538 : all conditional branches
+           312559173 : total branches
+           151572651 : taken branches
+           160986522 : non-taken conditional branches
+           131012689 : taken conditional branches
+           291999211 : all conditional branches
                    0 : linker-inserted veneer calls
 
-           271983041 : executed forward branches (+5.2%)
-            22885005 : taken forward branches (-79.9%)
-            20016680 : executed backward branches (-40.0%)
-             8702609 : taken backward branches (-49.6%)
+           271983005 : executed forward branches (+5.2%)
+            22885069 : taken forward branches (-79.9%)
+            20016389 : executed backward branches (-40.0%)
+             8702511 : taken backward branches (-49.6%)
              3581713 : executed unconditional branches (-82.6%)
             72171464 : all function calls (-3.3%)
             16633820 : indirect calls (=)
              3875896 : PLT calls (=)
-          2267919523 : executed instructions (-1.4%)
-           589212886 : executed load instructions (-0.8%)
-           332786343 : executed store instructions (-1.3%)
+          2267917911 : executed instructions (-1.4%)
+           589212588 : executed load instructions (-0.8%)
+           332786329 : executed store instructions (-1.3%)
                    0 : taken jump table branches (=)
                    0 : taken unknown indirect branches (=)
-           295581434 : total branches (-5.4%)
-            35169327 : taken branches (-76.8%)
-           260412107 : non-taken conditional branches (+61.8%)
-            31587614 : taken conditional branches (-75.9%)
-           291999721 : all conditional branches (+0.0%)
+           295581107 : total branches (-5.4%)
+            35169293 : taken branches (-76.8%)
+           260411814 : non-taken conditional branches (+61.8%)
+            31587580 : taken conditional branches (-75.9%)
+           291999394 : all conditional branches (+0.0%)
                    0 : linker-inserted veneer calls (=)
 
 BOLT-INFO: Finished pass: print dyno-stats after optimizations
@@ -6666,39 +6666,39 @@ BOLT-INFO: Finished pass: clean-mc-state
 BOLT-INFO: padding code to 0xc00000 to accommodate hot text
 BOLT-INFO: patched build-id (flipped first and last bits)
 BOLT: writing new section .fini_array
- data at 0xaaab1d46c510
+ data at 0xaaaaec4a11b0
  of size 16
  at offset 4995896 with content size 16
 BOLT: writing new section .init_array
- data at 0xaaab1d469990
+ data at 0xaaaaec49beb0
  of size 24
  at offset 4995912 with content size 24
 BOLT: writing new section .data.rel.ro
- data at 0xaaab23870d40
+ data at 0xaaaaf289d9c0
  of size 353096
  at offset 4995968 with content size 353096
 BOLT: writing new section .data
- data at 0xaaab238c70c0
+ data at 0xaaaaf28f3d40
  of size 256816
  at offset 5351360 with content size 256816
 BOLT: writing new section .PyRuntime
- data at 0xaaab23905c00
+ data at 0xaaaaf2932880
  of size 316632
  at offset 5608176 with content size 316632
 BOLT: writing new section .text
- data at 0xffff84200000
+ data at 0xffffb1600000
  of size 692756
  at offset 10485760 with content size 692756
 BOLT: writing new section .text.cold
- data at 0xaaab234afd00
+ data at 0xaaaaf24dc940
  of size 536348
  at offset 11178560 with content size 536348
 BOLT: writing new section .bolt.new.eh_frame
- data at 0xaaab239e4e10
+ data at 0xaaaaf2a11a90
  of size 289928
  at offset 12582912 with content size 289928
 BOLT: writing new section .relocated.eh_frame
- data at 0xaaab239530e0
+ data at 0xaaaaf297fd60
  of size 461276
  at offset 12872840 with content size 461276
 BOLT-INFO: not writing section header for section .fini_array

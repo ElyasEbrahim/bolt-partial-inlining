@@ -24,7 +24,7 @@ OUT=${OUT:-/work/results}
 MICRO_ROUNDS=${MICRO_ROUNDS:-15}
 RW_ROUNDS=${RW_ROUNDS:-30}
 MICRO=(bufwrite memo trace pool mixed memo-lowhit unsafe compute)
-REAL=(sqlite lua cpython zstd-compress zstd-decompress)
+REAL=(sqlite lua cpython zstd-compress zstd-decompress jq libxml2)
 
 # Training runs need ASLR disabled for reproducible profiles (bolt_variants.sh).
 if ! setarch -R true 2> /dev/null; then

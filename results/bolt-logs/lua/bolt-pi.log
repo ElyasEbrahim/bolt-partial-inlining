@@ -477,8 +477,8 @@ BOLT-WARNING: failed to post-process indirect branches for subexpr/1(*2)
 BOLT-WARNING: failed to post-process indirect branches for luaE_warning/1(*2)
 BOLT-WARNING: failed to post-process indirect branches for luaK_dischargevars/1(*2)
 BOLT-WARNING: failed to post-process indirect branches for statement/1(*2)
-BOLT-WARNING: failed to post-process indirect branches for luaV_equalobj/1(*2)
 BOLT-WARNING: failed to post-process indirect branches for llex/1(*2)
+BOLT-WARNING: failed to post-process indirect branches for luaV_equalobj/1(*2)
 BOLT-WARNING: failed to post-process indirect branches for match_class/1(*2)
 BOLT-WARNING: failed to post-process indirect branches for luaV_execute/1(*2)
 BOLT-INFO: Starting pass: pointer-auth-cfi-analyzer
@@ -1354,31 +1354,31 @@ BOLT-INFO: Finished pass: clean-mc-state
 BOLT-INFO: padding code to 0x600000 to accommodate hot text
 BOLT-INFO: patched build-id (flipped first and last bits)
 BOLT: writing new section .fini_array
- data at 0xaaaad99a6510
+ data at 0xaaaaed8d2970
  of size 8
  at offset 291984 with content size 8
 BOLT: writing new section .init_array
- data at 0xaaaad9cc58d0
+ data at 0xaaaaed8a2020
  of size 8
  at offset 291992 with content size 8
 BOLT: writing new section .data.rel.ro
- data at 0xaaaad98a3cd0
+ data at 0xaaaaedc71c10
  of size 4376
  at offset 292000 with content size 4376
 BOLT: writing new section .text
- data at 0xffffb0600000
+ data at 0xffff75a00000
  of size 94684
  at offset 4194304 with content size 94684
 BOLT: writing new section .text.cold
- data at 0xaaaada220c80
+ data at 0xaaaaee0ffcc0
  of size 37024
  at offset 4289024 with content size 37024
 BOLT: writing new section .bolt.new.eh_frame
- data at 0xaaaada258e90
+ data at 0xaaaaee137eb0
  of size 32760
  at offset 6291456 with content size 32760
 BOLT: writing new section .relocated.eh_frame
- data at 0xaaaada270eb0
+ data at 0xaaaaee14fed0
  of size 33116
  at offset 6324216 with content size 33116
 BOLT-INFO: not writing section header for section .fini_array

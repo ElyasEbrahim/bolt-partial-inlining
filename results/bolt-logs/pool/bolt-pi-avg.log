@@ -777,27 +777,27 @@ BOLT-INFO: Finished pass: clean-mc-state
 BOLT-INFO: padding code to 0x600000 to accommodate hot text
 BOLT-INFO: patched build-id (flipped first and last bits)
 BOLT: writing new section .fini_array
- data at 0xaaab031578e0
+ data at 0xaaab162c24e0
  of size 8
  at offset 3328 with content size 8
 BOLT: writing new section .init_array
- data at 0xaaab0316c2b0
+ data at 0xaaab162a98e0
  of size 8
  at offset 3336 with content size 8
 BOLT: writing new section .text
- data at 0xffff88400000
+ data at 0xffff98200000
  of size 924
  at offset 4194304 with content size 924
 BOLT: writing new section .text.cold
- data at 0xaaab0315bcc0
+ data at 0xaaab162adcc0
  of size 168
  at offset 4195264 with content size 168
 BOLT: writing new section .bolt.new.eh_frame
- data at 0xaaab03183420
+ data at 0xaaab162ec960
  of size 352
  at offset 6291456 with content size 352
 BOLT: writing new section .relocated.eh_frame
- data at 0xaaab0316edc0
+ data at 0xaaab162adb80
  of size 300
  at offset 6291808 with content size 300
 BOLT-INFO: not writing section header for section .fini_array

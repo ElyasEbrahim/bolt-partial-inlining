@@ -64,12 +64,12 @@
   "bolt-inl-pi": 79632495
  },
  "sqlite": {
-  "orig": 1185600869,
-  "bolt": 1175824470,
-  "bolt-pi": 1175156798,
-  "bolt-pi-nofe": 1175470322,
-  "bolt-inl": 1175022609,
-  "bolt-inl-pi": 1174681589
+  "orig": 1185600752,
+  "bolt": 1175824388,
+  "bolt-pi": 1175156746,
+  "bolt-pi-nofe": 1175470193,
+  "bolt-inl": 1175022433,
+  "bolt-inl-pi": 1174681481
  },
  "lua": {
   "orig": 3170891877,
@@ -80,12 +80,12 @@
   "bolt-inl-pi": 3110964933
  },
  "cpython": {
-  "orig": 2637340698,
-  "bolt": 2628610774,
-  "bolt-pi": 2621377200,
-  "bolt-pi-nofe": 2626897436,
-  "bolt-inl": 2625946088,
-  "bolt-inl-pi": 2620269835
+  "orig": 2637339943,
+  "bolt": 2628610019,
+  "bolt-pi": 2621376445,
+  "bolt-pi-nofe": 2626896681,
+  "bolt-inl": 2625945325,
+  "bolt-inl-pi": 2620269072
  },
  "zstd-compress": {
   "orig": 945884031,
@@ -102,5 +102,22 @@
   "bolt-pi-nofe": 331351789,
   "bolt-inl": 331345962,
   "bolt-inl-pi": 331345260
+ },
+ "jq": {
+  "orig": 1693270044,
+  "bolt": 1681099979,
+  "bolt-pi": 1648017574,
+  "bolt-pi-nofe": 1659948580,
+  "bolt-inl": 1646293644,
+  "bolt-inl-pi": 1632997246,
+  "bolt-pi-skip": 1665489296
+ },
+ "libxml2": {
+  "orig": 491080498,
+  "bolt": 485579990,
+  "bolt-pi": 478253989,
+  "bolt-pi-nofe": 484889990,
+  "bolt-inl": 484202447,
+  "bolt-inl-pi": 477461278
  }
 }

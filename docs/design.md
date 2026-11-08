@@ -51,25 +51,33 @@ Key results on an Apple M3 Max (Linux/AArch64 VM), BOLT baseline vs. baseline
 + `--partial-inline`, see [Section 5](#5-experimental-evaluation):
 
 * **Up to 2.72x** faster on code dominated by fast-path calls (`mixed` 2.72x,
-  `trace` 1.67x, `memo` 1.016x; 13-25% fewer executed instructions). Frame
+  `trace` 1.67x, `memo` 1.019x; 13-25% fewer executed instructions). Frame
   elision is what makes `memo` profitable: the compiler did not shrink-wrap
   its callee, and without frame elision the pass does not transform it.
-* **Real programs** (SQLite, Lua, CPython, zstd): the pass removes up to 12.7%
-  of the direct calls (Lua) and 0.06-0.41% of the executed instructions, but
-  no run-time change is measurable. All four programs are within 0.5% of the
-  baseline with confidence intervals that include 1.0, like the A/A control
-  (a byte-identical copy of the baseline).
+* **jq 1.8: 1.068x** (95% CI [1.060, 1.077], p = 2e-9), the one real program
+  with a measurable effect: the pass removes 26% of the direct calls and 2.0%
+  of the executed instructions. Most of the gain comes from a one-instruction
+  callee (`jv_get_kind`) that BOLT's existing `-inline-all` inlines as well
+  (`-inline-all`: 1.102x); without that callee, partial inlining still gives
+  1.022x [1.009, 1.025], the share no existing BOLT pass achieves. On top of
+  `-inline-all`, it adds 1.015x [0.978, 1.040], which is not significant.
+* **Other real programs** (SQLite, Lua, CPython, zstd, libxml2): the pass
+  removes up to 25.7% of the direct calls (libxml2) and 0.06-1.51% of the
+  executed instructions, but no run-time change is measurable: all are within
+  1.7% of the baseline with confidence intervals that include 1.0, like the
+  A/A control (a byte-identical copy of the baseline). jq and libxml2 were
+  selected by a screening of six candidate programs (Section 5.2).
 * **No regression** on workloads without the pattern or with unsafe fast paths
   (`compute`, `unsafe`, `memo-lowhit`): the pass leaves `unsafe` and
   `memo-lowhit` byte-identical and transforms only a lukewarm call site in
   `compute`; the executed instructions and the run time are unchanged.
-* Code growth <= 0.5% on the real programs; BOLT processing time +0.01 to
-  +0.04 s.
+* Code growth <= 0.6% on the real programs; BOLT processing time changes by
+  less than its run-to-run variation (at most +0.02 s).
 * One microbenchmark (`pool`) is 5% slower although it executes 25% fewer
   instructions. Section 5.5 shows that this is an interaction of BOLT's
   ext-tsp block layout with a store-to-load chain on this core: with the
-  original block order the same partially inlined code is 13.4% faster than
-  the baseline, exactly as fast as the compiler's own LTO inlining.
+  original block order the same partially inlined code is 14.0% faster than
+  the baseline, as fast as the compiler's own LTO inlining (13.9%).
 * The evaluation was checked for measurement bias (Section 5.6): profiles are
   reproducible, every variant runs from the same path, and an A/A control
   bounds the resolution at about +-1%. This check showed that the 2.5% Lua
@@ -477,7 +485,7 @@ All numbers in this section come from one continuous run of
 |---|---|
 | Hardware | Apple M3 Max (12 performance + 4 efficiency cores), FEAT_PAuth |
 | OS | Docker Desktop 4.98 Linux VM, kernel 7.0.14 (aarch64), 12 vCPUs, 31 GiB; Ubuntu 24.04 container. An unrelated, mostly idle database container (about 3% of one vCPU) ran on the same VM |
-| Compiler | clang/lld 23.1.6 (apt.llvm.org), no LTO, no PGO, `-Wl,--emit-relocs`; `-O2` for the microbenchmarks, SQLite and Lua, the projects' default `-O3` for CPython and zstd |
+| Compiler | clang/lld 23.1.6 (apt.llvm.org), no LTO, no PGO, `-Wl,--emit-relocs`; `-O2` for the microbenchmarks, SQLite and Lua, the projects' defaults for the others (`-O3` for CPython and zstd, `-O2` for jq and libxml2) |
 | BOLT | mainline `0a0e65b2e8ff` (Release + assertions), baseline and patched |
 | Profile | BOLT instrumentation (`-instrument`) on *training* inputs that are smaller than (zstd: different from) the evaluation inputs; the same profile is used for all variants. Profiles, and therefore all BOLT outputs, are byte-for-byte reproducible: the training runs execute with address space layout randomization disabled (`setarch -R`), CPython with `PYTHONHASHSEED=0`, and Lua is built with a fixed hash seed (`-Dluai_makeseed()=0u`) instead of one derived from the clock and a stack address. Without these measures Lua, SQLite and CPython produce a slightly different profile in every run, because some of their hash tables depend on addresses |
 
@@ -493,6 +501,7 @@ Variants of every workload (`scripts/bolt_variants.sh`):
 | `bolt-pi-nofe` | `bolt-pi` with `--partial-inline-frame-elision=false` (ablation) |
 | `bolt-inl` | `bolt` + BOLT's existing `-inline-all -inline-ap` |
 | `bolt-inl-pi` | `bolt-inl` + `--partial-inline` |
+| `bolt-pi-skip` | jq only: `bolt-pi` with `--partial-inline-skip=jv_get_kind` (analysis, Section 5.5) |
 
 Methodology (`scripts/bench.py`): every round runs all variants of a workload
 once in a rotated order after a warm-up run; 15 rounds for microbenchmarks, 30
@@ -548,6 +557,46 @@ same path, they execute exactly the same number.
 | `lua` | real | Lua 5.5.1, interpreter mix (calls, GC, floating point, strings, tables, OOP) |
 | `cpython` | real | CPython 3.14.10, interpreter mix (calls, objects, dicts, regex, JSON, generators, floating point) |
 | `zstd-compress`/`-decompress` | real | zstd 1.5.7 level 3 on 148 MB / 592 MB of Python sources (train: C sources) |
+| `jq` | real | jq 1.8.2: filter, project and group 160,000 JSON records (train: 60,000) |
+| `libxml2` | real | libxml2 2.15.4 `xmllint`: parse 240,000 catalog items and evaluate an XPath count (train: 60,000) |
+
+All programs use their default build (optimization level, no LTO, no PGO)
+plus `-Wl,--emit-relocs`, with their library code linked into the executable
+(BOLT only rewrites the executable). Programs that randomize per process are
+made deterministic: CPython with `PYTHONHASHSEED=0`; Lua, jq and libxml2 with a
+constant hash seed (a compile-time define for Lua, a one-line patch of the
+seeding function for jq and libxml2, applied by `benchmarks/realworld/build.sh`).
+
+**Selection of jq and libxml2.** SQLite, Lua, CPython and zstd were chosen
+as common real programs, without regard to the pass. After they showed no
+measurable effect, six further candidates were screened for the pattern the
+pass targets. The procedure was fixed before measuring:
+
+* candidates: non-LTO C programs whose hot paths call small functions in other
+  files that return early (allocators, buffers, interpreter helpers): PHP
+  8.5.12 (`Zend/bench.php`), Perl 5.44.0, GNU awk 5.4.1, cmark 0.31.2, libxml2
+  2.15.4 and jq 1.8.2, each with a deterministic CPU-bound input;
+* screening metric: the reduction of executed instructions estimated by BOLT
+  (dyno stats of `bolt-pi` vs. `bolt` on the training profile); a program
+  qualifies with at least 2%, twice the measurement resolution;
+* qualifying programs are added to the suite, and all screened programs are
+  reported.
+
+| Candidate | Instructions (dyno) | Calls (dyno) | Call sites (frame elided) | Qualifies |
+|---|---:|---:|---|---|
+| jq 1.8.2 | -2.97% | -21.8% | 21 (5) | yes |
+| libxml2 2.15.4 | -2.41% | -18.6% | 7 (5) | yes |
+| GNU awk 5.4.1 | -1.74% | -16.5% | 8 (3) | no |
+| cmark 0.31.2 | -1.36% | -9.1% | 5 (2) | no |
+| Perl 5.44.0 | -0.26% | -1.5% | 4 (3) | no |
+| PHP 8.5.12 | 0.00% | 0.0% | 0 | no |
+
+The screening used the programs' unmodified sources; jq and libxml2 were made
+deterministic afterwards, when they were added to the suite. In PHP, only 12
+callees were hot enough to be considered, none of them with a usable fast
+region (most often, 5 of 12, because every path calls another function). The screening scripts are not part of
+the suite; the selection affects which programs are measured, not how they
+are measured.
 
 ### 5.3 Run time
 
@@ -556,30 +605,55 @@ Speedup over `bolt` (higher is better), median of paired per-round ratios with
 p-values). `bolt-copy` is the A/A control: its deviations from 1.000 show the
 resolution of the measurement.
 
-| Workload | `bolt-copy` (A/A) | `bolt-pi` | `bolt-pi-avg` | `bolt-pi-nofe` | `bolt-inl` | p |
-|---|---|---|---|---|---|---:|
-| bufwrite | 1.002 [0.982, 1.007] | 1.001 [0.988, 1.012] | 1.001 | 0.999 | 0.999 | 0.76 |
-| memo | 0.998 [0.994, 1.005] | **1.016** [1.005, 1.021] | 1.023 | 1.001 | 0.990 | 0.035 |
-| trace | 0.998 [0.990, 1.015] | **1.667** [1.639, 1.681] | 1.648 | 1.658 | 0.993 | 6.1e-05 |
-| pool | 0.991 [0.987, 0.999] | 0.949 [0.936, 0.953] | 0.940 | 1.019 | 1.028 | 6.1e-05 |
-| mixed | 1.007 [0.995, 1.011] | **2.715** [2.670, 2.745] | 2.438 | 2.719 | 1.153 | 6.1e-05 |
-| memo-lowhit | 0.995 [0.989, 1.000] | 1.000 [0.989, 1.001] | 0.997 | 0.997 | 1.009 | 0.45 |
-| unsafe | 1.003 [0.997, 1.013] | 1.002 [0.985, 1.009] | 1.000 | 0.997 | 1.640 | 0.98 |
-| compute | 1.002 [0.995, 1.013] | 0.999 [0.983, 1.017] | 1.005 | 1.005 | 1.004 | 0.93 |
-| sqlite | 0.997 [0.990, 1.005] | 0.997 [0.991, 1.007] | 0.997 | 1.004 | 1.003 | 0.87 |
-| lua | 1.000 [0.993, 1.008] | 0.995 [0.988, 1.001] | 0.994 | 0.993 | 1.000 | 0.27 |
-| cpython | 0.998 [0.994, 1.001] | 0.997 [0.993, 1.002] | 0.998 | 0.999 | 0.991 | 0.07 |
-| zstd-compress | 1.002 [0.981, 1.010] | 1.003 [0.982, 1.017] | 1.014 | 1.018 | 1.004 | 0.84 |
-| zstd-decompress | 0.996 [0.986, 1.008] | 1.008 [0.997, 1.018] | 1.009 | 1.003 | 0.998 | 0.12 |
+| Workload | `bolt-copy` (A/A) | `bolt-pi` | `bolt-pi-avg` | `bolt-pi-nofe` | `bolt-inl` | `bolt-inl-pi` | p |
+|---|---|---|---|---|---|---|---:|
+| bufwrite | 0.998 [0.991, 1.011] | 1.004 [0.990, 1.014] | 1.002 | 0.999 | 0.998 | 1.007 | 0.72 |
+| memo | 1.000 [0.982, 1.005] | **1.019** [1.008, 1.031] | 1.023 | 0.996 | 0.994 | 1.021 | 0.03 |
+| trace | 0.997 [0.994, 1.001] | **1.668** [1.662, 1.673] | 1.661 | 1.667 | 0.999 | 1.662 | 6.1e-05 |
+| pool | 1.000 [0.994, 1.010] | 0.952 [0.944, 0.961] | 0.952 | 1.030 | 1.029 | 0.952 | 6.1e-05 |
+| mixed | 1.002 [0.999, 1.006] | **2.720** [2.712, 2.742] | 2.442 | 2.727 | 1.150 | 2.728 | 6.1e-05 |
+| memo-lowhit | 0.998 [0.994, 1.003] | 0.999 [0.994, 1.002] | 0.997 | 0.999 | 1.004 | 1.003 | 0.42 |
+| unsafe | 0.999 [0.997, 1.010] | 1.005 [0.991, 1.009] | 1.001 | 0.999 | 1.639 | 1.641 | 0.52 |
+| compute | 1.003 [0.995, 1.008] | 1.002 [0.998, 1.009] | 1.000 | 1.001 | 1.001 | 1.001 | 0.25 |
+| sqlite | 1.003 [0.995, 1.010] | 1.005 [0.998, 1.013] | 1.002 | 1.001 | 1.010 | 1.006 | 0.18 |
+| lua | 1.000 [0.995, 1.008] | 0.994 [0.990, 1.005] | 0.993 | 1.001 | 0.999 | 0.992 | 0.28 |
+| cpython | 0.999 [0.987, 1.009] | 1.001 [0.992, 1.006] | 0.994 | 0.997 | 0.994 | 1.002 | 0.75 |
+| zstd-compress | 0.997 [0.978, 1.015] | 0.991 [0.981, 1.018] | 0.993 | 1.014 | 1.017 | 0.998 | 0.69 |
+| zstd-decompress | 0.998 [0.980, 1.026] | 0.983 [0.971, 1.005] | 0.980 | 0.994 | 0.987 | 0.987 | 0.26 |
+| jq | 0.995 [0.975, 1.025] | **1.068** [1.060, 1.077] | 1.063 | 1.062 | 1.102 | 1.119 | 1.9e-09 |
+| libxml2 | 1.006 [0.992, 1.024] | 1.000 [0.979, 1.021] | 1.011 | 1.002 | 0.998 | 0.994 | 0.92 |
 
 ![speedup](../results/speedup.png)
 
-The A/A control stays within 0.991-1.007 on all 13 workloads; its 95% CI
-excludes 1.0 once (`pool`, barely), as expected for 13 comparisons at 95%.
-Differences of less than about 1% are therefore not resolvable in this
-environment, and only `trace`, `mixed`, `memo` (gains) and `pool` (loss) show
-a run-time effect of `bolt-pi`. For reference, the BOLT baseline itself is
-6.4% faster than `orig` on CPython, 3.8% on Lua and 2.6% on SQLite.
+The A/A control stays within 0.995-1.006 on all 15 workloads, and all its 95%
+CIs include 1.0. Differences of less than about 1% (more for the noisier zstd
+and jq runs, whose A/A CIs are about +-2.5% wide) are therefore not
+resolvable in this environment. `bolt-pi` has a run-time effect on `trace`,
+`mixed`, `memo` and jq (gains) and on `pool` (loss). For reference, the BOLT
+baseline itself is 6.5% faster than `orig` on CPython, 3.8% on Lua, 2.7% on
+SQLite, 9.6% on jq and 10.9% on libxml2.
+
+For jq, the variant `bolt-pi-skip` excludes the one callee that dominates the
+transformed calls, `jv_get_kind` (it returns a bit field of its argument: one
+instruction plus the return), which BOLT's existing `-inline-all` inlines as
+well:
+
+| jq | Speedup vs. `bolt` | Direct calls avoided (training) | Executed instructions |
+|---|---|---:|---:|
+| `bolt-pi` | 1.068 [1.060, 1.077] | 26.4% | -1.97% |
+| `bolt-pi-skip` (without `jv_get_kind`) | 1.022 [1.009, 1.025], p = 3e-4 | 8.7% | -0.93% |
+| `bolt-inl` (existing `-inline-all`) | 1.102 [1.086, 1.112] | - | -2.07% |
+| `bolt-inl-pi` | 1.119 [1.092, 1.143] | - | -2.86% |
+
+About two thirds of the gain of `bolt-pi` on jq therefore come from inlining a
+trivial function, which partial inlining does but whole-function inlining does
+too, and more broadly (`-inline-all` inlined calls at 636 sites, including
+small functions that call other functions, which the pass does not copy). The
+remaining 2.2% come from fast paths that only partial inlining can copy,
+among them `jvp_utf8_next` with its frame elided. Measured against
+`-inline-all` instead of `bolt` (paired, same run), `bolt-inl-pi` is 1.015x
+[0.978, 1.040], p = 0.22: the two transformations overlap on jq, and whether
+partial inlining adds to whole-function inlining there is not resolvable.
 
 ### 5.4 Deterministic metrics and what the pass did
 
@@ -600,11 +674,13 @@ of `bolt-pi` relative to `bolt`, and the transformation statistics:
 | lua | -0.41% | -10.2% | 14 (4 / 2) | 151 | 3 | +0.44% |
 | cpython | -0.28% | -3.3% | 14 (5 / 1) | 158 | 3 | +0.09% |
 | zstd | 0.00% | -0.65% | 5 (0 / 0) | 29 | 0 | +0.24% |
+| jq | -1.97% | -21.8% | 21 (5 / 1) | 99 | 4 | +0.24% |
+| libxml2 | -1.51% | -18.6% | 7 (5 / 0) | 95 | 0 | +0.56% |
 
-BOLT processing time grows from 1.18 s to 1.21 s for CPython (37 MB binary)
-and from 0.38 s to 0.42 s for SQLite; the pass itself is linear in the number
-of hot call sites, and `RegAnalysis` is only built if a fast region needs
-renaming. Where the pass changes nothing (`unsafe`, `memo-lowhit`), the
+BOLT processing time is 1.36 s without and 1.29 s with the pass for CPython
+(37 MB binary; the difference is run-to-run variation) and 0.41 s and 0.43 s
+for SQLite; the pass itself is linear in the number of hot call sites, and
+`RegAnalysis` is only built if a fast region needs renaming. Where the pass changes nothing (`unsafe`, `memo-lowhit`), the
 executed instruction count is identical to the instruction; for zstd and
 `compute`, where it only transforms lukewarm call sites, it differs by at most
 3,518 instructions (0.001%).
@@ -613,7 +689,7 @@ The reasons why callees of hot call sites in the real programs have no usable
 fast region are dominated by `no-fast-exit` (every return path contains a call)
 and calls in the entry block - fast paths that call other functions are out of
 scope by design. Store-before-decision (`side-effect`) and clobbered argument
-registers (`reg-clobber`) account for 4-8 callees per program (see
+registers (`reg-clobber`) account for 0-8 callees per program (see
 `REPORT.md`).
 
 ### 5.5 Analysis
@@ -643,23 +719,24 @@ the measurement resolution.
 
 **The `pool` slowdown.** `pool` executes 25% fewer instructions but runs 4-5%
 slower. A dedicated experiment (`scripts/pool_analysis.sh`, 15 rounds, its own
-A/A control: 1.002 [1.000, 1.004]):
+A/A control: 0.997 [0.996, 1.015]):
 
 | Variant | Speedup vs. bolt |
 |---|---|
-| partial inlining, ext-tsp layout (default) | 0.959 [0.956, 0.961] |
-| only `pool_alloc` / only `pool_free` partially inlined | 1.021 / 1.030 |
-| partial inlining, original block order (`-reorder-blocks=none`) | **1.134** [1.129, 1.137] |
-| baseline with original block order | 1.001 [0.997, 1.003] |
-| partial inlining, `-reorder-blocks=cache` | 1.030 |
-| compiler LTO (inlines both functions) | **1.134** [1.132, 1.139] |
+| partial inlining, ext-tsp layout (default) | 0.953 [0.944, 0.961] |
+| only `pool_alloc` / only `pool_free` partially inlined | 1.024 / 1.015 |
+| partial inlining, original block order (`-reorder-blocks=none`) | **1.140** [1.130, 1.157] |
+| baseline with original block order | 1.015 [1.002, 1.025] |
+| partial inlining, `-reorder-blocks=cache` | 1.022 |
+| compiler LTO (inlines both functions) | **1.139** [1.133, 1.151] |
 
 The partially inlined code is therefore as fast as the compiler's own inlining
 when the inlined `pool_free` (three stores to `p->free`, `p->live`, `n->next`)
 and `pool_alloc` (loads of exactly these locations) are separated by taken
-branches; laid out as one straight-line sequence by ext-tsp, it takes 18%
-longer than with the original block order. Alignment does not matter
-(`-align-blocks` with 32/64-byte boundaries gives the same result). The likely
+branches; laid out as one straight-line sequence by ext-tsp, it takes 19%
+longer than with the original block order. In an exploratory test outside the
+published run, aligning blocks to 32 or 64 bytes (`-align-blocks`) did not
+change this. The likely
 cause is the memory-dependence speculation of the core when loads issue right
 behind stores to the same addresses whose data arrives late; we cannot confirm
 it because the PMU is not available inside the VM. This is a property of the
@@ -682,6 +759,17 @@ cache in this workload), call other functions on every path (`_Py_Dealloc`), or 
 the fast/slow decision (`sqlite3BtreeNext`). The remaining 0.06-0.28% of the
 instructions are far below the resolution of the timing. zstd is dominated by
 loops in a few large functions; the pass finds only lukewarm call sites.
+
+libxml2 shows that removed calls alone do not predict a speedup: the pass
+removes 25.7% of its direct calls at 7 sites, 5 of them with frame elision
+(the largest: `xmlCurrentChar` into `xmlParseCDSect`), and 1.5% of the
+executed instructions, yet its run time is unchanged (1.000 [0.979, 1.021]).
+jq's 26.4% of avoided direct calls are 52 million calls in its training run,
+libxml2's 25.7% are 4.9 million. Scaled to the evaluation inputs, that is an
+estimated 110 million avoided calls per second of run time in jq and 34
+million in libxml2. Why the latter is not measurable is not resolved here;
+without hardware counters the cost of the avoided calls on this core cannot be
+measured directly.
 
 ### 5.6 Measurement validity
 
@@ -707,8 +795,12 @@ the evaluation, and are now controlled:
   +-1% everywhere and the Lua speedup is gone. The 2.5% Lua speedup reported by
   an earlier, unversioned snapshot of this repository was such an artifact.
 * **Nondeterministic workloads.** Lua seeds its string hash from the clock and
-  a stack address and CPython randomizes string hashing per process; Lua is
-  built with a fixed seed and CPython runs with `PYTHONHASHSEED=0`.
+  a stack address, CPython randomizes string hashing per process, and jq and
+  libxml2 seed their hash tables from `getentropy()`. Lua is built with a
+  fixed seed, CPython runs with `PYTHONHASHSEED=0`, and jq and libxml2 get a
+  one-line patch that makes the seed constant. For jq and libxml2 the
+  randomization was found the same way as the path effect: the A/A copy
+  executed a different number of instructions than the baseline.
 * **Instruction attribution.** valgrind cannot read the symbols of the code
   segment that BOLT adds ("ELF section outside all mapped regions") and
   attributes that code to unrelated functions, even in shared libraries.
@@ -731,14 +823,15 @@ The remaining limitations of the environment are listed in Section 7.
   No existing test changes its result; the only failure
   (`AArch64/icp-inline.c`) fails on unmodified mainline with this toolchain as
   well.
-* **Flag-off identity** (`results/flag-off-identity.txt`): for all 12 workload
+* **Flag-off identity** (`results/flag-off-identity.txt`): for all 14 workload
   binaries, with the layout options and with `-inline-all`, the patched
   `llvm-bolt` without `--partial-inline` writes byte-identical binaries to
   unmodified mainline (after removing the `.note.bolt_info` section, which
   records the BOLT revision and the command line).
-* **Output verification**: 8 variants x (8 x 16 + 5 x 31) = 2,264 runs plus
-  160 runs of the `pool` analysis, every output identical to the original
-  program's output.
+* **Output verification**: 2,791 timed and warm-up runs (8 variants, 9 for
+  jq; 16 runs per variant for the microbenchmarks, 31 for the real programs)
+  plus 160 runs of the `pool` analysis, every output identical to the
+  original program's output.
 * **x86-64 functional validation** (`scripts/x86_validate.sh`,
   `results/x86-validation.txt`): the 7 microbenchmarks, the end-to-end test
   program and Lua 5.5.1 were compiled natively for x86-64 (Ubuntu clang 18,
@@ -771,10 +864,14 @@ calls to functions that
 
 Typical candidates: allocator front ends, buffered I/O, logging and tracing
 frameworks, memoization layers, reference-counted object systems whose release
-path checks first, and C/C++ code bases built without LTO. Interpreters have
-many such call sites (Lua: 12.7% of the direct calls removed), but in the
-programs we measured the saved instructions (at most 0.41%) were too few for
-a measurable run-time gain.
+path checks first, and C/C++ code bases built without LTO. Among the real
+programs measured, jq benefits (1.068x; 1.022x from fast paths that no other
+BOLT pass copies), where the avoided calls are very frequent (an estimated 110
+million per second of run time). Interpreters and parsers have many such call
+sites (Lua: 12.7%, libxml2: 25.7% of the direct calls removed), but in Lua,
+CPython, SQLite and libxml2 the gain was below the measurement resolution.
+Where the hot callees are trivial leaf functions, BOLT's existing `-inline-all`
+achieves the same or more (jq: 1.102x); the two options can be combined.
 
 **Ineffective (and left unchanged)**:
 
@@ -833,7 +930,7 @@ them the pass does not modify the executed code at all.
 * **Measurement environment**: all measurements were taken in a Linux VM on an
   Apple M3 Max without access to hardware counters, with a resolution of about
   +-1% (A/A control). The small instruction savings on the real programs
-  (0.06-0.41%) could only be confirmed in run time on bare metal with
+  without a measurable effect (0.06-1.51%) could only be confirmed in run time on bare metal with
   hardware counters or many more repetitions. Results on other cores, in
   particular x86-64, were not measured.
 
@@ -845,7 +942,7 @@ repository root:
 ```bash
 make image          # baseline + patched BOLT, check-bolt for both, workloads
 make check-bolt     # results/check-bolt/: test results of both builds, compared
-make experiments    # scripts/run_experiments.sh, writes results/ (about 35 min)
+make experiments    # scripts/run_experiments.sh, writes results/ (about 50 min)
 make x86-validate   # Section 5.7, x86-64 under emulation
 ```
 

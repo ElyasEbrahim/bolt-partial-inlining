@@ -1,0 +1,70 @@
+BOLT-WARNING: specifying numeric value "1" for option -icf is deprecated
+BOLT-INFO: shared object or position-independent executable detected
+BOLT-INFO: Target architecture: aarch64
+BOLT-INFO: BOLT version: 0a0e65b2e8ff6043d85ab07c4d23ea18bf0b9b7d
+BOLT-INFO: first alloc address is 0x0
+BOLT-INFO: creating new program header table at address 0x200000, offset 0x200000
+BOLT-WARNING: debug info will be stripped from the binary. Use -update-debug-sections to keep it.
+BOLT-INFO: enabling relocation mode
+BOLT-INFO: enabling lite mode
+BOLT-INFO: pre-processing profile using branch profile reader
+BOLT-INFO: PointerAuthCFIAnalyzer ran on 1 functions. Ignored 0 functions (0.00%) because of CFI inconsistencies
+BOLT-INFO: number of removed linker-inserted veneers: 0
+BOLT-INFO: 229 out of 2192 functions in the binary (10.4%) have non-empty execution profile
+BOLT-INFO: 4 functions with profile could not be optimized
+BOLT-INFO: profile for 1 objects was ignored
+BOLT-INFO: profile quality metrics for the hottest 229 functions (reporting top 5% values): function CFG discontinuity 0.00%; call graph flow conservation gap 0.00%; CFG flow conservation gap 0.00% (weighted) 0.00% (worst); exception handling usage 0.00% (of total BBEC) 0.00% (of total InvokeEC)
+BOLT-INFO: ICF folded 1 out of 2261 functions in 3 passes. 0 functions had jump tables.
+BOLT-INFO: Removing all identical functions will save 0.00 KB of code space. Folded functions were called 2 times based on profile.
+BOLT-INFO: basic block reordering modified layout of 157 functions (68.56% of profiled, 6.94% of total)
+BOLT-INFO: 0 Functions were reordered by LoopInversionPass
+BOLT-INFO: program-wide dynostats after all optimizations before SCTC and FOP:
+
+           208469081 : executed forward branches
+            74750895 : taken forward branches
+            39349063 : executed backward branches
+            23163561 : taken backward branches
+            31173822 : executed unconditional branches
+            26156161 : all function calls
+             6752841 : indirect calls
+             1607818 : PLT calls
+          1233322025 : executed instructions
+           289702532 : executed load instructions
+           135929266 : executed store instructions
+                   0 : taken jump table branches
+                   0 : taken unknown indirect branches
+           278991966 : total branches
+           129088278 : taken branches
+           149903688 : non-taken conditional branches
+            97914456 : taken conditional branches
+           247818144 : all conditional branches
+                   0 : linker-inserted veneer calls
+
+           216013812 : executed forward branches (+3.6%)
+             7923911 : taken forward branches (-89.4%)
+            31804332 : executed backward branches (-19.2%)
+            16778406 : taken backward branches (-27.6%)
+             8234950 : executed unconditional branches (-73.6%)
+            26156161 : all function calls (=)
+             6752841 : indirect calls (=)
+             1607818 : PLT calls (=)
+          1204714351 : executed instructions (-2.3%)
+           289702532 : executed load instructions (=)
+           135929266 : executed store instructions (=)
+                   0 : taken jump table branches (=)
+                   0 : taken unknown indirect branches (=)
+           256053094 : total branches (-8.2%)
+            32937267 : taken branches (-74.5%)
+           223115827 : non-taken conditional branches (+48.8%)
+            24702317 : taken conditional branches (-74.8%)
+           247818144 : all conditional branches (=)
+                   0 : linker-inserted veneer calls (=)
+
+BOLT-WARNING: failed to patch entries in xmlGetLocalRngState/1(*2). The function will not be optimized
+BOLT-INFO: Starting stub-insertion pass
+BOLT-INFO: Inserted 83 stubs in the hot area and 66 stubs in the cold area. Shared 0 times, iterated 3 times.
+BOLT-INFO: rewritten pac-ret DWARF info in 1 out of 2261 functions (0.04%).
+BOLT-INFO: padding code to 0x600000 to accommodate hot text
+BOLT-INFO: patched build-id (flipped first and last bits)
+BOLT-INFO: setting __hot_start to 0x400000
+BOLT-INFO: setting __hot_end to 0x40aed8

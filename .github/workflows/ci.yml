@@ -19,7 +19,7 @@ jobs:
       - name: shellcheck
         run: shellcheck -S warning scripts/*.sh benchmarks/realworld/build.sh
       - name: pyflakes
-        run: python3 -m pyflakes scripts/*.py benchmarks/realworld/python/bench.py
+        run: python3 -m pyflakes scripts/*.py benchmarks/realworld/python/bench.py benchmarks/realworld/datagen.py
 
   patch:
     name: Patch applies to the pinned LLVM commit
