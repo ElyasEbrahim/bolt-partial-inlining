@@ -6,6 +6,8 @@ project uses [Semantic Versioning](https://semver.org/).
 
 ## [Unreleased]
 
+## [1.1.0] - 2026-11-08
+
 ### Added
 
 - Real-world workloads jq 1.8.2 and libxml2 2.15.4 (`xmllint`), selected by a
@@ -63,5 +65,6 @@ repository whose results had been collected in several separate runs.
 - The BOLT test-suite comparison (`make check-bolt`) is extracted from the
   final image and fails if the result of any existing test changes.
 
-[Unreleased]: https://github.com/ElyasEbrahim/bolt-partial-inlining/compare/v1.0.0...HEAD
+[Unreleased]: https://github.com/ElyasEbrahim/bolt-partial-inlining/compare/v1.1.0...HEAD
+[1.1.0]: https://github.com/ElyasEbrahim/bolt-partial-inlining/compare/v1.0.0...v1.1.0
 [1.0.0]: https://github.com/ElyasEbrahim/bolt-partial-inlining/releases/tag/v1.0.0
