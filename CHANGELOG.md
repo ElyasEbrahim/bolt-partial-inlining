@@ -6,6 +6,41 @@ project uses [Semantic Versioning](https://semver.org/).
 
 ## [Unreleased]
 
+### Added
+
+- Analysis of the `pool` slowdown on hand-written variants of its loop
+  (`scripts/pool_loop.py`, extended `scripts/pool_analysis.sh`): instructions
+  added or removed between the two inlined fast paths, 16 code placements,
+  register copies instead of reloads, and a build of the benchmark without
+  the random number generator in its loop. The hand-written loops that mirror
+  BOLT outputs are timed next to them.
+
+### Changed
+
+- The base image of the evaluation image is pinned by digest. The tag
+  `ubuntu:24.04` had moved since 1.1.0, so that `make image` rebuilt every
+  layer, including the toolchain. With the pin, the BOLT builds, the compiler
+  and the workload binaries are byte-identical to those of 1.1.0.
+- `results/pool-analysis/` has one directory per experiment.
+- All results are from a new continuous run of `make experiments`.
+
+### Fixed
+
+- Explanation of the `pool` slowdown (design document, Sections 1, 5.5, 6 and
+  7). Versions 1.0.0 and 1.1.0 attributed it to BOLT's ext-tsp block order
+  and stated that with another block order the partially inlined code is as
+  fast as the compiler's LTO inlining. Both statements are withdrawn. Nops
+  between the two inlined regions have the same effect as another block
+  order, and the equal speed was the lower bound set by the benchmark's
+  random number generator: without it, partial inlining is 20% slower than
+  the baseline and LTO 3.1 times faster. The run time of this loop depends
+  non-monotonically on the number of instructions between a store and the
+  load that reads it back, with or without the transformation, and no
+  mitigation in the pass was found.
+- jq on top of `-inline-all`: 1.024x [1.015, 1.028] in the new run. Version
+  1.1.0 reported 1.015x [0.978, 1.040] for byte-identical binaries and called
+  the difference not significant.
+
 ## [1.1.0] - 2026-11-08
 
 ### Added

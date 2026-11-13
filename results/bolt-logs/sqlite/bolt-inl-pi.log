@@ -873,20 +873,20 @@ BOLT-WARNING: failed to post-process indirect branches for sqlite3_free
 BOLT-WARNING: failed to post-process indirect branches for sqlite3GetToken/1(*2)
 BOLT-WARNING: failed to post-process indirect branches for sqlite3PcacheRelease/1(*2)
 BOLT-WARNING: failed to post-process indirect branches for sqlite3_step
-BOLT-WARNING: failed to post-process indirect branches for releasePageNotNull/1(*2)
 BOLT-WARNING: failed to post-process indirect branches for sqlite3_config
-BOLT-WARNING: failed to post-process indirect branches for getCellInfo/1(*2)
+BOLT-WARNING: failed to post-process indirect branches for releasePageNotNull/1(*2)
 BOLT-WARNING: failed to post-process indirect branches for sqlite3DbNNFreeNN/1(*2)
-BOLT-WARNING: failed to post-process indirect branches for sqlite3VdbeSerialGet/1(*2)
+BOLT-WARNING: failed to post-process indirect branches for getCellInfo/1(*2)
 BOLT-WARNING: failed to post-process indirect branches for sqlite3_test_control
+BOLT-WARNING: failed to post-process indirect branches for sqlite3VdbeSerialGet/1(*2)
 BOLT-WARNING: failed to post-process indirect branches for vdbeCompareMemString/1(*2)
 BOLT-WARNING: failed to post-process indirect branches for sqlite3_str_vappendf
 BOLT-WARNING: failed to post-process indirect branches for jsonUnescapeOneChar/1(*2)
-BOLT-WARNING: failed to post-process indirect branches for jsonTranslateBlobToText/1(*2)
 BOLT-WARNING: failed to post-process indirect branches for jsonTranslateTextToBlob/1(*2)
+BOLT-WARNING: failed to post-process indirect branches for jsonTranslateBlobToText/1(*2)
 BOLT-WARNING: failed to post-process indirect branches for yy_reduce/1(*2)
-BOLT-WARNING: failed to post-process indirect branches for sqlite3ExprCodeTarget/1(*2)
 BOLT-WARNING: failed to post-process indirect branches for sqlite3ExprDataType/1(*2)
+BOLT-WARNING: failed to post-process indirect branches for sqlite3ExprCodeTarget/1(*2)
 BOLT-WARNING: failed to post-process indirect branches for selectInnerLoop/1(*2)
 BOLT-WARNING: failed to post-process indirect branches for generateOutputSubroutine/1(*2)
 BOLT-INFO: Starting pass: pointer-auth-cfi-analyzer
@@ -1756,35 +1756,35 @@ BOLT-INFO: Finished pass: clean-mc-state
 BOLT-INFO: padding code to 0x600000 to accommodate hot text
 BOLT-INFO: patched build-id (flipped first and last bits)
 BOLT: writing new section .fini_array
- data at 0xaaab08b3f2b0
+ data at 0xaaab03e94670
  of size 8
  at offset 1208160 with content size 8
 BOLT: writing new section .init_array
- data at 0xaaab08b3f410
+ data at 0xaaab03e8cdb0
  of size 8
  at offset 1208168 with content size 8
 BOLT: writing new section .data.rel.ro
- data at 0xaaab097bcec0
+ data at 0xaaab03c40b10
  of size 5736
  at offset 1208176 with content size 5736
 BOLT: writing new section .data
- data at 0xaaab0a0a4a00
+ data at 0xaaab05b7a0a0
  of size 12525
  at offset 1214400 with content size 12525
 BOLT: writing new section .text
- data at 0xffff9c600000
+ data at 0xffffb8400000
  of size 405804
  at offset 4194304 with content size 405804
 BOLT: writing new section .text.cold
- data at 0xaaab0bb9dcc0
+ data at 0xaaab06f05c40
  of size 326800
  at offset 4600128 with content size 326800
 BOLT: writing new section .bolt.new.eh_frame
- data at 0xaaab0bbed960
+ data at 0xaaab06f558e0
  of size 97736
  at offset 6291456 with content size 97736
 BOLT: writing new section .relocated.eh_frame
- data at 0xaaab0ba05620
+ data at 0xaaab06d6d5b0
  of size 83612
  at offset 6389192 with content size 83612
 BOLT-INFO: not writing section header for section .fini_array

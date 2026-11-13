@@ -1692,9 +1692,9 @@ BOLT-INFO: basic block reordering modified layout of 147 functions (54.85% of pr
 BOLT-INFO: Finished pass: reorder-blocks
 BOLT-INFO: Starting pass: eliminate-unreachable
 BOLT-INFO: removed 1 dead basic block(s) accounting for 4 bytes in function stack_push
-BOLT-INFO: removed 1 dead basic block(s) accounting for 4 bytes in function frame_push/1(*2)
-BOLT-INFO: removed 1 dead basic block(s) accounting for 4 bytes in function stack_restore
 BOLT-INFO: removed 2 dead basic block(s) accounting for 8 bytes in function stack_save
+BOLT-INFO: removed 1 dead basic block(s) accounting for 4 bytes in function stack_restore
+BOLT-INFO: removed 1 dead basic block(s) accounting for 4 bytes in function frame_push/1(*2)
 BOLT-INFO: removed 1 dead basic block(s) accounting for 4 bytes in function f_lesseq/1(*2)
 BOLT-INFO: removed 5 dead basic block(s) accounting for 20 bytes in function jvp_cmp/1(*2)
 BOLT-INFO: removed 1 dead basic block(s) accounting for 4 bytes in function jv_parser_next
@@ -1832,35 +1832,35 @@ BOLT-INFO: Finished pass: clean-mc-state
 BOLT-INFO: padding code to 0x600000 to accommodate hot text
 BOLT-INFO: patched build-id (flipped first and last bits)
 BOLT: writing new section .fini_array
- data at 0xaaaafedd59d0
+ data at 0xaaaadd602fe0
  of size 8
  at offset 870352 with content size 8
 BOLT: writing new section .init_array
- data at 0xaaaaff1230f0
+ data at 0xaaaadd842720
  of size 8
  at offset 870360 with content size 8
 BOLT: writing new section .data.rel.ro
- data at 0xaaaafedacd50
+ data at 0xaaaadd403d50
  of size 11776
  at offset 870368 with content size 11776
 BOLT: writing new section .data
- data at 0xaaaaff683e20
+ data at 0xaaaaddcdae20
  of size 19592
  at offset 882816 with content size 19592
 BOLT: writing new section .text
- data at 0xffff88400000
+ data at 0xffffa8600000
  of size 85200
  at offset 4194304 with content size 85200
 BOLT: writing new section .text.cold
- data at 0xaaaaff613bc0
+ data at 0xaaaaddc6abc0
  of size 48528
  at offset 4279552 with content size 48528
 BOLT: writing new section .bolt.new.eh_frame
- data at 0xaaaaff6952c0
+ data at 0xaaaaddcec2c0
  of size 28904
  at offset 6291456 with content size 28904
 BOLT: writing new section .relocated.eh_frame
- data at 0xaaaaff688ab0
+ data at 0xaaaaddcdfab0
  of size 51208
  at offset 6320360 with content size 51208
 BOLT-INFO: not writing section header for section .fini_array

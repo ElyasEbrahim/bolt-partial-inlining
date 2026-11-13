@@ -39,21 +39,21 @@ see [`results/REPORT.md`](results/REPORT.md) and
 
 | Workload | Pattern | Speedup | Executed instructions |
 |---|---|---|---:|
-| `mixed` | always-fast and always-slow call sites of one callee | **2.720x** [2.712, 2.742] | -13.0% |
-| `trace` | disabled tracing hook | **1.668x** [1.662, 1.673] | -16.0% |
-| `memo` | memoization cache hit, callee not shrink-wrapped | **1.019x** [1.008, 1.031] | -16.3% |
-| `bufwrite` | buffered writer, bound by a store-to-load chain | 1.004x [0.990, 1.014] | -23.9% |
-| `pool` | free-list allocator, ext-tsp layout interaction | 0.952x [0.944, 0.961] | -25.0% |
-| `unsafe`, `memo-lowhit`, `compute` | unsafe, too cold, or no calls | 0.999-1.005x | 0.00% |
-| jq 1.8 | JSON processor, 26% of direct calls avoided | **1.068x** [1.060, 1.077] | -2.0% |
-| jq 1.8, without the trivial callee `jv_get_kind` | share no existing BOLT pass achieves | **1.022x** [1.009, 1.025] | -0.9% |
-| SQLite 3.54, Lua 5.5, CPython 3.14, zstd 1.5, libxml2 2.15 | real programs | 0.983-1.005x, all CIs include 1.0 | -1.5% to 0.0% |
-| A/A control | byte-identical copy of the baseline | 0.995-1.006x | - |
+| `mixed` | always-fast and always-slow call sites of one callee | **2.728x** [2.707, 2.748] | -13.0% |
+| `trace` | disabled tracing hook | **1.663x** [1.657, 1.679] | -16.0% |
+| `memo` | memoization cache hit, callee not shrink-wrapped | **1.018x** [1.014, 1.020] | -16.3% |
+| `bufwrite` | buffered writer, bound by a store-to-load chain | 1.003x [1.000, 1.007] | -23.9% |
+| `pool` | free-list allocator, bound by store-to-load chains between the two inlined fast paths | 0.953x [0.949, 0.957] | -25.0% |
+| `unsafe`, `memo-lowhit`, `compute` | unsafe, too cold, or no calls | 0.999-1.003x | 0.00% |
+| jq 1.8 | JSON processor, 26% of direct calls avoided | **1.070x** [1.060, 1.072] | -2.0% |
+| jq 1.8, without the trivial callee `jv_get_kind` | share no existing BOLT pass achieves | **1.023x** [1.005, 1.033] | -0.9% |
+| SQLite 3.54, Lua 5.5, CPython 3.14, zstd 1.5, libxml2 2.15 | real programs | 0.992-1.009x, all CIs include 1.0 | -1.5% to 0.0% |
+| A/A control | byte-identical copy of the baseline | 0.990-1.010x | - |
 
 The pass removes the call, return and frame overhead of hot fast paths and is
 effective where such calls dominate the run time. Among six real programs it
-speeds up jq by 6.8%. Most of that comes from a one-instruction callee that
-BOLT's existing `-inline-all` inlines as well (1.102x on its own, 1.119x
+speeds up jq by 7.0%. Most of that comes from a one-instruction callee that
+BOLT's existing `-inline-all` inlines as well (1.094x on its own, 1.122x
 together with `--partial-inline`). On the other real programs the saved
 instructions (at most 1.5%) are below the resolution of the measurement
 (about +-1%, see the A/A control). jq and libxml2 were chosen by a screening of
@@ -61,6 +61,14 @@ six candidate programs whose procedure and results are in the design
 document. Without `--partial-inline`, the patched `llvm-bolt` writes
 byte-identical binaries to upstream, and no existing BOLT test changes its
 result.
+
+The pass can also lose: `pool` is 5% slower although it executes 25% fewer
+instructions. Its two inlined fast paths store and reload the same fields in
+every loop iteration, and on this core the run time of such a loop depends on
+the exact number of instructions between a store and its reload (0.82x to
+1.09x when single instructions are added or removed). The pass has no cost
+model for this; see
+[Section 5.5 of the design document](docs/design.md#55-analysis).
 
 ## Repository layout
 
@@ -125,6 +133,12 @@ make check-bolt     # results/check-bolt/: test results of both builds, compared
 make experiments    # complete evaluation in one run (about 50 min), updates results/
 make x86-validate   # functional validation on x86-64 under emulation
 ```
+
+The base image is pinned by digest, but the packages installed into it (the
+Ubuntu archive and clang from apt.llvm.org) are not: an image built at a later
+date can contain a newer compiler than the one behind `results/`. The release
+image is the exact environment of the published results; its ID is recorded in
+`results/environment.txt`.
 
 `make experiments` runs [`scripts/run_experiments.sh`](scripts/run_experiments.sh)
 in the image: it builds all BOLT variants from instrumentation profiles,

@@ -5701,18 +5701,18 @@ BOLT-WARNING: failed to post-process indirect branches for deregister_tm_clones/
 BOLT-WARNING: failed to post-process indirect branches for register_tm_clones/1(*2)
 BOLT-WARNING: failed to post-process indirect branches for _PyToken_TwoChars
 BOLT-WARNING: failed to post-process indirect branches for PySequence_Contains
-BOLT-WARNING: failed to post-process indirect branches for _Py_NewReference
-BOLT-WARNING: failed to post-process indirect branches for _Py_NewReferenceNoTotal
-BOLT-WARNING: failed to post-process indirect branches for PyObject_GetAttrString
 BOLT-WARNING: failed to post-process indirect branches for PyMem_RawMalloc
-BOLT-WARNING: failed to post-process indirect branches for BOLT-WARNING: failed to post-process indirect branches for PyObject_SetAttrStringPyMem_RawCalloc
-
+BOLT-WARNING: failed to post-process indirect branches for PyObject_GetAttrString
+BOLT-WARNING: failed to post-process indirect branches for PyMem_RawCalloc
 BOLT-WARNING: failed to post-process indirect branches for PyMem_RawRealloc
 BOLT-WARNING: failed to post-process indirect branches for PyMem_Malloc
 BOLT-WARNING: failed to post-process indirect branches for PyMem_Calloc
 BOLT-WARNING: failed to post-process indirect branches for PyMem_Realloc
+BOLT-WARNING: failed to post-process indirect branches for PyObject_SetAttrString
 BOLT-WARNING: failed to post-process indirect branches for PyObject_Malloc
 BOLT-WARNING: failed to post-process indirect branches for PyObject_Realloc
+BOLT-WARNING: failed to post-process indirect branches for _Py_NewReference
+BOLT-WARNING: failed to post-process indirect branches for _Py_NewReferenceNoTotal
 BOLT-WARNING: failed to post-process indirect branches for unicode_from_format/1(*2)
 BOLT-WARNING: failed to post-process indirect branches for _PyUnicode_DecodeUnicodeEscapeInternal2
 BOLT-WARNING: failed to post-process indirect branches for PyUnicode_Format
@@ -5732,8 +5732,8 @@ BOLT-WARNING: failed to post-process indirect branches for countformat/1(*2)
 BOLT-WARNING: failed to post-process indirect branches for _PyConfig_Read/1(*2)
 BOLT-WARNING: failed to post-process indirect branches for r_object/1(*2)
 BOLT-WARNING: failed to post-process indirect branches for do_mkvalue/1(*2)
-BOLT-WARNING: failed to post-process indirect branches for PyMember_GetOne
 BOLT-WARNING: failed to post-process indirect branches for symtable_visit_expr/1(*2)
+BOLT-WARNING: failed to post-process indirect branches for PyMember_GetOne
 BOLT-WARNING: failed to post-process indirect branches for PyMember_SetOne
 BOLT-WARNING: failed to post-process indirect branches for symtable_visit_stmt/1(*2)
 BOLT-WARNING: failed to post-process indirect branches for sre_category/1(*2)
@@ -6666,39 +6666,39 @@ BOLT-INFO: Finished pass: clean-mc-state
 BOLT-INFO: padding code to 0xc00000 to accommodate hot text
 BOLT-INFO: patched build-id (flipped first and last bits)
 BOLT: writing new section .fini_array
- data at 0xaaaac6798f40
+ data at 0xaaaae1416130
  of size 16
  at offset 4995896 with content size 16
 BOLT: writing new section .init_array
- data at 0xaaaac47571b0
+ data at 0xaaaae0a80c60
  of size 24
  at offset 4995912 with content size 24
 BOLT: writing new section .data.rel.ro
- data at 0xaaaacab60c00
+ data at 0xaaaae46b3c80
  of size 353096
  at offset 4995968 with content size 353096
 BOLT: writing new section .data
- data at 0xaaaacabb6f80
+ data at 0xaaaae470a000
  of size 256816
  at offset 5351360 with content size 256816
 BOLT: writing new section .PyRuntime
- data at 0xaaaacabf5ac0
+ data at 0xaaaae4748b40
  of size 316632
  at offset 5608176 with content size 316632
 BOLT: writing new section .text
- data at 0xffffa7400000
+ data at 0xffffa0e00000
  of size 692756
  at offset 10485760 with content size 692756
 BOLT: writing new section .text.cold
- data at 0xaaaaca79fbc0
+ data at 0xaaaae42f2c00
  of size 536348
  at offset 11178560 with content size 536348
 BOLT: writing new section .bolt.new.eh_frame
- data at 0xaaaacacd4cd0
+ data at 0xaaaae4827d50
  of size 289928
  at offset 12582912 with content size 289928
 BOLT: writing new section .relocated.eh_frame
- data at 0xaaaacac42fa0
+ data at 0xaaaae4796020
  of size 461276
  at offset 12872840 with content size 461276
 BOLT-INFO: not writing section header for section .fini_array

@@ -871,19 +871,19 @@ BOLT-WARNING: failed to post-process indirect branches for register_tm_clones/1(
 BOLT-WARNING: failed to post-process indirect branches for sqlite3DbFree/1(*2)
 BOLT-WARNING: failed to post-process indirect branches for sqlite3_free
 BOLT-WARNING: failed to post-process indirect branches for sqlite3GetToken/1(*2)
-BOLT-WARNING: failed to post-process indirect branches for sqlite3PcacheRelease/1(*2)
 BOLT-WARNING: failed to post-process indirect branches for sqlite3_step
+BOLT-WARNING: failed to post-process indirect branches for sqlite3PcacheRelease/1(*2)
 BOLT-WARNING: failed to post-process indirect branches for releasePageNotNull/1(*2)
+BOLT-WARNING: failed to post-process indirect branches for sqlite3_config
 BOLT-WARNING: failed to post-process indirect branches for sqlite3DbNNFreeNN/1(*2)
 BOLT-WARNING: failed to post-process indirect branches for getCellInfo/1(*2)
-BOLT-WARNING: failed to post-process indirect branches for sqlite3_config
 BOLT-WARNING: failed to post-process indirect branches for sqlite3_test_control
 BOLT-WARNING: failed to post-process indirect branches for vdbeCompareMemString/1(*2)
 BOLT-WARNING: failed to post-process indirect branches for sqlite3VdbeSerialGet/1(*2)
 BOLT-WARNING: failed to post-process indirect branches for sqlite3_str_vappendf
 BOLT-WARNING: failed to post-process indirect branches for jsonUnescapeOneChar/1(*2)
-BOLT-WARNING: failed to post-process indirect branches for jsonTranslateBlobToText/1(*2)
 BOLT-WARNING: failed to post-process indirect branches for jsonTranslateTextToBlob/1(*2)
+BOLT-WARNING: failed to post-process indirect branches for jsonTranslateBlobToText/1(*2)
 BOLT-WARNING: failed to post-process indirect branches for yy_reduce/1(*2)
 BOLT-WARNING: failed to post-process indirect branches for sqlite3ExprCodeTarget/1(*2)
 BOLT-WARNING: failed to post-process indirect branches for sqlite3ExprDataType/1(*2)
@@ -1750,19 +1750,19 @@ BOLT-INFO: Finished pass: clean-mc-state
 BOLT-INFO: padding code to 0x600000 to accommodate hot text
 BOLT-INFO: patched build-id (flipped first and last bits)
 BOLT: writing new section .fini_array
- data at 0xaaab0077c510
+ data at 0xaaab0ffd5f00
  of size 8
  at offset 1208160 with content size 8
 BOLT: writing new section .init_array
- data at 0xaaab008beab0
+ data at 0xaaab0ffcbcb0
  of size 8
  at offset 1208168 with content size 8
 BOLT: writing new section .data.rel.ro
- data at 0xaaaaff1c3500
+ data at 0xaaab112b25e0
  of size 5736
  at offset 1208176 with content size 5736
 BOLT: writing new section .data
- data at 0xaaab00960100
+ data at 0xaaab11cca100
  of size 12525
  at offset 1214400 with content size 12525
 BOLT: writing new section .text
@@ -1770,15 +1770,15 @@ BOLT: writing new section .text
  of size 366448
  at offset 4194304 with content size 366448
 BOLT: writing new section .text.cold
- data at 0xaaab01948b80
+ data at 0xaaab12cc2b80
  of size 265532
  at offset 4560768 with content size 265532
 BOLT: writing new section .bolt.new.eh_frame
- data at 0xaaab019898d0
+ data at 0xaaab12d038d0
  of size 97192
  at offset 6291456 with content size 97192
 BOLT: writing new section .relocated.eh_frame
- data at 0xaaab017b04e0
+ data at 0xaaab12b125e0
  of size 83612
  at offset 6388648 with content size 83612
 BOLT-INFO: not writing section header for section .fini_array

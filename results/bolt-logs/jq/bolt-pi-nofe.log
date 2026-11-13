@@ -1686,15 +1686,15 @@ BOLT-INFO: Starting pass: reorder-blocks
 BOLT-INFO: basic block reordering modified layout of 146 functions (54.48% of profiled, 12.41% of total)
 BOLT-INFO: Finished pass: reorder-blocks
 BOLT-INFO: Starting pass: eliminate-unreachable
-BOLT-INFO: removed 2 dead basic block(s) accounting for 8 bytes in function stack_save
-BOLT-INFO: removed 1 dead basic block(s) accounting for 4 bytes in function frame_push/1(*2)
 BOLT-INFO: removed 1 dead basic block(s) accounting for 4 bytes in function stack_push
 BOLT-INFO: removed 1 dead basic block(s) accounting for 4 bytes in function stack_restore
+BOLT-INFO: removed 2 dead basic block(s) accounting for 8 bytes in function stack_save
+BOLT-INFO: removed 1 dead basic block(s) accounting for 4 bytes in function frame_push/1(*2)
 BOLT-INFO: removed 1 dead basic block(s) accounting for 4 bytes in function f_lesseq/1(*2)
 BOLT-INFO: removed 1 dead basic block(s) accounting for 4 bytes in function jv_get
 BOLT-INFO: removed 5 dead basic block(s) accounting for 20 bytes in function jvp_cmp/1(*2)
-BOLT-INFO: removed 1 dead basic block(s) accounting for 4 bytes in function jv_parser_next
 BOLT-INFO: removed 3 dead basic block(s) accounting for 12 bytes in function parse_token/1(*2)
+BOLT-INFO: removed 1 dead basic block(s) accounting for 4 bytes in function jv_parser_next
 BOLT-INFO: UCE removed 16 blocks and 64 bytes of code
 BOLT-INFO: Finished pass: eliminate-unreachable
 BOLT-INFO: Starting pass: split-functions
@@ -1828,35 +1828,35 @@ BOLT-INFO: Finished pass: clean-mc-state
 BOLT-INFO: padding code to 0x600000 to accommodate hot text
 BOLT-INFO: patched build-id (flipped first and last bits)
 BOLT: writing new section .fini_array
- data at 0xaaab0a4751e0
+ data at 0xaaaaed60b490
  of size 8
  at offset 870352 with content size 8
 BOLT: writing new section .init_array
- data at 0xaaab0a4461d0
+ data at 0xaaaaed64b680
  of size 8
  at offset 870360 with content size 8
 BOLT: writing new section .data.rel.ro
- data at 0xaaab0a111bd0
+ data at 0xaaaaed371bd0
  of size 11776
  at offset 870368 with content size 11776
 BOLT: writing new section .data
- data at 0xaaab0a86ea00
+ data at 0xaaaaedacea00
  of size 19592
  at offset 882816 with content size 19592
 BOLT: writing new section .text
- data at 0xffff8ae00000
+ data at 0xffff8c200000
  of size 85136
  at offset 4194304 with content size 85136
 BOLT: writing new section .text.cold
- data at 0xaaab0a884c80
+ data at 0xaaaaedae4c80
  of size 48592
  at offset 4279488 with content size 48592
 BOLT: writing new section .bolt.new.eh_frame
- data at 0xaaab0a9016c0
+ data at 0xaaaaedb616c0
  of size 28896
  at offset 6291456 with content size 28896
 BOLT: writing new section .relocated.eh_frame
- data at 0xaaab0a8f4eb0
+ data at 0xaaaaedb54eb0
  of size 51208
  at offset 6320352 with content size 51208
 BOLT-INFO: not writing section header for section .fini_array

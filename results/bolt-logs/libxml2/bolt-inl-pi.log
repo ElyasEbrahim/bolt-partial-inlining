@@ -2045,9 +2045,9 @@ BOLT-INFO: skipping processing xmlXPtrEval per user request
 BOLT-INFO: skipping processing xmlXPtrErr/1(*2) per user request
 BOLT-INFO: skipping processing xmlXPtrEvalChildSeq/1(*2) per user request
 BOLT-INFO: potentially escaped address 0x12406c in function xmlXPathCompOpEval/1(*2)
+BOLT-WARNING: failed to post-process indirect branches for xmlParserNsFree/1(*2)
 BOLT-WARNING: failed to post-process indirect branches for deregister_tm_clones/1(*2)
 BOLT-WARNING: failed to post-process indirect branches for register_tm_clones/1(*2)
-BOLT-WARNING: failed to post-process indirect branches for xmlParserNsFree/1(*2)
 BOLT-WARNING: failed to post-process indirect branches for xmlXPathCompOpEval/1(*2)
 BOLT-INFO: Starting pass: pointer-auth-cfi-analyzer
 BOLT-INFO: PointerAuthCFIAnalyzer ran on 1 functions. Ignored 0 functions (0.00%) because of CFI inconsistencies
@@ -2912,35 +2912,35 @@ BOLT-INFO: Finished pass: clean-mc-state
 BOLT-INFO: padding code to 0x600000 to accommodate hot text
 BOLT-INFO: patched build-id (flipped first and last bits)
 BOLT: writing new section .fini_array
- data at 0xaaaae42fe1f0
+ data at 0xaaaadc8c23b0
  of size 16
  at offset 1147504 with content size 16
 BOLT: writing new section .init_array
- data at 0xaaaae43456e0
+ data at 0xaaaadc822c30
  of size 8
  at offset 1147520 with content size 8
 BOLT: writing new section .data.rel.ro
- data at 0xaaaae459f110
+ data at 0xaaaadc9ef110
  of size 29344
  at offset 1147528 with content size 29344
 BOLT: writing new section .data
- data at 0xaaaae48035f0
+ data at 0xaaaadcc65ba0
  of size 836
  at offset 1177568 with content size 836
 BOLT: writing new section .text
- data at 0xffff90200000
+ data at 0xffff94400000
  of size 48744
  at offset 4194304 with content size 48744
 BOLT: writing new section .text.cold
- data at 0xaaaae4c0b580
+ data at 0xaaaadd057540
  of size 59408
  at offset 4243072 with content size 59408
 BOLT: writing new section .bolt.new.eh_frame
- data at 0xaaaae4bf3360
+ data at 0xaaaadd03f320
  of size 23016
  at offset 6291456 with content size 23016
 BOLT: writing new section .relocated.eh_frame
- data at 0xaaaae4c7b5c0
+ data at 0xaaaadd0c7580
  of size 108608
  at offset 6314472 with content size 108608
 BOLT-INFO: not writing section header for section .fini_array

@@ -5703,8 +5703,8 @@ BOLT-WARNING: failed to post-process indirect branches for _PyToken_TwoChars
 BOLT-WARNING: failed to post-process indirect branches for PySequence_Contains
 BOLT-WARNING: failed to post-process indirect branches for PyObject_GetAttrString
 BOLT-WARNING: failed to post-process indirect branches for _Py_NewReference
-BOLT-WARNING: failed to post-process indirect branches for _Py_NewReferenceNoTotal
 BOLT-WARNING: failed to post-process indirect branches for PyObject_SetAttrString
+BOLT-WARNING: failed to post-process indirect branches for _Py_NewReferenceNoTotal
 BOLT-WARNING: failed to post-process indirect branches for PyMem_RawMalloc
 BOLT-WARNING: failed to post-process indirect branches for PyMem_RawCalloc
 BOLT-WARNING: failed to post-process indirect branches for PyMem_RawRealloc
@@ -5721,16 +5721,16 @@ BOLT-WARNING: failed to post-process indirect branches for astfold_stmt/1(*2)
 BOLT-WARNING: failed to post-process indirect branches for codegen_addcompare/1(*2)
 BOLT-WARNING: failed to post-process indirect branches for _PyOpcode_num_popped/1(*2)
 BOLT-WARNING: failed to post-process indirect branches for _PyOpcode_num_pushed/1(*2)
-BOLT-WARNING: failed to post-process indirect branches for codegen_check_compare/1(*2)
 BOLT-WARNING: failed to post-process indirect branches for codegen_visit_expr/1(*2)
+BOLT-WARNING: failed to post-process indirect branches for codegen_check_compare/1(*2)
 BOLT-WARNING: failed to post-process indirect branches for skipitem/1(*2)
 BOLT-WARNING: failed to post-process indirect branches for optimize_load_fast/1(*2)
-BOLT-WARNING: failed to post-process indirect branches for codegen_visit_stmt/1(*2)
-BOLT-WARNING: failed to post-process indirect branches for convertitem/1(*2)
+BOLT-WARNING: failed to post-process indirect branches for BOLT-WARNING: failed to post-process indirect branches for codegen_visit_stmt/1(*2)convertitem/1(*2)
+
 BOLT-WARNING: failed to post-process indirect branches for countformat/1(*2)
 BOLT-WARNING: failed to post-process indirect branches for _PyCfg_OptimizeCodeUnit/1(*2)
-BOLT-WARNING: failed to post-process indirect branches for _PyConfig_Read/1(*2)
 BOLT-WARNING: failed to post-process indirect branches for r_object/1(*2)
+BOLT-WARNING: failed to post-process indirect branches for _PyConfig_Read/1(*2)
 BOLT-WARNING: failed to post-process indirect branches for do_mkvalue/1(*2)
 BOLT-WARNING: failed to post-process indirect branches for PyMember_GetOne
 BOLT-WARNING: failed to post-process indirect branches for symtable_visit_expr/1(*2)
@@ -6666,39 +6666,39 @@ BOLT-INFO: Finished pass: clean-mc-state
 BOLT-INFO: padding code to 0xc00000 to accommodate hot text
 BOLT-INFO: patched build-id (flipped first and last bits)
 BOLT: writing new section .fini_array
- data at 0xaaaaec4a11b0
+ data at 0xaaaac6fcea90
  of size 16
  at offset 4995896 with content size 16
 BOLT: writing new section .init_array
- data at 0xaaaaec49beb0
+ data at 0xaaaac53d4970
  of size 24
  at offset 4995912 with content size 24
 BOLT: writing new section .data.rel.ro
- data at 0xaaaaf289d9c0
+ data at 0xaaaac9ba0f80
  of size 353096
  at offset 4995968 with content size 353096
 BOLT: writing new section .data
- data at 0xaaaaf28f3d40
+ data at 0xaaaac9bf7300
  of size 256816
  at offset 5351360 with content size 256816
 BOLT: writing new section .PyRuntime
- data at 0xaaaaf2932880
+ data at 0xaaaac9c35e40
  of size 316632
  at offset 5608176 with content size 316632
 BOLT: writing new section .text
- data at 0xffffb1600000
+ data at 0xffff98a00000
  of size 692756
  at offset 10485760 with content size 692756
 BOLT: writing new section .text.cold
- data at 0xaaaaf24dc940
+ data at 0xaaaac97dff40
  of size 536348
  at offset 11178560 with content size 536348
 BOLT: writing new section .bolt.new.eh_frame
- data at 0xaaaaf2a11a90
+ data at 0xaaaac9d15050
  of size 289928
  at offset 12582912 with content size 289928
 BOLT: writing new section .relocated.eh_frame
- data at 0xaaaaf297fd60
+ data at 0xaaaac9c83320
  of size 461276
  at offset 12872840 with content size 461276
 BOLT-INFO: not writing section header for section .fini_array

@@ -11,9 +11,14 @@
 # pinned, SHA-256 verified sources) and the experiment scripts.
 
 ARG LLVM_APT_VERSION=23
+# The base image is pinned by digest. The tag ubuntu:24.04 moves, and a moved
+# tag rebuilds every layer, including the toolchain. The packages installed
+# below (Ubuntu archive, apt.llvm.org) are not pinned; the image that produced
+# the published results is attached to the release.
+ARG UBUNTU_IMAGE=ubuntu:24.04@sha256:fe81560990fae86dc4743202b2cb4d3df98d0bcf949173cecef15ce1127ef852
 
 ############################################################################
-FROM ubuntu:24.04 AS base
+FROM ${UBUNTU_IMAGE} AS base
 ARG LLVM_APT_VERSION
 ARG DEBIAN_FRONTEND=noninteractive
 RUN apt-get update && apt-get install -y --no-install-recommends \

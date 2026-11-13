@@ -11,7 +11,7 @@
 #      not),
 #   4. time all variants (interleaved rounds, every output verified):
 #      microbenchmarks with MICRO_ROUNDS rounds, real programs with RW_ROUNDS,
-#   5. run the layout-interaction analysis of the 'pool' microbenchmark,
+#   5. analyze the slowdown of the 'pool' microbenchmark (pool_analysis.sh),
 #   6. count executed instructions with valgrind,
 #   7. write the report (REPORT.md, report.json, plots).
 #
@@ -86,7 +86,7 @@ python3 "$HERE/bench.py" --root "$ROOT" --out "$OUT/realworld" \
   --rounds "$RW_ROUNDS" --only "${REAL[@]}" --stage-dir "$STAGE" \
   > "$OUT/realworld/bench.log" 2>&1
 
-stamp "pool layout analysis"
+stamp "pool analysis"
 STAGE=$STAGE OUT="$OUT/pool-analysis" "$HERE/pool_analysis.sh" > "$OUT/pool-analysis/bench.log" 2>&1
 
 stamp "instruction counts"
@@ -100,8 +100,10 @@ for d in "$ROOT"/*/; do
   mkdir -p "$OUT/bolt-logs/$w"
   cp "$d"/*.log "$d"/*.time "$OUT/bolt-logs/$w/" 2>/dev/null || true
 done
+mkdir -p "$OUT/bolt-logs/pool-counter"
+cp "$ROOT"/pool-counter/pool/*.log "$OUT/bolt-logs/pool-counter/" 2>/dev/null || true
 python3 "$HERE/report.py" --root "$ROOT" --results "$OUT" \
   --summary "$OUT/micro/summary.json" "$OUT/realworld/summary.json" \
-  --icount "$OUT/icount.json" --pool "$OUT/pool-analysis/summary.json" \
+  --icount "$OUT/icount.json" --pool "$OUT/pool-analysis" \
   > "$OUT/report.log" 2>&1
 stamp "done"

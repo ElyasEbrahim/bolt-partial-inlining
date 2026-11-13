@@ -869,26 +869,26 @@ BOLT-INFO: potentially escaped address 0xf0390 in function generateOutputSubrout
 BOLT-WARNING: failed to post-process indirect branches for deregister_tm_clones/1(*2)
 BOLT-WARNING: failed to post-process indirect branches for register_tm_clones/1(*2)
 BOLT-WARNING: failed to post-process indirect branches for sqlite3DbFree/1(*2)
-BOLT-WARNING: failed to post-process indirect branches for sqlite3GetToken/1(*2)
 BOLT-WARNING: failed to post-process indirect branches for sqlite3_free
+BOLT-WARNING: failed to post-process indirect branches for sqlite3GetToken/1(*2)
 BOLT-WARNING: failed to post-process indirect branches for sqlite3PcacheRelease/1(*2)
 BOLT-WARNING: failed to post-process indirect branches for sqlite3_step
-BOLT-WARNING: failed to post-process indirect branches for sqlite3_config
 BOLT-WARNING: failed to post-process indirect branches for releasePageNotNull/1(*2)
-BOLT-WARNING: failed to post-process indirect branches for sqlite3DbNNFreeNN/1(*2)
 BOLT-WARNING: failed to post-process indirect branches for getCellInfo/1(*2)
+BOLT-WARNING: failed to post-process indirect branches for sqlite3_config
+BOLT-WARNING: failed to post-process indirect branches for sqlite3DbNNFreeNN/1(*2)
 BOLT-WARNING: failed to post-process indirect branches for sqlite3_test_control
 BOLT-WARNING: failed to post-process indirect branches for sqlite3VdbeSerialGet/1(*2)
 BOLT-WARNING: failed to post-process indirect branches for vdbeCompareMemString/1(*2)
-BOLT-WARNING: failed to post-process indirect branches for sqlite3_str_vappendf
 BOLT-WARNING: failed to post-process indirect branches for jsonUnescapeOneChar/1(*2)
-BOLT-WARNING: failed to post-process indirect branches for jsonTranslateBlobToText/1(*2)
 BOLT-WARNING: failed to post-process indirect branches for jsonTranslateTextToBlob/1(*2)
+BOLT-WARNING: failed to post-process indirect branches for sqlite3_str_vappendf
+BOLT-WARNING: failed to post-process indirect branches for jsonTranslateBlobToText/1(*2)
 BOLT-WARNING: failed to post-process indirect branches for yy_reduce/1(*2)
-BOLT-WARNING: failed to post-process indirect branches for sqlite3ExprCodeTarget/1(*2)
-BOLT-WARNING: failed to post-process indirect branches for sqlite3ExprDataType/1(*2)
-BOLT-WARNING: failed to post-process indirect branches for generateOutputSubroutine/1(*2)
+BOLT-WARNING: failed to post-process indirect branches for BOLT-WARNING: failed to post-process indirect branches for sqlite3ExprDataType/1(*2)
+sqlite3ExprCodeTarget/1(*2)
 BOLT-WARNING: failed to post-process indirect branches for selectInnerLoop/1(*2)
+BOLT-WARNING: failed to post-process indirect branches for generateOutputSubroutine/1(*2)
 BOLT-INFO: Starting pass: pointer-auth-cfi-analyzer
 BOLT-INFO: PointerAuthCFIAnalyzer ran on 1 functions. Ignored 0 functions (0.00%) because of CFI inconsistencies
 BOLT-INFO: Finished pass: pointer-auth-cfi-analyzer
@@ -1754,35 +1754,35 @@ BOLT-INFO: Finished pass: clean-mc-state
 BOLT-INFO: padding code to 0x600000 to accommodate hot text
 BOLT-INFO: patched build-id (flipped first and last bits)
 BOLT: writing new section .fini_array
- data at 0xaaaad5ea1250
+ data at 0xaaaaffe72130
  of size 8
  at offset 1208160 with content size 8
 BOLT: writing new section .init_array
- data at 0xaaaad5ec50a0
+ data at 0xaaaaffe04d10
  of size 8
  at offset 1208168 with content size 8
 BOLT: writing new section .data.rel.ro
- data at 0xaaaad76321d0
+ data at 0xaaab00563db0
  of size 5736
  at offset 1208176 with content size 5736
 BOLT: writing new section .data
- data at 0xaaaad7ba2100
+ data at 0xaaab00d3bd40
  of size 12525
  at offset 1214400 with content size 12525
 BOLT: writing new section .text
- data at 0xffffb4200000
+ data at 0xffffa4200000
  of size 366576
  at offset 4194304 with content size 366576
 BOLT: writing new section .text.cold
- data at 0xaaaad8b5ab40
+ data at 0xaaab02abfb40
  of size 265596
  at offset 4560896 with content size 265596
 BOLT: writing new section .bolt.new.eh_frame
- data at 0xaaaad8b9b8d0
+ data at 0xaaab02b008d0
  of size 97192
  at offset 6291456 with content size 97192
 BOLT: writing new section .relocated.eh_frame
- data at 0xaaaad89c24b0
+ data at 0xaaab029274d0
  of size 83612
  at offset 6388648 with content size 83612
 BOLT-INFO: not writing section header for section .fini_array

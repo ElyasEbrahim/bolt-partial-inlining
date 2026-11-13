@@ -1,0 +1,35 @@
+BOLT-INFO: shared object or position-independent executable detected
+BOLT-INFO: Target architecture: aarch64
+BOLT-INFO: BOLT version: 0a0e65b2e8ff6043d85ab07c4d23ea18bf0b9b7d
+BOLT-INFO: first alloc address is 0x0
+BOLT-INFO: creating new program header table at address 0x200000, offset 0x200000
+BOLT-INFO: enabling relocation mode
+BOLT-INFO: forcing -jump-tables=move for instrumentation
+BOLT-INFO: enabling lite mode
+BOLT-INFO: PointerAuthCFIAnalyzer ran on 1 functions. Ignored 0 functions (0.00%) because of CFI inconsistencies
+BOLT-INFO: number of removed linker-inserted veneers: 0
+BOLT-INFO: 0 out of 12 functions in the binary (0.0%) have non-empty execution profile
+BOLT-INSTRUMENTER: Number of indirect call site descriptors: 0
+BOLT-INSTRUMENTER: Number of indirect call target descriptors: 9
+BOLT-INSTRUMENTER: Number of function descriptors: 9
+BOLT-INSTRUMENTER: Number of branch counters: 14
+BOLT-INSTRUMENTER: Number of ST leaf node counters: 17
+BOLT-INSTRUMENTER: Number of direct call counters: 0
+BOLT-INSTRUMENTER: Total number of counters: 31
+BOLT-INSTRUMENTER: Total size of counters: 248 bytes (static alloc memory)
+BOLT-INSTRUMENTER: Total size of string table emitted: 260 bytes in file
+BOLT-INSTRUMENTER: Total size of descriptors: 2304 bytes in file
+BOLT-INSTRUMENTER: Profile will be saved to file /work/out/pool-counter/pool/prof.fdata
+BOLT-INFO: Starting stub-insertion pass
+BOLT-INFO: Inserted 0 stubs in the hot area and 0 stubs in the cold area. Shared 0 times, iterated 1 times.
+BOLT-INFO: rewritten pac-ret DWARF info in 1 out of 20 functions (5.00%).
+BOLT-INFO: padding code to 0x600000 to accommodate hot text
+BOLT-INFO: output linked against instrumentation runtime library, lib entry point is 0x633668
+BOLT-INFO: clear procedure is 0x6300f0
+BOLT-INFO: patched build-id (flipped first and last bits)
+BOLT-INFO: setting __bolt_runtime_start to 0x633668
+BOLT-INFO: setting __bolt_runtime_fini to 0x633700
+BOLT-INFO: setting __hot_start to 0x400000
+BOLT-INFO: setting __hot_end to 0x400694
+BOLT-INFO: runtime library finalization was hooked via DT_FINI, set to 0x633700
+BOLT-INFO: runtime library initialization was hooked via ELF Header Entry Point, set to 0x633668

@@ -5701,41 +5701,41 @@ BOLT-WARNING: failed to post-process indirect branches for deregister_tm_clones/
 BOLT-WARNING: failed to post-process indirect branches for register_tm_clones/1(*2)
 BOLT-WARNING: failed to post-process indirect branches for _PyToken_TwoChars
 BOLT-WARNING: failed to post-process indirect branches for PySequence_Contains
-BOLT-WARNING: failed to post-process indirect branches for PyMem_RawMalloc
-BOLT-WARNING: failed to post-process indirect branches for PyMem_RawCalloc
-BOLT-WARNING: failed to post-process indirect branches for PyMem_RawRealloc
 BOLT-WARNING: failed to post-process indirect branches for _Py_NewReference
 BOLT-WARNING: failed to post-process indirect branches for _Py_NewReferenceNoTotal
 BOLT-WARNING: failed to post-process indirect branches for PyObject_GetAttrString
+BOLT-WARNING: failed to post-process indirect branches for PyMem_RawMalloc
+BOLT-WARNING: failed to post-process indirect branches for PyObject_SetAttrString
+BOLT-WARNING: failed to post-process indirect branches for PyMem_RawCalloc
+BOLT-WARNING: failed to post-process indirect branches for PyMem_RawRealloc
 BOLT-WARNING: failed to post-process indirect branches for PyMem_Malloc
 BOLT-WARNING: failed to post-process indirect branches for PyMem_Calloc
 BOLT-WARNING: failed to post-process indirect branches for PyMem_Realloc
-BOLT-WARNING: failed to post-process indirect branches for PyObject_SetAttrString
 BOLT-WARNING: failed to post-process indirect branches for PyObject_Malloc
 BOLT-WARNING: failed to post-process indirect branches for PyObject_Realloc
 BOLT-WARNING: failed to post-process indirect branches for unicode_from_format/1(*2)
-BOLT-WARNING: failed to post-process indirect branches for PyUnicode_Format
 BOLT-WARNING: failed to post-process indirect branches for _PyUnicode_DecodeUnicodeEscapeInternal2
+BOLT-WARNING: failed to post-process indirect branches for PyUnicode_Format
 BOLT-WARNING: failed to post-process indirect branches for astfold_expr/1(*2)
 BOLT-WARNING: failed to post-process indirect branches for astfold_stmt/1(*2)
 BOLT-WARNING: failed to post-process indirect branches for codegen_addcompare/1(*2)
-BOLT-WARNING: failed to post-process indirect branches for codegen_check_compare/1(*2)
 BOLT-WARNING: failed to post-process indirect branches for _PyOpcode_num_popped/1(*2)
 BOLT-WARNING: failed to post-process indirect branches for _PyOpcode_num_pushed/1(*2)
-BOLT-WARNING: failed to post-process indirect branches for optimize_load_fast/1(*2)
+BOLT-WARNING: failed to post-process indirect branches for codegen_check_compare/1(*2)
 BOLT-WARNING: failed to post-process indirect branches for codegen_visit_expr/1(*2)
+BOLT-WARNING: failed to post-process indirect branches for optimize_load_fast/1(*2)
 BOLT-WARNING: failed to post-process indirect branches for skipitem/1(*2)
 BOLT-WARNING: failed to post-process indirect branches for codegen_visit_stmt/1(*2)
+BOLT-WARNING: failed to post-process indirect branches for convertitem/1(*2)
 BOLT-WARNING: failed to post-process indirect branches for _PyCfg_OptimizeCodeUnit/1(*2)
 BOLT-WARNING: failed to post-process indirect branches for countformat/1(*2)
-BOLT-WARNING: failed to post-process indirect branches for convertitem/1(*2)
-BOLT-WARNING: failed to post-process indirect branches for r_object/1(*2)
 BOLT-WARNING: failed to post-process indirect branches for _PyConfig_Read/1(*2)
+BOLT-WARNING: failed to post-process indirect branches for r_object/1(*2)
 BOLT-WARNING: failed to post-process indirect branches for do_mkvalue/1(*2)
 BOLT-WARNING: failed to post-process indirect branches for PyMember_GetOne
 BOLT-WARNING: failed to post-process indirect branches for symtable_visit_expr/1(*2)
-BOLT-WARNING: failed to post-process indirect branches for PyMember_SetOne
 BOLT-WARNING: failed to post-process indirect branches for symtable_visit_stmt/1(*2)
+BOLT-WARNING: failed to post-process indirect branches for PyMember_SetOne
 BOLT-WARNING: failed to post-process indirect branches for sre_category/1(*2)
 BOLT-WARNING: failed to post-process indirect branches for _validate_inner/1(*2)
 BOLT-WARNING: failed to post-process indirect branches for sre_ucs1_match/1(*2)
@@ -6500,16 +6500,16 @@ BOLT-INFO: removed 1 dead basic block(s) accounting for 0 bytes in function desc
 BOLT-INFO: removed 1 dead basic block(s) accounting for 0 bytes in function gen_dealloc/1(*2)
 BOLT-INFO: removed 2 dead basic block(s) accounting for 0 bytes in function _PyGen_Finalize/1(*2)
 BOLT-INFO: removed 1 dead basic block(s) accounting for 0 bytes in function frame_dealloc/1(*2)
-BOLT-INFO: removed 1 dead basic block(s) accounting for 0 bytes in function calliter_dealloc/1(*2)
 BOLT-INFO: removed 1 dead basic block(s) accounting for 0 bytes in function listreviter_dealloc/1(*2)
+BOLT-INFO: removed 1 dead basic block(s) accounting for 0 bytes in function calliter_dealloc/1(*2)
 BOLT-INFO: removed 1 dead basic block(s) accounting for 0 bytes in function dictiter_dealloc/1(*2)
 BOLT-INFO: removed 1 dead basic block(s) accounting for 0 bytes in function mbuf_dealloc/1(*2)
 BOLT-INFO: removed 1 dead basic block(s) accounting for 0 bytes in function Py_ReprLeave
 BOLT-INFO: removed 1 dead basic block(s) accounting for 0 bytes in function slice_dealloc/1(*2)
 BOLT-INFO: removed 1 dead basic block(s) accounting for 0 bytes in function PyUnicodeWriter_WriteStr
 BOLT-INFO: removed 1 dead basic block(s) accounting for 0 bytes in function PyUnicodeWriter_WriteRepr
-BOLT-INFO: removed 1 dead basic block(s) accounting for 0 bytes in function _PyCompile_ExitScope/1(*2)
 BOLT-INFO: removed 1 dead basic block(s) accounting for 0 bytes in function PyErr_GivenExceptionMatches
+BOLT-INFO: removed 1 dead basic block(s) accounting for 0 bytes in function _PyCompile_ExitScope/1(*2)
 BOLT-INFO: removed 1 dead basic block(s) accounting for 0 bytes in function _PyLong_FormatAdvancedWriter/1(*2)
 BOLT-INFO: UCE removed 18 blocks and 0 bytes of code
 BOLT-INFO: Finished pass: eliminate-unreachable
@@ -6674,39 +6674,39 @@ BOLT-INFO: Finished pass: clean-mc-state
 BOLT-INFO: padding code to 0xc00000 to accommodate hot text
 BOLT-INFO: patched build-id (flipped first and last bits)
 BOLT: writing new section .fini_array
- data at 0xaaab1d46b600
+ data at 0xaaaaf83fe3e0
  of size 16
  at offset 4995896 with content size 16
 BOLT: writing new section .init_array
- data at 0xaaab20d43610
+ data at 0xaaaaf8a70180
  of size 24
  at offset 4995912 with content size 24
 BOLT: writing new section .data.rel.ro
- data at 0xaaab23e93300
+ data at 0xaaaafbcd1180
  of size 353096
  at offset 4995968 with content size 353096
 BOLT: writing new section .data
- data at 0xaaab23ee9680
+ data at 0xaaaafbd27500
  of size 256816
  at offset 5351360 with content size 256816
 BOLT: writing new section .PyRuntime
- data at 0xaaab23f281c0
+ data at 0xaaaafbd66040
  of size 316632
  at offset 5608176 with content size 316632
 BOLT: writing new section .text
- data at 0xffff97c00000
+ data at 0xffff8ac00000
  of size 733104
  at offset 10485760 with content size 733104
 BOLT: writing new section .text.cold
- data at 0xaaab23ad22c0
+ data at 0xaaaafb910140
  of size 619088
  at offset 11218880 with content size 619088
 BOLT: writing new section .bolt.new.eh_frame
- data at 0xaaab240073d0
+ data at 0xaaaafbe45250
  of size 292808
  at offset 12582912 with content size 292808
 BOLT: writing new section .relocated.eh_frame
- data at 0xaaab23f756a0
+ data at 0xaaaafbdb3520
  of size 461276
  at offset 12875720 with content size 461276
 BOLT-INFO: not writing section header for section .fini_array

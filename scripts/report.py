@@ -12,6 +12,7 @@ import argparse
 import json
 import os
 import re
+import statistics
 import subprocess
 import sys
 
@@ -96,6 +97,80 @@ def fmt_speedup(st):
     return f"{st['speedup_vs_bolt']:.3f} [{lo:.3f}, {hi:.3f}]"
 
 
+POOL_LABELS = {
+    "orig": "compiler output",
+    "bolt-copy": "identical copy of bolt (control)",
+    "bolt-pi": "partial inlining, ext-tsp block order (default)",
+    "pa-only-alloc": "only `pool_alloc` partially inlined",
+    "pa-only-free": "only `pool_free` partially inlined",
+    "pa-norb-bolt": "baseline, original block order",
+    "pa-norb-pi": "partial inlining, original block order",
+    "pa-cache-bolt": "baseline, `-reorder-blocks=cache`",
+    "pa-cache-pi": "partial inlining, `-reorder-blocks=cache`",
+    "pa-lto": "compiler LTO (inlines both functions)",
+    "hw-base": "hand-written loop of `bolt` (two calls)",
+    "hw-base-head+1": "`hw-base` with one nop in the loop head",
+    "hw-straight": "hand-written loop of `bolt-pi`",
+    "hw-norb": "hand-written loop of `pa-norb-pi`",
+    "hw-cache": "hand-written loop of `pa-cache-pi`",
+    "hw-short2": "`hw-straight`, 2 instructions fewer between the regions",
+    "hw-short1": "`hw-straight`, 1 instruction fewer (no register copy)",
+    "hw-samebase": "`hw-straight`, same base register in both regions",
+    "hw-tail+4": "`hw-straight`, 4 nops after the second region",
+    "hw-fwd1": "`hw-straight`, reload of `p->live` replaced by a register copy",
+    "hw-fwd3": "`hw-straight`, all three reloads replaced by register copies",
+}
+
+
+def pool_label(v):
+    if v.startswith("hw-gap+"):
+        n = int(v[len("hw-gap+"):])
+        return f"`hw-straight`, {n} nop{'s' if n > 1 else ''} between the regions"
+    return POOL_LABELS.get(v, "")
+
+
+def pool_table(L, variants):
+    L.append("| variant | | median [s] | speedup vs bolt [95% CI] | p |")
+    L.append("|---|---|---:|---|---:|")
+    for v, st in variants.items():
+        p = st.get("wilcoxon_p")
+        L.append(f"| {v} | {pool_label(v)} | {st['median']:.4f} | {fmt_speedup(st)} | "
+                 f"{'-' if p is None else format(p, '.2g')} |")
+
+
+def pool_report(pool, L):
+    """Tables of scripts/pool_analysis.sh (design document, Section 5.5)."""
+    if not pool:
+        return
+    rounds = next(iter(next(iter(pool.values())).values()))["n"]
+    L.append(f"\n## pool: analysis of the slowdown ({rounds} rounds per table)\n")
+    L.append("`hw-*` are hand-written variants of the loop (`scripts/pool_loop.py`); "
+             "speedups are relative to `bolt` of the same table.\n")
+    if "layout" in pool:
+        L.append("### Block orders, single callees, LTO; hand-written loops that "
+                 "mirror BOLT outputs\n")
+        pool_table(L, pool["layout"])
+    if "distance" in pool:
+        L.append("\n### Instructions between the two inlined regions\n")
+        pool_table(L, pool["distance"])
+    if "placement" in pool:
+        L.append("\n### Code placement\n")
+        L.append("Each loop shifted by 0, 4, ..., 60 bytes (nops in front of the "
+                 "loop that are not executed); speedup vs bolt per placement.\n")
+        L.append("| loop | min | median | max | all 16 placements |")
+        L.append("|---|---:|---:|---:|---|")
+        for loop in ("hw-base", "hw-straight"):
+            s = [st["speedup_vs_bolt"] for v, st in sorted(pool["placement"].items())
+                 if v.startswith(loop + "-p")]
+            if s:
+                L.append(f"| {loop} | {min(s):.3f} | {statistics.median(s):.3f} | "
+                         f"{max(s):.3f} | " + " ".join(f"{x:.3f}" for x in s) + " |")
+    if "counter" in pool:
+        L.append("\n### Build with `slot = i & (w - 1)` (no random number generator "
+                 "in the loop)\n")
+        pool_table(L, pool["counter"])
+
+
 def main():
     ap = argparse.ArgumentParser()
     ap.add_argument("--root", default="/work/out")
@@ -104,7 +179,7 @@ def main():
                     help="summary.json files to merge (later files win); "
                          "default: <results>/summary.json")
     ap.add_argument("--icount", help="icount.json from icount.py")
-    ap.add_argument("--pool", help="summary.json of pool_analysis.sh")
+    ap.add_argument("--pool", help="result directory of pool_analysis.sh")
     args = ap.parse_args()
     summary = {}
     for f in args.summary or [os.path.join(args.results, "summary.json")]:
@@ -187,15 +262,13 @@ def main():
                 continue
             L.append(f"| {name} | {b:,} | " + " | ".join(
                 f"{100.0 * (c[v] - b) / b:+.2f}%" if v in c else "-" for v in vs) + " |")
+    pool = {}
     if args.pool:
-        pool = json.load(open(args.pool))["pool"]["variants"]
-        rounds = next(iter(pool.values()))["n"]
-        L.append(f"\n## pool: layout interaction analysis ({rounds} rounds)\n")
-        L.append("| variant | median [s] | speedup vs bolt [95% CI] | p |")
-        L.append("|---|---:|---|---:|")
-        for v, st in pool.items():
-            L.append(f"| {v} | {st['median']:.4f} | {fmt_speedup(st)} | "
-                     f"{st.get('wilcoxon_p', float('nan')):.2g} |")
+        for group in ("layout", "distance", "placement", "counter"):
+            f = os.path.join(args.pool, group, "summary.json")
+            if os.path.exists(f):
+                pool[group] = json.load(open(f))["pool"]["variants"]
+        pool_report(pool, L)
     L.append("\n## What the pass did (bolt-pi)\n")
     L.append("| workload | callees with fast region | sites | with frame elision "
              "| tail-call sites | insns copied | regs renamed | fast-path calls "
@@ -244,7 +317,7 @@ def main():
         rej = e["pi"].get("bolt-pi", {}).get("rejected", {})
         L.append(f"| {name} | " + " | ".join(str(rej.get(r, 0)) for r in reasons) + " |")
     open(os.path.join(args.results, "REPORT.md"), "w").write("\n".join(L) + "\n")
-    json.dump(dict(report, _icount=icounts),
+    json.dump(dict(report, _icount=icounts, _pool=pool),
               open(os.path.join(args.results, "report.json"), "w"), indent=1)
 
     try:
