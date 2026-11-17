@@ -23,8 +23,8 @@ BOLT-INFO: setting size of function malloc@PLT to 16 (was 0)
 BOLT-INFO: setting size of function printf@PLT to 16 (was 0)
 BOLT-INFO: setting size of function memset@PLT to 16 (was 0)
 BOLT-INFO: pre-processing profile using branch profile reader
-BOLT-WARNING: failed to post-process indirect branches for register_tm_clones/1(*2)
-BOLT-WARNING: failed to post-process indirect branches for deregister_tm_clones/1(*2)
+BOLT-WARNING: failed to post-process indirect branches for BOLT-WARNING: failed to post-process indirect branches for deregister_tm_clones/1(*2)register_tm_clones/1(*2)
+
 BOLT-INFO: Starting pass: pointer-auth-cfi-analyzer
 BOLT-INFO: PointerAuthCFIAnalyzer ran on 1 functions. Ignored 0 functions (0.00%) because of CFI inconsistencies
 BOLT-INFO: Finished pass: pointer-auth-cfi-analyzer
@@ -656,8 +656,8 @@ BOLT-INFO: Starting pass: identical-code-folding
 BOLT-INFO: Finished pass: identical-code-folding
 BOLT-INFO: Starting pass: partial-inlining
 BOLT-INFO: buildCallGraph: 20 nodes, 13 callsites (0 recursive), density = 0.030000, 0 callsites not processed, 0 callsites with invalid profile, used perf data for 0 stale functions.
-BOLT-INFO: partial inlining: buf_putc into main (count 30000000, p(fast) 1.000 callee, 1.000 site, 10 insns, 2 renamed regs, frame elided)
-BOLT-INFO: partial inlining: 1 callees with a fast region (1 with frame elision); inlined 1 call sites (1 with frame elision, 0 tail calls), 10 instructions copied, 2 registers renamed
+BOLT-INFO: partial inlining: buf_putc into main (count 30000000, p(fast) 1.000 callee, 1.000 site, 10 insns, 2 renamed regs, first iteration of a loop, frame elided)
+BOLT-INFO: partial inlining: 1 callees with a fast region (1 with frame elision); inlined 1 call sites (1 with frame elision, 0 tail calls), 10 instructions copied, 2 registers renamed, 0 registers saved
 BOLT-INFO: partial inlining: estimated 29992676 calls avoided on fast paths (99.95% of profiled direct calls), 7324 slow-path calls re-execute the copied region
 BOLT-INFO: Finished pass: partial-inlining
 BOLT-INFO: Starting pass: plt-call-optimization
@@ -775,27 +775,27 @@ BOLT-INFO: Finished pass: clean-mc-state
 BOLT-INFO: padding code to 0x600000 to accommodate hot text
 BOLT-INFO: patched build-id (flipped first and last bits)
 BOLT: writing new section .fini_array
- data at 0xaaaacf854470
+ data at 0xaaaafc75f670
  of size 8
  at offset 3280 with content size 8
 BOLT: writing new section .init_array
- data at 0xaaaacf85c180
+ data at 0xaaaafc767790
  of size 8
  at offset 3288 with content size 8
 BOLT: writing new section .text
- data at 0xffffa0200000
+ data at 0xffffb8200000
  of size 1016
  at offset 4194304 with content size 1016
 BOLT: writing new section .text.cold
- data at 0xaaaacf855e80
+ data at 0xaaaafc778380
  of size 92
  at offset 4195328 with content size 92
 BOLT: writing new section .bolt.new.eh_frame
- data at 0xaaaacf883160
+ data at 0xaaaafc78c540
  of size 368
  at offset 6291456 with content size 368
 BOLT: writing new section .relocated.eh_frame
- data at 0xaaaacf8572f0
+ data at 0xaaaafc776240
  of size 308
  at offset 6291824 with content size 308
 BOLT-INFO: not writing section header for section .fini_array

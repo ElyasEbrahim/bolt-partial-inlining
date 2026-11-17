@@ -3,7 +3,7 @@
 CC      := clang
 CFLAGS  ?= -O2 -g0
 LDFLAGS ?= -Wl,--emit-relocs -fuse-ld=lld
-BENCHES := bufwrite memo trace pool unsafe compute mixed
+BENCHES := bufwrite memo trace pool lookup chain unsafe compute mixed
 
 all: $(foreach b,$(BENCHES),$(b)/$(b).exe)
 

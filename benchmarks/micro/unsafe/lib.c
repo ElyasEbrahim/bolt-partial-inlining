@@ -18,17 +18,3 @@ int obj_release(struct obj *o) {
   destroy(o);
   return 1;
 }
-
-/* The argument register is overwritten before the decision (p = p->next):
- * re-execution would start from the wrong pointer, so the pass must reject
- * it as well. */
-long chain_value(struct obj *p) {
-  p = p->next;
-  if (p->payload[1] >= 0)
-    return p->payload[1];
-  long s = 0;
-  for (struct obj *q = p; q; q = q->next)
-    s += q->payload[2] + (long)q->rc;
-  objs_destroyed += s & 1;
-  return s;
-}

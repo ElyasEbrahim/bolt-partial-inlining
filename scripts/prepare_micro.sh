@@ -13,7 +13,10 @@ v bufwrite bufwrite     @BIN@ 30000000
 v memo     memo         @BIN@ 20000000 20
 v trace    trace        @BIN@ 30000000
 v pool     pool         @BIN@ 20000000
+v lookup   lookup       @BIN@ 20000000
+v chain    chain        @BIN@ 20000000
 v mixed    mixed        @BIN@ 6000000
 v memo     memo-lowhit  @BIN@ 6000000 700
+v lookup   lookup-deep  @BIN@ 6000000 700
 v unsafe   unsafe       @BIN@ 20000000
 v compute  compute      @BIN@ 4

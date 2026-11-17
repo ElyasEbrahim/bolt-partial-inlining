@@ -1664,7 +1664,7 @@ BOLT-INFO: partial inlining: ZSTD_nextInputType into ZSTD_decompressStream (coun
 BOLT-INFO: partial inlining: ZSTD_isError into FIO_decompressSrcFile/1(*2) (count 132, p(fast) 1.000 callee, 1.000 site, 2 insns, 0 renamed regs)
 BOLT-INFO: partial inlining: AIO_ReadPool_consumeBytes into FIO_decompressSrcFile/1(*2) (count 132, p(fast) 1.000 callee, 1.000 site, 6 insns, 0 renamed regs)
 BOLT-INFO: partial inlining: ZSTD_DStreamInSize into FIO_decompressSrcFile/1(*2) (count 131, p(fast) 1.000 callee, 1.000 site, 2 insns, 0 renamed regs)
-BOLT-INFO: partial inlining: 5 callees with a fast region (0 with frame elision); inlined 5 call sites (0 with frame elision, 0 tail calls), 29 instructions copied, 0 registers renamed
+BOLT-INFO: partial inlining: 5 callees with a fast region (0 with frame elision); inlined 5 call sites (0 with frame elision, 0 tail calls), 29 instructions copied, 0 registers renamed, 0 registers saved
 BOLT-INFO: partial inlining: estimated 819 calls avoided on fast paths (1.24% of profiled direct calls), 0 slow-path calls re-execute the copied region
 BOLT-INFO: partial inlining: callees without a usable fast region: not-simple=5 entry-not-copyable=1 no-fast-exit=18 stack-access=1 side-effect=4
 BOLT-INFO: Finished pass: partial-inlining
@@ -1811,31 +1811,31 @@ BOLT-INFO: Finished pass: clean-mc-state
 BOLT-INFO: padding code to 0x600000 to accommodate hot text
 BOLT-INFO: patched build-id (flipped first and last bits)
 BOLT: writing new section .fini_array
- data at 0xaaab01625d20
+ data at 0xaaaae7910520
  of size 8
  at offset 838800 with content size 8
 BOLT: writing new section .init_array
- data at 0xaaab0160bd60
+ data at 0xaaaae7cc5bd0
  of size 8
  at offset 838808 with content size 8
 BOLT: writing new section .data.rel.ro
- data at 0xaaab0164f970
+ data at 0xaaaae7caf980
  of size 2656
  at offset 838816 with content size 2656
 BOLT: writing new section .text
- data at 0xffff9c200000
+ data at 0xffffb0400000
  of size 29764
  at offset 4194304 with content size 29764
 BOLT: writing new section .text.cold
- data at 0xaaab01732600
+ data at 0xaaaae7a37600
  of size 36132
  at offset 4224128 with content size 36132
 BOLT: writing new section .bolt.new.eh_frame
- data at 0xaaab017ff6d0
+ data at 0xaaaae79d9fe0
  of size 11248
  at offset 6291456 with content size 11248
 BOLT: writing new section .relocated.eh_frame
- data at 0xaaab0173b330
+ data at 0xaaaae7a40330
  of size 47276
  at offset 6302704 with content size 47276
 BOLT-INFO: not writing section header for section .fini_array

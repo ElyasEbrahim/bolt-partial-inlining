@@ -13,7 +13,8 @@
 #      microbenchmarks with MICRO_ROUNDS rounds, real programs with RW_ROUNDS,
 #   5. analyze the slowdown of the 'pool' microbenchmark (pool_analysis.sh),
 #   6. count executed instructions with valgrind,
-#   7. write the report (REPORT.md, report.json, plots).
+#   7. analyze which calls of the real programs the pass reaches (coverage.py),
+#   8. write the report (REPORT.md, report.json, plots).
 #
 #   OUT=/work/results ./run_experiments.sh
 set -euo pipefail
@@ -23,7 +24,7 @@ export ROOT=${ROOT:-/work/out}
 OUT=${OUT:-/work/results}
 MICRO_ROUNDS=${MICRO_ROUNDS:-15}
 RW_ROUNDS=${RW_ROUNDS:-30}
-MICRO=(bufwrite memo trace pool mixed memo-lowhit unsafe compute)
+MICRO=(bufwrite memo trace pool lookup chain mixed memo-lowhit lookup-deep unsafe compute)
 REAL=(sqlite lua cpython zstd-compress zstd-decompress jq libxml2)
 
 # Training runs need ASLR disabled for reproducible profiles (bolt_variants.sh).
@@ -44,7 +45,7 @@ fi
 # Start from empty directories ($OUT may be a mount point, keep the directory).
 mkdir -p "$OUT" "$ROOT"
 find "$OUT" "$ROOT" -mindepth 1 -delete
-mkdir -p "$OUT/micro" "$OUT/realworld" "$OUT/pool-analysis"
+mkdir -p "$OUT/micro" "$OUT/realworld" "$OUT/pool-analysis" "$OUT/coverage"
 stamp() { echo "$(date -u +%Y-%m-%dT%H:%M:%SZ) $*" | tee -a "$OUT/timeline.log"; }
 
 stamp "start"
@@ -93,6 +94,10 @@ stamp "instruction counts"
 python3 "$HERE/icount.py" --root "$ROOT" --out "$OUT" --stage-dir "$STAGE" \
   > "$OUT/icount.log" 2>&1
 
+stamp "coverage analysis"
+python3 "$HERE/coverage.py" --root "$ROOT" --out "$OUT/coverage" \
+  > "$OUT/coverage/coverage.log" 2>&1
+
 stamp "report"
 mkdir -p "$OUT/bolt-logs"
 for d in "$ROOT"/*/; do
@@ -105,5 +110,6 @@ cp "$ROOT"/pool-counter/pool/*.log "$OUT/bolt-logs/pool-counter/" 2>/dev/null ||
 python3 "$HERE/report.py" --root "$ROOT" --results "$OUT" \
   --summary "$OUT/micro/summary.json" "$OUT/realworld/summary.json" \
   --icount "$OUT/icount.json" --pool "$OUT/pool-analysis" \
+  --coverage "$OUT/coverage/coverage.json" \
   > "$OUT/report.log" 2>&1
 stamp "done"

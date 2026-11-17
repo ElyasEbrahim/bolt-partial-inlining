@@ -21,8 +21,8 @@ BOLT-INFO: setting size of function __cxa_finalize@PLT to 16 (was 0)
 BOLT-INFO: setting size of function strtol@PLT to 16 (was 0)
 BOLT-INFO: setting size of function printf@PLT to 16 (was 0)
 BOLT-INFO: pre-processing profile using branch profile reader
-BOLT-WARNING: failed to post-process indirect branches for deregister_tm_clones/1(*2)
-BOLT-WARNING: failed to post-process indirect branches for register_tm_clones/1(*2)
+BOLT-WARNING: failed to post-process indirect branches for BOLT-WARNING: failed to post-process indirect branches for deregister_tm_clones/1(*2)register_tm_clones/1(*2)
+
 BOLT-INFO: Starting pass: pointer-auth-cfi-analyzer
 BOLT-INFO: PointerAuthCFIAnalyzer ran on 1 functions. Ignored 0 functions (0.00%) because of CFI inconsistencies
 BOLT-INFO: Finished pass: pointer-auth-cfi-analyzer
@@ -656,7 +656,7 @@ BOLT-INFO: partial inlining: classify into main (count 6000000, p(fast) 0.750 ca
 BOLT-INFO: partial inlining: classify into main (count 18000000, p(fast) 0.750 callee, 0.750 site, 3 insns, 0 renamed regs)
 BOLT-INFO: partial inlining: weigh into classify (count 6000000, p(fast) 1.000 callee, 1.000 site, 6 insns, 0 renamed regs)
 BOLT-INFO: partial inlining: weigh into classify (count 6000000, p(fast) 1.000 callee, 1.000 site, 6 insns, 0 renamed regs)
-BOLT-INFO: partial inlining: 2 callees with a fast region (0 with frame elision); inlined 4 call sites (0 with frame elision, 0 tail calls), 18 instructions copied, 0 registers renamed
+BOLT-INFO: partial inlining: 2 callees with a fast region (0 with frame elision); inlined 4 call sites (0 with frame elision, 0 tail calls), 18 instructions copied, 0 registers renamed, 0 registers saved
 BOLT-INFO: partial inlining: estimated 30000000 calls avoided on fast paths (83.33% of profiled direct calls), 6000000 slow-path calls re-execute the copied region
 BOLT-INFO: Finished pass: partial-inlining
 BOLT-INFO: Starting pass: plt-call-optimization
@@ -776,27 +776,27 @@ BOLT-INFO: Finished pass: clean-mc-state
 BOLT-INFO: padding code to 0x600000 to accommodate hot text
 BOLT-INFO: patched build-id (flipped first and last bits)
 BOLT: writing new section .fini_array
- data at 0xaaaae9822910
+ data at 0xaaab021c51f0
  of size 8
  at offset 3120 with content size 8
 BOLT: writing new section .init_array
- data at 0xaaaae9801950
+ data at 0xaaab021c5210
  of size 8
  at offset 3128 with content size 8
 BOLT: writing new section .text
- data at 0xffff80200000
+ data at 0xffff73a00000
  of size 924
  at offset 4194304 with content size 924
 BOLT: writing new section .text.cold
- data at 0xaaaae9828e80
+ data at 0xaaab021c2cc0
  of size 60
  at offset 4195264 with content size 60
 BOLT: writing new section .bolt.new.eh_frame
- data at 0xaaaae9822290
+ data at 0xaaab021d14b0
  of size 328
  at offset 6291456 with content size 328
 BOLT: writing new section .relocated.eh_frame
- data at 0xaaaae9815e70
+ data at 0xaaab021c2e70
  of size 300
  at offset 6291784 with content size 300
 BOLT-INFO: not writing section header for section .fini_array

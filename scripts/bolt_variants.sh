@@ -11,6 +11,10 @@
 #   bolt-pi      bolt + -partial-inline (the optimization of this work)
 #   bolt-pi-avg  ablation: average instead of worst-case profile model
 #   bolt-pi-nofe ablation: frame elision disabled (frameless fast paths only)
+#   bolt-pi-noext ablation: without fast paths through the first iteration of
+#                a loop and without saving overwritten registers (the pass as
+#                in version 1.2.0). Only kept if it differs from bolt-pi;
+#                otherwise bolt-pi-noext.identical is written instead.
 #   bolt-inl     bolt + BOLT's existing whole-function inliner (-inline-all)
 #   bolt-inl-pi  bolt-inl + -partial-inline
 #   bolt-pi-skip only if PI_SKIP is set: bolt-pi with
@@ -59,6 +63,17 @@ cp "$out/bolt" "$out/bolt-copy"
 opt bolt-pi     "${LAYOUT[@]}" "${PI[@]}"
 opt bolt-pi-avg "${LAYOUT[@]}" "${PI[@]}" -partial-inline-profile-model=average
 opt bolt-pi-nofe "${LAYOUT[@]}" "${PI[@]}" -partial-inline-frame-elision=false
+opt bolt-pi-noext "${LAYOUT[@]}" "${PI[@]}" -partial-inline-loops=false \
+  -partial-inline-save-regs=false
+# The note section records the command line, which differs by construction.
+OBJCOPY=${OBJCOPY:-llvm-objcopy}
+"$OBJCOPY" --remove-section=.note.bolt_info "$out/bolt-pi" "$out/.pi.tmp"
+"$OBJCOPY" --remove-section=.note.bolt_info "$out/bolt-pi-noext" "$out/.noext.tmp"
+if cmp -s "$out/.pi.tmp" "$out/.noext.tmp"; then
+  rm -f "$out/bolt-pi-noext"
+  echo "byte-identical to bolt-pi" > "$out/bolt-pi-noext.identical"
+fi
+rm -f "$out/.pi.tmp" "$out/.noext.tmp"
 opt bolt-inl    "${LAYOUT[@]}" "${INL[@]}"
 opt bolt-inl-pi "${LAYOUT[@]}" "${INL[@]}" "${PI[@]}"
 if [ -n "${PI_SKIP:-}" ]; then

@@ -873,20 +873,20 @@ BOLT-WARNING: failed to post-process indirect branches for sqlite3_free
 BOLT-WARNING: failed to post-process indirect branches for sqlite3GetToken/1(*2)
 BOLT-WARNING: failed to post-process indirect branches for sqlite3PcacheRelease/1(*2)
 BOLT-WARNING: failed to post-process indirect branches for sqlite3_step
-BOLT-WARNING: failed to post-process indirect branches for releasePageNotNull/1(*2)
-BOLT-WARNING: failed to post-process indirect branches for getCellInfo/1(*2)
 BOLT-WARNING: failed to post-process indirect branches for sqlite3_config
+BOLT-WARNING: failed to post-process indirect branches for getCellInfo/1(*2)
+BOLT-WARNING: failed to post-process indirect branches for releasePageNotNull/1(*2)
 BOLT-WARNING: failed to post-process indirect branches for sqlite3DbNNFreeNN/1(*2)
 BOLT-WARNING: failed to post-process indirect branches for sqlite3_test_control
-BOLT-WARNING: failed to post-process indirect branches for sqlite3VdbeSerialGet/1(*2)
 BOLT-WARNING: failed to post-process indirect branches for vdbeCompareMemString/1(*2)
+BOLT-WARNING: failed to post-process indirect branches for sqlite3VdbeSerialGet/1(*2)
+BOLT-WARNING: failed to post-process indirect branches for sqlite3_str_vappendf
 BOLT-WARNING: failed to post-process indirect branches for jsonUnescapeOneChar/1(*2)
 BOLT-WARNING: failed to post-process indirect branches for jsonTranslateTextToBlob/1(*2)
-BOLT-WARNING: failed to post-process indirect branches for sqlite3_str_vappendf
 BOLT-WARNING: failed to post-process indirect branches for jsonTranslateBlobToText/1(*2)
 BOLT-WARNING: failed to post-process indirect branches for yy_reduce/1(*2)
-BOLT-WARNING: failed to post-process indirect branches for BOLT-WARNING: failed to post-process indirect branches for sqlite3ExprDataType/1(*2)
-sqlite3ExprCodeTarget/1(*2)
+BOLT-WARNING: failed to post-process indirect branches for sqlite3ExprCodeTarget/1(*2)
+BOLT-WARNING: failed to post-process indirect branches for sqlite3ExprDataType/1(*2)
 BOLT-WARNING: failed to post-process indirect branches for selectInnerLoop/1(*2)
 BOLT-WARNING: failed to post-process indirect branches for generateOutputSubroutine/1(*2)
 BOLT-INFO: Starting pass: pointer-auth-cfi-analyzer
@@ -1622,17 +1622,18 @@ BOLT-INFO: Starting pass: identical-code-folding
 BOLT-INFO: Finished pass: identical-code-folding
 BOLT-INFO: Starting pass: partial-inlining
 BOLT-INFO: buildCallGraph: 1632 nodes, 7492 callsites (108 recursive), density = 0.001453, 692 callsites not processed, 658 callsites with invalid profile, used perf data for 0 stale functions.
+BOLT-INFO: partial inlining: sqlite3PagerSharedLock/1(*2) into btreeBeginTrans/1(*2) (count 30403, p(fast) 1.000 callee, 1.000 site, 14 insns, 2 renamed regs, 1 saved regs, frame elided)
 BOLT-INFO: partial inlining: releaseAllSavepoints/1(*2) into pager_unlock/1(*2) (count 30805, p(fast) 0.999 callee, 0.999 site, 18 insns, 2 renamed regs, frame elided)
 BOLT-INFO: partial inlining: sqlite3BitvecDestroy/1(*2) into pager_unlock/1(*2) (count 30805, p(fast) 0.993 callee, 0.993 site, 1 insns, 0 renamed regs)
 BOLT-INFO: partial inlining: callFinaliser/1(*2) into vdbeCommit/1(*2) (count 29940, p(fast) 1.000 callee, 1.000 site, 2 insns, 1 renamed regs, frame elided)
 BOLT-INFO: partial inlining: sqlite3DbMallocRawNN/1(*2) into sqlite3VdbeMemGrow/1(*2) (count 385215, p(fast) 0.957 callee, 0.902 site, 22 insns, 0 renamed regs)
 BOLT-INFO: partial inlining: sqlite3DbMallocRawNN/1(*2) into allocateCursor/1(*2) (count 195354, p(fast) 0.957 callee, 0.807 site, 22 insns, 0 renamed regs)
-BOLT-INFO: partial inlining: sqlite3ExprDeleteNN/1(*2) into exprListDeleteNN/1(*2) (count 71057, p(fast) 0.713 callee, 0.678 site, 19 insns, 4 renamed regs, frame elided)
+BOLT-INFO: partial inlining: sqlite3ExprDeleteNN/1(*2) into exprListDeleteNN/1(*2) (count 71057, p(fast) 0.713 callee, 0.655 site, 19 insns, 4 renamed regs, frame elided)
 BOLT-INFO: partial inlining: sqlite3_value_numeric_type into sumStep/1(*2) (count 216932, p(fast) 0.908 callee, 0.908 site, 10 insns, 0 renamed regs)
 BOLT-INFO: partial inlining: sqlite3_column_count into speedtest1_run (count 75945, p(fast) 1.000 callee, 1.000 site, 2 insns, 0 renamed regs)
-BOLT-INFO: partial inlining: 7 callees with a fast region (3 with frame elision); inlined 8 call sites (3 with frame elision, 0 tail calls), 96 instructions copied, 7 registers renamed
-BOLT-INFO: partial inlining: estimated 970227 calls avoided on fast paths (4.07% of profiled direct calls), 65826 slow-path calls re-execute the copied region
-BOLT-INFO: partial inlining: callees without a usable fast region: not-simple=17 entry-not-copyable=7 no-fast-exit=30 stack-access=1 side-effect=4 reg-clobber=2 too-large=3 cold-fast-path=7
+BOLT-INFO: partial inlining: 8 callees with a fast region (4 with frame elision); inlined 9 call sites (4 with frame elision, 0 tail calls), 110 instructions copied, 9 registers renamed, 1 registers saved
+BOLT-INFO: partial inlining: estimated 1000630 calls avoided on fast paths (4.20% of profiled direct calls), 65826 slow-path calls re-execute the copied region
+BOLT-INFO: partial inlining: callees without a usable fast region: not-simple=17 entry-not-copyable=7 no-fast-exit=27 stack-access=1 frame-mismatch=1 side-effect=4 too-large=7 cold-fast-path=6
 BOLT-INFO: Finished pass: partial-inlining
 BOLT-INFO: Starting pass: plt-call-optimization
 BOLT-INFO: Finished pass: plt-call-optimization
@@ -1653,15 +1654,15 @@ BOLT-INFO: Finished pass: tail-duplication
 BOLT-INFO: Starting pass: fix-branches
 BOLT-INFO: Finished pass: fix-branches
 BOLT-INFO: Starting pass: reorder-functions
-BOLT-INFO: buildCallGraph: 795 nodes, 3776 callsites (72 recursive), density = 0.003153, 600 callsites not processed, 495 callsites with invalid profile, used perf data for 0 stale functions.
+BOLT-INFO: buildCallGraph: 795 nodes, 3807 callsites (72 recursive), density = 0.003157, 629 callsites not processed, 495 callsites with invalid profile, used perf data for 0 stale functions.
 BOLT-INFO: Function reordering stats
-BOLT-INFO:  Number of hot functions: 794
+BOLT-INFO:  Number of hot functions: 793
 BOLT-INFO:  Number of clusters: 1
-BOLT-INFO:  Final average call distance = 7284.9 (177389052957 / 24350356)
-BOLT-INFO:  Total Calls = 24350356
-BOLT-INFO:  Total Calls within 64B = 2488521 (10.22%)
-BOLT-INFO:  Total Calls within 4KB = 20196242 (82.94%)
-BOLT-INFO:  Total Calls within 2MB = 24350356 (100.00%)
+BOLT-INFO:  Final average call distance = 7292.3 (177347547548 / 24319953)
+BOLT-INFO:  Total Calls = 24319953
+BOLT-INFO:  Total Calls within 64B = 2518521 (10.36%)
+BOLT-INFO:  Total Calls within 4KB = 20195839 (83.04%)
+BOLT-INFO:  Total Calls within 2MB = 24319953 (100.00%)
 BOLT-INFO: Finished pass: reorder-functions
 BOLT-INFO: Starting pass: populate-output-functions
 BOLT-INFO: Finished pass: populate-output-functions
@@ -1695,12 +1696,12 @@ BOLT-INFO: program-wide dynostats after all optimizations before SCTC and FOP:
             47464623 : executed backward branches (+0.3%)
             29301551 : taken backward branches (+7.6%)
             10894285 : executed unconditional branches (-77.4%)
-            43099013 : all function calls (-2.2%)
+            43068610 : all function calls (-2.3%)
             20198337 : indirect calls (=)
              8958540 : PLT calls (=)
-          1789895446 : executed instructions (-2.7%)
-           466730692 : executed load instructions (-0.1%)
-           180724043 : executed store instructions (-0.3%)
+          1789591416 : executed instructions (-2.7%)
+           466639483 : executed load instructions (-0.1%)
+           180632834 : executed store instructions (-0.3%)
                    0 : taken jump table branches (=)
                    0 : taken unknown indirect branches (=)
            276965062 : total branches (-11.8%)
@@ -1754,37 +1755,37 @@ BOLT-INFO: Finished pass: clean-mc-state
 BOLT-INFO: padding code to 0x600000 to accommodate hot text
 BOLT-INFO: patched build-id (flipped first and last bits)
 BOLT: writing new section .fini_array
- data at 0xaaaaffe72130
+ data at 0xaaaadba9af30
  of size 8
  at offset 1208160 with content size 8
 BOLT: writing new section .init_array
- data at 0xaaaaffe04d10
+ data at 0xaaaadbb009e0
  of size 8
  at offset 1208168 with content size 8
 BOLT: writing new section .data.rel.ro
- data at 0xaaab00563db0
+ data at 0xaaaadc9d0e90
  of size 5736
  at offset 1208176 with content size 5736
 BOLT: writing new section .data
- data at 0xaaab00d3bd40
+ data at 0xaaaadd769880
  of size 12525
  at offset 1214400 with content size 12525
 BOLT: writing new section .text
- data at 0xffffa4200000
- of size 366576
- at offset 4194304 with content size 366576
+ data at 0xffff72e00000
+ of size 368084
+ at offset 4194304 with content size 368084
 BOLT: writing new section .text.cold
- data at 0xaaab02abfb40
- of size 265596
- at offset 4560896 with content size 265596
+ data at 0xaaaade742b40
+ of size 264124
+ at offset 4562432 with content size 264124
 BOLT: writing new section .bolt.new.eh_frame
- data at 0xaaab02b008d0
- of size 97192
- at offset 6291456 with content size 97192
+ data at 0xaaaade783310
+ of size 97168
+ at offset 6291456 with content size 97168
 BOLT: writing new section .relocated.eh_frame
- data at 0xaaab029274d0
+ data at 0xaaaade5aa4a0
  of size 83612
- at offset 6388648 with content size 83612
+ at offset 6388624 with content size 83612
 BOLT-INFO: not writing section header for section .fini_array
 BOLT-INFO: not writing section header for section .init_array
 BOLT-INFO: not writing section header for section .data.rel.ro
@@ -1794,7 +1795,7 @@ BOLT-INFO: writing section header for .text.cold
 BOLT-INFO: writing section header for .eh_frame
 BOLT-INFO: writing section header for .eh_frame_hdr
 BOLT-INFO: setting __hot_start to 0x400000
-BOLT-INFO: setting __hot_end to 0x4597f0
+BOLT-INFO: setting __hot_end to 0x459dd4
 BOLT-INFO: not writing section header for section .fini_array
 BOLT-INFO: not writing section header for section .init_array
 BOLT-INFO: not writing section header for section .data.rel.ro

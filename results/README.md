@@ -14,6 +14,7 @@ toolchain and BOLT revisions.
 | `micro/`, `realworld/` | `raw.csv` (one row per run: wall, user and system time, max RSS), `summary.json`/`.md` (statistics) and `bench.log` |
 | `pool-analysis/` | analysis of the `pool` slowdown (`scripts/pool_analysis.sh`), one directory per experiment: `layout/` (block orders, single callees, LTO, hand-written loops that mirror BOLT outputs), `distance/` (instructions added or removed between the two inlined regions), `placement/` (16 code placements), `counter/` (build without the random number generator in the loop) |
 | `icount.json` | executed instructions per variant (valgrind, smaller inputs, every variant run from the same path) |
+| `coverage/` | which calls of the real programs the pass reaches and what stops it (`scripts/coverage.py`, from the training profiles and `llvm-bolt -v=2`, no timing) |
 | `flag-off-identity.txt` | patched `llvm-bolt` without `--partial-inline` vs. upstream `llvm-bolt`, byte by byte |
 | `bolt-logs/<workload>/` | `llvm-bolt` logs (incl. `-dyno-stats`, `-v=1`) and processing time of every variant |
 | `prepare-*.log`, `icount.log`, `report.log` | logs of the individual steps |

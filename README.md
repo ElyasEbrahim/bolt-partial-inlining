@@ -18,7 +18,11 @@ fast path into the caller,
   updates, callee-saved spills and reloads, frame pointer setup, return
   address signing, CFI, BTI landing pads),
 * renames callee-saved registers used as temporaries to scratch registers that
-  are provably dead at the call site, and
+  are provably dead at the call site,
+* copies the first iteration of a loop on the fast path (a hash chain lookup
+  that usually hits the first node) and leaves through its back edge,
+* saves and restores an argument register that the fast path overwrites
+  before it decides (`p = p->next`), and
 * falls back to the original call on every other path. The copied region is
   side-effect free and re-executable up to the fast/slow decision, so the
   callee itself is left unchanged.
@@ -39,30 +43,44 @@ see [`results/REPORT.md`](results/REPORT.md) and
 
 | Workload | Pattern | Speedup | Executed instructions |
 |---|---|---|---:|
-| `mixed` | always-fast and always-slow call sites of one callee | **2.728x** [2.707, 2.748] | -13.0% |
-| `trace` | disabled tracing hook | **1.663x** [1.657, 1.679] | -16.0% |
-| `memo` | memoization cache hit, callee not shrink-wrapped | **1.018x** [1.014, 1.020] | -16.3% |
-| `bufwrite` | buffered writer, bound by a store-to-load chain | 1.003x [1.000, 1.007] | -23.9% |
-| `pool` | free-list allocator, bound by store-to-load chains between the two inlined fast paths | 0.953x [0.949, 0.957] | -25.0% |
-| `unsafe`, `memo-lowhit`, `compute` | unsafe, too cold, or no calls | 0.999-1.003x | 0.00% |
-| jq 1.8 | JSON processor, 26% of direct calls avoided | **1.070x** [1.060, 1.072] | -2.0% |
-| jq 1.8, without the trivial callee `jv_get_kind` | share no existing BOLT pass achieves | **1.023x** [1.005, 1.033] | -0.9% |
-| SQLite 3.54, Lua 5.5, CPython 3.14, zstd 1.5, libxml2 2.15 | real programs | 0.992-1.009x, all CIs include 1.0 | -1.5% to 0.0% |
-| A/A control | byte-identical copy of the baseline | 0.990-1.010x | - |
+| `mixed` | always-fast and always-slow call sites of one callee | **2.722x** [2.707, 2.728] | -13.0% |
+| `chain` | callee overwrites its argument before it decides (saved register) | **2.565x** [2.561, 2.571] | -7.9% |
+| `trace` | disabled tracing hook | **1.671x** [1.666, 1.674] | -16.0% |
+| `lookup` | hash chain lookup, usually at the first node (first iteration of a loop) | **1.450x** [1.442, 1.454] | -7.0% |
+| `memo` | memoization cache hit, callee not shrink-wrapped | **1.018x** [1.008, 1.020] | -16.3% |
+| `bufwrite` | buffered writer, bound by a store-to-load chain | 1.003x [1.001, 1.004] | -23.9% |
+| `pool` | free-list allocator, bound by store-to-load chains between the two inlined fast paths | 0.959x [0.955, 0.960] | -25.0% |
+| `unsafe`, `memo-lowhit`, `lookup-deep`, `compute` | unsafe, too cold, or no calls | 0.998-1.002x | 0.00% |
+| jq 1.8 | JSON processor, 26% of direct calls avoided | **1.069x** [1.060, 1.079] | -2.0% |
+| jq 1.8, without the trivial callee `jv_get_kind` | share no existing BOLT pass achieves | **1.016x** [1.006, 1.031] | -0.9% |
+| SQLite 3.54, Lua 5.5, CPython 3.14, zstd 1.5, libxml2 2.15 | real programs | 1.004-1.014x, no reliable change | -1.5% to 0.0% |
+| A/A control | byte-identical copy of the baseline | 0.994-1.008x | - |
 
 The pass removes the call, return and frame overhead of hot fast paths and is
 effective where such calls dominate the run time. Among six real programs it
-speeds up jq by 7.0%. Most of that comes from a one-instruction callee that
-BOLT's existing `-inline-all` inlines as well (1.094x on its own, 1.122x
+speeds up jq by 6.9%. Most of that comes from a one-instruction callee that
+BOLT's existing `-inline-all` inlines as well (1.101x on its own, 1.110x
 together with `--partial-inline`). On the other real programs the saved
-instructions (at most 1.5%) are below the resolution of the measurement
-(about +-1%, see the A/A control). jq and libxml2 were chosen by a screening of
-six candidate programs whose procedure and results are in the design
-document. Without `--partial-inline`, the patched `llvm-bolt` writes
-byte-identical binaries to upstream, and no existing BOLT test changes its
-result.
+instructions (at most 1.5%) are at or below the resolution of the
+measurement (about +-1%, see the A/A control). libxml2 measured 1.014x
+[1.005, 1.031] in this run, but 1.000x and 1.009x for the same binaries in
+the two previous runs, so it is not counted as a measurable gain. jq and
+libxml2 were chosen by a screening of six candidate programs whose procedure
+and results are in the design document. Without `--partial-inline`, the
+patched `llvm-bolt` writes byte-identical binaries to upstream, and no
+existing BOLT test changes its result.
 
-The pass can also lose: `pool` is 5% slower although it executes 25% fewer
+For `lookup` and `chain`, whose callees are small leaf functions without a
+stack frame, BOLT's existing `-inline-all` is as fast or faster (1.598x and
+2.577x): it inlines them as a whole. The support for loops and overwritten
+registers matters for callees that `-inline-all` cannot inline, such as those
+with a stack frame. In the real programs it adds 7 call sites, 5 of them with
+frame elision, without a measurable change in run time. Many of the hottest
+calls of the interpreters (Lua, CPython, jq, SQLite) come from their
+interpreter loops, which BOLT does not rewrite at all
+([Section 5.6](docs/design.md#56-what-limits-the-pass-on-real-programs)).
+
+The pass can also lose: `pool` is 4% slower although it executes 25% fewer
 instructions. Its two inlined fast paths store and reload the same fields in
 every loop iteration, and on this core the run time of such a loop depends on
 the exact number of instructions between a store and its reload (0.82x to
@@ -74,7 +92,7 @@ model for this; see
 
 | Path | Content |
 |---|---|
-| [`patches/`](patches/) | the LLVM patch (pass, target hooks, 7 lit tests, documentation) and the LLVM commit it applies to |
+| [`patches/`](patches/) | the LLVM patch (pass, target hooks, 9 lit tests, documentation) and the LLVM commit it applies to |
 | [`docs/design.md`](docs/design.md) | design document: problem, design, correctness argument, implementation, evaluation, limitations |
 | [`benchmarks/`](benchmarks/) | microbenchmarks and build scripts for SQLite, Lua, CPython, zstd, jq and libxml2 |
 | [`scripts/`](scripts/) | profiling, BOLT variant generation, benchmarking, checks and reporting |
@@ -119,7 +137,9 @@ llvm-bolt prog -o prog.bolt -data /tmp/prof.fdata \
 
 `-v=1` lists every transformed call site, `-v=2` also why callees were
 rejected. The options are documented in BOLT's command-line reference and in
-`bolt/docs/PartialInlining.md` (both added by the patch).
+`bolt/docs/PartialInlining.md` (both added by the patch). Two hidden options,
+`--partial-inline-loops` and `--partial-inline-save-regs` (both on), switch
+off the support for loops and for saved registers.
 
 ## Reproducing the evaluation
 
@@ -130,7 +150,7 @@ and `docker load` it, or build it:
 ```bash
 make image          # upstream and patched BOLT, BOLT test suite for both, workloads
 make check-bolt     # results/check-bolt/: test results of both builds, compared
-make experiments    # complete evaluation in one run (about 50 min), updates results/
+make experiments    # complete evaluation in one run (about 60 min), updates results/
 make x86-validate   # functional validation on x86-64 under emulation
 ```
 
@@ -154,7 +174,7 @@ and a tmpfs at `/stage`, both set by the Makefile.
 
 ## Testing
 
-The patch adds seven lit tests to `bolt/test/` (run them with
+The patch adds nine lit tests to `bolt/test/` (run them with
 `ninja check-bolt`):
 
 | Test | Checks |
@@ -163,17 +183,21 @@ The patch adds seven lit tests to `bolt/test/` (run them with
 | `AArch64/partial-inline-frame-elision.s` | prologue/epilogue elision and callee-saved register renaming |
 | `AArch64/partial-inline-reject.s` | ten callees that must not be transformed |
 | `AArch64/partial-inline-sites.s` | tail-call sites, profile models, thresholds |
+| `AArch64/partial-inline-loop.s` | first iteration of a loop, back edge to the original call, profile bound for loop headers |
+| `AArch64/partial-inline-save-regs.s` | overwritten argument register saved and restored, with frame elision and at tail calls |
 | `AArch64/partial-inline-pauth.s` | pointer authentication and BTI |
 | `X86/partial-inline.s` | x86-64 frameless fast paths with `endbr64` |
 | `runtime/AArch64/partial-inline.c` | end-to-end build, profile, optimize and run, with and without `-mbranch-protection=standard` |
 
 ## Limitations
 
-Fast paths that call other functions, contain loops, use the stack, or store to
-memory or overwrite an argument register before the fast/slow decision are not
-inlined. Stack frame elision is implemented for AArch64 only. BOLT profiles are
-context-insensitive, which the default worst-case model compensates for
-conservatively. See [`docs/design.md`](docs/design.md#7-limitations-and-future-work)
+Fast paths that call other functions, use the stack, or store to memory before
+the fast/slow decision are not inlined; of a loop only the first iteration is.
+Stack frame elision and saving overwritten registers are implemented for
+AArch64 only (general purpose registers). BOLT profiles are context-insensitive,
+which the default worst-case model compensates for conservatively. Call sites
+in functions that BOLT cannot rewrite, such as interpreter loops with computed
+gotos, are out of reach. See [`docs/design.md`](docs/design.md#7-limitations-and-future-work)
 for details and future work.
 
 ## Contributing

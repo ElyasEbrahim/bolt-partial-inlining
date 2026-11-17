@@ -10,54 +10,54 @@ BOLT-INFO: enabling lite mode
 BOLT-INFO: pre-processing profile using branch profile reader
 BOLT-INFO: PointerAuthCFIAnalyzer ran on 2 functions. Ignored 0 functions (0.00%) because of CFI inconsistencies
 BOLT-INFO: number of removed linker-inserted veneers: 0
-BOLT-INFO: 2300 out of 7601 functions in the binary (30.3%) have non-empty execution profile
+BOLT-INFO: 2301 out of 7601 functions in the binary (30.3%) have non-empty execution profile
 BOLT-INFO: 43 functions with profile could not be optimized
 BOLT-INFO: profile for 1 objects was ignored
 BOLT-INFO: profile quality metrics for the hottest 1000 functions (reporting top 5% values): function CFG discontinuity 0.00%; call graph flow conservation gap 0.00%; CFG flow conservation gap 0.00% (weighted) 0.00% (worst); exception handling usage 0.00% (of total BBEC) 0.00% (of total InvokeEC)
 BOLT-INFO: ICF folded 88 out of 7991 functions in 4 passes. 0 functions had jump tables.
-BOLT-INFO: Removing all identical functions will save 5.95 KB of code space. Folded functions were called 3655048 times based on profile.
-BOLT-INFO: basic block reordering modified layout of 1592 functions (69.22% of profiled, 19.92% of total)
+BOLT-INFO: Removing all identical functions will save 5.95 KB of code space. Folded functions were called 3655791 times based on profile.
+BOLT-INFO: basic block reordering modified layout of 1592 functions (69.19% of profiled, 19.92% of total)
 BOLT-INFO: 2 Functions were reordered by LoopInversionPass
 BOLT-INFO: program-wide dynostats after all optimizations before SCTC and FOP:
 
-           258612691 : executed forward branches
-           113733654 : taken forward branches
-            33386520 : executed backward branches
-            17279035 : taken backward branches
-            20559962 : executed unconditional branches
-            74667696 : all function calls
-            16633820 : indirect calls
-             3875896 : PLT calls
-          2299645333 : executed instructions
-           593690865 : executed load instructions
-           337264796 : executed store instructions
+           259012342 : executed forward branches
+           113844334 : taken forward branches
+            33533214 : executed backward branches
+            17382225 : taken backward branches
+            20595306 : executed unconditional branches
+            74736494 : all function calls
+            16637524 : indirect calls
+             3878289 : PLT calls
+          2303791926 : executed instructions
+           594680133 : executed load instructions
+           338003301 : executed store instructions
                    0 : taken jump table branches
                    0 : taken unknown indirect branches
-           312559173 : total branches
-           151572651 : taken branches
-           160986522 : non-taken conditional branches
-           131012689 : taken conditional branches
-           291999211 : all conditional branches
+           313140862 : total branches
+           151821865 : taken branches
+           161318997 : non-taken conditional branches
+           131226559 : taken conditional branches
+           292545556 : all conditional branches
                    0 : linker-inserted veneer calls
 
-           271982822 : executed forward branches (+5.2%)
-            22885003 : taken forward branches (-79.9%)
-            20016389 : executed backward branches (-40.0%)
-             8702511 : taken backward branches (-49.6%)
-             3581645 : executed unconditional branches (-82.6%)
-            74667696 : all function calls (=)
-            16633820 : indirect calls (=)
-             3875896 : PLT calls (=)
-          2282018030 : executed instructions (-0.8%)
-           593690865 : executed load instructions (=)
-           337264796 : executed store instructions (=)
+           272430159 : executed forward branches (+5.2%)
+            22947313 : taken forward branches (-79.8%)
+            20115397 : executed backward branches (-40.0%)
+             8799590 : taken backward branches (-49.4%)
+             3583399 : executed unconditional branches (-82.6%)
+            74736494 : all function calls (=)
+            16637524 : indirect calls (=)
+             3878289 : PLT calls (=)
+          2286189774 : executed instructions (-0.8%)
+           594680133 : executed load instructions (=)
+           338003301 : executed store instructions (=)
                    0 : taken jump table branches (=)
                    0 : taken unknown indirect branches (=)
-           295580856 : total branches (-5.4%)
-            35169159 : taken branches (-76.8%)
-           260411697 : non-taken conditional branches (+61.8%)
-            31587514 : taken conditional branches (-75.9%)
-           291999211 : all conditional branches (=)
+           296128955 : total branches (-5.4%)
+            35330302 : taken branches (-76.7%)
+           260798653 : non-taken conditional branches (+61.7%)
+            31746903 : taken conditional branches (-75.8%)
+           292545556 : all conditional branches (=)
                    0 : linker-inserted veneer calls (=)
 
 BOLT-WARNING: failed to patch entries in _PyToken_Init/1(*2). The function will not be optimized
@@ -92,4 +92,4 @@ BOLT-INFO: rewritten pac-ret DWARF info in 2 out of 7991 functions (0.03%).
 BOLT-INFO: padding code to 0xc00000 to accommodate hot text
 BOLT-INFO: patched build-id (flipped first and last bits)
 BOLT-INFO: setting __hot_start to 0xa00000
-BOLT-INFO: setting __hot_end to 0xaa8d04
+BOLT-INFO: setting __hot_end to 0xaa8bd4

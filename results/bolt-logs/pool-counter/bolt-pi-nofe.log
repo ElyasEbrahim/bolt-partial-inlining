@@ -23,8 +23,8 @@ BOLT-INFO: setting size of function calloc@PLT to 16 (was 0)
 BOLT-INFO: setting size of function printf@PLT to 16 (was 0)
 BOLT-INFO: setting size of function malloc@PLT to 16 (was 0)
 BOLT-INFO: pre-processing profile using branch profile reader
-BOLT-WARNING: failed to post-process indirect branches for register_tm_clones/1(*2)
 BOLT-WARNING: failed to post-process indirect branches for deregister_tm_clones/1(*2)
+BOLT-WARNING: failed to post-process indirect branches for register_tm_clones/1(*2)
 BOLT-INFO: Starting pass: pointer-auth-cfi-analyzer
 BOLT-INFO: PointerAuthCFIAnalyzer ran on 1 functions. Ignored 0 functions (0.00%) because of CFI inconsistencies
 BOLT-INFO: Finished pass: pointer-auth-cfi-analyzer
@@ -655,7 +655,7 @@ BOLT-INFO: Starting pass: identical-code-folding
 BOLT-INFO: Finished pass: identical-code-folding
 BOLT-INFO: Starting pass: partial-inlining
 BOLT-INFO: partial inlining: pool_free into main (count 19999744, p(fast) 1.000 callee, 1.000 site, 6 insns, 0 renamed regs)
-BOLT-INFO: partial inlining: 1 callees with a fast region (0 with frame elision); inlined 1 call sites (0 with frame elision, 0 tail calls), 6 instructions copied, 0 registers renamed
+BOLT-INFO: partial inlining: 1 callees with a fast region (0 with frame elision); inlined 1 call sites (0 with frame elision, 0 tail calls), 6 instructions copied, 0 registers renamed, 0 registers saved
 BOLT-INFO: partial inlining: estimated 19999744 calls avoided on fast paths (50.00% of profiled direct calls), 0 slow-path calls re-execute the copied region
 BOLT-INFO: partial inlining: callees without a usable fast region: stack-access=1
 BOLT-INFO: Finished pass: partial-inlining
@@ -776,27 +776,27 @@ BOLT-INFO: Finished pass: clean-mc-state
 BOLT-INFO: padding code to 0x600000 to accommodate hot text
 BOLT-INFO: patched build-id (flipped first and last bits)
 BOLT: writing new section .fini_array
- data at 0xaaaaf969e970
+ data at 0xaaaae0127310
  of size 8
  at offset 3280 with content size 8
 BOLT: writing new section .init_array
- data at 0xaaaaf967e8f0
+ data at 0xaaaae01118f0
  of size 8
  at offset 3288 with content size 8
 BOLT: writing new section .text
- data at 0xffff8c200000
+ data at 0xffffa0400000
  of size 796
  at offset 4194304 with content size 796
 BOLT: writing new section .text.cold
- data at 0xaaaaf969f600
+ data at 0xaaaae0149780
  of size 164
  at offset 4195136 with content size 164
 BOLT: writing new section .bolt.new.eh_frame
- data at 0xaaaaf96bfc90
+ data at 0xaaaae0136010
  of size 344
  at offset 6291456 with content size 344
 BOLT: writing new section .relocated.eh_frame
- data at 0xaaaaf959d0b0
+ data at 0xaaaae00300b0
  of size 292
  at offset 6291800 with content size 292
 BOLT-INFO: not writing section header for section .fini_array

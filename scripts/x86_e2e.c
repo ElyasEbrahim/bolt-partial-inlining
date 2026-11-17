@@ -112,6 +112,41 @@ NOINLINE int obj_release(struct obj *o) {
   return 1;
 }
 
+// A loop on the fast path: the first node of a chain usually has the key.
+// Longer walks and misses leave the copy through the back edge of the loop.
+struct hnode {
+  uint64_t key, val;
+  struct hnode *next;
+};
+static struct hnode hnodes[128];
+static struct hnode *buckets[64];
+NOINLINE uint64_t chain_get(struct hnode **bucket, uint64_t key) {
+  for (struct hnode *n = *bucket; n; n = n->next)
+    if (n->key == key)
+      return n->val;
+  return 0;
+}
+
+// The argument register is overwritten before the decision. The slow path
+// starts again from the argument, so it computes a different result if the
+// fallback call does not receive the original value.
+struct lnode {
+  struct lnode *next;
+  long val;
+};
+static struct lnode ring[64];
+long slow_walks;
+NOINLINE long next_value(struct lnode *p) {
+  p = p->next;
+  if (p->val >= 0)
+    return p->val;
+  long sum = 0;
+  for (int i = 0; i < 8; i++, p = p->next)
+    sum = sum * 31 + p->val;
+  slow_walks++;
+  return sum;
+}
+
 static uint64_t rng(uint64_t *s) {
   *s ^= *s << 13;
   *s ^= *s >> 7;
@@ -126,6 +161,15 @@ int main(int argc, char **argv) {
   struct pool p = {0, 0, 0};
   void *window[64] = {0};
   struct obj o = {100, 0};
+  // Two nodes per bucket; the second one is rarely looked up.
+  for (int i = 0; i < 64; i++) {
+    hnodes[2 * i] = (struct hnode){i, 3 * i + 1, &hnodes[2 * i + 1]};
+    hnodes[2 * i + 1] = (struct hnode){i + 64, 5 * i + 2, 0};
+    buckets[i] = &hnodes[2 * i];
+  }
+  // A ring in which every 16th value is negative.
+  for (int i = 0; i < 64; i++)
+    ring[i] = (struct lnode){&ring[(i + 1) & 63], (i & 15) == 7 ? -i : i};
   for (long i = 0; i < n; i++) {
     uint64_t r = rng(&s);
     trace_event(2, (long)r);
@@ -138,12 +182,19 @@ int main(int argc, char **argv) {
       pool_free(&p, window[slot]);
     window[slot] = pool_alloc(&p);
     acc += obj_release(&o);
+    // 1 of 16 lookups needs the second node, 1 of 64 finds nothing.
+    unsigned b = (unsigned)(r >> 8) & 63;
+    uint64_t key = b;
+    if (((r >> 16) & 15) == 0)
+      key += ((r >> 20) & 3) ? 64 : 128;
+    acc += chain_get(&buckets[b], key);
+    acc += (uint64_t)next_value(&ring[(r >> 24) & 63]);
   }
   flush(&b);
   printf("acc=%016llx misses=%llu hash=%016llx live=%zu slabs=%zu "
-         "trace=%lu destroyed=%ld\n",
+         "trace=%lu destroyed=%ld walks=%ld\n",
          (unsigned long long)acc, (unsigned long long)misses,
          (unsigned long long)b.hash, p.live, p.slabs, trace_bytes,
-         o.destroyed);
+         o.destroyed, slow_walks);
   return 0;
 }

@@ -1672,7 +1672,7 @@ BOLT-INFO: partial inlining: jvp_number_is_nan into jvp_cmp/1(*2) (count 806388,
 BOLT-INFO: partial inlining: check_literal/1(*2) into jv_parser_next (count 2809884, p(fast) 0.915 callee, 0.915 site, 3 insns, 0 renamed regs)
 BOLT-INFO: partial inlining: gen_noop(*2) into parse_token/1(*2) (count 939941, p(fast) 1.000 callee, 1.000 site, 2 insns, 0 renamed regs)
 BOLT-INFO: partial inlining: jvp_utf8_next into jvp_utf8_is_valid (count 6334102, p(fast) 1.000 callee, 1.000 site, 10 insns, 0 renamed regs, frame elided)
-BOLT-INFO: partial inlining: 8 callees with a fast region (4 with frame elision); inlined 12 call sites (5 with frame elision, 1 tail calls), 90 instructions copied, 4 registers renamed
+BOLT-INFO: partial inlining: 8 callees with a fast region (4 with frame elision); inlined 12 call sites (5 with frame elision, 1 tail calls), 90 instructions copied, 4 registers renamed, 0 registers saved
 BOLT-INFO: partial inlining: estimated 17136030 calls avoided on fast paths (8.67% of profiled direct calls), 378544 slow-path calls re-execute the copied region
 BOLT-INFO: partial inlining: callees without a usable fast region: not-simple=6 entry-not-copyable=5 no-fast-exit=6 too-large=1
 BOLT-INFO: Finished pass: partial-inlining
@@ -1820,35 +1820,35 @@ BOLT-INFO: Finished pass: clean-mc-state
 BOLT-INFO: padding code to 0x600000 to accommodate hot text
 BOLT-INFO: patched build-id (flipped first and last bits)
 BOLT: writing new section .fini_array
- data at 0xaaaaf68d4b10
+ data at 0xaaaacb6f1520
  of size 8
  at offset 870352 with content size 8
 BOLT: writing new section .init_array
- data at 0xaaaaf6beb7e0
+ data at 0xaaaacba260a0
  of size 8
  at offset 870360 with content size 8
 BOLT: writing new section .data.rel.ro
- data at 0xaaaaf6842db0
+ data at 0xaaaacb415db0
  of size 11776
  at offset 870368 with content size 11776
 BOLT: writing new section .data
- data at 0xaaaaf7087a50
+ data at 0xaaaacbc62a70
  of size 19592
  at offset 882816 with content size 19592
 BOLT: writing new section .text
- data at 0xffff86e00000
+ data at 0xffff84200000
  of size 85200
  at offset 4194304 with content size 85200
 BOLT: writing new section .text.cold
- data at 0xaaaaf709dcc0
+ data at 0xaaaacbc78cc0
  of size 48784
  at offset 4279552 with content size 48784
 BOLT: writing new section .bolt.new.eh_frame
- data at 0xaaaaf711a710
+ data at 0xaaaacbcf5730
  of size 28904
  at offset 6291456 with content size 28904
 BOLT: writing new section .relocated.eh_frame
- data at 0xaaaaf710df00
+ data at 0xaaaacbce8f20
  of size 51208
  at offset 6320360 with content size 51208
 BOLT-INFO: not writing section header for section .fini_array

@@ -39,6 +39,11 @@ call site it copies the callee's hot, acyclic fast region into the caller,
   signing/authentication, CFI, BTI landing pads),
 * **renames** callee-saved registers that the fast path uses as temporaries to
   scratch registers that are provably dead at the call site,
+* copies the **first iteration of a loop** on the fast path (a hash chain
+  lookup that usually hits the first node) and leaves the loop through its
+  back edge,
+* **saves and restores** an argument register that the fast path overwrites
+  before it decides (`p = p->next`; AArch64),
 * and **falls back to the original call** on every slow exit. The copied
   region is guaranteed to be side-effect free and *re-executable* on every
   path to a slow exit, so the callee itself is not modified at all.
@@ -50,30 +55,51 @@ under a coverage budget.
 Key results on an Apple M3 Max (Linux/AArch64 VM), BOLT baseline vs. baseline
 + `--partial-inline`, see [Section 5](#5-experimental-evaluation):
 
-* **Up to 2.73x** faster on code dominated by fast-path calls (`mixed` 2.73x,
-  `trace` 1.66x, `memo` 1.018x; 13-25% fewer executed instructions). Frame
+* **Up to 2.72x** faster on code dominated by fast-path calls (`mixed` 2.72x,
+  `trace` 1.67x, `memo` 1.018x; 13-25% fewer executed instructions). Frame
   elision is what makes `memo` profitable: the compiler did not shrink-wrap
   its callee, and without frame elision the pass does not transform it.
-* **jq 1.8: 1.070x** (95% CI [1.060, 1.072], p = 2e-9), the one real program
+* **Loops and overwritten arguments.** With fast paths through the first
+  iteration of a loop and saved argument registers, the pass speeds up a hash
+  chain lookup (`lookup`) by 1.45x and a function that advances its argument
+  before it decides (`chain`) by 2.57x, both left unchanged by version 1.2.0.
+  BOLT's existing `-inline-all` is as fast or faster on both (1.60x and
+  2.58x), because their callees are small leaf functions without a frame that
+  it inlines as a whole. In the real programs the two extensions add 7 call
+  sites, 5 of them with frame elision, and raise the share of avoided direct
+  calls in Lua from 12.7% to 15.4%, without a measurable change in run time.
+* **jq 1.8: 1.069x** (95% CI [1.060, 1.079], p = 4e-9), the one real program
   with a measurable effect: the pass removes 26% of the direct calls and 2.0%
   of the executed instructions. Most of the gain comes from a one-instruction
   callee (`jv_get_kind`) that BOLT's existing `-inline-all` inlines as well
-  (`-inline-all`: 1.094x); without that callee, partial inlining still gives
-  1.023x [1.005, 1.033], the share no existing BOLT pass achieves. On top of
-  `-inline-all`, it adds 1.024x [1.015, 1.028] (Section 5.3).
+  (`-inline-all`: 1.101x); without that callee, partial inlining still gives
+  1.016x [1.006, 1.031], significant in all three runs so far (1.022x and
+  1.023x before). On top of `-inline-all` it adds 1.011x [1.000, 1.022], p =
+  0.10; across three runs, about 1-2%, at the limit of the resolution
+  (Section 5.3).
 * **Other real programs** (SQLite, Lua, CPython, zstd, libxml2): the pass
   removes up to 25.7% of the direct calls (libxml2) and 0.06-1.51% of the
-  executed instructions, but no run-time change is measurable: all are within
-  0.9% of the baseline with confidence intervals that include 1.0, like the
-  A/A control (a byte-identical copy of the baseline). jq and libxml2 were
-  selected by a screening of six candidate programs (Section 5.2).
+  executed instructions, but no run-time change is measurable reliably: all
+  are within 1.4% of the baseline, like the A/A control (a byte-identical copy
+  of the baseline). The CI of libxml2, 1.014x [1.005, 1.031], excludes 1.0 in
+  this run, but the same binaries measured 1.000x and 1.009x in the two
+  previous runs. jq and libxml2 were selected by a screening of six candidate
+  programs (Section 5.2).
+* **What limits the pass on real programs** (Section 5.6): 16-42% of the
+  function entries in their profiles have no caller that BOLT rewrites; the
+  interpreter loops of Lua, CPython, jq and SQLite are not simple for BOLT,
+  and many of the hottest calls come from them. Of the remaining direct
+  calls, the largest groups go to library functions through the PLT and to
+  functions whose every path calls another function, both outside the scope
+  of the pass.
 * **No regression** on workloads without the pattern or with unsafe fast paths
-  (`compute`, `unsafe`, `memo-lowhit`): the pass leaves `unsafe` and
-  `memo-lowhit` byte-identical and transforms only a lukewarm call site in
-  `compute`; the executed instructions and the run time are unchanged.
-* Code growth <= 0.6% on the real programs; BOLT processing time changes by
-  at most 0.06 s (CPython, 1.11 s to 1.17 s).
-* One microbenchmark (`pool`) is 5% slower although it executes 25% fewer
+  (`compute`, `unsafe`, `memo-lowhit`, `lookup-deep`): the pass transforms no
+  call site in `unsafe`, `memo-lowhit` and `lookup-deep` (identical executed
+  instructions) and only a lukewarm call site in `compute`; the run time is
+  unchanged.
+* Code growth <= 0.7% on the real programs; BOLT processing time changes by
+  at most 0.05 s (CPython, 1.10 s to 1.15 s).
+* One microbenchmark (`pool`) is 4% slower although it executes 25% fewer
   instructions. Its loop is bound by two values that both inlined fast paths
   store to memory and load again. Section 5.5 shows that on this core the run
   time of such a loop reacts non-monotonically to the number of instructions
@@ -82,13 +108,14 @@ Key results on an Apple M3 Max (Linux/AArch64 VM), BOLT baseline vs. baseline
   block order and code placement. The pass has no cost model for this. A
   compiler that inlines both callees keeps the values in registers instead,
   which needs alias information that a post-link optimizer does not have.
-* The evaluation was checked for measurement bias (Section 5.6): profiles are
+* The evaluation was checked for measurement bias (Section 5.7): profiles are
   reproducible, every variant runs from the same path, and an A/A control
   bounds the resolution at about +-1%. This check showed that the 2.5% Lua
   speedup reported by an earlier snapshot of this work was an artifact: each
-  variant ran under its own file name from its own file pages.
+  variant ran under its own file name from its own file pages. The workload
+  builds are reproducible as well (Section 5.2).
 
-The patch adds 7 lit tests (one of them executes PAC-protected binaries end to
+The patch adds 9 lit tests (one of them executes PAC-protected binaries end to
 end); the full BOLT test suite shows **no change in the result of any existing
 test**, and with the option disabled the patched `llvm-bolt` produces
 **byte-identical output** to unmodified mainline on all evaluated workloads.
@@ -185,16 +212,22 @@ pattern.
 For a callee `F`:
 
 * the **fast region** `R` is a set of basic blocks of `F` that contains the
-  entry, is acyclic, contains no calls, indirect branches or jump tables, and
-  from every block of which a return is reachable within `R`;
+  entry, contains no calls, indirect branches or jump tables, and from every
+  block of which a return is reachable within `R`. If blocks of `R` form a
+  loop in `F`, its back edges are *cut*: they do not belong to `R`, which is
+  therefore acyclic and contains the first iteration of the loop only;
 * a **fast exit** is a return in `R`;
-* a **slow exit** is a CFG edge from a block of `R` to a block outside `R`.
+* a **slow exit** is a CFG edge from a block of `R` to a block outside `R`, or
+  a cut back edge.
 
 For a call site `S: call F` in caller `G`, the pass creates a copy `R'` of `R`
 in `G`. Fast exits of `R'` continue after the call (or return, at tail call
 sites); slow exits of `R'` branch to a new block `SLOW` that contains the
 original call instruction (with all its annotations: EH landing pad, GNU args
 size, RA state, call count) followed by a branch to the code after the call.
+If `R'` overwrites registers that `F` needs again (3.2), `R'` starts with
+copies of these registers to scratch registers, and `SLOW` copies them back
+in front of the call.
 
 ```
             G (before)                     G (after)
@@ -224,13 +257,24 @@ original program if, on every path `P` from the entry of `R` to a slow exit:
    register writes, ...). Instructions on paths that can no longer reach a slow
    exit (after the fast/slow decision) may store - e.g. the free-list update
    in `pool_alloc` or the buffer append in `buf_putc`.
-2. **No register hazard.** No register written on `P` is read on `P` before it
-   is defined on `P`. Then, by induction over the instructions of `P`, the
-   re-executed `F` reads the same values, takes the same branches, and reaches
-   the slow exit with exactly the architectural state of the original call.
-3. **Fresh scratch registers.** The scratch registers introduced by renaming
-   (3.4) are not read by `F` before being written (they are caller-saved
-   non-argument registers and `F`'s own code is checked).
+2. **Entry values are intact.** A register that is read on `P` before it is
+   defined on `P` carries a value from the entry of `F`: an argument. Such a
+   register must have its entry value when the call in `SLOW` executes.
+   Either no path to a slow exit writes it, or `R'` saves it in a scratch
+   register before its first instruction and `SLOW` restores it (3.4). An
+   example is a lookup that advances its argument, `p = p->next`, before it
+   decides. Then, by induction over the instructions of `P`, the re-executed
+   `F` reads the same values, takes the same branches, and reaches the slow
+   exit with exactly the architectural state of the original call.
+3. **Fresh scratch registers.** The scratch registers introduced for renaming
+   and saving (3.4) are not read by `F` before being written (they are
+   caller-saved non-argument registers and `F`'s own code is checked).
+
+A loop does not change the argument. `R'` executes the first iteration; when
+the loop would continue, `R'` takes the cut back edge, a slow exit, and `F`
+starts over from its entry and iterates itself. Conditions 1 and 2 hold for
+the paths to the cut edges like for any other path to a slow exit: a loop
+that stores before its exit test, for example, has no fast region.
 
 On a fast exit, `R'` has performed exactly `F`'s computation and memory
 accesses on that path, except for the elided frame instructions, which only
@@ -254,9 +298,13 @@ speculative reads never happened and `F` was entered at the time of the call.
    (no calls, no indirect branches, no jump tables, no EH labels, no landing
    pads, symbolic operands must not reference callee-local labels or jump
    tables; exploration is bounded).
-2. **Acyclicity**: blocks on cycles (Tarjan SCC on the candidate subgraph) are
-   removed; a loop at the entry rejects `F`.
-3. **Usefulness**: keep only blocks from which a return is reachable.
+2. **Acyclicity**: a depth-first search from the entry cuts every edge that
+   leads to a block on the search stack. Every cycle contains such a back
+   edge, so the remaining graph is acyclic. The cut edges are slow exits.
+3. **Usefulness**: keep only blocks from which a return is reachable. A loop
+   latch whose only way to a return is the cut back edge is dropped here, and
+   the edges into it become the slow exits; a latch with another exit (the
+   end of the chain) stays in the region.
 4. **Profile flow**: in topological order compute the flow from the entry
    (`Flow`) and, backwards, the probability of leaving through a fast exit
    (`PFast`) from the edge counts. `FastProb = PFast(entry)`.
@@ -265,7 +313,8 @@ speculative reads never happened and `F` was entered at the time of the call.
 6. **Frame/dataflow analysis** (3.5) in topological order.
 7. **Slow reachability**, **side-effect check** (condition 1) and **hazard
    check** (condition 2, a forward must-define analysis restricted to blocks
-   that can reach a slow exit).
+   that can reach a slow exit). Registers that violate condition 2 are
+   recorded for saving if the target can copy them (3.4).
 8. **Size limits** (`--partial-inline-max-insns`, `--partial-inline-max-blocks`).
 
 Any violation in a non-entry block *prunes* that block (its incoming edges
@@ -303,6 +352,17 @@ pass therefore uses BOLT's interprocedural `RegAnalysis` and accepts `s` if
 Either way the clobber set of every function is unchanged by the
 transformation, so `RegAnalysis` stays valid while the pass transforms
 multiple call sites.
+
+**Saved registers.** The registers recorded by the hazard check (condition 2)
+get a scratch register in the same way, with the same callee-side and
+call-site requirements, and distinct from the ones used for renaming. `R'`
+then starts with `mov s, r`, and `SLOW` executes `mov r, s` in front of the
+call, on every path, whether or not the register was overwritten on it. The
+fast path pays one register copy per call. The copies are created by a new
+target hook, `MCPlusBuilder::createRegisterCopy()`, which is implemented for
+AArch64 general purpose registers. A hazard on any other register
+(floating-point and vector registers, flags, every register on x86-64) still
+prunes the block or rejects the callee.
 
 ### 3.5 Frame elision
 
@@ -350,6 +410,19 @@ transformed in decreasing order of `Count(S)·p_site` until
 `--partial-inline-profile-model=average` uses `FastProb` for all call sites
 (ablation in Sections 5.3 and 5.5).
 
+`FastProb` follows the edge counts through the region and thereby assumes
+that a block branches the same way whenever it executes. This does not hold
+for a block that is also entered from outside the region: the counts of a
+loop header mix the first iteration with the later ones, which may well leave
+the header differently. Whatever the correlation, an invocation that leaves
+the region takes a slow-exit edge at least once, so the sum of the profile
+counts of the slow-exit edges bounds the number of slow invocations from
+above. The worst-case model uses the larger of the two values as
+`SlowCalls(F)`. For a region without flow from outside both are equal. For a
+chain lookup whose header executes 1.5 times per call, the flow may predict
+67% fast calls where the bound guarantees only 50%; such a call site is
+skipped (lit test `partial-inline-loop.s`).
+
 ### 3.7 Profile maintenance
 
 * The copies `R'` receive `Count(S)/Count(F)` of the region flow of `R`; the
@@ -389,6 +462,8 @@ The pass runs after `Inliner` and the second `IdenticalCodeFolding`, and before
 | `--partial-inline-frame-elision` | on | allow frame elision |
 | `--print-partial-inline` | off | print modified functions |
 | `--partial-inline-min-block-flow` (hidden) | 1 | cold block pruning threshold (%) |
+| `--partial-inline-loops` (hidden) | on | allow regions through the first iteration of a loop |
+| `--partial-inline-save-regs` (hidden) | on | allow saving registers that the region overwrites |
 | `--partial-inline-max-sites` (hidden) | 0 | limit for bisecting |
 | `--partial-inline-skip` (hidden) | - | functions never partially inlined |
 
@@ -401,13 +476,13 @@ no usable fast region; `-debug-only=bolt-partial-inline` dumps the analysis.
 
 | File | Change |
 |---|---|
-| `bolt/include/bolt/Passes/PartialInlining.h`, `bolt/lib/Passes/PartialInlining.cpp` | the pass (~1,400 lines incl. comments) |
-| `bolt/include/bolt/Core/MCPlusBuilder.h` | 3 new target hooks with conservative defaults |
-| `bolt/lib/Target/AArch64/AArch64MCPlusBuilder.cpp` | AArch64 frame instruction classifier, scratch registers, zero-extension model |
+| `bolt/include/bolt/Passes/PartialInlining.h`, `bolt/lib/Passes/PartialInlining.cpp` | the pass (~1,750 lines incl. comments) |
+| `bolt/include/bolt/Core/MCPlusBuilder.h` | 4 new target hooks with conservative defaults |
+| `bolt/lib/Target/AArch64/AArch64MCPlusBuilder.cpp` | AArch64 frame instruction classifier, scratch registers, register copies, zero-extension model |
 | `bolt/lib/Target/X86/X86MCPlusBuilder.cpp` | `endbr` landing pads, 32-bit zero-extension model |
 | `bolt/lib/Rewrite/BinaryPassManager.cpp` | pass registration, `--print-partial-inline` |
 | `bolt/docs/*.md` | user documentation, command-line reference, AArch64 status |
-| `bolt/test/**/partial-inline*` | 7 lit tests |
+| `bolt/test/**/partial-inline*` | 9 lit tests |
 
 The new target hooks are:
 
@@ -420,6 +495,8 @@ The new target hooks are:
 * `getFullyDefinedReg(Reg)` - the register completely defined by a write to
   `Reg` (`W0 -> X0`, `S0 -> Q0` on AArch64; `EAX -> RAX` on x86-64), used to
   make the must-define analysis precise.
+* `createRegisterCopy(Inst, Dst, Src)` - a register copy without any other
+  effect (AArch64: `mov Xd, Xm`), used to save and restore registers (3.4).
 
 The pass is organized in four phases: lazy per-callee analysis
 (`analyzeCallee`, `buildRegion`, `computeScratchCandidates`), call-site
@@ -443,6 +520,7 @@ that a less careful implementation would get wrong:
 | `x16/x17` are used by BOLT's long-branch stubs without liveness checks | possible clobber of a renamed value | exclude from scratch candidates |
 | GCC `-fipa-ra` callers keep values in caller-saved registers | possible miscompile with ABI-only reasoning | `RegAnalysis`-based scratch selection (3.4) |
 | Cold slow-path blocks reaching returns entered the region | spurious hazards, size | cold pruning + conflict-driven pruning |
+| The edge counts of a loop header mix the first iteration with later ones | the flow through the region overestimates the share of calls that return from the copy | bound the slow invocations by the counts of the slow-exit edges (3.6) |
 
 ### 4.3 Testing
 
@@ -453,9 +531,18 @@ that a less careful implementation would get wrong:
   * `AArch64/partial-inline-frame-elision.s` - prologue/epilogue elision and
     renaming of `x19`/`x20`; with frame elision disabled the callee is rejected;
   * `AArch64/partial-inline-reject.s` - 10 hot callees that must not be
-    transformed (store before the decision, barrier, clobbered argument, SP use,
-    LR use, stack argument, unrestored callee-saved register, partially written
-    renamed register, cold fast path, loop at entry);
+    transformed (store before the decision, barrier, clobbered floating-point
+    argument, SP use, LR use, stack argument, unrestored callee-saved register,
+    partially written renamed register, cold fast path, loop at the entry that
+    usually iterates);
+  * `AArch64/partial-inline-loop.s` - a chain lookup: the copy contains the
+    first iteration, the back edge branches to the original call, and the end
+    of the chain is a second fast exit; a lookup that iterates more often is
+    only transformed with the average profile model; a loop that stores before
+    its back edge is rejected;
+  * `AArch64/partial-inline-save-regs.s` - an argument register that is
+    overwritten before the decision is saved and restored, without a frame,
+    together with frame elision and renaming, and at a tail call site;
   * `AArch64/partial-inline-sites.s` - tail call sites, worst-case vs. average
     model, `--partial-inline-min-fast-ratio`, `--partial-inline-min-count`;
   * `AArch64/partial-inline-pauth.s` - BTI landing pads and PAC signing/
@@ -465,12 +552,22 @@ that a less careful implementation would get wrong:
   * `runtime/AArch64/partial-inline.c` - end to end on the host: compile at
     `-O2`, instrument, train, optimize, run, compare outputs; repeated with
     `-mbranch-protection=standard`, which on this CPU (FEAT_PAuth) faults on a
-    wrong frame elision.
-* **Mutation test** for the must-dirty fix: re-introducing the bug makes
-  `partial-inline-reject.s` fail.
+    wrong frame elision. The program includes a chain lookup and a function
+    that overwrites its argument register, whose slow paths run about 6% of
+    the time and change the output if the fallback call gets a wrong argument.
+* **Mutation tests**: re-introducing the must-dirty bug makes
+  `partial-inline-reject.s` fail. Four injected bugs in the code for loops
+  and saved registers (no restore in front of the fallback call, no save at
+  the start of the copy, a cut back edge that is not treated as a slow exit,
+  a back edge that branches to the copied loop header) each make
+  `partial-inline-loop.s` or `partial-inline-save-regs.s` fail, and the two
+  save/restore bugs also change the output of the end-to-end test.
+* **Extensions off**: with `--partial-inline-loops=false
+  --partial-inline-save-regs=false` the pass writes byte-identical binaries
+  to the pass of version 1.2.0 for all 14 workloads of that version.
 * **Regression**: `check-bolt` for unmodified mainline and the patched tree with
-  the same toolchain ([Section 5.7](#57-correctness-and-regression-testing)).
-* **x86-64**: 9 programs validated end to end under emulation (Section 5.7).
+  the same toolchain ([Section 5.8](#58-correctness-and-regression-testing)).
+* **x86-64**: 11 programs validated end to end under emulation (Section 5.8).
 * **Output equivalence**: every benchmark run of every variant is checked
   against the output of the original binary (exit code and SHA-256 of stdout).
 * **Flag-off identity**: the patched `llvm-bolt` without `--partial-inline`
@@ -488,7 +585,7 @@ All numbers in this section come from one continuous run of
 | | |
 |---|---|
 | Hardware | Apple M3 Max (12 performance + 4 efficiency cores), FEAT_PAuth |
-| OS | Docker Desktop 4.99 Linux VM, kernel 7.0.14 (aarch64), 12 vCPUs, 31 GiB; Ubuntu 24.04 container. An unrelated, mostly idle database container (about 4% of one vCPU) ran on the same VM |
+| OS | Docker Desktop 4.99 Linux VM, kernel 7.0.14 (aarch64), 12 vCPUs, 31 GiB; Ubuntu 24.04 container. No other container ran on the VM (in the runs of versions 1.0.0-1.2.0, an unrelated, mostly idle database container used about 3-4% of one vCPU) |
 | Compiler | clang/lld 23.1.6 (apt.llvm.org), no LTO, no PGO, `-Wl,--emit-relocs`; `-O2` for the microbenchmarks, SQLite and Lua, the projects' defaults for the others (`-O3` for CPython and zstd, `-O2` for jq and libxml2) |
 | BOLT | mainline `0a0e65b2e8ff` (Release + assertions), baseline and patched |
 | Profile | BOLT instrumentation (`-instrument`) on *training* inputs that are smaller than (zstd: different from) the evaluation inputs; the same profile is used for all variants. Profiles, and therefore all BOLT outputs, are byte-for-byte reproducible: the training runs execute with address space layout randomization disabled (`setarch -R`), CPython with `PYTHONHASHSEED=0`, and Lua is built with a fixed hash seed (`-Dluai_makeseed()=0u`) instead of one derived from the clock and a stack address. Without these measures Lua, SQLite and CPython produce a slightly different profile in every run, because some of their hash tables depend on addresses |
@@ -503,6 +600,7 @@ Variants of every workload (`scripts/bolt_variants.sh`):
 | `bolt-pi` | `bolt` + `--partial-inline` (**this work**, default settings) |
 | `bolt-pi-avg` | `bolt-pi` with `--partial-inline-profile-model=average` (ablation) |
 | `bolt-pi-nofe` | `bolt-pi` with `--partial-inline-frame-elision=false` (ablation) |
+| `bolt-pi-noext` | `bolt-pi` with `--partial-inline-loops=false --partial-inline-save-regs=false`: the pass as in version 1.2.0 (ablation). Only measured where its binary differs from `bolt-pi` |
 | `bolt-inl` | `bolt` + BOLT's existing `-inline-all -inline-ap` |
 | `bolt-inl-pi` | `bolt-inl` + `--partial-inline` |
 | `bolt-pi-skip` | jq only: `bolt-pi` with `--partial-inline-skip=jv_get_kind` (analysis, Section 5.5) |
@@ -519,7 +617,7 @@ standard output (and exit code) of every single run is compared with the
 original binary.
 
 Two measures remove biases that are not caused by the code of a variant
-(Section 5.6 explains why they are needed):
+(Section 5.7 explains why they are needed):
 
 * **Same path, fresh pages.** Every single run first copies the variant's
   binary to a new file `/stage/prog` (a tmpfs) and executes that copy. All
@@ -553,9 +651,12 @@ same path, they execute exactly the same number.
 | `memo` | target | memoization cache hit (98%); not shrink-wrapped, callee-saved temporaries |
 | `trace` | target | disabled tracing hook with a 256-byte stack frame on the slow path (shrink-wrapped) |
 | `pool` | target | free-list allocator (`pool_alloc` with frame, `pool_free` frameless) |
+| `lookup` | target | hash table lookup in chains of two nodes; 95% of the lookups find the key in the first node (fast path through the first iteration of a loop) |
+| `chain` | target | a function that overwrites its argument register before the decision (`p = p->next`), 1.6% slow calls (saved register) |
 | `mixed` | adversarial | one callee, an always-fast and an always-slow call site (aggregate 75% fast) |
 | `memo-lowhit` | neutral | same binary as `memo`, 30% hit rate: fast path too cold |
-| `unsafe` | neutral | hot fast paths that are *unsafe* to re-execute (store before the decision, clobbered argument) |
+| `lookup-deep` | neutral | same binary as `lookup`, 70% of the lookups go beyond the first node: first iteration too cold |
+| `unsafe` | neutral | hot fast path that is *unsafe* to re-execute: a reference count is decremented (a store) before the decision |
 | `compute` | neutral | call-free CRC-32C and matrix multiplication kernels |
 | `sqlite` | real | SQLite 3.54.1 `speedtest1 --size 60 --memdb` (train: `--size 20`) |
 | `lua` | real | Lua 5.5.1, interpreter mix (calls, GC, floating point, strings, tables, OOP) |
@@ -571,6 +672,16 @@ made deterministic: CPython with `PYTHONHASHSEED=0`; Lua, jq and libxml2 with a
 constant hash seed (a compile-time define for Lua, a one-line patch of the
 seeding function for jq and libxml2, applied by `benchmarks/realworld/build.sh`).
 
+The builds themselves are reproducible: a second build in a fresh container
+gives byte-identical binaries for all six programs. This needs a fixed build
+date for CPython, which embeds `__DATE__` and `__TIME__`; the linker merges
+that string with all other constant strings, so a different build time
+changed about 45,000 bytes of the binary, including code. `build.sh` sets
+`SOURCE_DATE_EPOCH`, which clang uses for both macros. Versions up to 1.2.0
+did not, and an image built from their Dockerfile at a later time contains a
+different CPython binary; their CPython results are reproducible exactly only
+with the image attached to their release.
+
 **Selection of jq and libxml2.** SQLite, Lua, CPython and zstd were chosen
 as common real programs, without regard to the pass. After they showed no
 measurable effect, six further candidates were screened for the pattern the
@@ -585,6 +696,10 @@ pass targets. The procedure was fixed before measuring:
   qualifies with at least 2%, twice the measurement resolution;
 * qualifying programs are added to the suite, and all screened programs are
   reported.
+
+The screening used the pass of version 1.1.0, before it handled loops and
+overwritten registers; the numbers of the two adopted programs in the rest of
+this section are from the current pass.
 
 | Candidate | Instructions (dyno) | Calls (dyno) | Call sites (frame elided) | Qualifies |
 |---|---:|---:|---|---|
@@ -611,32 +726,75 @@ resolution of the measurement.
 
 | Workload | `bolt-copy` (A/A) | `bolt-pi` | `bolt-pi-avg` | `bolt-pi-nofe` | `bolt-inl` | `bolt-inl-pi` | p |
 |---|---|---|---|---|---|---|---:|
-| bufwrite | 0.999 [0.996, 1.002] | 1.003 [1.000, 1.007] | 1.001 | 0.999 | 0.997 | 1.000 | 0.14 |
-| memo | 0.998 [0.995, 1.003] | **1.018** [1.014, 1.020] | 1.021 | 1.001 | 0.995 | 1.021 | 6.1e-05 |
-| trace | 0.999 [0.996, 1.006] | **1.663** [1.657, 1.679] | 1.672 | 1.669 | 1.001 | 1.665 | 6.1e-05 |
-| pool | 1.003 [1.001, 1.007] | 0.953 [0.949, 0.957] | 0.955 | 1.029 | 1.029 | 0.953 | 6.1e-05 |
-| mixed | 1.005 [0.999, 1.007] | **2.728** [2.707, 2.748] | 2.436 | 2.736 | 1.153 | 2.730 | 6.1e-05 |
-| memo-lowhit | 0.998 [0.988, 1.007] | 1.001 [0.999, 1.019] | 1.001 | 0.997 | 0.992 | 0.995 | 0.42 |
-| unsafe | 1.002 [0.994, 1.006] | 0.999 [0.991, 1.002] | 0.998 | 0.998 | 1.643 | 1.644 | 0.42 |
-| compute | 0.997 [0.992, 1.002] | 1.003 [0.990, 1.009] | 0.995 | 0.999 | 0.998 | 1.002 | 1 |
-| sqlite | 1.004 [0.989, 1.010] | 1.002 [0.996, 1.007] | 0.993 | 0.996 | 0.994 | 0.990 | 0.63 |
-| lua | 0.990 [0.983, 1.001] | 1.002 [0.995, 1.009] | 0.999 | 0.997 | 1.006 | 0.990 | 0.76 |
-| cpython | 1.002 [0.997, 1.005] | 1.002 [0.997, 1.005] | 1.002 | 0.998 | 0.991 | 1.005 | 0.6 |
-| zstd-compress | 1.005 [0.991, 1.016] | 0.992 [0.986, 1.025] | 1.005 | 1.001 | 0.998 | 0.996 | 0.89 |
-| zstd-decompress | 1.001 [0.997, 1.012] | 1.001 [0.993, 1.010] | 1.002 | 1.005 | 1.005 | 1.005 | 0.76 |
-| jq | 1.000 [0.983, 1.009] | **1.070** [1.060, 1.072] | 1.079 | 1.061 | 1.094 | 1.122 | 1.9e-09 |
-| libxml2 | 1.010 [0.990, 1.020] | 1.009 [0.992, 1.019] | 1.005 | 1.011 | 1.001 | 0.994 | 0.54 |
+| bufwrite | 1.000 [0.998, 1.002] | 1.003 [1.001, 1.004] | 1.002 | 0.999 | 0.999 | 1.002 | 0.45 |
+| memo | 0.998 [0.995, 1.000] | **1.018** [1.008, 1.020] | 1.017 | 0.998 | 0.993 | 1.018 | 0.0084 |
+| trace | 1.002 [1.001, 1.004] | **1.671** [1.666, 1.674] | 1.669 | 1.665 | 1.002 | 1.667 | 6.1e-05 |
+| pool | 0.998 [0.995, 1.001] | 0.959 [0.955, 0.960] | 0.957 | 1.026 | 1.026 | 0.957 | 6.1e-05 |
+| lookup | 1.000 [0.999, 1.001] | **1.450** [1.442, 1.454] | 1.451 | 1.451 | 1.598 | 1.594 | 6.1e-05 |
+| chain | 1.001 [1.000, 1.003] | **2.565** [2.561, 2.571] | 2.568 | 2.563 | 2.577 | 2.580 | 6.1e-05 |
+| mixed | 1.000 [0.996, 1.004] | **2.722** [2.707, 2.728] | 2.428 | 2.720 | 1.149 | 2.717 | 6.1e-05 |
+| memo-lowhit | 0.997 [0.989, 1.003] | 0.999 [0.994, 1.005] | 1.000 | 0.999 | 1.002 | 1.001 | 0.98 |
+| lookup-deep | 0.998 [0.976, 1.009] | 1.002 [0.988, 1.010] | 0.998 | 0.998 | 1.514 | 1.518 | 0.89 |
+| unsafe | 1.004 [0.992, 1.014] | 0.998 [0.992, 1.011] | 1.000 | 0.996 | 0.996 | 0.996 | 0.8 |
+| compute | 1.002 [0.992, 1.012] | 1.000 [0.991, 1.012] | 1.002 | 1.001 | 0.999 | 0.994 | 1 |
+| sqlite | 1.000 [0.992, 1.016] | 1.005 [0.988, 1.012] | 1.007 | 1.005 | 1.001 | 0.999 | 0.89 |
+| lua | 1.005 [0.992, 1.013] | 1.004 [0.993, 1.013] | 1.011 | 0.994 | 1.001 | 1.011 | 0.61 |
+| cpython | 1.000 [0.993, 1.005] | 1.009 [0.997, 1.012] | 1.003 | 1.006 | 1.002 | 1.003 | 0.16 |
+| zstd-compress | 1.008 [0.984, 1.023] | 1.004 [0.992, 1.020] | 1.007 | 1.002 | 1.014 | 1.000 | 0.58 |
+| zstd-decompress | 0.994 [0.979, 1.009] | 1.013 [0.984, 1.034] | 1.009 | 0.996 | 1.004 | 1.001 | 0.38 |
+| jq | 0.999 [0.993, 1.005] | **1.069** [1.060, 1.079] | 1.076 | 1.065 | 1.101 | 1.110 | 3.7e-09 |
+| libxml2 | 1.004 [0.994, 1.010] | 1.014 [1.005, 1.031] | 1.009 | 1.009 | 1.012 | 1.011 | 0.0047 |
 
 ![speedup](../results/speedup.png)
 
-The A/A control stays within 0.990-1.010 on all 15 workloads, and its 95% CI
-includes 1.0 for 14 of them (the exception is `pool`, 1.003 [1.001, 1.007];
-with 15 intervals about one such miss is expected). Differences of less than
-about 1% (more for the noisier runs: the A/A CIs of SQLite, zstd-compress, jq
-and libxml2 are 2-3% wide) are therefore not resolvable in this environment. `bolt-pi` has a run-time effect on `trace`,
-`mixed`, `memo` and jq (gains) and on `pool` (loss). For reference, the BOLT
-baseline itself is 5.7% faster than `orig` on CPython, 3.2% on Lua, 3.2% on
-SQLite, 10.0% on jq and 11.5% on libxml2.
+The A/A control stays within 0.994-1.008 on all 18 workloads. Its 95% CI
+excludes 1.0 for two of them (`trace`: 1.002 [1.001, 1.004]; `chain`: 1.001
+[1.000, 1.003]), about as many as expected by chance among 18 intervals.
+Differences of less than about 1% are therefore not resolvable in this
+environment, and more than that for the noisier workloads, whose A/A CIs are
+2-4% wide (SQLite, Lua, zstd, `lookup-deep`, `unsafe`, `compute`). `bolt-pi`
+has a run-time effect on `trace`, `mixed`, `memo`, `lookup`, `chain` and jq
+(gains) and on `pool` (loss). For reference, the BOLT baseline itself is 5.7%
+faster than `orig` on CPython, 4.5% on Lua, 3.3% on SQLite, 10.5% on jq and
+11.3% on libxml2.
+
+**libxml2** is the only other workload whose CI excludes 1.0: 1.014 [1.005,
+1.031], p = 0.005, and 1.010 [1.003, 1.021], p = 0.004, against the A/A copy.
+Its `bolt` and `bolt-pi` binaries are the same as in the runs of versions 1.1.0
+and 1.2.0 (identical profiles, dyno stats and transformed call sites), where
+they measured 1.000 [0.979, 1.021] and 1.009 [0.992, 1.019]. A gain of about
+1% would fit the 1.5% fewer executed instructions (Section 5.4). But the
+p-values are not corrected for the roughly 100 comparisons of a run, and the
+effect was not significant in two of the three runs. We therefore do not
+count libxml2 among the programs with a measurable effect.
+
+**The extensions.** The pass without its support for loops and saved
+registers (`bolt-pi-noext`, the pass of version 1.2.0) leaves `lookup` and
+`chain` unchanged (1.001 and 0.999); `bolt-pi` runs them 1.450x and 2.565x
+faster. BOLT's existing `-inline-all` is faster still, 1.598x and 2.577x, that
+is 1.104x [1.102, 1.109] and 1.005x [1.002, 1.009] faster than `bolt-pi`. Both
+callees are small leaf functions without a stack frame, which whole-function
+inlining copies completely, loop and slow path included. The 5% of the
+lookups that need the second node of a chain, or miss, therefore stay in the
+caller, while partial inlining sends them to the fallback call, which repeats
+the first iteration. For the same reason `-inline-all` speeds up
+`lookup-deep` by 1.514x, which partial inlining leaves unchanged: there the
+first iteration is the fast path of only 30% of the calls. The extensions are
+useful where whole-function inlining is not possible: for callees with a
+stack frame, which BOLT's inliner inlines only at tail calls on AArch64
+(Section 2.2), and for callees too large to be inlined as a whole. In the
+real programs they add 7 call sites, 2 through the first iteration of a loop
+and 5 with a saved register, 5 of the 7 with frame elision:
+
+| Workload | `bolt-pi-noext` | `bolt-pi` | Direct calls avoided (noext / pi) | Executed instructions (noext / pi) | Call sites added |
+|---|---|---|---|---|---|
+| sqlite | 1.006 [0.995, 1.019] | 1.005 [0.988, 1.012] | 4.07% / 4.20% | -0.06% / -0.06% | `sqlite3PagerSharedLock` (saved register, frame elided) |
+| lua | 1.010 [0.996, 1.015] | 1.004 [0.993, 1.013] | 12.66% / 15.45% | -0.41% / -0.53% | `luaS_remove` (loop); `lua_checkstack`, `lua_settop` at 2 sites (saved register, frame elided) |
+| cpython | 1.009 [0.997, 1.013] | 1.009 [0.997, 1.012] | 4.54% / 4.69% | -0.27% / -0.28% | `lookdict_index` (loop, 2 saved registers); `object_richcompare` (saved register, frame elided, tail call) |
+
+None of the three changes its run time measurably. In CPython, a third site
+(`_Py_CheckFunctionResult`, without an extension) is selected because the
+additional candidates move the cutoff of the coverage budget (Section 3.6).
 
 For jq, the variant `bolt-pi-skip` excludes the one callee that dominates the
 transformed calls, `jv_get_kind` (it returns a bit field of its argument: one
@@ -645,62 +803,76 @@ well:
 
 | jq | Speedup vs. `bolt` | Direct calls avoided (training) | Executed instructions |
 |---|---|---:|---:|
-| `bolt-pi` | 1.070 [1.060, 1.072] | 26.4% | -1.97% |
-| `bolt-pi-skip` (without `jv_get_kind`) | 1.023 [1.005, 1.033], p = 9e-5 | 8.7% | -0.93% |
-| `bolt-inl` (existing `-inline-all`) | 1.094 [1.093, 1.105] | - | -2.07% |
-| `bolt-inl-pi` | 1.122 [1.115, 1.128] | - | -2.86% |
+| `bolt-pi` | 1.069 [1.060, 1.079] | 26.4% | -1.97% |
+| `bolt-pi-skip` (without `jv_get_kind`) | 1.016 [1.006, 1.031], p = 0.001 | 8.7% | -0.93% |
+| `bolt-inl` (existing `-inline-all`) | 1.101 [1.092, 1.114] | - | -2.07% |
+| `bolt-inl-pi` | 1.110 [1.097, 1.119] | - | -2.86% |
 
-About two thirds of the gain of `bolt-pi` on jq therefore come from inlining a
-trivial function, which partial inlining does but whole-function inlining does
-too, and more broadly (`-inline-all` inlined calls at 636 sites, including
-small functions that call other functions, which the pass does not copy). The
-remaining 2.3% come from fast paths that only partial inlining can copy,
-among them `jvp_utf8_next` with its frame elided. Measured against
-`-inline-all` instead of `bolt` (paired, same run), `bolt-inl-pi` is 1.024x
-[1.015, 1.028], p = 6e-7: partial inlining adds to whole-function inlining on
-jq about what it achieves without the trivial callee. The run published with
-version 1.1.0 measured byte-identical binaries and did not resolve this
-difference (1.015 [0.978, 1.040], p = 0.22); the two results are consistent
-with each other, and the share without `jv_get_kind` was the same in both
-runs (1.022 and 1.023).
+About three quarters of the gain of `bolt-pi` on jq therefore come from
+inlining a trivial function, which partial inlining does but whole-function
+inlining does too, and more broadly (`-inline-all` inlined calls at 636 sites,
+including small functions that call other functions, which the pass does not
+copy). The remaining 1.6% come from fast paths that only partial inlining can
+copy, among them `jvp_utf8_next` with its frame elided. All jq binaries are
+the same as in the runs of versions 1.1.0 and 1.2.0, where `bolt-pi-skip`
+measured 1.022x and 1.023x: this share is significant in all three runs.
+Measured against `-inline-all` instead of `bolt` (paired, same run),
+`bolt-inl-pi` is 1.011x [1.000, 1.022], p = 0.10; the two earlier runs
+measured 1.015x [0.978, 1.040] (p = 0.22) and 1.024x [1.015, 1.028] (p =
+6e-7). Partial inlining therefore adds about 1-2% to whole-function inlining
+on jq, at the limit of what this setup resolves. The documentation of version
+1.2.0 presented its one significant result as settling this question; the
+three runs together do not support that.
 
 ### 5.4 Deterministic metrics and what the pass did
 
 Executed instructions (valgrind) and profile-estimated calls (BOLT dyno stats)
 of `bolt-pi` relative to `bolt`, and the transformation statistics:
 
-| Workload | instructions | calls | call sites (frame elided / tail) | copied insns | renamed regs | .text growth |
-|---|---:|---:|---|---:|---:|---:|
-| bufwrite | -23.85% | -99.9% | 1 (1 / 0) | 10 | 2 | -3.5% |
-| memo | -16.28% | -95.1% | 1 (1 / 0) | 10 | 2 | +0.5% |
-| trace | -15.98% | -100% | 2 (0 / 0) | 8 | 0 | +3.0% |
-| pool | -24.97% | -100% | 2 (1 / 0) | 16 | 1 | +9.2% (92 B) |
-| mixed | -12.96% | -70.8% | 3 (0 / 0) | 15 | 0 | +3.6% |
-| memo-lowhit | 0.00% | 0% | 0 | 0 | 0 | 0 |
-| unsafe | 0.00% | 0% | 0 | 0 | 0 | 0 |
-| compute | 0.00% | -3.4% | 1 (cold CRT code) | 3 | 0 | +40 B |
-| sqlite | -0.06% | -2.2% | 8 (3 / 0) | 96 | 7 | +0.03% |
-| lua | -0.41% | -10.2% | 14 (4 / 2) | 151 | 3 | +0.44% |
-| cpython | -0.28% | -3.3% | 14 (5 / 1) | 158 | 3 | +0.09% |
-| zstd | 0.00% | -0.65% | 5 (0 / 0) | 29 | 0 | +0.24% |
-| jq | -1.97% | -21.8% | 21 (5 / 1) | 99 | 4 | +0.24% |
-| libxml2 | -1.51% | -18.6% | 7 (5 / 0) | 95 | 0 | +0.56% |
+| Workload | instructions | calls | call sites (frame elided / tail) | through a loop / saved regs | copied insns | renamed regs | .text growth |
+|---|---:|---:|---|---|---:|---:|---:|
+| bufwrite | -23.85% | -99.9% | 1 (1 / 0) | 0 / 0 | 10 | 2 | -3.5% |
+| memo | -16.28% | -95.1% | 1 (1 / 0) | 0 / 0 | 10 | 2 | +0.5% |
+| trace | -15.98% | -100% | 2 (0 / 0) | 0 / 0 | 8 | 0 | +3.0% |
+| pool | -24.97% | -100% | 2 (1 / 0) | 0 / 0 | 16 | 1 | +9.2% (92 B) |
+| lookup | -6.96% | -94.6% | 1 (0 / 0) | 1 / 0 | 8 | 0 | +7.2% (64 B) |
+| chain | -7.90% | -98.4% | 1 (0 / 0) | 0 / 1 | 4 | 0 | +9.6% (64 B) |
+| mixed | -12.96% | -70.8% | 3 (0 / 0) | 0 / 0 | 15 | 0 | +3.6% |
+| memo-lowhit | 0.00% | 0% | 0 | - | 0 | 0 | 0 |
+| lookup-deep | 0.00% | 0% | 0 | - | 0 | 0 | 0 |
+| unsafe | 0.00% | 0% | 0 | - | 0 | 0 | 0 |
+| compute | 0.00% | -3.4% | 1 (cold CRT code) | 0 / 0 | 3 | 0 | +40 B |
+| sqlite | -0.06% | -2.3% | 9 (4 / 0) | 0 / 1 | 110 | 9 | +0.04% |
+| lua | -0.53% | -12.4% | 18 (7 / 2) | 1 / 3 | 223 | 7 | +0.68% |
+| cpython | -0.28% | -3.5% | 17 (7 / 2) | 1 / 2 | 200 | 3 | +0.11% |
+| zstd | 0.00% | -0.65% | 5 (0 / 0) | 0 / 0 | 29 | 0 | +0.24% |
+| jq | -1.97% | -21.8% | 21 (5 / 1) | 0 / 0 | 99 | 4 | +0.24% |
+| libxml2 | -1.51% | -18.6% | 7 (5 / 0) | 0 / 0 | 95 | 0 | +0.56% |
 
-BOLT processing time is 1.11 s without and 1.17 s with the pass for CPython
+A saved register costs one copied instruction (the save at the start of the
+copy; the restore is on the slow path). The copy of `chain_value` is the
+shortest: three instructions of the callee and the save.
+
+BOLT processing time is 1.10 s without and 1.15 s with the pass for CPython
 (37 MB binary; in the run of version 1.1.0 it was 1.36 s and 1.29 s, so the
-difference is within the run-to-run variation) and 0.36 s and 0.38 s for
+difference is within the run-to-run variation) and 0.37 s and 0.40 s for
 SQLite; the pass itself is linear in the number of hot call sites, and
-`RegAnalysis` is only built if a fast region needs renaming. Where the pass changes nothing (`unsafe`, `memo-lowhit`), the
-executed instruction count is identical to the instruction; for zstd and
+`RegAnalysis` is only built if a fast region needs renaming or saving. Where
+the pass changes nothing (`unsafe`, `memo-lowhit`, `lookup-deep`), the
+executed instruction count is identical to that of `bolt`; for zstd and
 `compute`, where it only transforms lukewarm call sites, it differs by at most
 3,518 instructions (0.001%).
 
 The reasons why callees of hot call sites in the real programs have no usable
 fast region are dominated by `no-fast-exit` (every return path contains a call)
 and calls in the entry block - fast paths that call other functions are out of
-scope by design. Store-before-decision (`side-effect`) and clobbered argument
-registers (`reg-clobber`) account for 0-8 callees per program (see
-`REPORT.md`).
+scope by design. Store-before-decision (`side-effect`) accounts for 0-9
+callees per program. Clobbered argument registers (`reg-clobber`), which
+rejected 0-4 callees per program in version 1.2.0, reject none: all of them
+were general purpose registers, which the pass now saves. Some of the callees
+that the support for loops admits are too large instead (`too-large`: 1-7
+callees per program, 0-3 before). Section 5.6 weighs these reasons by the
+calls they cost (see also `REPORT.md`).
 
 ### 5.5 Analysis
 
@@ -715,20 +887,33 @@ not shrink-wrapped), which is why `bolt-pi-nofe` gains nothing there. `mixed`
 combines both effects and is the case where the profile model matters (below).
 
 **Instruction count is not everything.** `bufwrite` executes 24% fewer
-instructions but is not measurably faster (1.003, p = 0.14): its loop is bound by the
-store-to-load dependency chain through `b->pos` in memory, which inlining does
-not shorten (only the compiler could keep `pos` in a register).
+instructions but is not measurably faster (1.003 [1.001, 1.004], p = 0.45,
+below the resolution): its loop is bound by the store-to-load dependency chain
+through `b->pos` in memory, which inlining does not shorten (only the compiler
+could keep `pos` in a register).
 
 **The profile model.** In `mixed`, `classify()` is called 3x per iteration from
 a site that always takes the fast path and once from a site that always takes
 the slow path. The average model inlines both sites; the slow site then
 executes the copied check and the original call (re-execution). The worst-case
-model only transforms the always-fast site and is 12.0% faster (2.73x vs.
-2.44x). On the other workloads the two models give the same run time within
+model only transforms the always-fast site and is 12.1% faster (2.72x vs.
+2.43x). On the other workloads the two models give the same run time within
 the measurement resolution.
 
-**The `pool` slowdown.** `pool` executes 25% fewer instructions but runs 5%
-slower (0.953 [0.949, 0.957]). Its loop frees one object and allocates one in
+**Loops and saved registers.** In `lookup` the copy of `tab_get` contains the
+first iteration of the chain walk: the bucket load, the key comparison with
+the first node and the end-of-chain test (8 instructions). About 95% of the
+calls return from it; the others leave through the back edge of the loop and
+call `tab_get`, which walks the chain from the start. In `chain` the copy
+saves the argument register in a scratch register, loads `p->next` and its
+value and tests the sign (4 instructions); 98.4% of the calls return from it,
+and the others restore the argument and call `chain_value`. Both are leaf
+functions without a frame, so the copies save the call and the return but no
+prologue; why BOLT's `-inline-all` is faster on them is explained in Section
+5.3.
+
+**The `pool` slowdown.** `pool` executes 25% fewer instructions but runs 4%
+slower (0.959 [0.955, 0.960]). Its loop frees one object and allocates one in
 every iteration, and both callees update the same two fields of the pool: the
 head of the free list and the counter of live objects. Each field is loaded,
 modified and stored twice per iteration, and every load reads what the
@@ -740,62 +925,62 @@ transformation (15 rounds per table, speedups relative to the `bolt` of the
 same table, all rows in `results/REPORT.md`). BOLT does not place single
 instructions, so part of the analysis uses hand-written assembly variants of
 the loop (`hw-*`, `scripts/pool_loop.py`). The four of them that reproduce a
-BOLT output run as fast as that output (0.999, 0.948, 1.130 and 1.023 against
-1.000, 0.950, 1.133 and 1.021), which validates the method.
+BOLT output run as fast as that output (0.999, 0.956, 1.135 and 1.019 against
+1.000, 0.953, 1.133 and 1.025), which validates the method.
 
 *Other block orders are faster, but block order is not the cause.*
 
 | BOLT output | Speedup vs. `bolt` |
 |---|---|
-| partial inlining, ext-tsp block order (default) | 0.950 [0.947, 0.956] |
-| only `pool_alloc` / only `pool_free` partially inlined | 1.019 / 1.027 |
-| partial inlining, original block order | 1.133 [1.126, 1.139] |
-| partial inlining, `-reorder-blocks=cache` | 1.021 [1.006, 1.025] |
-| baseline with original block order / with `-reorder-blocks=cache` | 0.999 / 0.995 |
-| compiler LTO (inlines both functions) | 1.128 [1.126, 1.132] |
-| A/A control | 1.001 [0.994, 1.002] |
+| partial inlining, ext-tsp block order (default) | 0.953 [0.950, 0.960] |
+| only `pool_alloc` / only `pool_free` partially inlined | 1.024 / 1.030 |
+| partial inlining, original block order | 1.133 [1.121, 1.139] |
+| partial inlining, `-reorder-blocks=cache` | 1.025 [1.018, 1.027] |
+| baseline with original block order / with `-reorder-blocks=cache` | 1.003 / 1.002 |
+| compiler LTO (inlines both functions) | 1.132 [1.130, 1.135] |
+| A/A control | 1.001 [0.993, 1.002] |
 
 The same gains appear without any change of the block order when nops are
 inserted between the two inlined regions of the ext-tsp layout:
 
 | Hand-written loop | Speedup vs. `bolt` |
 |---|---|
-| loop of `bolt-pi` | 0.953 [0.944, 0.956] |
-| with 1 / 2 / 3 / 4 nops between the two inlined regions | 1.008 / 1.068 / 1.033 / 1.076 |
-| with 5 nops | **0.820** [0.817, 0.825] |
-| with 6 / 8 / 16 nops | 1.071 / 1.085 / 1.084 |
-| with 4 nops after the second region instead | 1.056 [1.047, 1.060] |
-| with 1 / 2 instructions fewer between the regions | 0.851 / 0.818 |
-| with the same base register in both regions, same instruction count | 0.944 [0.931, 0.950] |
-| loop of `bolt` with one nop in the loop head | 0.995 [0.992, 1.003] |
+| loop of `bolt-pi` | 0.953 [0.929, 0.954] |
+| with 1 / 2 / 3 / 4 nops between the two inlined regions | 1.006 / 1.061 / 1.049 / 1.077 |
+| with 5 nops | **0.822** [0.815, 0.830] |
+| with 6 / 8 / 16 nops | 1.069 / 1.085 / 1.083 |
+| with 4 nops after the second region instead | 1.053 [1.052, 1.068] |
+| with 1 / 2 instructions fewer between the regions | 0.851 / 0.817 |
+| with the same base register in both regions, same instruction count | 0.935 [0.932, 0.941] |
+| loop of `bolt` with one nop in the loop head | 0.998 [0.988, 1.013] |
 
 The run time is a non-monotonic function of the number of instructions
-between a store and the load that reads it back. A fifth nop turns 1.076 into
-0.820, and a *shorter* sequence is slower. Which register addresses the pool
+between a store and the load that reads it back. A fifth nop turns 1.077 into
+0.822, and a *shorter* sequence is slower. Which register addresses the pool
 does not matter. Code placement is not the cause either: shifted to 16
-positions (0 to 60 bytes), the call-based loop stays at 0.991-1.023 and the
-partially inlined loop at 0.947-0.963.
+positions (0 to 60 bytes), the call-based loop stays at 0.995-1.024 and the
+partially inlined loop at 0.937-0.963.
 
 *The published benchmark hides most of the effect.* The loop also computes a
 pseudo-random slot, a loop-carried dependency of its own that bounds the
-iteration time from below. The LTO build reaches this bound (it needs 0.339 s
-with the generator and 0.110 s without), and so does the partially inlined
-code with the original block order; their equal speed (1.128 and 1.133) says
+iteration time from below. The LTO build reaches this bound (it needs 0.338 s
+with the generator and 0.109 s without), and so does the partially inlined
+code with the original block order; their equal speed (1.132 and 1.133) says
 nothing more. A build of the benchmark whose loop uses
 `slot = i & (w - 1)` instead has no such bound:
 
 | Build without the random number generator | Speedup vs. its `bolt` |
 |---|---|
-| partial inlining, ext-tsp block order (default) | 0.802 [0.796, 0.808] |
-| only `pool_alloc` / only `pool_free` partially inlined | 0.857 / 0.993 |
-| partial inlining, original block order / `-reorder-blocks=cache` | 1.050 / 0.915 |
-| hand-written loop of `bolt-pi` with 1 / 2 / 4 / 8 nops | 0.881 / 1.104 / 1.345 / 0.914 |
-| hand-written loop of `bolt` with one nop in the loop head | 0.786 [0.783, 0.792] |
-| compiler LTO | **3.143** [3.116, 3.173] |
+| partial inlining, ext-tsp block order (default) | 0.803 [0.799, 0.805] |
+| only `pool_alloc` / only `pool_free` partially inlined | 0.871 / 1.003 |
+| partial inlining, original block order / `-reorder-blocks=cache` | 1.052 / 0.914 |
+| hand-written loop of `bolt-pi` with 1 / 2 / 4 / 8 nops | 0.884 / 1.087 / 1.342 / 0.920 |
+| hand-written loop of `bolt` with one nop in the loop head | 0.791 [0.785, 0.796] |
+| compiler LTO | **3.153** [3.113, 3.213] |
 
 Here the transformation costs 20%, one nop in the *untransformed* loop costs
 21%, and four nops between the inlined regions make the transformed loop
-1.35 times as fast as the baseline. The compiler's LTO build is 3.1 times as
+1.34 times as fast as the baseline. The compiler's LTO build is 3.2 times as
 fast as the baseline and 2.3 times as fast as the best of these variants:
 after inlining, the compiler sees that no other store can modify the two
 fields and keeps them in registers for the whole loop.
@@ -817,23 +1002,27 @@ What follows from this:
   region by register copies is provable at the binary level for one of the
   three loads only (for the other two, a store through a different pointer
   lies in between, and the binary does not show that it cannot overlap), and
-  it is not a reliable gain: 1.014 [0.901, 1.060] for that one load and 0.999
-  [0.932, 1.089] for all three (1.122 [0.881, 1.188] and 0.935 [0.878, 1.101]
-  in the build without the random number generator). The run times of these
-  variants differ by more than 20% from run to run (0.350-0.431 s and
-  0.340-0.428 s), where the other variants stay within a few percent.
+  it is not a reliable gain: 1.013 [0.902, 1.048] for that one load and 1.070
+  [1.050, 1.113] for all three (1.151 [1.044, 1.177] and 0.966 [0.850, 1.059]
+  in the build without the random number generator). The all-three variant
+  measured 0.999 [0.932, 1.089] in the run of version 1.2.0, and the run times
+  of these variants differ by about 25% from run to run (0.348-0.434 s and
+  0.340-0.431 s), where the other variants stay within a few percent.
 
-**Real programs.** In Lua, 14 call sites are transformed, removing 10.2% of
-the calls (12.7% of the direct calls): Lua C API and auxiliary library
+**Real programs.** In Lua, 18 call sites are transformed, removing 12.4% of
+the calls (15.4% of the direct calls): Lua C API and auxiliary library
 functions called across translation units from the standard library
-(`lua_type`, `lua_absindex`, `lua_pushnumber`, the string buffer helper
-`prepbuffsize` with frame elision), table insertion (`mainpositionTV` into
-`insertkey`, frame elided), comparisons (`luaV_lessthan` at a tail call site),
+(`lua_type`, `lua_absindex`, `lua_pushnumber`, `lua_settop` and
+`lua_checkstack` with a saved argument register and frame elision, the string
+buffer helper `prepbuffsize` with frame elision), table insertion
+(`mainpositionTV` into `insertkey`, frame elided), comparisons
+(`luaV_lessthan` at a tail call site), the removal of a string from the
+string table (`luaS_remove`, through the first iteration of its chain walk),
 a GC helper (`luaC_checkfinalizer`) and table sizing (`luaO_ceillog2`). This
-saves 0.41% of the executed instructions: the 6.9 million avoided calls
+saves 0.53% of the executed instructions: the 8.4 million avoided calls
 (training input) are frequent, but each saves only a few instructions, and the
-run time is unchanged within the resolution (1.002 [0.995, 1.009]). In CPython and SQLite the pass removes 3.3% and 2.2%
-of the calls, but the hottest candidates are either below the 60% fast-path
+run time is unchanged within the resolution (1.004 [0.993, 1.013]). In CPython
+and SQLite the pass removes 3.5% and 2.3% of the calls, but the hottest candidates are either below the 60% fast-path
 threshold (`PyLong_FromLong`: fewer than 60% of its calls hit the small-int
 cache in this workload), call other functions on every path (`_Py_Dealloc`), or store before
 the fast/slow decision (`sqlite3BtreeNext`). The remaining 0.06-0.28% of the
@@ -843,15 +1032,96 @@ loops in a few large functions; the pass finds only lukewarm call sites.
 libxml2 shows that removed calls alone do not predict a speedup: the pass
 removes 25.7% of its direct calls at 7 sites, 5 of them with frame elision
 (the largest: `xmlCurrentChar` into `xmlParseCDSect`), and 1.5% of the
-executed instructions, yet its run time is unchanged (1.009 [0.992, 1.019]).
-jq's 26.4% of avoided direct calls are 52 million calls in its training run,
-libxml2's 25.7% are 4.9 million. Scaled to the evaluation inputs, that is an
-estimated 120 million avoided calls per second of run time in jq and 36
-million in libxml2. Why the latter is not measurable is not resolved here;
-without hardware counters the cost of the avoided calls on this core cannot be
-measured directly.
+executed instructions, but the run time of the same binaries changed by
+1.000, 1.009 and 1.014 in three runs (Section 5.3). jq's 26.4% of avoided
+direct calls are 52 million calls in its training run, libxml2's 25.7% are
+4.9 million. Scaled to the evaluation inputs, that is an estimated 116
+million avoided calls per second of run time in jq and 35 million in libxml2.
+A gain in libxml2 of at most about 1%, too small to measure reliably here, is
+consistent with the lower rate; without hardware counters the cost of the
+avoided calls on this core cannot be measured directly.
 
-### 5.6 Measurement validity
+### 5.6 What limits the pass on real programs
+
+Except for jq, the real programs show no measurable run-time change, although
+the pass removes up to a quarter of their direct calls. `scripts/coverage.py`
+looks at the calls that the pass does *not* reach and at the reasons, from the
+training profiles and `llvm-bolt -v=2`, without timing (`results/coverage/`;
+all tables in `REPORT.md`).
+
+**Calls from code that BOLT does not rewrite.** An instrumentation profile
+attributes a call to its caller only if BOLT instrumented the caller, which it
+does for the functions it can rewrite ("simple" functions). The other function
+entries in the profile have no known caller:
+
+| Program | Function entries (training) | Without a known caller | Hottest callees of these |
+|---|---:|---:|---|
+| SQLite | 44.9M | 23.4% | `sqlite3BtreeNext` 1.87M, `btreeParseCellPtr` 1.70M |
+| Lua | 104.2M | 42.2% | `luaH_getshortstr` 26.0M, `luaH_psetshortstr` 7.2M |
+| CPython | 98.0M | 30.9% | `_PyFloat_FromDouble_ConsumeInputs` 7.2M, `_Py_Dealloc` 3.6M |
+| jq | 293.7M | 32.9% | `jv_get_kind` 36.9M, `stack_push` 26.3M |
+| libxml2 | 28.5M | 15.6% | `xmlXPathNextChildElement` 1.2M, `xmlXPathNodeSetAddUnique` 1.0M |
+
+These calls come from outside the binary and from functions that BOLT cannot
+rewrite. The interpreter loops of all four interpreters are among the latter:
+`luaV_execute` (Lua), `_PyEval_EvalFrameDefault` (CPython), `jq_next` (jq)
+and `sqlite3VdbeExec` (SQLite) are not simple for BOLT, nor is libxml2's
+XPath evaluator `xmlXPathCompOpEval`. In Lua, for example, BOLT finds
+addresses inside `luaV_execute` in data: the dispatch table of its computed
+gotos. The calls from these loops are among the hottest of the programs, and
+they include fast paths of exactly the kind the pass targets. `luaH_getshortstr`,
+the lookup of a short-string key in a hash chain, has 26 million calls without
+a known caller, practically all from the interpreter loop; `jv_get_kind`, the
+callee that dominates the gain on jq, has 37 million. No BOLT pass can
+transform these call sites. (zstd makes hardly any calls; Section 5.5.)
+
+**Calls the pass considers.** Of the direct calls in the functions that BOLT
+rewrites, the pass avoids 4.2% in SQLite, 15.4% in Lua, 4.7% in CPython,
+26.4% in jq and 25.7% in libxml2. The callees that it rejects at hot call
+sites, weighted by their execution counts as a share of these direct calls:
+
+| Reason | SQLite, Lua, CPython, jq, libxml2 | Hottest examples |
+|---|---|---|
+| library function called through the PLT, or callee that BOLT does not rewrite | 9-49% | `memcpy`, `free`, `realloc`, `malloc` (libc); CPython's `_Py_NewReference` |
+| every path to a return calls another function | 20-46% | `jv_free` (jq), `_Py_Dealloc` (CPython), `xmlParserShrink` (libxml2), `patternCompare` (SQLite) |
+| a call or an indirect branch in the entry block | 3-20% | `jv_mem_free`, a tail call of `free` (jq); `luaM_free_`, a call through the allocator pointer (Lua) |
+| a store before the fast/slow decision | 0-12% | `sqlite3BtreeNext` (SQLite), `luaD_precall` (Lua) |
+| the region exceeds the size limits | 0-19% | `luaH_psetshortstr` (Lua), `sqlite3VdbeRecordCompareWithSkip` (SQLite) |
+| the fast path is below the 60% threshold | 0-9% | `PyLong_FromLong` (CPython), `singlematch` (Lua) |
+
+The shares are upper bounds, and they overlap with the previous table, because
+a callee's execution count includes its calls without a known caller: 3.6 of
+the 4.3 million executions of `_Py_Dealloc`, 7.2 of the 7.5 million of
+`luaH_psetshortstr` and 1.87 of the 1.91 million of `sqlite3BtreeNext`. Only
+the last two reasons are limits of the region construction; the others follow
+from the design of the pass, which copies fast paths without calls and
+without stores before the decision. The two extensions of this version act on
+smaller reasons: clobbered argument registers no longer reject any callee
+(Section 5.4), and of loops, previously rejected as `no-fast-exit`, the first
+iteration is copied.
+
+**Region size limits.** Larger regions admit more callees (calls avoided,
+share of the direct calls, for `-partial-inline-max-insns` /
+`-max-blocks`; 24/8 is the default):
+
+| Program | without extensions | 16/6 | 24/8 | 32/8 | 40/12 | 64/16 |
+|---|---:|---:|---:|---:|---:|---:|
+| SQLite | 4.1% | 1.4% | 4.2% | 4.2% | 5.8% | 5.5% |
+| Lua | 12.7% | 10.0% | 15.4% | 16.4% | 18.6% | 18.6% |
+| CPython | 4.5% | 4.2% | 4.7% | 4.7% | 4.7% | 4.7% |
+| jq | 26.4% | 26.4% | 26.4% | 26.4% | 26.4% | 26.8% |
+| libxml2 | 25.7% | 3.8% | 25.7% | 25.7% | 30.5% | 30.5% |
+
+At 40/12, BOLT's estimate of the executed instructions falls by 0.24-0.31
+percentage points more than with the defaults in SQLite, Lua and libxml2, for
+0.08-0.63 percentage points more code (`REPORT.md`). In a timing pilot outside
+the published run (20 rounds; Lua, CPython, SQLite and libxml2), the 40/12
+regions did not change the run time measurably (0.992-1.000 of `bolt`), so
+the defaults stay. Most of the remaining gap is not a matter of size: the
+largest rejected callee in Lua, `luaH_psetshortstr`, is called almost only
+from the interpreter loop, which no size limit brings within reach.
+
+### 5.7 Measurement validity
 
 Several effects unrelated to the code under test were found while reviewing
 the evaluation, and are now controlled:
@@ -888,14 +1158,14 @@ the evaluation, and are now controlled:
 
 The remaining limitations of the environment are listed in Section 7.
 
-### 5.7 Correctness and regression testing
+### 5.8 Correctness and regression testing
 
 * **BOLT test suite** (`check-bolt`, identical toolchain for both builds,
   `results/check-bolt/`):
 
   | Result | mainline | patched |
   |---|---:|---:|
-  | PASS | 689 | 696 (689 + 7 new) |
+  | PASS | 689 | 698 (689 + 9 new) |
   | UNSUPPORTED | 138 | 138 |
   | XFAIL | 1 | 1 |
   | FAIL | 1 | 1 |
@@ -903,26 +1173,30 @@ The remaining limitations of the environment are listed in Section 7.
   No existing test changes its result; the only failure
   (`AArch64/icp-inline.c`) fails on unmodified mainline with this toolchain as
   well.
-* **Flag-off identity** (`results/flag-off-identity.txt`): for all 14 workload
-  binaries, with the layout options and with `-inline-all`, the patched
+* **Flag-off identity** (`results/flag-off-identity.txt`): for all 17 workloads
+  (binary and profile), with the layout options and with `-inline-all`, the patched
   `llvm-bolt` without `--partial-inline` writes byte-identical binaries to
   unmodified mainline (after removing the `.note.bolt_info` section, which
   records the BOLT revision and the command line).
-* **Output verification**: 2,791 timed and warm-up runs (8 variants, 9 for
-  jq; 16 runs per variant for the microbenchmarks, 31 for the real programs)
-  plus 1,328 runs of the `pool` analysis (83 variants in four experiments,
-  16 runs each), every output identical to the
-  original program's output.
+* **Output verification**: 3,300 timed and warm-up runs (8 variants, 9 for
+  `lookup`, `chain`, SQLite, Lua, CPython and jq; 16 runs per variant for the
+  microbenchmarks, 31 for the real programs) plus 1,328 runs of the `pool`
+  analysis (83 variants in four experiments, 16 runs each), every output
+  identical to the original program's output.
 * **x86-64 functional validation** (`scripts/x86_validate.sh`,
-  `results/x86-validation.txt`): the 7 microbenchmarks, the end-to-end test
-  program and Lua 5.5.1 were compiled natively for x86-64 (Ubuntu clang 18,
+  `results/x86-validation.txt`): the 9 microbenchmark programs, the end-to-end
+  test program and Lua 5.5.1 were compiled natively for x86-64 (Ubuntu clang 18,
   without CET; `endbr64` landing pads are covered by the lit test
   `X86/partial-inline.s`), profiled with BOLT instrumentation and
   optimized with the patched `llvm-bolt`, and executed under Docker's amd64
-  emulation: all 9 programs produce identical output for the original, `bolt`
-  and `bolt-pi` binaries (10 transformed call sites in Lua). Callees whose fast
-  path has a `push`-based frame (`bufwrite`, `memo`) are, as designed, not
-  transformed on x86-64. Run time was not measured under emulation.
+  emulation: all 11 programs produce identical output for the original, `bolt`
+  and `bolt-pi` binaries (11 transformed call sites in Lua). `lookup` is
+  transformed through the first iteration of its loop. `chain` is transformed
+  without a saved register: on x86-64 the compiler loads `p->next` into a
+  register other than the argument register, so the fast path overwrites
+  nothing that the callee needs again. Callees whose fast path has a
+  `push`-based frame (`bufwrite`, `memo`) are, as designed, not transformed on
+  x86-64. Run time was not measured under emulation.
 * **End-to-end runtime test with pointer authentication**
   (`runtime/AArch64/partial-inline.c`, built with
   `-mbranch-protection=standard`): the frame-elided fast paths execute with
@@ -939,21 +1213,25 @@ calls to functions that
   (worst-case estimate) - caches, buffers, free lists, disabled logging and
   tracing, argument and state checks, interpreter helpers,
 * whose fast path does not call other functions and only reads memory before
-  the fast/slow decision,
+  the fast/slow decision; it may run through the first iteration of a loop
+  (a chain or list lookup that usually succeeds at the first node, `lookup`)
+  and, on AArch64, overwrite its argument registers before it decides
+  (`chain`),
 * and especially when the compiler could not shrink-wrap them (frame elision
   removes the prologue and epilogue as well, Section 2.1).
 
 Typical candidates: allocator front ends, buffered I/O, logging and tracing
 frameworks, memoization layers, reference-counted object systems whose release
 path checks first, and C/C++ code bases built without LTO. Among the real
-programs measured, jq benefits (1.070x; 1.023x from fast paths that no other
-BOLT pass copies), where the avoided calls are very frequent (an estimated 120
+programs measured, jq benefits (1.069x; 1.016x from fast paths that no other
+BOLT pass copies), where the avoided calls are very frequent (an estimated 116
 million per second of run time). Interpreters and parsers have many such call
-sites (Lua: 12.7%, libxml2: 25.7% of the direct calls removed), but in Lua,
-CPython, SQLite and libxml2 the gain was below the measurement resolution.
-Where the hot callees are trivial leaf functions, BOLT's existing `-inline-all`
-achieves the same or more (jq: 1.094x); the two options can be combined (jq:
-1.122x).
+sites (Lua: 15.4%, libxml2: 25.7% of the direct calls removed), but in Lua,
+CPython, SQLite and libxml2 the gain was below the measurement resolution, and
+their hottest calls come from interpreter loops that BOLT does not rewrite
+(Section 5.6). Where the hot callees are small leaf functions, BOLT's existing
+`-inline-all` achieves the same or more (jq: 1.101x; `lookup`: 1.60x against
+1.45x); the two options can be combined (jq: 1.110x).
 
 **Ineffective (and left unchanged)**:
 
@@ -963,11 +1241,13 @@ achieves the same or more (jq: 1.094x); the two options can be combined (jq:
 * fast paths taken by less than 60% of a call site's calls (`memo-lowhit`),
   call sites below BOLT's hot threshold;
 * fast paths that are unsafe to re-execute: stores, atomics or barriers before
-  the decision (reference-count decrement, lock acquisition), arguments
-  overwritten before the decision (`unsafe`);
-* fast paths that call other functions, contain loops or jump tables, or use
-  the stack (locals, spills, stack arguments, `alloca`, a stack-protector
-  canary set up before the decision as GCC does for `trace_event`);
+  the decision (reference-count decrement, lock acquisition; `unsafe`), and
+  floating-point arguments, or any argument on x86-64, overwritten before the
+  decision;
+* fast paths that call other functions, contain jump tables, or use the stack
+  (locals, spills, stack arguments, `alloca`, a stack-protector canary set up
+  before the decision as GCC does for `trace_event`), and loops that most
+  calls iterate more than once (`lookup-deep`);
 * loops bound by a memory dependency chain that the fast path does not
   shorten (`bufwrite`): fewer instructions but no speedup.
 
@@ -1001,9 +1281,24 @@ speedup over the baseline is 1.027x (0.993x in the variant).
   Keeping the values in registers for the whole loop, as a compiler does
   after inlining, needs the knowledge that no other store can modify them. A
   cost model would need measurements with hardware counters on several cores.
-* **Clobbered argument registers** (`ldr x0, [x0]` before the decision): a
-  flow-sensitive renaming of the register on paths to slow exits, with a copy
-  back at fast exits, would make these regions re-executable.
+* **Overwritten registers** (`ldr x0, [x0]` before the decision) are saved
+  and restored only if they are AArch64 general purpose registers. The same
+  is possible for floating-point and vector registers (`fmov`, `mov v.16b`)
+  and on x86-64 (`mov`), which needs one more target hook implementation
+  each. The save costs one register copy on every fast path, also when the
+  overwriting path is rarely taken; a copy placed only on that path would
+  avoid this.
+* **Loops** contribute their first iteration only. A lookup whose key is
+  usually in the second node of a chain (`lookup-deep`) has no fast region
+  above the 60% threshold; copying a second iteration would cover it at the
+  cost of code size.
+* **Calls from code that BOLT does not rewrite**: 16-42% of the function
+  entries in the profiles of the real programs come from functions that BOLT
+  cannot rewrite, among them the interpreter loops of Lua, CPython, jq and
+  SQLite, or from outside the binary (Section 5.6). No pass can transform
+  these call sites; support in BOLT for such functions (computed gotos with
+  dispatch tables in data, in Lua's case) would extend the reach of this pass
+  as of all others.
 * **Stores before the decision**: instead of re-executing the callee, the slow
   exit could enter the callee at the slow-exit block through a new secondary
   entry point with the frame state of that point.
@@ -1042,8 +1337,8 @@ repository root:
 ```bash
 make image          # baseline + patched BOLT, check-bolt for both, workloads
 make check-bolt     # results/check-bolt/: test results of both builds, compared
-make experiments    # scripts/run_experiments.sh, writes results/ (about 50 min)
-make x86-validate   # Section 5.7, x86-64 under emulation
+make experiments    # scripts/run_experiments.sh, writes results/ (about 60 min)
+make x86-validate   # Section 5.8, x86-64 under emulation
 ```
 
 `results/timeline.log` and `results/environment.txt` record when each step of

@@ -21,8 +21,8 @@ BOLT-INFO: setting size of function __cxa_finalize@PLT to 16 (was 0)
 BOLT-INFO: setting size of function strtol@PLT to 16 (was 0)
 BOLT-INFO: setting size of function printf@PLT to 16 (was 0)
 BOLT-INFO: pre-processing profile using branch profile reader
-BOLT-WARNING: failed to post-process indirect branches for BOLT-WARNING: failed to post-process indirect branches for deregister_tm_clones/1(*2)register_tm_clones/1(*2)
-
+BOLT-WARNING: failed to post-process indirect branches for deregister_tm_clones/1(*2)BOLT-WARNING: failed to post-process indirect branches for 
+register_tm_clones/1(*2)
 BOLT-INFO: Starting pass: pointer-auth-cfi-analyzer
 BOLT-INFO: PointerAuthCFIAnalyzer ran on 1 functions. Ignored 0 functions (0.00%) because of CFI inconsistencies
 BOLT-INFO: Finished pass: pointer-auth-cfi-analyzer
@@ -36,15 +36,15 @@ BOLT-INFO: Starting pass: veneer-elimination
 BOLT-INFO: number of removed linker-inserted veneers: 0
 BOLT-INFO: Finished pass: veneer-elimination
 BOLT-INFO: Starting pass: print-stats
-BOLT-INFO: 10 out of 13 functions in the binary (76.9%) have non-empty execution profile
+BOLT-INFO: 9 out of 12 functions in the binary (75.0%) have non-empty execution profile
 BOLT-INFO: 2 functions with profile could not be optimized
 BOLT-INFO: profile for 1 objects was ignored
 BOLT-INFO: Finished pass: print-stats
 BOLT-INFO: Starting pass: profile-quality-stats
-BOLT-INFO: profile quality metrics for the hottest 10 functions (reporting top 5% values): function CFG discontinuity 0.00%; 
+BOLT-INFO: profile quality metrics for the hottest 9 functions (reporting top 5% values): function CFG discontinuity 0.00%; 
 abbreviations: EC = execution count, POS BBs = positive EC BBs
 distribution of NUM(unreachable POS BBs) per function
-  Length     : 10
+  Length     : 9
   MAX        : 0
   TOP 1%     : 0
   TOP 5%     : 0
@@ -54,7 +54,7 @@ distribution of NUM(unreachable POS BBs) per function
   TOP 80%    : 0
   MIN        : 0
 distribution of SUM_EC(unreachable POS BBs) per function
-  Length     : 10
+  Length     : 9
   MAX        : 0
   TOP 1%     : 0
   TOP 5%     : 0
@@ -64,7 +64,7 @@ distribution of SUM_EC(unreachable POS BBs) per function
   TOP 80%    : 0
   MIN        : 0
 distribution of [(SUM_EC(unreachable POS BBs) / SUM_EC(all POS BBs))] per function
-  Length     : 10
+  Length     : 9
   MAX        : 0.00%
   TOP 1%     : 0.00%
   TOP 5%     : 0.00%
@@ -75,7 +75,7 @@ distribution of [(SUM_EC(unreachable POS BBs) / SUM_EC(all POS BBs))] per functi
   MIN        : 0.00%
 call graph flow conservation gap 0.00%; 
 distribution of function entry flow conservation gaps
-  Length     : 10
+  Length     : 9
   MAX        : 0.00%
   TOP 1%     : 0.00%
   TOP 5%     : 0.00%
@@ -85,7 +85,7 @@ distribution of function entry flow conservation gaps
   TOP 80%    : 0.00%
   MIN        : 0.00%
 CFG flow conservation gap 0.00% (weighted) 0.00% (worst); distribution of weighted CFG flow conservation gaps
-  Length     : 10
+  Length     : 9
   MAX        : 0.00%
   TOP 1%     : 0.00%
   TOP 5%     : 0.00%
@@ -96,7 +96,7 @@ CFG flow conservation gap 0.00% (weighted) 0.00% (worst); distribution of weight
   MIN        : 0.00%
 Consider only blocks with execution counts > 500:
 distribution of worst block flow conservation gap per function 
-  Length     : 10
+  Length     : 9
   MAX        : 0.00%
   TOP 1%     : 0.00%
   TOP 5%     : 0.00%
@@ -106,7 +106,7 @@ distribution of worst block flow conservation gap per function
   TOP 80%    : 0.00%
   MIN        : 0.00%
 distribution of worst block flow conservation gap (absolute value) per function
-  Length     : 10
+  Length     : 9
   MAX        : 0
   TOP 1%     : 0
   TOP 5%     : 0
@@ -117,7 +117,7 @@ distribution of worst block flow conservation gap (absolute value) per function
   MIN        : 0
 exception handling usage 0.00% (of total BBEC) 0.00% (of total InvokeEC)
 distribution of exception handling usage as a fraction of total BBEC of each function
-  Length     : 10
+  Length     : 9
   MAX        : 0.00%
   TOP 1%     : 0.00%
   TOP 5%     : 0.00%
@@ -127,7 +127,7 @@ distribution of exception handling usage as a fraction of total BBEC of each fun
   TOP 80%    : 0.00%
   MIN        : 0.00%
 distribution of exception handling usage as a fraction of total InvokeEC of each function
-  Length     : 10
+  Length     : 9
   MAX        : 0.00%
   TOP 1%     : 0.00%
   TOP 5%     : 0.00%
@@ -136,15 +136,15 @@ distribution of exception handling usage as a fraction of total InvokeEC of each
   TOP 50%    : 0.00%
   TOP 80%    : 0.00%
   MIN        : 0.00%
-Detailed stats for 5 buckets, each with  2 functions:
+Detailed stats for 5 buckets, each with  1 functions:
 ----------------
 |   Bucket 1:  |
 ----------------
-execution counts of the 2 functions in the bucket: 20000000-20000000
+execution counts of the 1 functions in the bucket: 20000000-20000000
 function CFG discontinuity 0.00%; 
 abbreviations: EC = execution count, POS BBs = positive EC BBs
 distribution of NUM(unreachable POS BBs) per function
-  Length     : 2
+  Length     : 1
   MAX        : 0
   TOP 1%     : 0
   TOP 5%     : 0
@@ -154,7 +154,7 @@ distribution of NUM(unreachable POS BBs) per function
   TOP 80%    : 0
   MIN        : 0
 distribution of SUM_EC(unreachable POS BBs) per function
-  Length     : 2
+  Length     : 1
   MAX        : 0
   TOP 1%     : 0
   TOP 5%     : 0
@@ -164,7 +164,7 @@ distribution of SUM_EC(unreachable POS BBs) per function
   TOP 80%    : 0
   MIN        : 0
 distribution of [(SUM_EC(unreachable POS BBs) / SUM_EC(all POS BBs))] per function
-  Length     : 2
+  Length     : 1
   MAX        : 0.00%
   TOP 1%     : 0.00%
   TOP 5%     : 0.00%
@@ -175,7 +175,7 @@ distribution of [(SUM_EC(unreachable POS BBs) / SUM_EC(all POS BBs))] per functi
   MIN        : 0.00%
 call graph flow conservation gap 0.00%; 
 distribution of function entry flow conservation gaps
-  Length     : 2
+  Length     : 1
   MAX        : 0.00%
   TOP 1%     : 0.00%
   TOP 5%     : 0.00%
@@ -185,7 +185,7 @@ distribution of function entry flow conservation gaps
   TOP 80%    : 0.00%
   MIN        : 0.00%
 CFG flow conservation gap 0.00% (weighted) 0.00% (worst); distribution of weighted CFG flow conservation gaps
-  Length     : 2
+  Length     : 1
   MAX        : 0.00%
   TOP 1%     : 0.00%
   TOP 5%     : 0.00%
@@ -196,7 +196,7 @@ CFG flow conservation gap 0.00% (weighted) 0.00% (worst); distribution of weight
   MIN        : 0.00%
 Consider only blocks with execution counts > 500:
 distribution of worst block flow conservation gap per function 
-  Length     : 2
+  Length     : 1
   MAX        : 0.00%
   TOP 1%     : 0.00%
   TOP 5%     : 0.00%
@@ -206,7 +206,7 @@ distribution of worst block flow conservation gap per function
   TOP 80%    : 0.00%
   MIN        : 0.00%
 distribution of worst block flow conservation gap (absolute value) per function
-  Length     : 2
+  Length     : 1
   MAX        : 0
   TOP 1%     : 0
   TOP 5%     : 0
@@ -217,7 +217,7 @@ distribution of worst block flow conservation gap (absolute value) per function
   MIN        : 0
 exception handling usage 0.00% (of total BBEC) 0.00% (of total InvokeEC)
 distribution of exception handling usage as a fraction of total BBEC of each function
-  Length     : 2
+  Length     : 1
   MAX        : 0.00%
   TOP 1%     : 0.00%
   TOP 5%     : 0.00%
@@ -227,7 +227,7 @@ distribution of exception handling usage as a fraction of total BBEC of each fun
   TOP 80%    : 0.00%
   MIN        : 0.00%
 distribution of exception handling usage as a fraction of total InvokeEC of each function
-  Length     : 2
+  Length     : 1
   MAX        : 0.00%
   TOP 1%     : 0.00%
   TOP 5%     : 0.00%
@@ -239,11 +239,11 @@ distribution of exception handling usage as a fraction of total InvokeEC of each
 ----------------
 |   Bucket 2:  |
 ----------------
-execution counts of the 2 functions in the bucket: 1-20014
+execution counts of the 1 functions in the bucket: 20014-20014
 function CFG discontinuity 0.00%; 
 abbreviations: EC = execution count, POS BBs = positive EC BBs
 distribution of NUM(unreachable POS BBs) per function
-  Length     : 2
+  Length     : 1
   MAX        : 0
   TOP 1%     : 0
   TOP 5%     : 0
@@ -253,7 +253,7 @@ distribution of NUM(unreachable POS BBs) per function
   TOP 80%    : 0
   MIN        : 0
 distribution of SUM_EC(unreachable POS BBs) per function
-  Length     : 2
+  Length     : 1
   MAX        : 0
   TOP 1%     : 0
   TOP 5%     : 0
@@ -263,7 +263,7 @@ distribution of SUM_EC(unreachable POS BBs) per function
   TOP 80%    : 0
   MIN        : 0
 distribution of [(SUM_EC(unreachable POS BBs) / SUM_EC(all POS BBs))] per function
-  Length     : 2
+  Length     : 1
   MAX        : 0.00%
   TOP 1%     : 0.00%
   TOP 5%     : 0.00%
@@ -274,7 +274,7 @@ distribution of [(SUM_EC(unreachable POS BBs) / SUM_EC(all POS BBs))] per functi
   MIN        : 0.00%
 call graph flow conservation gap 0.00%; 
 distribution of function entry flow conservation gaps
-  Length     : 2
+  Length     : 1
   MAX        : 0.00%
   TOP 1%     : 0.00%
   TOP 5%     : 0.00%
@@ -284,7 +284,7 @@ distribution of function entry flow conservation gaps
   TOP 80%    : 0.00%
   MIN        : 0.00%
 CFG flow conservation gap 0.00% (weighted) 0.00% (worst); distribution of weighted CFG flow conservation gaps
-  Length     : 2
+  Length     : 1
   MAX        : 0.00%
   TOP 1%     : 0.00%
   TOP 5%     : 0.00%
@@ -295,7 +295,7 @@ CFG flow conservation gap 0.00% (weighted) 0.00% (worst); distribution of weight
   MIN        : 0.00%
 Consider only blocks with execution counts > 500:
 distribution of worst block flow conservation gap per function 
-  Length     : 2
+  Length     : 1
   MAX        : 0.00%
   TOP 1%     : 0.00%
   TOP 5%     : 0.00%
@@ -305,7 +305,7 @@ distribution of worst block flow conservation gap per function
   TOP 80%    : 0.00%
   MIN        : 0.00%
 distribution of worst block flow conservation gap (absolute value) per function
-  Length     : 2
+  Length     : 1
   MAX        : 0
   TOP 1%     : 0
   TOP 5%     : 0
@@ -316,7 +316,7 @@ distribution of worst block flow conservation gap (absolute value) per function
   MIN        : 0
 exception handling usage 0.00% (of total BBEC) 0.00% (of total InvokeEC)
 distribution of exception handling usage as a fraction of total BBEC of each function
-  Length     : 2
+  Length     : 1
   MAX        : 0.00%
   TOP 1%     : 0.00%
   TOP 5%     : 0.00%
@@ -326,7 +326,7 @@ distribution of exception handling usage as a fraction of total BBEC of each fun
   TOP 80%    : 0.00%
   MIN        : 0.00%
 distribution of exception handling usage as a fraction of total InvokeEC of each function
-  Length     : 2
+  Length     : 1
   MAX        : 0.00%
   TOP 1%     : 0.00%
   TOP 5%     : 0.00%
@@ -338,11 +338,11 @@ distribution of exception handling usage as a fraction of total InvokeEC of each
 ----------------
 |   Bucket 3:  |
 ----------------
-execution counts of the 2 functions in the bucket: 1-1
+execution counts of the 1 functions in the bucket: 1-1
 function CFG discontinuity 0.00%; 
 abbreviations: EC = execution count, POS BBs = positive EC BBs
 distribution of NUM(unreachable POS BBs) per function
-  Length     : 2
+  Length     : 1
   MAX        : 0
   TOP 1%     : 0
   TOP 5%     : 0
@@ -352,7 +352,7 @@ distribution of NUM(unreachable POS BBs) per function
   TOP 80%    : 0
   MIN        : 0
 distribution of SUM_EC(unreachable POS BBs) per function
-  Length     : 2
+  Length     : 1
   MAX        : 0
   TOP 1%     : 0
   TOP 5%     : 0
@@ -362,7 +362,7 @@ distribution of SUM_EC(unreachable POS BBs) per function
   TOP 80%    : 0
   MIN        : 0
 distribution of [(SUM_EC(unreachable POS BBs) / SUM_EC(all POS BBs))] per function
-  Length     : 2
+  Length     : 1
   MAX        : 0.00%
   TOP 1%     : 0.00%
   TOP 5%     : 0.00%
@@ -373,7 +373,7 @@ distribution of [(SUM_EC(unreachable POS BBs) / SUM_EC(all POS BBs))] per functi
   MIN        : 0.00%
 call graph flow conservation gap 0.00%; 
 distribution of function entry flow conservation gaps
-  Length     : 2
+  Length     : 1
   MAX        : 0.00%
   TOP 1%     : 0.00%
   TOP 5%     : 0.00%
@@ -383,7 +383,7 @@ distribution of function entry flow conservation gaps
   TOP 80%    : 0.00%
   MIN        : 0.00%
 CFG flow conservation gap 0.00% (weighted) 0.00% (worst); distribution of weighted CFG flow conservation gaps
-  Length     : 2
+  Length     : 1
   MAX        : 0.00%
   TOP 1%     : 0.00%
   TOP 5%     : 0.00%
@@ -394,7 +394,7 @@ CFG flow conservation gap 0.00% (weighted) 0.00% (worst); distribution of weight
   MIN        : 0.00%
 Consider only blocks with execution counts > 500:
 distribution of worst block flow conservation gap per function 
-  Length     : 2
+  Length     : 1
   MAX        : 0.00%
   TOP 1%     : 0.00%
   TOP 5%     : 0.00%
@@ -404,7 +404,7 @@ distribution of worst block flow conservation gap per function
   TOP 80%    : 0.00%
   MIN        : 0.00%
 distribution of worst block flow conservation gap (absolute value) per function
-  Length     : 2
+  Length     : 1
   MAX        : 0
   TOP 1%     : 0
   TOP 5%     : 0
@@ -415,7 +415,7 @@ distribution of worst block flow conservation gap (absolute value) per function
   MIN        : 0
 exception handling usage 0.00% (of total BBEC) 0.00% (of total InvokeEC)
 distribution of exception handling usage as a fraction of total BBEC of each function
-  Length     : 2
+  Length     : 1
   MAX        : 0.00%
   TOP 1%     : 0.00%
   TOP 5%     : 0.00%
@@ -425,7 +425,7 @@ distribution of exception handling usage as a fraction of total BBEC of each fun
   TOP 80%    : 0.00%
   MIN        : 0.00%
 distribution of exception handling usage as a fraction of total InvokeEC of each function
-  Length     : 2
+  Length     : 1
   MAX        : 0.00%
   TOP 1%     : 0.00%
   TOP 5%     : 0.00%
@@ -437,11 +437,11 @@ distribution of exception handling usage as a fraction of total InvokeEC of each
 ----------------
 |   Bucket 4:  |
 ----------------
-execution counts of the 2 functions in the bucket: 1-1
+execution counts of the 1 functions in the bucket: 1-1
 function CFG discontinuity 0.00%; 
 abbreviations: EC = execution count, POS BBs = positive EC BBs
 distribution of NUM(unreachable POS BBs) per function
-  Length     : 2
+  Length     : 1
   MAX        : 0
   TOP 1%     : 0
   TOP 5%     : 0
@@ -451,7 +451,7 @@ distribution of NUM(unreachable POS BBs) per function
   TOP 80%    : 0
   MIN        : 0
 distribution of SUM_EC(unreachable POS BBs) per function
-  Length     : 2
+  Length     : 1
   MAX        : 0
   TOP 1%     : 0
   TOP 5%     : 0
@@ -461,7 +461,7 @@ distribution of SUM_EC(unreachable POS BBs) per function
   TOP 80%    : 0
   MIN        : 0
 distribution of [(SUM_EC(unreachable POS BBs) / SUM_EC(all POS BBs))] per function
-  Length     : 2
+  Length     : 1
   MAX        : 0.00%
   TOP 1%     : 0.00%
   TOP 5%     : 0.00%
@@ -472,7 +472,7 @@ distribution of [(SUM_EC(unreachable POS BBs) / SUM_EC(all POS BBs))] per functi
   MIN        : 0.00%
 call graph flow conservation gap 0.00%; 
 distribution of function entry flow conservation gaps
-  Length     : 2
+  Length     : 1
   MAX        : 0.00%
   TOP 1%     : 0.00%
   TOP 5%     : 0.00%
@@ -482,7 +482,7 @@ distribution of function entry flow conservation gaps
   TOP 80%    : 0.00%
   MIN        : 0.00%
 CFG flow conservation gap 0.00% (weighted) 0.00% (worst); distribution of weighted CFG flow conservation gaps
-  Length     : 2
+  Length     : 1
   MAX        : 0.00%
   TOP 1%     : 0.00%
   TOP 5%     : 0.00%
@@ -493,7 +493,7 @@ CFG flow conservation gap 0.00% (weighted) 0.00% (worst); distribution of weight
   MIN        : 0.00%
 Consider only blocks with execution counts > 500:
 distribution of worst block flow conservation gap per function 
-  Length     : 2
+  Length     : 1
   MAX        : 0.00%
   TOP 1%     : 0.00%
   TOP 5%     : 0.00%
@@ -503,7 +503,7 @@ distribution of worst block flow conservation gap per function
   TOP 80%    : 0.00%
   MIN        : 0.00%
 distribution of worst block flow conservation gap (absolute value) per function
-  Length     : 2
+  Length     : 1
   MAX        : 0
   TOP 1%     : 0
   TOP 5%     : 0
@@ -514,7 +514,7 @@ distribution of worst block flow conservation gap (absolute value) per function
   MIN        : 0
 exception handling usage 0.00% (of total BBEC) 0.00% (of total InvokeEC)
 distribution of exception handling usage as a fraction of total BBEC of each function
-  Length     : 2
+  Length     : 1
   MAX        : 0.00%
   TOP 1%     : 0.00%
   TOP 5%     : 0.00%
@@ -524,7 +524,7 @@ distribution of exception handling usage as a fraction of total BBEC of each fun
   TOP 80%    : 0.00%
   MIN        : 0.00%
 distribution of exception handling usage as a fraction of total InvokeEC of each function
-  Length     : 2
+  Length     : 1
   MAX        : 0.00%
   TOP 1%     : 0.00%
   TOP 5%     : 0.00%
@@ -536,11 +536,11 @@ distribution of exception handling usage as a fraction of total InvokeEC of each
 ----------------
 |   Bucket 5:  |
 ----------------
-execution counts of the 2 functions in the bucket: 1-1
+execution counts of the 1 functions in the bucket: 1-1
 function CFG discontinuity 0.00%; 
 abbreviations: EC = execution count, POS BBs = positive EC BBs
 distribution of NUM(unreachable POS BBs) per function
-  Length     : 2
+  Length     : 1
   MAX        : 0
   TOP 1%     : 0
   TOP 5%     : 0
@@ -550,7 +550,7 @@ distribution of NUM(unreachable POS BBs) per function
   TOP 80%    : 0
   MIN        : 0
 distribution of SUM_EC(unreachable POS BBs) per function
-  Length     : 2
+  Length     : 1
   MAX        : 0
   TOP 1%     : 0
   TOP 5%     : 0
@@ -560,7 +560,7 @@ distribution of SUM_EC(unreachable POS BBs) per function
   TOP 80%    : 0
   MIN        : 0
 distribution of [(SUM_EC(unreachable POS BBs) / SUM_EC(all POS BBs))] per function
-  Length     : 2
+  Length     : 1
   MAX        : 0.00%
   TOP 1%     : 0.00%
   TOP 5%     : 0.00%
@@ -571,7 +571,7 @@ distribution of [(SUM_EC(unreachable POS BBs) / SUM_EC(all POS BBs))] per functi
   MIN        : 0.00%
 call graph flow conservation gap 0.00%; 
 distribution of function entry flow conservation gaps
-  Length     : 2
+  Length     : 1
   MAX        : 0.00%
   TOP 1%     : 0.00%
   TOP 5%     : 0.00%
@@ -581,7 +581,7 @@ distribution of function entry flow conservation gaps
   TOP 80%    : 0.00%
   MIN        : 0.00%
 CFG flow conservation gap 0.00% (weighted) 0.00% (worst); distribution of weighted CFG flow conservation gaps
-  Length     : 2
+  Length     : 1
   MAX        : 0.00%
   TOP 1%     : 0.00%
   TOP 5%     : 0.00%
@@ -592,7 +592,7 @@ CFG flow conservation gap 0.00% (weighted) 0.00% (worst); distribution of weight
   MIN        : 0.00%
 Consider only blocks with execution counts > 500:
 distribution of worst block flow conservation gap per function 
-  Length     : 2
+  Length     : 1
   MAX        : 0.00%
   TOP 1%     : 0.00%
   TOP 5%     : 0.00%
@@ -602,7 +602,7 @@ distribution of worst block flow conservation gap per function
   TOP 80%    : 0.00%
   MIN        : 0.00%
 distribution of worst block flow conservation gap (absolute value) per function
-  Length     : 2
+  Length     : 1
   MAX        : 0
   TOP 1%     : 0
   TOP 5%     : 0
@@ -613,7 +613,7 @@ distribution of worst block flow conservation gap (absolute value) per function
   MIN        : 0
 exception handling usage 0.00% (of total BBEC) 0.00% (of total InvokeEC)
 distribution of exception handling usage as a fraction of total BBEC of each function
-  Length     : 2
+  Length     : 1
   MAX        : 0.00%
   TOP 1%     : 0.00%
   TOP 5%     : 0.00%
@@ -623,7 +623,7 @@ distribution of exception handling usage as a fraction of total BBEC of each fun
   TOP 80%    : 0.00%
   MIN        : 0.00%
 distribution of exception handling usage as a fraction of total InvokeEC of each function
-  Length     : 2
+  Length     : 1
   MAX        : 0.00%
   TOP 1%     : 0.00%
   TOP 5%     : 0.00%
@@ -648,18 +648,18 @@ BOLT-INFO: Finished pass: identical-code-folding
 BOLT-INFO: Starting pass: indirect-call-promotion
 BOLT-INFO: Finished pass: indirect-call-promotion
 BOLT-INFO: Starting pass: inlining
-BOLT-INFO: inlined 20020015 calls at 3 call sites in 2 iteration(s). Change in binary size: 112 bytes.
+BOLT-INFO: inlined 20015 calls at 2 call sites in 2 iteration(s). Change in binary size: 52 bytes.
 BOLT-INFO: Finished pass: inlining
 BOLT-INFO: Starting pass: identical-code-folding
 BOLT-INFO: Finished pass: identical-code-folding
 BOLT-INFO: Starting pass: partial-inlining
-BOLT-INFO: partial inlining: 0 callees with a fast region (0 with frame elision); inlined 0 call sites (0 with frame elision, 0 tail calls), 0 instructions copied, 0 registers renamed
+BOLT-INFO: partial inlining: 0 callees with a fast region (0 with frame elision); inlined 0 call sites (0 with frame elision, 0 tail calls), 0 instructions copied, 0 registers renamed, 0 registers saved
 BOLT-INFO: partial inlining: callees without a usable fast region: side-effect=1
 BOLT-INFO: Finished pass: partial-inlining
 BOLT-INFO: Starting pass: plt-call-optimization
 BOLT-INFO: Finished pass: plt-call-optimization
 BOLT-INFO: Starting pass: reorder-blocks
-BOLT-INFO: basic block reordering modified layout of 2 functions (20.00% of profiled, 10.53% of total)
+BOLT-INFO: basic block reordering modified layout of 2 functions (22.22% of profiled, 11.11% of total)
 BOLT-INFO: Finished pass: reorder-blocks
 BOLT-INFO: Starting pass: eliminate-unreachable
 BOLT-INFO: Finished pass: eliminate-unreachable
@@ -673,11 +673,11 @@ BOLT-INFO: Finished pass: tail-duplication
 BOLT-INFO: Starting pass: fix-branches
 BOLT-INFO: Finished pass: fix-branches
 BOLT-INFO: Starting pass: reorder-functions
-BOLT-INFO: buildCallGraph: 12 nodes, 9 callsites (0 recursive), density = 0.020833, 6 callsites not processed, 0 callsites with invalid profile, used perf data for 0 stale functions.
+BOLT-INFO: buildCallGraph: 11 nodes, 9 callsites (0 recursive), density = 0.024793, 6 callsites not processed, 0 callsites with invalid profile, used perf data for 0 stale functions.
 BOLT-INFO: Function reordering stats
 BOLT-INFO:  Number of hot functions: 9
 BOLT-INFO:  Number of clusters: 1
-BOLT-INFO:  Final average call distance = 92.0 (1840000032 / 20000002)
+BOLT-INFO:  Final average call distance = 68.0 (1360000032 / 20000002)
 BOLT-INFO:  Total Calls = 20000002
 BOLT-INFO:  Total Calls within 64B = 2 (0.00%)
 BOLT-INFO:  Total Calls within 4KB = 20000002 (100.00%)
@@ -690,44 +690,44 @@ BOLT-INFO: Finished pass: split-functions
 BOLT-INFO: Starting pass: print dyno-stats after optimizations
 BOLT-INFO: program-wide dynostats after all optimizations before SCTC and FOP:
 
-            40000005 : executed forward branches
+            20000005 : executed forward branches
                20015 : taken forward branches
             20000016 : executed backward branches
             20000014 : taken backward branches
                    2 : executed unconditional branches
-            40020027 : all function calls
+            20020027 : all function calls
                    5 : indirect calls
                    5 : PLT calls
-           440301408 : executed instructions
-            60060063 : executed load instructions
-            20080225 : executed store instructions
+           280301406 : executed instructions
+            20060062 : executed load instructions
+            20080224 : executed store instructions
                    0 : taken jump table branches
                    0 : taken unknown indirect branches
-            60000023 : total branches
+            40000023 : total branches
             20020031 : taken branches
-            39979992 : non-taken conditional branches
+            19979992 : non-taken conditional branches
             20020029 : taken conditional branches
-            60000021 : all conditional branches
+            40000021 : all conditional branches
                    0 : linker-inserted veneer calls
 
-            40000005 : executed forward branches (=)
+            20000005 : executed forward branches (=)
                20014 : taken forward branches (-0.0%)
             20000016 : executed backward branches (=)
             20000014 : taken backward branches (=)
                    0 : executed unconditional branches (-100.0%)
-            20000012 : all function calls (-50.0%)
+            20000012 : all function calls (-0.1%)
                    5 : indirect calls (=)
                    5 : PLT calls (=)
-           380261371 : executed instructions (-13.6%)
-            60060063 : executed load instructions (=)
-            20080225 : executed store instructions (=)
+           260261369 : executed instructions (-7.1%)
+            20060062 : executed load instructions (=)
+            20080224 : executed store instructions (=)
                    0 : taken jump table branches (=)
                    0 : taken unknown indirect branches (=)
-            60000021 : total branches (-0.0%)
+            40000021 : total branches (-0.0%)
             20020028 : taken branches (-0.0%)
-            39979993 : non-taken conditional branches (+0.0%)
+            19979993 : non-taken conditional branches (+0.0%)
             20020028 : taken conditional branches (+0.0%)
-            60000021 : all conditional branches (=)
+            40000021 : all conditional branches (=)
                    0 : linker-inserted veneer calls (=)
 
 BOLT-INFO: Finished pass: print dyno-stats after optimizations
@@ -752,7 +752,7 @@ BOLT-INFO: Starting stub-insertion pass
 BOLT-INFO: Inserted 0 stubs in the hot area and 0 stubs in the cold area. Shared 0 times, iterated 1 times.
 BOLT-INFO: Finished pass: long-jmp
 BOLT-INFO: Starting pass: pointer-auth-cfi-fixup
-BOLT-INFO: rewritten pac-ret DWARF info in 1 out of 19 functions (5.26%).
+BOLT-INFO: rewritten pac-ret DWARF info in 1 out of 18 functions (5.56%).
 BOLT-INFO: Finished pass: pointer-auth-cfi-fixup
 BOLT-INFO: Starting pass: finalize-functions
 BOLT-INFO: Finished pass: finalize-functions
@@ -771,29 +771,29 @@ BOLT-INFO: Finished pass: clean-mc-state
 BOLT-INFO: padding code to 0x600000 to accommodate hot text
 BOLT-INFO: patched build-id (flipped first and last bits)
 BOLT: writing new section .fini_array
- data at 0xaaaae6527040
+ data at 0xaaab06d229d0
  of size 8
- at offset 3152 with content size 8
+ at offset 3072 with content size 8
 BOLT: writing new section .init_array
- data at 0xaaaae6528240
+ data at 0xaaab06d272e0
  of size 8
- at offset 3160 with content size 8
+ at offset 3080 with content size 8
 BOLT: writing new section .text
- data at 0xffff98200000
- of size 1088
- at offset 4194304 with content size 1088
+ data at 0xffff92200000
+ of size 960
+ at offset 4194304 with content size 960
 BOLT: writing new section .text.cold
- data at 0xaaaae6532740
- of size 76
- at offset 4195392 with content size 76
+ data at 0xaaab06c0be80
+ of size 28
+ at offset 4195264 with content size 28
 BOLT: writing new section .bolt.new.eh_frame
- data at 0xaaaae6524090
- of size 312
- at offset 6291456 with content size 312
+ data at 0xaaab06c2d000
+ of size 288
+ at offset 6291456 with content size 288
 BOLT: writing new section .relocated.eh_frame
- data at 0xaaaae6524740
- of size 308
- at offset 6291768 with content size 308
+ data at 0xaaab06c08480
+ of size 276
+ at offset 6291744 with content size 276
 BOLT-INFO: not writing section header for section .fini_array
 BOLT-INFO: not writing section header for section .init_array
 BOLT-INFO: writing section header for .text
@@ -801,7 +801,7 @@ BOLT-INFO: writing section header for .text.cold
 BOLT-INFO: writing section header for .eh_frame
 BOLT-INFO: writing section header for .eh_frame_hdr
 BOLT-INFO: setting __hot_start to 0x400000
-BOLT-INFO: setting __hot_end to 0x400440
+BOLT-INFO: setting __hot_end to 0x4003c0
 BOLT-INFO: not writing section header for section .fini_array
 BOLT-INFO: not writing section header for section .init_array
 BOLT-INFO: writing section header for .text

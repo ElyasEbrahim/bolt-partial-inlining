@@ -70,7 +70,8 @@ Requirements for changes to the pass:
   `scripts/run_experiments.sh` in the image built from the same commit
   (`make image experiments`); do not mix results of different runs.
 * Workload sources are downloaded at build time and pinned by SHA-256 in
-  `benchmarks/realworld/build.sh`.
+  `benchmarks/realworld/build.sh`, and must build reproducibly: two builds
+  must give byte-identical binaries (`build.sh` sets `SOURCE_DATE_EPOCH`).
 * The base image is pinned by digest in `docker/Dockerfile`. Change the
   digest only together with a new evaluation run: a new base image rebuilds
   the toolchain from package repositories that are not pinned.

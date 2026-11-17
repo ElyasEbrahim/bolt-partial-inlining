@@ -39,7 +39,9 @@ RUN apt-get update && apt-get install -y --no-install-recommends \
 ############################################################################
 FROM base AS builder
 WORKDIR /llvm
-COPY patches/ /llvm/patches/
+# Only the commit hash here: the checkout and the baseline build below do not
+# depend on the patch and stay cached when it changes.
+COPY patches/LLVM_COMMIT /llvm/patches/LLVM_COMMIT
 # Shallow, sparse checkout of exactly the pinned commit.
 RUN git init -q src && cd src \
  && git remote add origin https://github.com/llvm/llvm-project.git \
@@ -64,6 +66,7 @@ RUN printf '%s\n' '#!/bin/bash' 'set -e' \
 # Baseline: unmodified upstream.
 RUN build-bolt /llvm/build-baseline
 # Patched: the patch applied on top of the same commit.
+COPY patches/ /llvm/patches/
 RUN cd /llvm/src && git apply --index /llvm/patches/0001-*.patch \
  && build-bolt /llvm/build-patched
 
@@ -81,16 +84,19 @@ FROM base AS runtime
 ARG DEBIAN_FRONTEND=noninteractive
 RUN apt-get update && apt-get install -y --no-install-recommends valgrind pkg-config \
  && rm -rf /var/lib/apt/lists/*
+# Real-world workloads first: they depend on the compiler and on
+# benchmarks/realworld only, not on BOLT or on the rest of the repository, so
+# the same binaries are used when the patch or the scripts change.
+COPY benchmarks/realworld/ /workspace/benchmarks/realworld/
+RUN mkdir -p /work && (SRC=/work/src OUT=/work/rw /workspace/benchmarks/realworld/build.sh \
+      > /work/build-workloads.log 2>&1 || (tail -n 60 /work/build-workloads.log; exit 1)) \
+ && find /work/rw -name '*.o' -delete
 COPY --from=builder /opt/bolt-baseline /opt/bolt-baseline
 COPY --from=builder /opt/bolt-patched /opt/bolt-patched
 COPY --from=builder /llvm/COMMIT /opt/LLVM_COMMIT
 RUN ln -s /opt/bolt-patched /opt/bolt
 ENV PATH=/opt/bolt/bin:$PATH BOLT_BIN=/opt/bolt/bin
-# Real-world workloads first: they only depend on benchmarks/.
 COPY benchmarks/ /workspace/benchmarks/
-RUN mkdir -p /work && (SRC=/work/src OUT=/work/rw /workspace/benchmarks/realworld/build.sh \
-      > /work/build-workloads.log 2>&1 || (tail -n 60 /work/build-workloads.log; exit 1)) \
- && find /work/rw -name '*.o' -delete
 COPY LICENSE /workspace/LICENSE
 COPY patches/ /workspace/patches/
 COPY scripts/ /workspace/scripts/

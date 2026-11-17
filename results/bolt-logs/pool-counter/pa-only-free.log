@@ -13,7 +13,7 @@ BOLT-INFO: 9 out of 12 functions in the binary (75.0%) have non-empty execution 
 BOLT-INFO: 2 functions with profile could not be optimized
 BOLT-INFO: profile for 1 objects was ignored
 BOLT-INFO: profile quality metrics for the hottest 9 functions (reporting top 5% values): function CFG discontinuity 0.00%; call graph flow conservation gap 0.00%; CFG flow conservation gap 0.00% (weighted) 0.00% (worst); exception handling usage 0.00% (of total BBEC) 0.00% (of total InvokeEC)
-BOLT-INFO: partial inlining: 1 callees with a fast region (0 with frame elision); inlined 1 call sites (0 with frame elision, 0 tail calls), 6 instructions copied, 0 registers renamed
+BOLT-INFO: partial inlining: 1 callees with a fast region (0 with frame elision); inlined 1 call sites (0 with frame elision, 0 tail calls), 6 instructions copied, 0 registers renamed, 0 registers saved
 BOLT-INFO: partial inlining: estimated 19999744 calls avoided on fast paths (50.00% of profiled direct calls), 0 slow-path calls re-execute the copied region
 BOLT-INFO: partial inlining: callees without a usable fast region: not-simple=1
 BOLT-INFO: basic block reordering modified layout of 3 functions (33.33% of profiled, 15.00% of total)

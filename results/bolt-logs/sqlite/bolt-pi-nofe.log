@@ -871,12 +871,12 @@ BOLT-WARNING: failed to post-process indirect branches for register_tm_clones/1(
 BOLT-WARNING: failed to post-process indirect branches for sqlite3DbFree/1(*2)
 BOLT-WARNING: failed to post-process indirect branches for sqlite3_free
 BOLT-WARNING: failed to post-process indirect branches for sqlite3GetToken/1(*2)
-BOLT-WARNING: failed to post-process indirect branches for sqlite3_step
 BOLT-WARNING: failed to post-process indirect branches for sqlite3PcacheRelease/1(*2)
-BOLT-WARNING: failed to post-process indirect branches for releasePageNotNull/1(*2)
+BOLT-WARNING: failed to post-process indirect branches for sqlite3_step
 BOLT-WARNING: failed to post-process indirect branches for sqlite3_config
-BOLT-WARNING: failed to post-process indirect branches for sqlite3DbNNFreeNN/1(*2)
 BOLT-WARNING: failed to post-process indirect branches for getCellInfo/1(*2)
+BOLT-WARNING: failed to post-process indirect branches for releasePageNotNull/1(*2)
+BOLT-WARNING: failed to post-process indirect branches for sqlite3DbNNFreeNN/1(*2)
 BOLT-WARNING: failed to post-process indirect branches for sqlite3_test_control
 BOLT-WARNING: failed to post-process indirect branches for vdbeCompareMemString/1(*2)
 BOLT-WARNING: failed to post-process indirect branches for sqlite3VdbeSerialGet/1(*2)
@@ -1626,9 +1626,9 @@ BOLT-INFO: partial inlining: sqlite3DbMallocRawNN/1(*2) into sqlite3VdbeMemGrow/
 BOLT-INFO: partial inlining: sqlite3DbMallocRawNN/1(*2) into allocateCursor/1(*2) (count 195354, p(fast) 0.957 callee, 0.807 site, 22 insns, 0 renamed regs)
 BOLT-INFO: partial inlining: sqlite3_value_numeric_type into sumStep/1(*2) (count 216932, p(fast) 0.908 callee, 0.908 site, 10 insns, 0 renamed regs)
 BOLT-INFO: partial inlining: sqlite3_column_count into speedtest1_run (count 75945, p(fast) 1.000 callee, 1.000 site, 2 insns, 0 renamed regs)
-BOLT-INFO: partial inlining: 4 callees with a fast region (0 with frame elision); inlined 5 call sites (0 with frame elision, 0 tail calls), 57 instructions copied, 0 registers renamed
+BOLT-INFO: partial inlining: 4 callees with a fast region (0 with frame elision); inlined 5 call sites (0 with frame elision, 0 tail calls), 57 instructions copied, 0 registers renamed, 0 registers saved
 BOLT-INFO: partial inlining: estimated 858878 calls avoided on fast paths (3.60% of profiled direct calls), 45373 slow-path calls re-execute the copied region
-BOLT-INFO: partial inlining: callees without a usable fast region: not-simple=17 entry-not-copyable=7 no-fast-exit=30 stack-access=17 too-large=1 cold-fast-path=2
+BOLT-INFO: partial inlining: callees without a usable fast region: not-simple=17 entry-not-copyable=7 no-fast-exit=27 stack-access=20 too-large=1 cold-fast-path=2
 BOLT-INFO: Finished pass: partial-inlining
 BOLT-INFO: Starting pass: plt-call-optimization
 BOLT-INFO: Finished pass: plt-call-optimization
@@ -1750,35 +1750,35 @@ BOLT-INFO: Finished pass: clean-mc-state
 BOLT-INFO: padding code to 0x600000 to accommodate hot text
 BOLT-INFO: patched build-id (flipped first and last bits)
 BOLT: writing new section .fini_array
- data at 0xaaab0ffd5f00
+ data at 0xaaab20e29de0
  of size 8
  at offset 1208160 with content size 8
 BOLT: writing new section .init_array
- data at 0xaaab0ffcbcb0
+ data at 0xaaab20e79e40
  of size 8
  at offset 1208168 with content size 8
 BOLT: writing new section .data.rel.ro
- data at 0xaaab112b25e0
+ data at 0xaaab1fe455e0
  of size 5736
  at offset 1208176 with content size 5736
 BOLT: writing new section .data
- data at 0xaaab11cca100
+ data at 0xaaab2085d100
  of size 12525
  at offset 1214400 with content size 12525
 BOLT: writing new section .text
- data at 0xffff9c400000
+ data at 0xffffa4200000
  of size 366448
  at offset 4194304 with content size 366448
 BOLT: writing new section .text.cold
- data at 0xaaab12cc2b80
+ data at 0xaaab21859c80
  of size 265532
  at offset 4560768 with content size 265532
 BOLT: writing new section .bolt.new.eh_frame
- data at 0xaaab12d038d0
+ data at 0xaaab2189a9d0
  of size 97192
  at offset 6291456 with content size 97192
 BOLT: writing new section .relocated.eh_frame
- data at 0xaaab12b125e0
+ data at 0xaaab216bd600
  of size 83612
  at offset 6388648 with content size 83612
 BOLT-INFO: not writing section header for section .fini_array

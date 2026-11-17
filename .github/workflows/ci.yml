@@ -50,5 +50,5 @@ jobs:
       - name: Run with small inputs
         run: |
           cd benchmarks/micro
-          for b in bufwrite memo trace pool mixed unsafe; do "$b/$b.exe" 100000; done
+          for b in bufwrite memo trace pool lookup chain mixed unsafe; do "$b/$b.exe" 100000; done
           compute/compute.exe 1 32

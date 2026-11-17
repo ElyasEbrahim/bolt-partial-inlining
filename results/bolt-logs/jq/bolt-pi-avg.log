@@ -1685,7 +1685,7 @@ BOLT-INFO: partial inlining: jv_get_kind into parse_token/1(*2) (count 519941, p
 BOLT-INFO: partial inlining: jv_get_kind into parse_token/1(*2) (count 519941, p(fast) 1.000 callee, 1.000 site, 1 insns, 0 renamed regs)
 BOLT-INFO: partial inlining: gen_noop(*2) into parse_token/1(*2) (count 939941, p(fast) 1.000 callee, 1.000 site, 2 insns, 0 renamed regs)
 BOLT-INFO: partial inlining: jvp_utf8_next into jvp_utf8_is_valid (count 6334102, p(fast) 1.000 callee, 1.000 site, 10 insns, 0 renamed regs, frame elided)
-BOLT-INFO: partial inlining: 9 callees with a fast region (4 with frame elision); inlined 25 call sites (8 with frame elision, 1 tail calls), 124 instructions copied, 10 registers renamed
+BOLT-INFO: partial inlining: 9 callees with a fast region (4 with frame elision); inlined 25 call sites (8 with frame elision, 1 tail calls), 124 instructions copied, 10 registers renamed, 0 registers saved
 BOLT-INFO: partial inlining: estimated 55096709 calls avoided on fast paths (27.89% of profiled direct calls), 842874 slow-path calls re-execute the copied region
 BOLT-INFO: partial inlining: callees without a usable fast region: not-simple=5 entry-not-copyable=5 no-fast-exit=6 too-large=1
 BOLT-INFO: Finished pass: partial-inlining
@@ -1695,15 +1695,15 @@ BOLT-INFO: Starting pass: reorder-blocks
 BOLT-INFO: basic block reordering modified layout of 146 functions (54.48% of profiled, 12.41% of total)
 BOLT-INFO: Finished pass: reorder-blocks
 BOLT-INFO: Starting pass: eliminate-unreachable
-BOLT-INFO: removed 1 dead basic block(s) accounting for 4 bytes in function stack_restore
 BOLT-INFO: removed 1 dead basic block(s) accounting for 4 bytes in function stack_push
-BOLT-INFO: removed 1 dead basic block(s) accounting for 4 bytes in function frame_push/1(*2)
+BOLT-INFO: removed 1 dead basic block(s) accounting for 4 bytes in function stack_restore
 BOLT-INFO: removed 2 dead basic block(s) accounting for 8 bytes in function stack_save
+BOLT-INFO: removed 1 dead basic block(s) accounting for 4 bytes in function frame_push/1(*2)
 BOLT-INFO: removed 1 dead basic block(s) accounting for 4 bytes in function f_lesseq/1(*2)
 BOLT-INFO: removed 1 dead basic block(s) accounting for 4 bytes in function jv_get
 BOLT-INFO: removed 5 dead basic block(s) accounting for 20 bytes in function jvp_cmp/1(*2)
-BOLT-INFO: removed 3 dead basic block(s) accounting for 12 bytes in function parse_token/1(*2)
 BOLT-INFO: removed 1 dead basic block(s) accounting for 4 bytes in function jv_parser_next
+BOLT-INFO: removed 3 dead basic block(s) accounting for 12 bytes in function parse_token/1(*2)
 BOLT-INFO: UCE removed 16 blocks and 64 bytes of code
 BOLT-INFO: Finished pass: eliminate-unreachable
 BOLT-INFO: Starting pass: split-functions
@@ -1837,35 +1837,35 @@ BOLT-INFO: Finished pass: clean-mc-state
 BOLT-INFO: padding code to 0x600000 to accommodate hot text
 BOLT-INFO: patched build-id (flipped first and last bits)
 BOLT: writing new section .fini_array
- data at 0xaaaaf12abc50
+ data at 0xaaaae7af95b0
  of size 8
  at offset 870352 with content size 8
 BOLT: writing new section .init_array
- data at 0xaaaaf1202ff0
+ data at 0xaaaae79a7be0
  of size 8
  at offset 870360 with content size 8
 BOLT: writing new section .data.rel.ro
- data at 0xaaaaf0d4bd50
+ data at 0xaaaae763fd50
  of size 11776
  at offset 870368 with content size 11776
 BOLT: writing new section .data
- data at 0xaaaaf1622e20
+ data at 0xaaaae7f1ee40
  of size 19592
  at offset 882816 with content size 19592
 BOLT: writing new section .text
- data at 0xffff8ee00000
+ data at 0xffff80200000
  of size 85328
  at offset 4194304 with content size 85328
 BOLT: writing new section .text.cold
- data at 0xaaaaf15b2bc0
+ data at 0xaaaae7eaec00
  of size 48528
  at offset 4279680 with content size 48528
 BOLT: writing new section .bolt.new.eh_frame
- data at 0xaaaaf16342c0
+ data at 0xaaaae7f302e0
  of size 28904
  at offset 6291456 with content size 28904
 BOLT: writing new section .relocated.eh_frame
- data at 0xaaaaf1627ab0
+ data at 0xaaaae7f23ad0
  of size 51208
  at offset 6320360 with content size 51208
 BOLT-INFO: not writing section header for section .fini_array

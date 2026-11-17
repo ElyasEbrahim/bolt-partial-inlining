@@ -37,7 +37,7 @@ clang++ -O3 -std=c++17 -ffreestanding -fno-exceptions -fno-rtti -fno-stack-prote
 ar rc /v/bin/libbolt_rt_instr.a instr.o
 # Microbenchmarks.
 cp -r /repo/benchmarks/micro micro && make -s -C micro CC=clang all
-for b in bufwrite memo trace pool mixed unsafe compute; do cp micro/$b/$b.exe /v/bin/$b; done
+for b in bufwrite memo trace pool lookup chain mixed unsafe compute; do cp micro/$b/$b.exe /v/bin/$b; done
 # End-to-end test program of the patch.
 clang -O2 -fno-inline /repo/scripts/x86_e2e.c -o /v/bin/e2e -fuse-ld=lld -Wl,--emit-relocs
 # Lua 5.5.1.
@@ -54,6 +54,8 @@ SPECS=(
   "memo|2000000 20|4000000 20"
   "trace|3000000|6000000"
   "pool|2000000|4000000"
+  "lookup|2000000|4000000"
+  "chain|2000000|4000000"
   "mixed|600000|1200000"
   "unsafe|2000000|4000000"
   "compute|2|3"
@@ -62,7 +64,7 @@ SPECS=(
 )
 
 echo "== 2. instrument"
-dev "set -e; for b in bufwrite memo trace pool mixed unsafe compute e2e lua; do
+dev "set -e; for b in bufwrite memo trace pool lookup chain mixed unsafe compute e2e lua; do
   /bolt/llvm-bolt /v/bin/\$b -instrument -o /v/bin/\$b.instr \
     --runtime-instrumentation-lib=/v/bin/libbolt_rt_instr.a \
     --instrumentation-file=/v/bin/\$b.fdata --instrumentation-file-append-pid=0 > /dev/null; done"
@@ -73,7 +75,7 @@ for s in "${SPECS[@]}"; do IFS='|' read -r n t e <<< "$s"
 
 echo "== 4. optimize"
 dev "set -e; L='-reorder-blocks=ext-tsp -reorder-functions=cdsort -split-functions -split-all-cold -split-eh -icf=1'
-for b in bufwrite memo trace pool mixed unsafe compute e2e lua; do
+for b in bufwrite memo trace pool lookup chain mixed unsafe compute e2e lua; do
   /bolt/llvm-bolt /v/bin/\$b -o /v/bin/\$b.bolt -data /v/bin/\$b.fdata \$L > /v/bin/\$b.bolt.log 2>&1
   /bolt/llvm-bolt /v/bin/\$b -o /v/bin/\$b.pi -data /v/bin/\$b.fdata \$L -partial-inline -v=1 > /v/bin/\$b.pi.log 2>&1
   printf '%-9s ' \$b; grep -h 'partial inlining: [0-9]' /v/bin/\$b.pi.log | sed 's/BOLT-INFO: partial inlining: //'

@@ -1216,17 +1216,21 @@ BOLT-INFO: buildCallGraph: 785 nodes, 1972 callsites (23 recursive), density = 0
 BOLT-INFO: partial inlining: luaC_checkfinalizer/1(*2) into lua_setmetatable (count 600008, p(fast) 1.000 callee, 1.000 site, 5 insns, 0 renamed regs)
 BOLT-INFO: partial inlining: mainpositionTV/1(*2) into insertkey/1(*2) (count 1203002, p(fast) 1.000 callee, 1.000 site, 21 insns, 0 renamed regs, frame elided)
 BOLT-INFO: partial inlining: prepbuffsize/1(*2) into luaL_prepbuffsize (count 240004, p(fast) 1.000 callee, 1.000 site, 8 insns, 1 renamed regs, frame elided, tail call)
+BOLT-INFO: partial inlining: lua_settop into luaL_addvalue (count 240000, p(fast) 1.000 callee, 1.000 site, 21 insns, 1 renamed regs, 1 saved regs, frame elided)
 BOLT-INFO: partial inlining: prepbuffsize/1(*2) into luaL_addvalue (count 240000, p(fast) 1.000 callee, 1.000 site, 8 insns, 1 renamed regs, frame elided)
+BOLT-INFO: partial inlining: lua_checkstack into luaL_checkstack (count 240001, p(fast) 1.000 callee, 1.000 site, 13 insns, 2 renamed regs, 1 saved regs, frame elided)
 BOLT-INFO: partial inlining: prepbuffsize/1(*2) into luaL_addlstring (count 283143, p(fast) 1.000 callee, 1.000 site, 8 insns, 1 renamed regs, frame elided)
+BOLT-INFO: partial inlining: lua_settop into luaB_setmetatable/1(*2) (count 600002, p(fast) 1.000 callee, 1.000 site, 21 insns, 1 renamed regs, 1 saved regs, frame elided)
+BOLT-INFO: partial inlining: luaL_checktype into luaB_setmetatable/1(*2) (count 600002, p(fast) 1.000 callee, 1.000 site, 20 insns, 3 renamed regs, 1 saved regs, frame elided)
 BOLT-INFO: partial inlining: luaV_lessthan/1(*2) into sort_comp/1(*2) (count 513732, p(fast) 1.000 callee, 1.000 site, 18 insns, 0 renamed regs, tail call)
-BOLT-INFO: partial inlining: 5 callees with a fast region (3 with frame elision); inlined 6 call sites (4 with frame elision, 2 tail calls), 68 instructions copied, 3 registers renamed
-BOLT-INFO: partial inlining: estimated 3079509 calls avoided on fast paths (6.70% of profiled direct calls), 380 slow-path calls re-execute the copied region
-BOLT-INFO: partial inlining: callees without a usable fast region: not-simple=8 entry-not-copyable=7 no-fast-exit=17 stack-access=1 side-effect=2 reg-clobber=4 cold-fast-path=2
+BOLT-INFO: partial inlining: 8 callees with a fast region (6 with frame elision); inlined 10 call sites (8 with frame elision, 2 tail calls), 143 instructions copied, 10 registers renamed, 4 registers saved
+BOLT-INFO: partial inlining: estimated 4759511 calls avoided on fast paths (10.36% of profiled direct calls), 383 slow-path calls re-execute the copied region
+BOLT-INFO: partial inlining: callees without a usable fast region: not-simple=8 entry-not-copyable=7 no-fast-exit=13 stack-access=1 side-effect=3 too-large=4 cold-fast-path=2
 BOLT-INFO: Finished pass: partial-inlining
 BOLT-INFO: Starting pass: plt-call-optimization
 BOLT-INFO: Finished pass: plt-call-optimization
 BOLT-INFO: Starting pass: reorder-blocks
-BOLT-INFO: basic block reordering modified layout of 223 functions (67.99% of profiled, 28.41% of total)
+BOLT-INFO: basic block reordering modified layout of 224 functions (68.29% of profiled, 28.54% of total)
 BOLT-INFO: Finished pass: reorder-blocks
 BOLT-INFO: Starting pass: eliminate-unreachable
 BOLT-INFO: removed 1 dead basic block(s) accounting for 0 bytes in function luaH_pset/1(*2)
@@ -1244,15 +1248,15 @@ BOLT-INFO: Finished pass: tail-duplication
 BOLT-INFO: Starting pass: fix-branches
 BOLT-INFO: Finished pass: fix-branches
 BOLT-INFO: Starting pass: reorder-functions
-BOLT-INFO: buildCallGraph: 339 nodes, 1263 callsites (18 recursive), density = 0.006178, 167 callsites not processed, 307 callsites with invalid profile, used perf data for 0 stale functions.
+BOLT-INFO: buildCallGraph: 339 nodes, 1260 callsites (18 recursive), density = 0.006152, 167 callsites not processed, 307 callsites with invalid profile, used perf data for 0 stale functions.
 BOLT-INFO: Function reordering stats
 BOLT-INFO:  Number of hot functions: 298
 BOLT-INFO:  Number of clusters: 1
-BOLT-INFO:  Final average call distance = 1030.3 (41955909802 / 40723605)
-BOLT-INFO:  Total Calls = 40723605
-BOLT-INFO:  Total Calls within 64B = 8390814 (20.60%)
-BOLT-INFO:  Total Calls within 4KB = 37681767 (92.53%)
-BOLT-INFO:  Total Calls within 2MB = 40723605 (100.00%)
+BOLT-INFO:  Final average call distance = 904.0 (35294651977 / 39043602)
+BOLT-INFO:  Total Calls = 39043602
+BOLT-INFO:  Total Calls within 64B = 8750815 (22.41%)
+BOLT-INFO:  Total Calls within 4KB = 36851789 (94.39%)
+BOLT-INFO:  Total Calls within 2MB = 39043602 (100.00%)
 BOLT-INFO: Finished pass: reorder-functions
 BOLT-INFO: Starting pass: populate-output-functions
 BOLT-INFO: Finished pass: populate-output-functions
@@ -1281,24 +1285,24 @@ BOLT-INFO: program-wide dynostats after all optimizations before SCTC and FOP:
            364116406 : all conditional branches
                    0 : linker-inserted veneer calls
 
-           324047787 : executed forward branches (+31.1%)
-            25204426 : taken forward branches (-69.2%)
+           324047792 : executed forward branches (+31.1%)
+            25204428 : taken forward branches (-69.2%)
             40069286 : executed backward branches (-65.7%)
             23783944 : taken backward branches (-13.3%)
-            11228739 : executed unconditional branches (-88.3%)
-            56404466 : all function calls (-17.2%)
+            11228741 : executed unconditional branches (-88.3%)
+            54724463 : all function calls (-19.7%)
             13548623 : indirect calls (=)
              7655876 : PLT calls (=)
-          2745213066 : executed instructions (-4.6%)
-           770893533 : executed load instructions (-0.7%)
-           340129941 : executed store instructions (-1.6%)
+          2733820706 : executed instructions (-5.0%)
+           766693533 : executed load instructions (-1.2%)
+           335929934 : executed store instructions (-2.8%)
                    0 : taken jump table branches (=)
                    0 : taken unknown indirect branches (=)
-           375345812 : total branches (-18.5%)
-            60217109 : taken branches (-70.7%)
-           315128703 : non-taken conditional branches (+23.6%)
-            48988370 : taken conditional branches (-55.1%)
-           364117073 : all conditional branches (+0.0%)
+           375345819 : total branches (-18.5%)
+            60217113 : taken branches (-70.7%)
+           315128706 : non-taken conditional branches (+23.6%)
+            48988372 : taken conditional branches (-55.1%)
+           364117078 : all conditional branches (+0.0%)
                    0 : linker-inserted veneer calls (=)
 
 BOLT-INFO: Finished pass: print dyno-stats after optimizations
@@ -1349,33 +1353,33 @@ BOLT-INFO: Finished pass: clean-mc-state
 BOLT-INFO: padding code to 0x600000 to accommodate hot text
 BOLT-INFO: patched build-id (flipped first and last bits)
 BOLT: writing new section .fini_array
- data at 0xaaaad20e8630
+ data at 0xaaaaf67e7830
  of size 8
  at offset 291984 with content size 8
 BOLT: writing new section .init_array
- data at 0xaaaad219ed90
+ data at 0xaaaaf6a78930
  of size 8
  at offset 291992 with content size 8
 BOLT: writing new section .data.rel.ro
- data at 0xaaaad1fcbf80
+ data at 0xaaaaf6a7d9f0
  of size 4376
  at offset 292000 with content size 4376
 BOLT: writing new section .text
  data at 0xffffb8200000
- of size 107108
- at offset 4194304 with content size 107108
+ of size 107556
+ at offset 4194304 with content size 107556
 BOLT: writing new section .text.cold
- data at 0xaaaad2816680
- of size 58872
- at offset 4301440 with content size 58872
+ data at 0xaaaaf719d640
+ of size 58936
+ at offset 4301888 with content size 58936
 BOLT: writing new section .bolt.new.eh_frame
- data at 0xaaaad287e8c0
- of size 33752
- at offset 6291456 with content size 33752
+ data at 0xaaaaf72058a0
+ of size 33824
+ at offset 6291456 with content size 33824
 BOLT: writing new section .relocated.eh_frame
- data at 0xaaaad2824c80
+ data at 0xaaaaf71abc80
  of size 33116
- at offset 6325208 with content size 33116
+ at offset 6325280 with content size 33116
 BOLT-INFO: not writing section header for section .fini_array
 BOLT-INFO: not writing section header for section .init_array
 BOLT-INFO: not writing section header for section .data.rel.ro
@@ -1384,7 +1388,7 @@ BOLT-INFO: writing section header for .text.cold
 BOLT-INFO: writing section header for .eh_frame
 BOLT-INFO: writing section header for .eh_frame_hdr
 BOLT-INFO: setting __hot_start to 0x400000
-BOLT-INFO: setting __hot_end to 0x41a264
+BOLT-INFO: setting __hot_end to 0x41a424
 BOLT-INFO: not writing section header for section .fini_array
 BOLT-INFO: not writing section header for section .init_array
 BOLT-INFO: not writing section header for section .data.rel.ro

@@ -10,58 +10,58 @@ BOLT-INFO: enabling lite mode
 BOLT-INFO: pre-processing profile using branch profile reader
 BOLT-INFO: PointerAuthCFIAnalyzer ran on 2 functions. Ignored 0 functions (0.00%) because of CFI inconsistencies
 BOLT-INFO: number of removed linker-inserted veneers: 0
-BOLT-INFO: 2300 out of 7601 functions in the binary (30.3%) have non-empty execution profile
+BOLT-INFO: 2301 out of 7601 functions in the binary (30.3%) have non-empty execution profile
 BOLT-INFO: 43 functions with profile could not be optimized
 BOLT-INFO: profile for 1 objects was ignored
 BOLT-INFO: profile quality metrics for the hottest 1000 functions (reporting top 5% values): function CFG discontinuity 0.00%; call graph flow conservation gap 0.00%; CFG flow conservation gap 0.00% (weighted) 0.00% (worst); exception handling usage 0.00% (of total BBEC) 0.00% (of total InvokeEC)
 BOLT-INFO: ICF folded 88 out of 7991 functions in 4 passes. 0 functions had jump tables.
-BOLT-INFO: Removing all identical functions will save 5.95 KB of code space. Folded functions were called 3655048 times based on profile.
-BOLT-INFO: inlined 3836274 calls at 2866 call sites in 3 iteration(s). Change in binary size: 126912 bytes.
+BOLT-INFO: Removing all identical functions will save 5.95 KB of code space. Folded functions were called 3655791 times based on profile.
+BOLT-INFO: inlined 3838873 calls at 2870 call sites in 3 iteration(s). Change in binary size: 128024 bytes.
 BOLT-INFO: ICF folded 2 out of 7991 functions in 3 passes. 0 functions had jump tables.
 BOLT-INFO: Removing all identical functions will save 0.01 KB of code space. Folded functions were called 1058 times based on profile.
-BOLT-INFO: basic block reordering modified layout of 1589 functions (69.09% of profiled, 19.88% of total)
+BOLT-INFO: basic block reordering modified layout of 1590 functions (69.10% of profiled, 19.90% of total)
 BOLT-INFO: UCE removed 18 blocks and 0 bytes of code
 BOLT-INFO: 3 Functions were reordered by LoopInversionPass
 BOLT-INFO: program-wide dynostats after all optimizations before SCTC and FOP:
 
-           258612691 : executed forward branches
-           113733654 : taken forward branches
-            33386520 : executed backward branches
-            17279035 : taken backward branches
-            20559962 : executed unconditional branches
-            74667696 : all function calls
-            16633820 : indirect calls
-             3875896 : PLT calls
-          2299645333 : executed instructions
-           593690865 : executed load instructions
-           337264796 : executed store instructions
+           259012342 : executed forward branches
+           113844334 : taken forward branches
+            33533214 : executed backward branches
+            17382225 : taken backward branches
+            20595306 : executed unconditional branches
+            74736494 : all function calls
+            16637524 : indirect calls
+             3878289 : PLT calls
+          2303791926 : executed instructions
+           594680133 : executed load instructions
+           338003301 : executed store instructions
                    0 : taken jump table branches
                    0 : taken unknown indirect branches
-           312559173 : total branches
-           151572651 : taken branches
-           160986522 : non-taken conditional branches
-           131012689 : taken conditional branches
-           291999211 : all conditional branches
+           313140862 : total branches
+           151821865 : taken branches
+           161318997 : non-taken conditional branches
+           131226559 : taken conditional branches
+           292545556 : all conditional branches
                    0 : linker-inserted veneer calls
 
-           271895155 : executed forward branches (+5.1%)
-            22860490 : taken forward branches (-79.9%)
-            20103306 : executed backward branches (-39.8%)
-             8726529 : taken backward branches (-49.5%)
-             3585793 : executed unconditional branches (-82.6%)
-            71535031 : all function calls (-4.2%)
-            17117260 : indirect calls (+2.9%)
-             3875896 : PLT calls (=)
-          2276938990 : executed instructions (-1.0%)
-           593689872 : executed load instructions (-0.0%)
-           337264410 : executed store instructions (-0.0%)
+           272348534 : executed forward branches (+5.1%)
+            22926648 : taken forward branches (-79.9%)
+            20196228 : executed backward branches (-39.8%)
+             8819787 : taken backward branches (-49.3%)
+             3588023 : executed unconditional branches (-82.6%)
+            71601427 : all function calls (-4.2%)
+            17121029 : indirect calls (+2.9%)
+             3878289 : PLT calls (=)
+          2281106853 : executed instructions (-1.0%)
+           594679098 : executed load instructions (-0.0%)
+           338002895 : executed store instructions (-0.0%)
                    0 : taken jump table branches (=)
                    0 : taken unknown indirect branches (=)
-           295584254 : total branches (-5.4%)
-            35172812 : taken branches (-76.8%)
-           260411442 : non-taken conditional branches (+61.8%)
-            31587019 : taken conditional branches (-75.9%)
-           291998461 : all conditional branches (-0.0%)
+           296132785 : total branches (-5.4%)
+            35334458 : taken branches (-76.7%)
+           260798327 : non-taken conditional branches (+61.7%)
+            31746435 : taken conditional branches (-75.8%)
+           292544762 : all conditional branches (-0.0%)
                    0 : linker-inserted veneer calls (=)
 
 BOLT-WARNING: failed to patch entries in _PyToken_Init/1(*2). The function will not be optimized
@@ -96,4 +96,4 @@ BOLT-INFO: rewritten pac-ret DWARF info in 2 out of 7991 functions (0.03%).
 BOLT-INFO: padding code to 0xc00000 to accommodate hot text
 BOLT-INFO: patched build-id (flipped first and last bits)
 BOLT-INFO: setting __hot_start to 0xa00000
-BOLT-INFO: setting __hot_end to 0xab2cf0
+BOLT-INFO: setting __hot_end to 0xab2f30

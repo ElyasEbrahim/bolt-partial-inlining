@@ -1579,6 +1579,7 @@ BOLT-INFO: skipping processing long_rshift/1(*2) per user request
 BOLT-INFO: skipping processing long_float/1(*2) per user request
 BOLT-INFO: skipping processing long_true_divide/1(*2) per user request
 BOLT-INFO: skipping processing long_invmod/1(*2) per user request
+BOLT-INFO: skipping processing long_bitwise/1(*2) per user request
 BOLT-INFO: skipping processing long_long_meth/1(*2) per user request
 BOLT-INFO: skipping processing int_bit_count/1(*2) per user request
 BOLT-INFO: skipping processing int_as_integer_ratio/1(*2) per user request
@@ -3704,7 +3705,6 @@ BOLT-INFO: skipping processing _imp_init_frozen/1(*2) per user request
 BOLT-INFO: skipping processing _imp__frozen_module_names/1(*2) per user request
 BOLT-INFO: skipping processing _imp__override_frozen_modules_for_tests/1(*2) per user request
 BOLT-INFO: skipping processing _imp__override_multi_interp_extensions_check/1(*2) per user request
-BOLT-INFO: skipping processing _imp_source_hash/1(*2) per user request
 BOLT-INFO: skipping processing update_code_filenames/1(*2) per user request
 BOLT-INFO: skipping processing _Py_ext_module_loader_info_init_for_core/1(*2) per user request
 BOLT-INFO: skipping processing _Py_ext_module_loader_result_apply_error/1(*2) per user request
@@ -3956,7 +3956,6 @@ BOLT-INFO: skipping processing _PyPreConfig_InitFromConfig/1(*2) per user reques
 BOLT-INFO: skipping processing _PyPreConfig_AsDict/1(*2) per user request
 BOLT-INFO: skipping processing _Py_str_to_int/1(*2) per user request
 BOLT-INFO: skipping processing PyFPE_dummy/1(*2) per user request
-BOLT-INFO: skipping processing _Py_KeyedHash/1(*2) per user request
 BOLT-INFO: skipping processing Py_IsFinalizing per user request
 BOLT-INFO: skipping processing _Py_IsCoreInitialized/1(*2) per user request
 BOLT-INFO: skipping processing Py_IsInitialized per user request
@@ -5701,39 +5700,39 @@ BOLT-WARNING: failed to post-process indirect branches for deregister_tm_clones/
 BOLT-WARNING: failed to post-process indirect branches for register_tm_clones/1(*2)
 BOLT-WARNING: failed to post-process indirect branches for _PyToken_TwoChars
 BOLT-WARNING: failed to post-process indirect branches for PySequence_Contains
-BOLT-WARNING: failed to post-process indirect branches for PyObject_GetAttrString
 BOLT-WARNING: failed to post-process indirect branches for _Py_NewReference
-BOLT-WARNING: failed to post-process indirect branches for PyObject_SetAttrString
 BOLT-WARNING: failed to post-process indirect branches for _Py_NewReferenceNoTotal
+BOLT-WARNING: failed to post-process indirect branches for PyMem_Realloc
+BOLT-WARNING: failed to post-process indirect branches for PyObject_GetAttrString
+BOLT-WARNING: failed to post-process indirect branches for PyObject_SetAttrString
+BOLT-WARNING: failed to post-process indirect branches for PyObject_Malloc
+BOLT-WARNING: failed to post-process indirect branches for PyObject_Realloc
 BOLT-WARNING: failed to post-process indirect branches for PyMem_RawMalloc
 BOLT-WARNING: failed to post-process indirect branches for PyMem_RawCalloc
 BOLT-WARNING: failed to post-process indirect branches for PyMem_RawRealloc
 BOLT-WARNING: failed to post-process indirect branches for PyMem_Malloc
 BOLT-WARNING: failed to post-process indirect branches for PyMem_Calloc
-BOLT-WARNING: failed to post-process indirect branches for PyMem_Realloc
-BOLT-WARNING: failed to post-process indirect branches for PyObject_Malloc
-BOLT-WARNING: failed to post-process indirect branches for PyObject_Realloc
 BOLT-WARNING: failed to post-process indirect branches for unicode_from_format/1(*2)
-BOLT-WARNING: failed to post-process indirect branches for _PyUnicode_DecodeUnicodeEscapeInternal2
 BOLT-WARNING: failed to post-process indirect branches for PyUnicode_Format
+BOLT-WARNING: failed to post-process indirect branches for _PyUnicode_DecodeUnicodeEscapeInternal2
 BOLT-WARNING: failed to post-process indirect branches for astfold_expr/1(*2)
 BOLT-WARNING: failed to post-process indirect branches for astfold_stmt/1(*2)
 BOLT-WARNING: failed to post-process indirect branches for codegen_addcompare/1(*2)
 BOLT-WARNING: failed to post-process indirect branches for _PyOpcode_num_popped/1(*2)
 BOLT-WARNING: failed to post-process indirect branches for _PyOpcode_num_pushed/1(*2)
-BOLT-WARNING: failed to post-process indirect branches for codegen_visit_expr/1(*2)
 BOLT-WARNING: failed to post-process indirect branches for codegen_check_compare/1(*2)
+BOLT-WARNING: failed to post-process indirect branches for codegen_visit_expr/1(*2)
 BOLT-WARNING: failed to post-process indirect branches for skipitem/1(*2)
 BOLT-WARNING: failed to post-process indirect branches for optimize_load_fast/1(*2)
-BOLT-WARNING: failed to post-process indirect branches for BOLT-WARNING: failed to post-process indirect branches for codegen_visit_stmt/1(*2)convertitem/1(*2)
-
-BOLT-WARNING: failed to post-process indirect branches for countformat/1(*2)
+BOLT-WARNING: failed to post-process indirect branches for codegen_visit_stmt/1(*2)
+BOLT-WARNING: failed to post-process indirect branches for convertitem/1(*2)
 BOLT-WARNING: failed to post-process indirect branches for _PyCfg_OptimizeCodeUnit/1(*2)
-BOLT-WARNING: failed to post-process indirect branches for r_object/1(*2)
+BOLT-WARNING: failed to post-process indirect branches for countformat/1(*2)
 BOLT-WARNING: failed to post-process indirect branches for _PyConfig_Read/1(*2)
+BOLT-WARNING: failed to post-process indirect branches for r_object/1(*2)
 BOLT-WARNING: failed to post-process indirect branches for do_mkvalue/1(*2)
-BOLT-WARNING: failed to post-process indirect branches for PyMember_GetOne
 BOLT-WARNING: failed to post-process indirect branches for symtable_visit_expr/1(*2)
+BOLT-WARNING: failed to post-process indirect branches for PyMember_GetOne
 BOLT-WARNING: failed to post-process indirect branches for PyMember_SetOne
 BOLT-WARNING: failed to post-process indirect branches for symtable_visit_stmt/1(*2)
 BOLT-WARNING: failed to post-process indirect branches for sre_category/1(*2)
@@ -5753,93 +5752,93 @@ BOLT-INFO: Starting pass: veneer-elimination
 BOLT-INFO: number of removed linker-inserted veneers: 0
 BOLT-INFO: Finished pass: veneer-elimination
 BOLT-INFO: Starting pass: print-stats
-BOLT-INFO: 2300 out of 7601 functions in the binary (30.3%) have non-empty execution profile
+BOLT-INFO: 2301 out of 7601 functions in the binary (30.3%) have non-empty execution profile
 BOLT-INFO: 43 functions with profile could not be optimized
 BOLT-INFO: profile for 1 objects was ignored
 BOLT-INFO: top called functions are:
   _PyFloat_FromDouble_ConsumeInputs/1(*2) : 7199967
-  _Py_Dealloc : 4291717
-  binary_op1/1(*2) : 3006511
-  PyLong_FromLong : 2478801
-  _PyObject_Free/1(*2) : 2093902
-  _PyLong_FromSTwoDigits/1(*2) : 2084800
-  _PyObject_Malloc/1(*2) : 1993282
-  PyObject_Free : 1932736
-  gen_send_ex2/1(*2) : 1660288
+  _Py_Dealloc : 4292035
+  binary_op1/1(*2) : 3006472
+  PyLong_FromLong : 2478881
+  _PyObject_Free/1(*2) : 2094145
+  _PyLong_FromSTwoDigits/1(*2) : 2084801
+  _PyObject_Malloc/1(*2) : 1993485
+  PyObject_Free : 1932896
   gen_iternext/1(*2) : 1660288
+  gen_send_ex2/1(*2) : 1660288
   PyIter_Next : 1637772
   PyNumber_Remainder : 1565621
   l_mod/1(*2) : 1565600
   long_mod/1(*2) : 1565600
   sre_ucs1_charset/1(*2) : 1434457
-  _PyThreadState_PopFrame : 1304779
-  _PyFrame_ClearExceptCode/1(*2) : 1304779
-  _PyEval_FrameClearAndPop : 1304772
-  _PyFrame_PushUnchecked/1(*2) : 1301464
+  _PyFrame_ClearExceptCode/1(*2) : 1304759
+  _PyThreadState_PopFrame : 1304759
+  _PyEval_FrameClearAndPop : 1304752
+  _PyFrame_PushUnchecked/1(*2) : 1301445
   binary_iop/1(*2) : 1200168
   PyNumber_InPlaceOr : 1200162
   long_add/1(*2) : 947067
   _PyLong_Add : 946705
-  unicode_dealloc/1(*2) : 944447
-  PyUnicode_New : 944441
-  _Py_dict_lookup/1(*2) : 906219
+  unicode_dealloc/1(*2) : 944547
+  PyUnicode_New : 944541
+  _Py_dict_lookup/1(*2) : 906538
   _copy_characters/1(*2) : 832951
-  long_alloc/1(*2) : 816716
-  unicodekeys_lookup_unicode/1(*2) : 810526
-  PyThread_get_thread_ident : 701677
-  _Py_IsMainThread/1(*2) : 701594
-  _PyInterpreterState_GetConfig/1(*2) : 701455
-  _PyInterpreterState_Main : 701371
-  _PyRunRemoteDebugger/1(*2) : 700930
-  _PyErr_CheckSignalsTstate/1(*2) : 700913
-  PyErr_CheckSignals : 700909
+  long_alloc/1(*2) : 816636
+  unicodekeys_lookup_unicode/1(*2) : 810868
+  PyThread_get_thread_ident : 701878
+  _Py_IsMainThread/1(*2) : 701735
+  _PyInterpreterState_GetConfig/1(*2) : 701498
+  _PyInterpreterState_Main : 701391
+  _PyRunRemoteDebugger/1(*2) : 700950
+  _PyErr_CheckSignalsTstate/1(*2) : 700933
+  PyErr_CheckSignals : 700929
   long_sub/1(*2) : 694162
   _PyLong_Subtract : 694137
-  visit_decref/1(*2) : 509091
-  visit_reachable/1(*2) : 474273
+  visit_decref/1(*2) : 509097
+  visit_reachable/1(*2) : 474279
   long_mul/1(*2) : 447731
   _PyLong_Multiply : 447424
-  setitem_take2_lock_held/1(*2) : 443360
-  PyObject_Hash : 421580
-  insertdict/1(*2) : 410762
+  setitem_take2_lock_held/1(*2) : 443400
+  PyObject_Hash : 421620
+  insertdict/1(*2) : 410782
   long_to_decimal_string_internal/1(*2) : 360811
   _PyUnicodeWriter_WriteStr : 352071
   PyUnicodeWriter_WriteStr : 351999
-  PyObject_Str : 345011
+  PyObject_Str : 345031
   object_str/1(*2) : 344808
   long_to_decimal_string/1(*2) : 344805
-  Py_HashBuffer : 332890
-  pysiphash/1(*2) : 332888
-  siphash13/1(*2) : 332888
-  unicode_hash/1(*2) : 321805
+  siphash13/1(*2) : 332948
+  Py_HashBuffer : 332930
+  pysiphash/1(*2) : 332928
+  unicode_hash/1(*2) : 321845
   PyFloat_FromDouble : 256346
   _PyDict_SetItem_Take2 : 240880
   PyUnicode_Concat : 240357
   dict_get/1(*2) : 240340
   _PyUnicode_ExactDealloc : 240155
-  ternary_op/1(*2) : 240001
   _PyNumber_PowerNoMod/1(*2) : 240001
-  PyNumber_TrueDivide : 240000
-  float_pow/1(*2) : 240000
+  ternary_op/1(*2) : 240001
   float_div/1(*2) : 240000
   _Py_ADJUST_ERANGE1/1(*2) : 240000
-  PyObject_GC_UnTrack : 225303
+  float_pow/1(*2) : 240000
+  PyNumber_TrueDivide : 240000
+  PyObject_GC_UnTrack : 225443
   PyUnicode_Substring : 192694
-  insert_combined_dict/1(*2) : 175789
+  insert_combined_dict/1(*2) : 175809
   _PyUnicode_IsDecimalDigit : 164414
-  PyObject_RichCompare : 160517
-  PyMem_Free : 160372
+  PyObject_RichCompare : 160518
+  PyMem_Free : 160435
   PyObject_RichCompareBool : 160288
   PyUnicodeWriter_Create : 144004
   PyUnicodeWriter_Discard : 144000
-  PyBool_FromLong : 136043
-  PyUnicode_RichCompare : 135507
+  PyBool_FromLong : 136164
+  PyUnicode_RichCompare : 135508
   unsafe_latin_compare/1(*2) : 135207
   unsafe_tuple_compare/1(*2) : 134566
   multadd/1(*2) : 128662
   PyDict_SetItem : 119230
-  PyObject_GC_Del : 114733
-  tuple_dealloc/1(*2) : 113259
+  PyObject_GC_Del : 114793
+  tuple_dealloc/1(*2) : 113359
   PyList_Append : 98907
   long_hash/1(*2) : 97839
   PyObject_Format : 88803
@@ -5851,9 +5850,9 @@ BOLT-INFO: top called functions are:
   _PyObject_GC_New : 74216
   quorem/1(*2) : 73334
   diff/1(*2) : 73334
-  PyType_IsSubtype : 67971
+  PyType_IsSubtype : 68071
   PyObject_GetIter : 67400
-  _PyObject_Realloc/1(*2) : 66001
+  _PyObject_Realloc/1(*2) : 66041
   PyUnicodeWriter_WriteChar : 64014
   _PyThreadState_GetCurrent : 64002
   listiter_dealloc/1(*2) : 60413
@@ -5895,7 +5894,7 @@ call graph flow conservation gap 0.00%;
 distribution of function entry flow conservation gaps
   Length     : 1000
   MAX        : 100.00%
-  TOP 1%     : 0.13%
+  TOP 1%     : 0.00%
   TOP 5%     : 0.00%
   TOP 10%    : 0.00%
   TOP 20%    : 0.00%
@@ -5904,7 +5903,7 @@ distribution of function entry flow conservation gaps
   MIN        : 0.00%
 CFG flow conservation gap 0.00% (weighted) 0.00% (worst); distribution of weighted CFG flow conservation gaps
   Length     : 1000
-  MAX        : 38.34%
+  MAX        : 38.33%
   TOP 1%     : 0.03%
   TOP 5%     : 0.00%
   TOP 10%    : 0.00%
@@ -5925,7 +5924,7 @@ distribution of worst block flow conservation gap per function
   MIN        : 0.00%
 distribution of worst block flow conservation gap (absolute value) per function
   Length     : 1000
-  MAX        : 3245999
+  MAX        : 3245997
   TOP 1%     : 0
   TOP 5%     : 0
   TOP 10%    : 0
@@ -5958,7 +5957,7 @@ Detailed stats for 5 buckets, each with  200 functions:
 ----------------
 |   Bucket 1:  |
 ----------------
-execution counts of the 200 functions in the bucket: 13967-7199967
+execution counts of the 200 functions in the bucket: 15999-7199967
 function CFG discontinuity 0.00%; 
 abbreviations: EC = execution count, POS BBs = positive EC BBs
 distribution of NUM(unreachable POS BBs) per function
@@ -6004,7 +6003,7 @@ distribution of function entry flow conservation gaps
   MIN        : 0.00%
 CFG flow conservation gap 0.00% (weighted) 0.00% (worst); distribution of weighted CFG flow conservation gaps
   Length     : 200
-  MAX        : 38.34%
+  MAX        : 38.33%
   TOP 1%     : 6.65%
   TOP 5%     : 0.00%
   TOP 10%    : 0.00%
@@ -6025,7 +6024,7 @@ distribution of worst block flow conservation gap per function
   MIN        : 0.00%
 distribution of worst block flow conservation gap (absolute value) per function
   Length     : 200
-  MAX        : 3245999
+  MAX        : 3245997
   TOP 1%     : 1200000
   TOP 5%     : 0
   TOP 10%    : 0
@@ -6057,7 +6056,7 @@ distribution of exception handling usage as a fraction of total InvokeEC of each
 ----------------
 |   Bucket 2:  |
 ----------------
-execution counts of the 200 functions in the bucket: 594-12698
+execution counts of the 200 functions in the bucket: 603-14798
 function CFG discontinuity 0.00%; 
 abbreviations: EC = execution count, POS BBs = positive EC BBs
 distribution of NUM(unreachable POS BBs) per function
@@ -6115,7 +6114,7 @@ Consider only blocks with execution counts > 500:
 distribution of worst block flow conservation gap per function 
   Length     : 200
   MAX        : 11.14%
-  TOP 1%     : 7.59%
+  TOP 1%     : 7.36%
   TOP 5%     : 0.00%
   TOP 10%    : 0.00%
   TOP 20%    : 0.00%
@@ -6156,7 +6155,7 @@ distribution of exception handling usage as a fraction of total InvokeEC of each
 ----------------
 |   Bucket 3:  |
 ----------------
-execution counts of the 200 functions in the bucket: 193-589
+execution counts of the 200 functions in the bucket: 197-594
 function CFG discontinuity 0.00%; 
 abbreviations: EC = execution count, POS BBs = positive EC BBs
 distribution of NUM(unreachable POS BBs) per function
@@ -6255,7 +6254,7 @@ distribution of exception handling usage as a fraction of total InvokeEC of each
 ----------------
 |   Bucket 4:  |
 ----------------
-execution counts of the 200 functions in the bucket: 81-191
+execution counts of the 200 functions in the bucket: 84-197
 function CFG discontinuity 0.00%; 
 abbreviations: EC = execution count, POS BBs = positive EC BBs
 distribution of NUM(unreachable POS BBs) per function
@@ -6354,7 +6353,7 @@ distribution of exception handling usage as a fraction of total InvokeEC of each
 ----------------
 |   Bucket 5:  |
 ----------------
-execution counts of the 200 functions in the bucket: 36-81
+execution counts of the 200 functions in the bucket: 42-84
 function CFG discontinuity 0.00%; 
 abbreviations: EC = execution count, POS BBs = positive EC BBs
 distribution of NUM(unreachable POS BBs) per function
@@ -6390,8 +6389,8 @@ distribution of [(SUM_EC(unreachable POS BBs) / SUM_EC(all POS BBs))] per functi
 call graph flow conservation gap 0.00%; 
 distribution of function entry flow conservation gaps
   Length     : 200
-  MAX        : 2.56%
-  TOP 1%     : 1.35%
+  MAX        : 1.35%
+  TOP 1%     : 0.00%
   TOP 5%     : 0.00%
   TOP 10%    : 0.00%
   TOP 20%    : 0.00%
@@ -6463,7 +6462,7 @@ BOLT-INFO: Starting pass: normalize CFG
 BOLT-INFO: Finished pass: normalize CFG
 BOLT-INFO: Starting pass: identical-code-folding
 BOLT-INFO: ICF folded 88 out of 7991 functions in 4 passes. 0 functions had jump tables.
-BOLT-INFO: Removing all identical functions will save 5.95 KB of code space. Folded functions were called 3655048 times based on profile.
+BOLT-INFO: Removing all identical functions will save 5.95 KB of code space. Folded functions were called 3655791 times based on profile.
 BOLT-INFO: Finished pass: identical-code-folding
 BOLT-INFO: Starting pass: indirect-call-promotion
 BOLT-INFO: Finished pass: indirect-call-promotion
@@ -6472,29 +6471,32 @@ BOLT-INFO: Finished pass: inlining
 BOLT-INFO: Starting pass: identical-code-folding
 BOLT-INFO: Finished pass: identical-code-folding
 BOLT-INFO: Starting pass: partial-inlining
-BOLT-INFO: buildCallGraph: 7991 nodes, 23124 callsites (222 recursive), density = 0.000174, 482 callsites not processed, 2130 callsites with invalid profile, used perf data for 0 stale functions.
-BOLT-INFO: partial inlining: _PyNumber_Index into PyNumber_AsSsize_t (count 25818, p(fast) 0.998 callee, 0.998 site, 8 insns, 0 renamed regs, frame elided)
-BOLT-INFO: partial inlining: PyLong_AsSsize_t into PyNumber_AsSsize_t (count 25818, p(fast) 1.000 callee, 1.000 site, 10 insns, 0 renamed regs, frame elided)
-BOLT-INFO: partial inlining: PyObject_GC_UnTrack into list_dealloc/1(*2) (count 49340, p(fast) 1.000 callee, 1.000 site, 19 insns, 0 renamed regs)
+BOLT-INFO: buildCallGraph: 7991 nodes, 23121 callsites (222 recursive), density = 0.000174, 482 callsites not processed, 2130 callsites with invalid profile, used perf data for 0 stale functions.
+BOLT-INFO: partial inlining: _PyNumber_Index into PyNumber_AsSsize_t (count 25778, p(fast) 0.996 callee, 0.996 site, 8 insns, 0 renamed regs, frame elided)
+BOLT-INFO: partial inlining: PyLong_AsSsize_t into PyNumber_AsSsize_t (count 25778, p(fast) 1.000 callee, 1.000 site, 10 insns, 0 renamed regs, frame elided)
+BOLT-INFO: partial inlining: _Py_CheckFunctionResult into calliter_iternext/1(*2) (count 24001, p(fast) 0.998 callee, 0.998 site, 4 insns, 0 renamed regs, frame elided)
+BOLT-INFO: partial inlining: PyObject_GC_UnTrack into list_dealloc/1(*2) (count 49360, p(fast) 1.000 callee, 1.000 site, 19 insns, 0 renamed regs)
 BOLT-INFO: partial inlining: _PyUnicode_TransformDecimalAndSpaceToASCII into PyLong_FromUnicodeObject (count 24007, p(fast) 1.000 callee, 1.000 site, 11 insns, 0 renamed regs, frame elided)
-BOLT-INFO: partial inlining: PyObject_GC_UnTrack into dict_dealloc/1(*2) (count 34076, p(fast) 1.000 callee, 1.000 site, 19 insns, 0 renamed regs)
-BOLT-INFO: partial inlining: PyObject_GC_UnTrack into tuple_dealloc/1(*2) (count 113259, p(fast) 1.000 callee, 1.000 site, 19 insns, 0 renamed regs)
-BOLT-INFO: partial inlining: _PyInterpreterState_GetConfig/1(*2) into _PyRunRemoteDebugger/1(*2) (count 700930, p(fast) 1.000 callee, 1.000 site, 2 insns, 0 renamed regs)
+BOLT-INFO: partial inlining: lookdict_index/1(*2) into delitem_common/1(*2) (count 33513, p(fast) 0.971 callee, 0.971 site, 22 insns, 0 renamed regs, 2 saved regs, first iteration of a loop)
+BOLT-INFO: partial inlining: PyObject_GC_UnTrack into dict_dealloc/1(*2) (count 34096, p(fast) 1.000 callee, 1.000 site, 19 insns, 0 renamed regs)
+BOLT-INFO: partial inlining: PyObject_GC_UnTrack into tuple_dealloc/1(*2) (count 113359, p(fast) 1.000 callee, 1.000 site, 19 insns, 0 renamed regs)
+BOLT-INFO: partial inlining: object_richcompare/1(*2) into _Py_BaseObject_RichCompare/1(*2) (count 24034, p(fast) 1.000 callee, 1.000 site, 16 insns, 0 renamed regs, 1 saved regs, frame elided, tail call)
+BOLT-INFO: partial inlining: _PyInterpreterState_GetConfig/1(*2) into _PyRunRemoteDebugger/1(*2) (count 700950, p(fast) 1.000 callee, 1.000 site, 2 insns, 0 renamed regs)
 BOLT-INFO: partial inlining: r_string/1(*2) into r_long/1(*2) (count 25227, p(fast) 1.000 callee, 1.000 site, 11 insns, 2 renamed regs, frame elided)
-BOLT-INFO: partial inlining: _PyInterpreterState_Main into PyErr_CheckSignals (count 700909, p(fast) 1.000 callee, 1.000 site, 3 insns, 0 renamed regs)
-BOLT-INFO: partial inlining: _PyErr_CheckSignalsTstate/1(*2) into PyErr_CheckSignals (count 700909, p(fast) 1.000 callee, 1.000 site, 7 insns, 1 renamed regs, frame elided, tail call)
+BOLT-INFO: partial inlining: _PyInterpreterState_Main into PyErr_CheckSignals (count 700929, p(fast) 1.000 callee, 1.000 site, 3 insns, 0 renamed regs)
+BOLT-INFO: partial inlining: _PyErr_CheckSignalsTstate/1(*2) into PyErr_CheckSignals (count 700929, p(fast) 1.000 callee, 1.000 site, 7 insns, 1 renamed regs, frame elided, tail call)
 BOLT-INFO: partial inlining: PyObject_GC_Track into pattern_new_match/1(*2) (count 24003, p(fast) 1.000 callee, 1.000 site, 19 insns, 0 renamed regs)
 BOLT-INFO: partial inlining: PyObject_GC_UnTrack into match_dealloc/1(*2) (count 24003, p(fast) 1.000 callee, 1.000 site, 19 insns, 0 renamed regs)
 BOLT-INFO: partial inlining: PyIndex_Check into match_getindex/1(*2) (count 24000, p(fast) 1.000 callee, 1.000 site, 6 insns, 0 renamed regs)
 BOLT-INFO: partial inlining: PyType_GetModule into _sre_SRE_Scanner_search/1(*2) (count 24001, p(fast) 1.000 callee, 1.000 site, 5 insns, 0 renamed regs)
-BOLT-INFO: partial inlining: 15 callees with a fast region (8 with frame elision); inlined 14 call sites (5 with frame elision, 1 tail calls), 158 instructions copied, 3 registers renamed
-BOLT-INFO: partial inlining: estimated 2496232 calls avoided on fast paths (4.55% of profiled direct calls), 68 slow-path calls re-execute the copied region
-BOLT-INFO: partial inlining: callees without a usable fast region: not-simple=16 entry-not-copyable=11 no-fast-exit=45 frame-mismatch=1 side-effect=4 reg-clobber=4 too-large=1 cold-fast-path=6
+BOLT-INFO: partial inlining: 18 callees with a fast region (10 with frame elision); inlined 17 call sites (7 with frame elision, 2 tail calls), 200 instructions copied, 3 registers renamed, 3 registers saved
+BOLT-INFO: partial inlining: estimated 2576849 calls avoided on fast paths (4.69% of profiled direct calls), 1119 slow-path calls re-execute the copied region
+BOLT-INFO: partial inlining: callees without a usable fast region: not-simple=16 entry-not-copyable=11 no-fast-exit=38 stack-access=1 frame-mismatch=1 side-effect=9 too-large=4 cold-fast-path=7
 BOLT-INFO: Finished pass: partial-inlining
 BOLT-INFO: Starting pass: plt-call-optimization
 BOLT-INFO: Finished pass: plt-call-optimization
 BOLT-INFO: Starting pass: reorder-blocks
-BOLT-INFO: basic block reordering modified layout of 1594 functions (69.30% of profiled, 19.95% of total)
+BOLT-INFO: basic block reordering modified layout of 1596 functions (69.36% of profiled, 19.97% of total)
 BOLT-INFO: Finished pass: reorder-blocks
 BOLT-INFO: Starting pass: eliminate-unreachable
 BOLT-INFO: removed 1 dead basic block(s) accounting for 4 bytes in function list_dealloc/1(*2)
@@ -6515,15 +6517,15 @@ BOLT-INFO: Finished pass: tail-duplication
 BOLT-INFO: Starting pass: fix-branches
 BOLT-INFO: Finished pass: fix-branches
 BOLT-INFO: Starting pass: reorder-functions
-BOLT-INFO: buildCallGraph: 2255 nodes, 12261 callsites (188 recursive), density = 0.001170, 1191 callsites not processed, 1573 callsites with invalid profile, used perf data for 0 stale functions.
+BOLT-INFO: buildCallGraph: 2256 nodes, 12263 callsites (188 recursive), density = 0.001170, 1191 callsites not processed, 1573 callsites with invalid profile, used perf data for 0 stale functions.
 BOLT-INFO: Function reordering stats
-BOLT-INFO:  Number of hot functions: 2255
+BOLT-INFO:  Number of hot functions: 2256
 BOLT-INFO:  Number of clusters: 1
-BOLT-INFO:  Final average call distance = 3666.5 (208231486156 / 56792675)
-BOLT-INFO:  Total Calls = 56792675
-BOLT-INFO:  Total Calls within 64B = 23975639 (42.22%)
-BOLT-INFO:  Total Calls within 4KB = 52121595 (91.78%)
-BOLT-INFO:  Total Calls within 2MB = 56792675 (100.00%)
+BOLT-INFO:  Final average call distance = 3721.9 (211311085368 / 56775307)
+BOLT-INFO:  Total Calls = 56775307
+BOLT-INFO:  Total Calls within 64B = 23986020 (42.25%)
+BOLT-INFO:  Total Calls within 4KB = 52050467 (91.68%)
+BOLT-INFO:  Total Calls within 2MB = 56775307 (100.00%)
 BOLT-INFO: Finished pass: reorder-functions
 BOLT-INFO: Starting pass: populate-output-functions
 BOLT-INFO: Finished pass: populate-output-functions
@@ -6532,44 +6534,44 @@ BOLT-INFO: Finished pass: split-functions
 BOLT-INFO: Starting pass: print dyno-stats after optimizations
 BOLT-INFO: program-wide dynostats after all optimizations before SCTC and FOP:
 
-           258612691 : executed forward branches
-           113733654 : taken forward branches
-            33386520 : executed backward branches
-            17279035 : taken backward branches
-            20559962 : executed unconditional branches
-            74667696 : all function calls
-            16633820 : indirect calls
-             3875896 : PLT calls
-          2299645333 : executed instructions
-           593690865 : executed load instructions
-           337264796 : executed store instructions
+           259012342 : executed forward branches
+           113844334 : taken forward branches
+            33533214 : executed backward branches
+            17382225 : taken backward branches
+            20595306 : executed unconditional branches
+            74736494 : all function calls
+            16637524 : indirect calls
+             3878289 : PLT calls
+          2303791926 : executed instructions
+           594680133 : executed load instructions
+           338003301 : executed store instructions
                    0 : taken jump table branches
                    0 : taken unknown indirect branches
-           312559173 : total branches
-           151572651 : taken branches
-           160986522 : non-taken conditional branches
-           131012689 : taken conditional branches
-           291999211 : all conditional branches
+           313140862 : total branches
+           151821865 : taken branches
+           161318997 : non-taken conditional branches
+           131226559 : taken conditional branches
+           292545556 : all conditional branches
                    0 : linker-inserted veneer calls
 
-           271983005 : executed forward branches (+5.2%)
-            22885069 : taken forward branches (-79.9%)
-            20016389 : executed backward branches (-40.0%)
-             8702511 : taken backward branches (-49.6%)
-             3581713 : executed unconditional branches (-82.6%)
-            72171464 : all function calls (-3.3%)
-            16633820 : indirect calls (=)
-             3875896 : PLT calls (=)
-          2267917911 : executed instructions (-1.4%)
-           589212588 : executed load instructions (-0.8%)
-           332786329 : executed store instructions (-1.3%)
+           272464697 : executed forward branches (+5.2%)
+            22947981 : taken forward branches (-79.8%)
+            20082533 : executed backward branches (-40.1%)
+             8799016 : taken backward branches (-49.4%)
+             3584645 : executed unconditional branches (-82.6%)
+            72159646 : all function calls (-3.4%)
+            16637524 : indirect calls (=)
+             3878289 : PLT calls (=)
+          2271767072 : executed instructions (-1.4%)
+           590083362 : executed load instructions (-0.8%)
+           333404975 : executed store instructions (-1.4%)
                    0 : taken jump table branches (=)
                    0 : taken unknown indirect branches (=)
-           295581107 : total branches (-5.4%)
-            35169293 : taken branches (-76.8%)
-           260411814 : non-taken conditional branches (+61.8%)
-            31587580 : taken conditional branches (-75.9%)
-           291999394 : all conditional branches (+0.0%)
+           296131875 : total branches (-5.4%)
+            35331642 : taken branches (-76.7%)
+           260800233 : non-taken conditional branches (+61.7%)
+            31746997 : taken conditional branches (-75.8%)
+           292547230 : all conditional branches (+0.0%)
                    0 : linker-inserted veneer calls (=)
 
 BOLT-INFO: Finished pass: print dyno-stats after optimizations
@@ -6666,41 +6668,41 @@ BOLT-INFO: Finished pass: clean-mc-state
 BOLT-INFO: padding code to 0xc00000 to accommodate hot text
 BOLT-INFO: patched build-id (flipped first and last bits)
 BOLT: writing new section .fini_array
- data at 0xaaaac6fcea90
+ data at 0xaaaaef57aeb0
  of size 16
  at offset 4995896 with content size 16
 BOLT: writing new section .init_array
- data at 0xaaaac53d4970
+ data at 0xaaaaef5aeaa0
  of size 24
  at offset 4995912 with content size 24
 BOLT: writing new section .data.rel.ro
- data at 0xaaaac9ba0f80
+ data at 0xaaaaf5905740
  of size 353096
  at offset 4995968 with content size 353096
 BOLT: writing new section .data
- data at 0xaaaac9bf7300
+ data at 0xaaaaf595bac0
  of size 256816
  at offset 5351360 with content size 256816
 BOLT: writing new section .PyRuntime
- data at 0xaaaac9c35e40
+ data at 0xaaaaf599a600
  of size 316632
  at offset 5608176 with content size 316632
 BOLT: writing new section .text
- data at 0xffff98a00000
- of size 692756
- at offset 10485760 with content size 692756
+ data at 0xffff91000000
+ of size 692180
+ at offset 10485760 with content size 692180
 BOLT: writing new section .text.cold
- data at 0xaaaac97dff40
- of size 536348
- at offset 11178560 with content size 536348
+ data at 0xaaaaf55446c0
+ of size 535452
+ at offset 11177984 with content size 535452
 BOLT: writing new section .bolt.new.eh_frame
- data at 0xaaaac9d15050
- of size 289928
- at offset 12582912 with content size 289928
+ data at 0xaaaaf5a79810
+ of size 289896
+ at offset 12582912 with content size 289896
 BOLT: writing new section .relocated.eh_frame
- data at 0xaaaac9c83320
+ data at 0xaaaaf59e7ae0
  of size 461276
- at offset 12872840 with content size 461276
+ at offset 12872808 with content size 461276
 BOLT-INFO: not writing section header for section .fini_array
 BOLT-INFO: not writing section header for section .init_array
 BOLT-INFO: not writing section header for section .data.rel.ro
@@ -6711,7 +6713,7 @@ BOLT-INFO: writing section header for .text.cold
 BOLT-INFO: writing section header for .eh_frame
 BOLT-INFO: writing section header for .eh_frame_hdr
 BOLT-INFO: setting __hot_start to 0xa00000
-BOLT-INFO: setting __hot_end to 0xaa9214
+BOLT-INFO: setting __hot_end to 0xaa8fd4
 BOLT-INFO: not writing section header for section .fini_array
 BOLT-INFO: not writing section header for section .init_array
 BOLT-INFO: not writing section header for section .data.rel.ro

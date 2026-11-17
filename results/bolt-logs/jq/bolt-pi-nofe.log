@@ -1676,7 +1676,7 @@ BOLT-INFO: partial inlining: jv_get_kind into jv_parser_next (count 690000, p(fa
 BOLT-INFO: partial inlining: jv_get_kind into parse_token/1(*2) (count 519941, p(fast) 1.000 callee, 1.000 site, 1 insns, 0 renamed regs)
 BOLT-INFO: partial inlining: jv_get_kind into parse_token/1(*2) (count 519941, p(fast) 1.000 callee, 1.000 site, 1 insns, 0 renamed regs)
 BOLT-INFO: partial inlining: gen_noop(*2) into parse_token/1(*2) (count 939941, p(fast) 1.000 callee, 1.000 site, 2 insns, 0 renamed regs)
-BOLT-INFO: partial inlining: 5 callees with a fast region (0 with frame elision); inlined 17 call sites (0 with frame elision, 1 tail calls), 33 instructions copied, 0 registers renamed
+BOLT-INFO: partial inlining: 5 callees with a fast region (0 with frame elision); inlined 17 call sites (0 with frame elision, 1 tail calls), 33 instructions copied, 0 registers renamed, 0 registers saved
 BOLT-INFO: partial inlining: estimated 43266105 calls avoided on fast paths (21.90% of profiled direct calls), 240070 slow-path calls re-execute the copied region
 BOLT-INFO: partial inlining: callees without a usable fast region: not-simple=5 entry-not-copyable=5 no-fast-exit=6 stack-access=5
 BOLT-INFO: Finished pass: partial-inlining
@@ -1688,8 +1688,8 @@ BOLT-INFO: Finished pass: reorder-blocks
 BOLT-INFO: Starting pass: eliminate-unreachable
 BOLT-INFO: removed 1 dead basic block(s) accounting for 4 bytes in function stack_push
 BOLT-INFO: removed 1 dead basic block(s) accounting for 4 bytes in function stack_restore
-BOLT-INFO: removed 2 dead basic block(s) accounting for 8 bytes in function stack_save
 BOLT-INFO: removed 1 dead basic block(s) accounting for 4 bytes in function frame_push/1(*2)
+BOLT-INFO: removed 2 dead basic block(s) accounting for 8 bytes in function stack_save
 BOLT-INFO: removed 1 dead basic block(s) accounting for 4 bytes in function f_lesseq/1(*2)
 BOLT-INFO: removed 1 dead basic block(s) accounting for 4 bytes in function jv_get
 BOLT-INFO: removed 5 dead basic block(s) accounting for 20 bytes in function jvp_cmp/1(*2)
@@ -1828,35 +1828,35 @@ BOLT-INFO: Finished pass: clean-mc-state
 BOLT-INFO: padding code to 0x600000 to accommodate hot text
 BOLT-INFO: patched build-id (flipped first and last bits)
 BOLT: writing new section .fini_array
- data at 0xaaaaed60b490
+ data at 0xaaab055b9c10
  of size 8
  at offset 870352 with content size 8
 BOLT: writing new section .init_array
- data at 0xaaaaed64b680
+ data at 0xaaab05b0a4e0
  of size 8
  at offset 870360 with content size 8
 BOLT: writing new section .data.rel.ro
- data at 0xaaaaed371bd0
+ data at 0xaaab057adbd0
  of size 11776
  at offset 870368 with content size 11776
 BOLT: writing new section .data
- data at 0xaaaaedacea00
+ data at 0xaaab05f0ea10
  of size 19592
  at offset 882816 with content size 19592
 BOLT: writing new section .text
- data at 0xffff8c200000
+ data at 0xffffb1600000
  of size 85136
  at offset 4194304 with content size 85136
 BOLT: writing new section .text.cold
- data at 0xaaaaedae4c80
+ data at 0xaaab05f24c80
  of size 48592
  at offset 4279488 with content size 48592
 BOLT: writing new section .bolt.new.eh_frame
- data at 0xaaaaedb616c0
+ data at 0xaaab05fa16d0
  of size 28896
  at offset 6291456 with content size 28896
 BOLT: writing new section .relocated.eh_frame
- data at 0xaaaaedb54eb0
+ data at 0xaaab05f94ec0
  of size 51208
  at offset 6320352 with content size 51208
 BOLT-INFO: not writing section header for section .fini_array

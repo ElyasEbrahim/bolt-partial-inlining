@@ -1,0 +1,980 @@
+{
+ "sqlite": {
+  "entries": 44847966,
+  "entries_unknown": 10500822,
+  "top_unknown": [
+   [
+    "sqlite3BtreeNext/1",
+    1867722
+   ],
+   [
+    "btreeParseCellPtr/1",
+    1700154
+   ],
+   [
+    "applyAffinity/1",
+    659763
+   ]
+  ],
+  "configs": {
+   "without extensions": {
+    "sites": 8,
+    "avoided": 970227,
+    "avoided_pct": 4.07,
+    "insns_pct": -0.14408426881081185,
+    "text_pct": 0.03228011544888349
+   },
+   "16/6": {
+    "sites": 4,
+    "avoided": 333402,
+    "avoided_pct": 1.4,
+    "insns_pct": -0.04662952302416522,
+    "text_pct": -0.02848245480783837
+   },
+   "24/8": {
+    "sites": 9,
+    "avoided": 1000630,
+    "avoided_pct": 4.2,
+    "insns_pct": -0.16104570313793928,
+    "text_pct": 0.03797660641045116
+   },
+   "32/8": {
+    "sites": 9,
+    "avoided": 1000630,
+    "avoided_pct": 4.2,
+    "insns_pct": -0.16104570313793928,
+    "text_pct": 0.03797660641045116
+   },
+   "40/12": {
+    "sites": 14,
+    "avoided": 1370417,
+    "avoided_pct": 5.75,
+    "insns_pct": -0.4129177866536028,
+    "text_pct": 0.11899336675274698
+   },
+   "64/16": {
+    "sites": 13,
+    "avoided": 1319789,
+    "avoided_pct": 5.53,
+    "insns_pct": -0.38315173302324124,
+    "text_pct": 0.12912046179553396
+   }
+  },
+  "rejected": {
+   "not-simple": {
+    "callees": 17,
+    "executions": 11656545,
+    "top": [
+     [
+      "memcpy@PLT",
+      2253737
+     ],
+     [
+      "memcmp@PLT",
+      2106163
+     ],
+     [
+      "memmove@PLT",
+      1470311
+     ]
+    ]
+   },
+   "side-effect": {
+    "callees": 4,
+    "executions": 2963615,
+    "top": [
+     [
+      "sqlite3BtreeNext/1(*2)",
+      1912114
+     ],
+     [
+      "moveToRoot/1(*2)",
+      807001
+     ],
+     [
+      "sqlite3VdbeReset/1(*2)",
+      128657
+     ]
+    ]
+   },
+   "no-fast-exit": {
+    "callees": 27,
+    "executions": 5372626,
+    "top": [
+     [
+      "patternCompare/1(*2)",
+      935590
+     ],
+     [
+      "getAndInitPage/1(*2)",
+      926690
+     ],
+     [
+      "sqlite3BtreeIndexMoveto/1(*2)",
+      433887
+     ]
+    ]
+   },
+   "entry-not-copyable": {
+    "callees": 7,
+    "executions": 822109,
+    "top": [
+     [
+      "computeCellSize/1(*2)",
+      461210
+     ],
+     [
+      "bindText/1(*2)",
+      140290
+     ],
+     [
+      "sqlite3_str_appendf",
+      57038
+     ]
+    ]
+   },
+   "cold-fast-path": {
+    "callees": 6,
+    "executions": 926331,
+    "top": [
+     [
+      "sqlite3VdbeMemSetText/1(*2)",
+      328319
+     ],
+     [
+      "sqlite3BtreeTableMoveto/1(*2)",
+      269571
+     ],
+     [
+      "btreeReleaseAllCursorPages/1(*2)",
+      208230
+     ]
+    ]
+   },
+   "too-large": {
+    "callees": 7,
+    "executions": 1617694,
+    "top": [
+     [
+      "sqlite3VdbeRecordCompareWithSkip/1(*2)",
+      358638
+     ],
+     [
+      "pageFindSlot/1(*2)",
+      350717
+     ],
+     [
+      "sqlite3_column_text",
+      300649
+     ]
+    ]
+   },
+   "frame-mismatch": {
+    "callees": 1,
+    "executions": 134217,
+    "top": [
+     [
+      "releaseMemArray/1(*2)",
+      134217
+     ]
+    ]
+   },
+   "stack-access": {
+    "callees": 1,
+    "executions": 208940,
+    "top": [
+     [
+      "freeSpace/1(*2)",
+      208940
+     ]
+    ]
+   }
+  },
+  "direct_calls": 23824524
+ },
+ "lua": {
+  "entries": 104176443,
+  "entries_unknown": 43938966,
+  "top_unknown": [
+   [
+    "luaH_getshortstr/1",
+    25960027
+   ],
+   [
+    "luaH_psetshortstr/1",
+    7200043
+   ],
+   [
+    "luaD_precall/1",
+    3383800
+   ]
+  ],
+  "configs": {
+   "without extensions": {
+    "sites": 14,
+    "avoided": 6914362,
+    "avoided_pct": 12.66,
+    "insns_pct": -1.0193722053911414,
+    "text_pct": 0.43618838457784287
+   },
+   "16/6": {
+    "sites": 13,
+    "avoided": 5437964,
+    "avoided_pct": 9.96,
+    "insns_pct": -0.6809390744576684,
+    "text_pct": 0.3416300634455832
+   },
+   "24/8": {
+    "sites": 18,
+    "avoided": 8437234,
+    "avoided_pct": 15.45,
+    "insns_pct": -1.270153506396779,
+    "text_pct": 0.6802098584675451
+   },
+   "32/8": {
+    "sites": 19,
+    "avoided": 8951512,
+    "avoided_pct": 16.4,
+    "insns_pct": -1.2454985490909334,
+    "text_pct": 0.777818448023426
+   },
+   "40/12": {
+    "sites": 24,
+    "avoided": 10160336,
+    "avoided_pct": 18.61,
+    "insns_pct": -1.5066399379448365,
+    "text_pct": 1.3146656905807712
+   },
+   "64/16": {
+    "sites": 24,
+    "avoided": 10160336,
+    "avoided_pct": 18.61,
+    "insns_pct": -1.5066399379448365,
+    "text_pct": 1.3146656905807712
+   }
+  },
+  "rejected": {
+   "no-fast-exit": {
+    "callees": 14,
+    "executions": 11404339,
+    "top": [
+     [
+      "match/1(*2)",
+      2273025
+     ],
+     [
+      "luaM_malloc_/1(*2)",
+      1844134
+     ],
+     [
+      "freeobj/1(*2)",
+      1244032
+     ]
+    ]
+   },
+   "side-effect": {
+    "callees": 1,
+    "executions": 3624820,
+    "top": [
+     [
+      "luaD_precall/1(*2)",
+      3624820
+     ]
+    ]
+   },
+   "entry-not-copyable": {
+    "callees": 11,
+    "executions": 8595235,
+    "top": [
+     [
+      "luaM_free_/1(*2)",
+      2005704
+     ],
+     [
+      "luaC_newobj/1(*2)",
+      1244032
+     ],
+     [
+      "insertkey/1(*2)",
+      1203002
+     ]
+    ]
+   },
+   "not-simple": {
+    "callees": 8,
+    "executions": 9088301,
+    "top": [
+     [
+      "realloc@PLT",
+      2005940
+     ],
+     [
+      "free@PLT",
+      2005745
+     ],
+     [
+      "match_class/1(*2)",
+      1793023
+     ]
+    ]
+   },
+   "cold-fast-path": {
+    "callees": 2,
+    "executions": 4107324,
+    "top": [
+     [
+      "singlematch/1(*2)",
+      3346050
+     ],
+     [
+      "setnodevector/1(*2)",
+      761274
+     ]
+    ]
+   },
+   "too-large": {
+    "callees": 4,
+    "executions": 10123818,
+    "top": [
+     [
+      "luaH_psetshortstr/1(*2)",
+      7500392
+     ],
+     [
+      "luaH_get/1(*2)",
+      1620196
+     ],
+     [
+      "lua_tolstring",
+      763168
+     ]
+    ]
+   },
+   "stack-access": {
+    "callees": 1,
+    "executions": 800003,
+    "top": [
+     [
+      "lua_tonumberx",
+      800003
+     ]
+    ]
+   }
+  },
+  "direct_calls": 54609929
+ },
+ "cpython": {
+  "entries": 98031410,
+  "entries_unknown": 30303987,
+  "top_unknown": [
+   [
+    "_PyFloat_FromDouble_ConsumeInputs/1",
+    7199967
+   ],
+   [
+    "_Py_Dealloc",
+    3551470
+   ],
+   [
+    "_PyObject_Free/1",
+    2093331
+   ]
+  ],
+  "configs": {
+   "without extensions": {
+    "sites": 14,
+    "avoided": 2496312,
+    "avoided_pct": 4.54,
+    "insns_pct": -0.6167342344170593,
+    "text_pct": 0.10438004775387184
+   },
+   "16/6": {
+    "sites": 11,
+    "avoided": 2299482,
+    "avoided_pct": 4.18,
+    "insns_pct": -0.6099985293696796,
+    "text_pct": 0.08350403820309747
+   },
+   "24/8": {
+    "sites": 17,
+    "avoided": 2576849,
+    "avoided_pct": 4.69,
+    "insns_pct": -0.6308619767275715,
+    "text_pct": 0.10959905014156544
+   },
+   "32/8": {
+    "sites": 17,
+    "avoided": 2577423,
+    "avoided_pct": 4.69,
+    "insns_pct": -0.6310853177668005,
+    "text_pct": 0.11481805252925903
+   },
+   "40/12": {
+    "sites": 17,
+    "avoided": 2577423,
+    "avoided_pct": 4.69,
+    "insns_pct": -0.6310853177668005,
+    "text_pct": 0.11481805252925903
+   },
+   "64/16": {
+    "sites": 18,
+    "avoided": 2604302,
+    "avoided_pct": 4.74,
+    "insns_pct": -0.6387077820950834,
+    "text_pct": 0.1356940620800334
+   }
+  },
+  "rejected": {
+   "entry-not-copyable": {
+    "callees": 11,
+    "executions": 5848187,
+    "top": [
+     [
+      "PyObject_Free",
+      1932896
+     ],
+     [
+      "PyIter_Next",
+      1637772
+     ],
+     [
+      "_Py_IsMainThread/1(*2)",
+      701735
+     ]
+    ]
+   },
+   "no-fast-exit": {
+    "callees": 38,
+    "executions": 22581397,
+    "top": [
+     [
+      "_Py_Dealloc",
+      4292035
+     ],
+     [
+      "binary_op1/1(*2)",
+      3006472
+     ],
+     [
+      "gen_send_ex2/1(*2)",
+      1660288
+     ]
+    ]
+   },
+   "not-simple": {
+    "callees": 16,
+    "executions": 19690475,
+    "top": [
+     [
+      "_Py_NewReference",
+      11741561
+     ],
+     [
+      "PyObject_Malloc",
+      1932896
+     ],
+     [
+      "_PyEval_EvalFrameDefault",
+      1661416
+     ]
+    ]
+   },
+   "cold-fast-path": {
+    "callees": 7,
+    "executions": 4857101,
+    "top": [
+     [
+      "PyLong_FromLong(*4)",
+      2510510
+     ],
+     [
+      "_PyLong_FromSTwoDigits/1(*2)",
+      2084801
+     ],
+     [
+      "PyList_Append",
+      98907
+     ]
+    ]
+   },
+   "frame-mismatch": {
+    "callees": 1,
+    "executions": 40077,
+    "top": [
+     [
+      "maybe_small_long/1(*2)",
+      40077
+     ]
+    ]
+   },
+   "side-effect": {
+    "callees": 9,
+    "executions": 1889930,
+    "top": [
+     [
+      "_PyFrame_ClearExceptCode/1(*2)",
+      1304759
+     ],
+     [
+      "insert_combined_dict/1(*2)",
+      175809
+     ],
+     [
+      "multadd/1(*2)",
+      128662
+     ]
+    ]
+   },
+   "too-large": {
+    "callees": 4,
+    "executions": 1363715,
+    "top": [
+     [
+      "unicodekeys_lookup_unicode/1(*2)",
+      810868
+     ],
+     [
+      "siphash13/1(*2)",
+      332948
+     ],
+     [
+      "PyUnicode_Substring",
+      192694
+     ]
+    ]
+   },
+   "stack-access": {
+    "callees": 1,
+    "executions": 906538,
+    "top": [
+     [
+      "_Py_dict_lookup/1(*2)",
+      906538
+     ]
+    ]
+   }
+  },
+  "direct_calls": 54943475
+ },
+ "zstd": {
+  "entries": 66433,
+  "entries_unknown": 66,
+  "top_unknown": [
+   [
+    "AIO_ReadPool_executeReadJob/1",
+    30
+   ],
+   [
+    "UTIL_freeFileNamesTable",
+    2
+   ],
+   [
+    "ZSTD_minCLevel",
+    2
+   ]
+  ],
+  "configs": {
+   "without extensions": {
+    "sites": 5,
+    "avoided": 819,
+    "avoided_pct": 1.24,
+    "insns_pct": -0.0010785561002066323,
+    "text_pct": 0.24339783375927954
+   },
+   "16/6": {
+    "sites": 5,
+    "avoided": 819,
+    "avoided_pct": 1.24,
+    "insns_pct": -0.0010785561002066323,
+    "text_pct": 0.24339783375927954
+   },
+   "24/8": {
+    "sites": 5,
+    "avoided": 819,
+    "avoided_pct": 1.24,
+    "insns_pct": -0.0010785561002066323,
+    "text_pct": 0.24339783375927954
+   },
+   "32/8": {
+    "sites": 5,
+    "avoided": 819,
+    "avoided_pct": 1.24,
+    "insns_pct": -0.0010785561002066323,
+    "text_pct": 0.24339783375927954
+   },
+   "40/12": {
+    "sites": 5,
+    "avoided": 819,
+    "avoided_pct": 1.24,
+    "insns_pct": -0.0010785561002066323,
+    "text_pct": 0.24339783375927954
+   },
+   "64/16": {
+    "sites": 5,
+    "avoided": 819,
+    "avoided_pct": 1.24,
+    "insns_pct": -0.0010785561002066323,
+    "text_pct": 0.24339783375927954
+   }
+  },
+  "rejected": {
+   "not-simple": {
+    "callees": 5,
+    "executions": 60503,
+    "top": [
+     [
+      "memmove@PLT",
+      59354
+     ],
+     [
+      "memset@PLT",
+      640
+     ],
+     [
+      "memcpy@PLT",
+      349
+     ]
+    ]
+   },
+   "no-fast-exit": {
+    "callees": 18,
+    "executions": 3568,
+    "top": [
+     [
+      "FSE_readNCount_bmi2",
+      573
+     ],
+     [
+      "ZSTD_buildSeqTable/1(*2)",
+      438
+     ],
+     [
+      "ZSTD_buildFSETable",
+      438
+     ]
+    ]
+   },
+   "side-effect": {
+    "callees": 4,
+    "executions": 691,
+    "top": [
+     [
+      "FSE_initDState/1(*2)",
+      270
+     ],
+     [
+      "ZSTD_getcBlockSize",
+      146
+     ],
+     [
+      "HUF_DecompressFastArgs_init/1(*2)",
+      143
+     ]
+    ]
+   },
+   "entry-not-copyable": {
+    "callees": 1,
+    "executions": 438,
+    "top": [
+     [
+      "FSE_readNCount",
+      438
+     ]
+    ]
+   },
+   "cold-fast-path": {
+    "callees": 1,
+    "executions": 30,
+    "top": [
+     [
+      "AIO_ReadPool_fillBuffer",
+      30
+     ]
+    ]
+   }
+  },
+  "direct_calls": 66048
+ },
+ "jq": {
+  "entries": 293679562,
+  "entries_unknown": 96641809,
+  "top_unknown": [
+   [
+    "jv_get_kind",
+    36937759
+   ],
+   [
+    "stack_push",
+    26275896
+   ],
+   [
+    "jv_copy",
+    12180999
+   ]
+  ],
+  "configs": {
+   "without extensions": {
+    "sites": 21,
+    "avoided": 52156991,
+    "avoided_pct": 26.4,
+    "insns_pct": -2.969623252243451,
+    "text_pct": 0.23986567522187574
+   },
+   "16/6": {
+    "sites": 21,
+    "avoided": 52156991,
+    "avoided_pct": 26.4,
+    "insns_pct": -2.969623252243451,
+    "text_pct": 0.23986567522187574
+   },
+   "24/8": {
+    "sites": 21,
+    "avoided": 52156991,
+    "avoided_pct": 26.4,
+    "insns_pct": -2.969623252243451,
+    "text_pct": 0.23986567522187574
+   },
+   "32/8": {
+    "sites": 21,
+    "avoided": 52156991,
+    "avoided_pct": 26.4,
+    "insns_pct": -2.969623252243451,
+    "text_pct": 0.23986567522187574
+   },
+   "40/12": {
+    "sites": 21,
+    "avoided": 52156991,
+    "avoided_pct": 26.4,
+    "insns_pct": -2.969623252243451,
+    "text_pct": 0.23986567522187574
+   },
+   "64/16": {
+    "sites": 22,
+    "avoided": 52921257,
+    "avoided_pct": 26.79,
+    "insns_pct": -3.1151988811800124,
+    "text_pct": 0.43175821539937637
+   }
+  },
+  "rejected": {
+   "no-fast-exit": {
+    "callees": 6,
+    "executions": 40048950,
+    "top": [
+     [
+      "jv_free",
+      32442649
+     ],
+     [
+      "jv_array_length",
+      2243669
+     ],
+     [
+      "jvp_cmp/1(*2)",
+      1720546
+     ]
+    ]
+   },
+   "entry-not-copyable": {
+    "callees": 5,
+    "executions": 39271386,
+    "top": [
+     [
+      "jv_mem_free",
+      34433892
+     ],
+     [
+      "jv_mem_alloc",
+      1987542
+     ],
+     [
+      "jvp_object_find_slot/1(*2)",
+      1353516
+     ]
+    ]
+   },
+   "not-simple": {
+    "callees": 5,
+    "executions": 39728197,
+    "top": [
+     [
+      "free@PLT",
+      34433901
+     ],
+     [
+      "malloc@PLT",
+      1987544
+     ],
+     [
+      "memcpy@PLT",
+      1800532
+     ]
+    ]
+   },
+   "too-large": {
+    "callees": 1,
+    "executions": 806388,
+    "top": [
+     [
+      "jvp_number_cmp",
+      806388
+     ]
+    ]
+   }
+  },
+  "direct_calls": 197564360
+ },
+ "libxml2": {
+  "entries": 28508351,
+  "entries_unknown": 4440030,
+  "top_unknown": [
+   [
+    "xmlXPathNextChildElement/1",
+    1200004
+   ],
+   [
+    "xmlXPathNodeSetAddUnique",
+    1020003
+   ],
+   [
+    "xmlXPathNextDescendantOrSelf",
+    900004
+   ]
+  ],
+  "configs": {
+   "without extensions": {
+    "sites": 7,
+    "avoided": 4866953,
+    "avoided_pct": 25.72,
+    "insns_pct": -2.3939266578887133,
+    "text_pct": 0.5607771897954348
+   },
+   "16/6": {
+    "sites": 3,
+    "avoided": 720001,
+    "avoided_pct": 3.8,
+    "insns_pct": -0.48310298579650607,
+    "text_pct": 0.10267751362451623
+   },
+   "24/8": {
+    "sites": 7,
+    "avoided": 4866953,
+    "avoided_pct": 25.72,
+    "insns_pct": -2.3939266578887133,
+    "text_pct": 0.5607771897954348
+   },
+   "32/8": {
+    "sites": 7,
+    "avoided": 4866953,
+    "avoided_pct": 25.72,
+    "insns_pct": -2.3939266578887133,
+    "text_pct": 0.5607771897954348
+   },
+   "40/12": {
+    "sites": 11,
+    "avoided": 5767370,
+    "avoided_pct": 30.48,
+    "insns_pct": -2.6977331989963154,
+    "text_pct": 0.7463865413474449
+   },
+   "64/16": {
+    "sites": 11,
+    "avoided": 5767370,
+    "avoided_pct": 30.48,
+    "insns_pct": -2.6977331989963154,
+    "text_pct": 0.7463865413474449
+   }
+  },
+  "rejected": {
+   "not-simple": {
+    "callees": 5,
+    "executions": 1660328,
+    "top": [
+     [
+      "memcpy@PLT",
+      920172
+     ],
+     [
+      "strncmp@PLT",
+      539991
+     ],
+     [
+      "strlen@PLT",
+      80159
+     ]
+    ]
+   },
+   "no-fast-exit": {
+    "callees": 25,
+    "executions": 8660599,
+    "top": [
+     [
+      "xmlParserShrink/1(*2)",
+      1200001
+     ],
+     [
+      "xmlSAX2TextNode/1(*2)",
+      780001
+     ],
+     [
+      "xmlSAX2Text/1(*2)",
+      600001
+     ]
+    ]
+   },
+   "frame-mismatch": {
+    "callees": 2,
+    "executions": 300014,
+    "top": [
+     [
+      "xmlNextChar",
+      240014
+     ],
+     [
+      "xmlXPathNodeValHash/1(*2)",
+      60000
+     ]
+    ]
+   },
+   "entry-not-copyable": {
+    "callees": 3,
+    "executions": 660002,
+    "top": [
+     [
+      "xmlDictLookupHashed/1(*2)",
+      540001
+     ],
+     [
+      "xmlXPathNodeSetCreate",
+      60001
+     ],
+     [
+      "xmlNewCDataBlock",
+      60000
+     ]
+    ]
+   },
+   "too-large": {
+    "callees": 1,
+    "executions": 240000,
+    "top": [
+     [
+      "xmlIsID",
+      240000
+     ]
+    ]
+   },
+   "side-effect": {
+    "callees": 1,
+    "executions": 300001,
+    "top": [
+     [
+      "nodePop/1(*2)",
+      300001
+     ]
+    ]
+   }
+  },
+  "direct_calls": 18922834
+ }
+}

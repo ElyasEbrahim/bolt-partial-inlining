@@ -657,7 +657,7 @@ BOLT-INFO: Finished pass: identical-code-folding
 BOLT-INFO: Starting pass: partial-inlining
 BOLT-INFO: buildCallGraph: 20 nodes, 13 callsites (0 recursive), density = 0.030000, 0 callsites not processed, 0 callsites with invalid profile, used perf data for 0 stale functions.
 BOLT-INFO: partial inlining: pool_alloc into main (count 20000000, p(fast) 1.000 callee, 1.000 site, 10 insns, 1 renamed regs, frame elided)
-BOLT-INFO: partial inlining: 1 callees with a fast region (1 with frame elision); inlined 1 call sites (1 with frame elision, 0 tail calls), 10 instructions copied, 1 registers renamed
+BOLT-INFO: partial inlining: 1 callees with a fast region (1 with frame elision); inlined 1 call sites (1 with frame elision, 0 tail calls), 10 instructions copied, 1 registers renamed, 0 registers saved
 BOLT-INFO: partial inlining: estimated 19999999 calls avoided on fast paths (100.00% of profiled direct calls), 1 slow-path calls re-execute the copied region
 BOLT-INFO: Finished pass: partial-inlining
 BOLT-INFO: Starting pass: plt-call-optimization
@@ -775,27 +775,27 @@ BOLT-INFO: Finished pass: clean-mc-state
 BOLT-INFO: padding code to 0x600000 to accommodate hot text
 BOLT-INFO: patched build-id (flipped first and last bits)
 BOLT: writing new section .fini_array
- data at 0xaaaae990b7c0
+ data at 0xaaaac7804390
  of size 8
  at offset 3280 with content size 8
 BOLT: writing new section .init_array
- data at 0xaaaae98f48d0
+ data at 0xaaaac77d68d0
  of size 8
  at offset 3288 with content size 8
 BOLT: writing new section .text
- data at 0xffffb0200000
+ data at 0xffff7c400000
  of size 880
  at offset 4194304 with content size 880
 BOLT: writing new section .text.cold
- data at 0xaaaae990bb00
+ data at 0xaaaac77edb00
  of size 168
  at offset 4195200 with content size 168
 BOLT: writing new section .bolt.new.eh_frame
- data at 0xaaaae9913e50
+ data at 0xaaaac7804730
  of size 336
  at offset 6291456 with content size 336
 BOLT: writing new section .relocated.eh_frame
- data at 0xaaaae9813090
+ data at 0xaaaac76f5090
  of size 292
  at offset 6291792 with content size 292
 BOLT-INFO: not writing section header for section .fini_array

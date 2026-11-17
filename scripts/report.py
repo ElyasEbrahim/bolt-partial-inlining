@@ -61,6 +61,10 @@ def pi_stats(log):
         out["fast_calls"] = int(m.group(1))
         out["fast_calls_pct"] = float(m.group(2))
         out["slow_calls"] = int(m.group(3))
+    # Per-site lines (-v=1): sites that use one of the extensions.
+    sites = re.findall(r"partial inlining: .+ into .+ \(count .*\)", text)
+    out["loop_sites"] = sum("first iteration of a loop" in x for x in sites)
+    out["saved_sites"] = sum(" saved regs" in x for x in sites)
     m = re.search(r"callees without a usable fast region: (.*)", text)
     if m:
         out["rejected"] = dict((k, int(v)) for k, v in
@@ -171,6 +175,64 @@ def pool_report(pool, L):
         pool_table(L, pool["counter"])
 
 
+def coverage_report(cov, L):
+    """Tables of scripts/coverage.py (design document, Section 5.6)."""
+    if not cov:
+        return
+    L.append("\n## Coverage on the real programs and what limits it\n")
+    L.append("From the training profiles and `llvm-bolt -v=2`, without timing "
+             "(`scripts/coverage.py`). *Entries*: transfers to the entry of "
+             "another function in the instrumentation profile. *Unattributed*: "
+             "entries whose caller the profile does not know, i.e. calls from "
+             "functions that BOLT cannot rewrite and from outside the binary.\n")
+    L.append("| program | entries | unattributed | direct calls at call sites the "
+             "pass can transform | avoided | hottest callees of unattributed calls |")
+    L.append("|---|---:|---:|---:|---:|---|")
+    for w, r in cov.items():
+        c = r["configs"]["24/8"]
+        top = ", ".join(f"`{fn}` {n / 1e6:.2f}M" for fn, n in r["top_unknown"])
+        direct = r.get("direct_calls")
+        L.append(f"| {w} | {r['entries'] / 1e6:.2f}M | "
+                 f"{100.0 * r['entries_unknown'] / r['entries']:.1f}% | "
+                 f"{'-' if not direct else format(direct / 1e6, '.2f') + 'M'} | "
+                 f"{c['avoided'] / 1e6:.2f}M ({c['avoided_pct']:.1f}%) | {top} |")
+    L.append("\n### Callees of hot call sites without a usable fast region\n")
+    L.append("Executions of the rejected callees as a share of the direct calls "
+             "in the previous table, by reason, with the hottest callee. The "
+             "shares are upper bounds: the execution count of a callee also "
+             "contains indirect and unattributed calls.\n")
+    reasons = ["not-simple", "no-fast-exit", "entry-not-copyable", "side-effect",
+               "cold-fast-path", "reg-clobber", "too-large", "stack-access",
+               "frame-mismatch", "no-scratch", "no-profile"]
+    used = [x for x in reasons if any(x in r["rejected"] for r in cov.values())]
+    L.append("| program | " + " | ".join(used) + " |")
+    L.append("|---|" + "---|" * len(used))
+    for w, r in cov.items():
+        direct = r.get("direct_calls") or 0
+        cells = []
+        for x in used:
+            j = r["rejected"].get(x)
+            if not j or not direct:
+                cells.append("-")
+                continue
+            fn = j["top"][0][0].split("/")[0].split("(")[0]
+            cells.append(f"{100.0 * j['executions'] / direct:.1f}% (`{fn}`)")
+        L.append(f"| {w} | " + " | ".join(cells) + " |")
+    L.append("\n### Region size limits and extensions\n")
+    L.append("Calls avoided (share of the direct calls), BOLT's estimate of the "
+             "executed instructions and code size, each relative to `bolt`, for "
+             "`-partial-inline-max-insns` / `-max-blocks`. 24/8 is the default; "
+             "*without extensions* is 24/8 with `-partial-inline-loops=false "
+             "-partial-inline-save-regs=false`.\n")
+    names = list(next(iter(cov.values()))["configs"])
+    L.append("| program | " + " | ".join(names) + " |")
+    L.append("|---|" + "---|" * len(names))
+    for w, r in cov.items():
+        L.append(f"| {w} | " + " | ".join(
+            f"{c['avoided_pct']:.1f}%, {c['insns_pct']:+.2f}%, {c['text_pct']:+.2f}%"
+            for c in (r["configs"][n] for n in names)) + " |")
+
+
 def main():
     ap = argparse.ArgumentParser()
     ap.add_argument("--root", default="/work/out")
@@ -180,6 +242,7 @@ def main():
                          "default: <results>/summary.json")
     ap.add_argument("--icount", help="icount.json from icount.py")
     ap.add_argument("--pool", help="result directory of pool_analysis.sh")
+    ap.add_argument("--coverage", help="coverage.json of coverage.py")
     args = ap.parse_args()
     summary = {}
     for f in args.summary or [os.path.join(args.results, "summary.json")]:
@@ -202,6 +265,12 @@ def main():
                               if os.path.exists(os.path.join(d, v))}
         entry["bolt_time_s"] = {v: bolt_time(os.path.join(d, f"{v}.time"))
                                 for v in ["bolt"] + PI_VARIANTS}
+        # The pass without its extensions, where that changes the binary.
+        if os.path.exists(os.path.join(d, "bolt-pi-noext")):
+            entry["pi"]["bolt-pi-noext"] = pi_stats(os.path.join(d, "bolt-pi-noext.log"))
+            entry["noext"] = "differs"
+        elif os.path.exists(os.path.join(d, "bolt-pi-noext.identical")):
+            entry["noext"] = "identical"
         report[name] = entry
     L = []
     L.append("# Evaluation report\n")
@@ -249,6 +318,33 @@ def main():
                 ["bolt-pi", "bolt-pi-skip", "bolt-inl", "bolt-inl-pi"]) +
                 f" | {e['pi'].get('bolt-pi', {}).get('fast_calls_pct', 0):.2f}% | "
                 f"{ps.get('fast_calls_pct', 0):.2f}% | {p:.2g} |")
+    ext = [(n, e) for n, e in report.items() if e.get("noext") == "differs"]
+    if ext:
+        L.append("\n## Effect of the extensions\n")
+        L.append("`bolt-pi-noext` is `bolt-pi` without fast paths through the first "
+                 "iteration of a loop and without saved registers "
+                 "(`-partial-inline-loops=false -partial-inline-save-regs=false`): "
+                 "the pass as in version 1.2.0. For the workloads that are not "
+                 "listed, both binaries are byte-identical: " +
+                 ", ".join(n for n, e in report.items() if e.get("noext") == "identical")
+                 + ".\n")
+        L.append("| workload | bolt-pi-noext | bolt-pi | calls avoided noext | "
+                 "calls avoided bolt-pi | sites through a loop | sites with saved "
+                 "registers | instructions noext | instructions bolt-pi |")
+        L.append("|---|---|---|---:|---:|---:|---:|---:|---:|")
+        for name, e in ext:
+            t, pi, c = e["timing"], e["pi"], icounts.get(name, {})
+
+            def ic(v):
+                return (f"{100.0 * (c[v] - c['bolt']) / c['bolt']:+.2f}%"
+                        if v in c and c.get("bolt") else "-")
+            L.append(f"| {name} | {fmt_speedup(t.get('bolt-pi-noext', {}))} | "
+                     f"{fmt_speedup(t.get('bolt-pi', {}))} | "
+                     f"{pi['bolt-pi-noext'].get('fast_calls_pct', 0):.2f}% | "
+                     f"{pi.get('bolt-pi', {}).get('fast_calls_pct', 0):.2f}% | "
+                     f"{pi.get('bolt-pi', {}).get('loop_sites', 0)} | "
+                     f"{pi.get('bolt-pi', {}).get('saved_sites', 0)} | "
+                     f"{ic('bolt-pi-noext')} | {ic('bolt-pi')} |")
     if icounts:
         L.append("\n## Executed instructions (valgrind, smaller inputs; change vs. bolt)\n")
         L.append("All instructions of the process; every variant is executed from "
@@ -269,17 +365,20 @@ def main():
             if os.path.exists(f):
                 pool[group] = json.load(open(f))["pool"]["variants"]
         pool_report(pool, L)
+    coverage = json.load(open(args.coverage)) if args.coverage else {}
+    coverage_report(coverage, L)
     L.append("\n## What the pass did (bolt-pi)\n")
     L.append("| workload | callees with fast region | sites | with frame elision "
-             "| tail-call sites | insns copied | regs renamed | fast-path calls "
-             "avoided (% of direct calls) |")
-    L.append("|---|---:|---:|---:|---:|---:|---:|---:|")
+             "| tail-call sites | through a loop | with saved regs | insns copied | "
+             "regs renamed | fast-path calls avoided (% of direct calls) |")
+    L.append("|---|---:|---:|---:|---:|---:|---:|---:|---:|---:|")
     for name, e in report.items():
         s = e["pi"].get("bolt-pi", {})
         if not s:
             continue
         L.append(f"| {name} | {s.get('callees', 0)} | {s.get('sites', 0)} | "
                  f"{s.get('framed_sites', 0)} | {s.get('tail_sites', 0)} | "
+                 f"{s.get('loop_sites', 0)} | {s.get('saved_sites', 0)} | "
                  f"{s.get('copied_insns', 0)} | {s.get('renamed_regs', 0)} | "
                  f"{s.get('fast_calls', 0)} ({s.get('fast_calls_pct', 0):.2f}%) |")
     L.append("\n## Profile-estimated dynamic effect (BOLT dyno-stats, bolt-pi vs bolt)\n")
@@ -317,7 +416,7 @@ def main():
         rej = e["pi"].get("bolt-pi", {}).get("rejected", {})
         L.append(f"| {name} | " + " | ".join(str(rej.get(r, 0)) for r in reasons) + " |")
     open(os.path.join(args.results, "REPORT.md"), "w").write("\n".join(L) + "\n")
-    json.dump(dict(report, _icount=icounts, _pool=pool),
+    json.dump(dict(report, _icount=icounts, _pool=pool, _coverage=coverage),
               open(os.path.join(args.results, "report.json"), "w"), indent=1)
 
     try:

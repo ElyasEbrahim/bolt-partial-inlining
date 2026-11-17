@@ -1,12 +1,12 @@
 == sqlite
-BOLT-INFO: partial inlining: 7 callees with a fast region (3 with frame elision); inlined 8 call sites (3 with frame elision, 0 tail calls), 96 instructions copied, 7 registers renamed
+BOLT-INFO: partial inlining: 8 callees with a fast region (4 with frame elision); inlined 9 call sites (4 with frame elision, 0 tail calls), 110 instructions copied, 9 registers renamed, 1 registers saved
 == lua
-BOLT-INFO: partial inlining: 11 callees with a fast region (3 with frame elision); inlined 14 call sites (4 with frame elision, 2 tail calls), 151 instructions copied, 3 registers renamed
+BOLT-INFO: partial inlining: 16 callees with a fast region (5 with frame elision); inlined 18 call sites (7 with frame elision, 2 tail calls), 223 instructions copied, 7 registers renamed, 3 registers saved
 == cpython
-BOLT-INFO: partial inlining: 15 callees with a fast region (8 with frame elision); inlined 14 call sites (5 with frame elision, 1 tail calls), 158 instructions copied, 3 registers renamed
+BOLT-INFO: partial inlining: 18 callees with a fast region (10 with frame elision); inlined 17 call sites (7 with frame elision, 2 tail calls), 200 instructions copied, 3 registers renamed, 3 registers saved
 == zstd
-BOLT-INFO: partial inlining: 5 callees with a fast region (0 with frame elision); inlined 5 call sites (0 with frame elision, 0 tail calls), 29 instructions copied, 0 registers renamed
+BOLT-INFO: partial inlining: 5 callees with a fast region (0 with frame elision); inlined 5 call sites (0 with frame elision, 0 tail calls), 29 instructions copied, 0 registers renamed, 0 registers saved
 == jq
-BOLT-INFO: partial inlining: 9 callees with a fast region (4 with frame elision); inlined 21 call sites (5 with frame elision, 1 tail calls), 99 instructions copied, 4 registers renamed
+BOLT-INFO: partial inlining: 9 callees with a fast region (4 with frame elision); inlined 21 call sites (5 with frame elision, 1 tail calls), 99 instructions copied, 4 registers renamed, 0 registers saved
 == libxml2
-BOLT-INFO: partial inlining: 6 callees with a fast region (3 with frame elision); inlined 7 call sites (5 with frame elision, 0 tail calls), 95 instructions copied, 0 registers renamed
+BOLT-INFO: partial inlining: 8 callees with a fast region (4 with frame elision); inlined 7 call sites (5 with frame elision, 0 tail calls), 95 instructions copied, 0 registers renamed, 0 registers saved

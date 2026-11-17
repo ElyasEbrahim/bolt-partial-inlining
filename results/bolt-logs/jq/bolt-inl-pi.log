@@ -925,8 +925,8 @@ BOLT-INFO: potentially escaped address 0xbc420 in function jq_yylex
 BOLT-WARNING: failed to post-process indirect branches for deregister_tm_clones/1(*2)
 BOLT-WARNING: failed to post-process indirect branches for register_tm_clones/1(*2)
 BOLT-WARNING: failed to post-process indirect branches for jq_next
-BOLT-WARNING: failed to post-process indirect branches for jq_yylex
 BOLT-WARNING: failed to post-process indirect branches for yyparse
+BOLT-WARNING: failed to post-process indirect branches for jq_yylex
 BOLT-INFO: Starting pass: pointer-auth-cfi-analyzer
 BOLT-INFO: PointerAuthCFIAnalyzer ran on 1 functions. Ignored 0 functions (0.00%) because of CFI inconsistencies
 BOLT-INFO: Finished pass: pointer-auth-cfi-analyzer
@@ -1667,7 +1667,7 @@ BOLT-INFO: partial inlining: jvp_number_is_nan into jvp_cmp/1(*2) (count 806388,
 BOLT-INFO: partial inlining: jvp_number_is_nan into jvp_cmp/1(*2) (count 806388, p(fast) 1.000 callee, 1.000 site, 16 insns, 0 renamed regs, frame elided)
 BOLT-INFO: partial inlining: check_literal/1(*2) into jv_parser_next (count 2809884, p(fast) 0.915 callee, 0.915 site, 3 insns, 0 renamed regs)
 BOLT-INFO: partial inlining: jvp_utf8_next into jvp_utf8_is_valid (count 6334102, p(fast) 1.000 callee, 1.000 site, 10 insns, 0 renamed regs, frame elided)
-BOLT-INFO: partial inlining: 5 callees with a fast region (4 with frame elision); inlined 6 call sites (5 with frame elision, 0 tail calls), 70 instructions copied, 4 registers renamed
+BOLT-INFO: partial inlining: 5 callees with a fast region (4 with frame elision); inlined 6 call sites (5 with frame elision, 0 tail calls), 70 instructions copied, 4 registers renamed, 0 registers saved
 BOLT-INFO: partial inlining: estimated 11978228 calls avoided on fast paths (11.01% of profiled direct calls), 378544 slow-path calls re-execute the copied region
 BOLT-INFO: partial inlining: callees without a usable fast region: not-simple=5 entry-not-copyable=3 no-fast-exit=6 too-large=1
 BOLT-INFO: Finished pass: partial-inlining
@@ -1809,35 +1809,35 @@ BOLT-INFO: Finished pass: clean-mc-state
 BOLT-INFO: padding code to 0x600000 to accommodate hot text
 BOLT-INFO: patched build-id (flipped first and last bits)
 BOLT: writing new section .fini_array
- data at 0xaaab0827beb0
+ data at 0xaaaafc35fee0
  of size 8
  at offset 870352 with content size 8
 BOLT: writing new section .init_array
- data at 0xaaab0821eef0
+ data at 0xaaaafc1e5ff0
  of size 8
  at offset 870360 with content size 8
 BOLT: writing new section .data.rel.ro
- data at 0xaaab07e2fd50
+ data at 0xaaaafbe93d50
  of size 11776
  at offset 870368 with content size 11776
 BOLT: writing new section .data
- data at 0xaaab086f8ad0
+ data at 0xaaaafc758ad0
  of size 19592
  at offset 882816 with content size 19592
 BOLT: writing new section .text
- data at 0xffffb8200000
+ data at 0xffff9b600000
  of size 91456
  at offset 4194304 with content size 91456
 BOLT: writing new section .text.cold
- data at 0xaaab0870ed40
+ data at 0xaaaafc76ed40
  of size 53456
  at offset 4285760 with content size 53456
 BOLT: writing new section .bolt.new.eh_frame
- data at 0xaaab0878b790
+ data at 0xaaaafc7eb790
  of size 29240
  at offset 6291456 with content size 29240
 BOLT: writing new section .relocated.eh_frame
- data at 0xaaab0877ef80
+ data at 0xaaaafc7def80
  of size 51208
  at offset 6320696 with content size 51208
 BOLT-INFO: not writing section header for section .fini_array

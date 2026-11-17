@@ -1,10 +1,11 @@
-2026-11-12T11:57:17Z start
-2026-11-12T11:57:17Z build BOLT variants (microbenchmarks)
-2026-11-12T11:57:20Z build BOLT variants (real-world programs)
-2026-11-12T11:57:45Z flag-off identity check
-2026-11-12T11:57:54Z timing: microbenchmarks
-2026-11-12T12:11:38Z timing: real-world programs
-2026-11-12T12:37:49Z pool analysis
-2026-11-12T12:46:19Z instruction counts
-2026-11-12T12:49:22Z report
-2026-11-12T12:49:23Z done
+2026-11-17T11:23:01Z start
+2026-11-17T11:23:01Z build BOLT variants (microbenchmarks)
+2026-11-17T11:23:05Z build BOLT variants (real-world programs)
+2026-11-17T11:23:31Z flag-off identity check
+2026-11-17T11:23:41Z timing: microbenchmarks
+2026-11-17T11:39:56Z timing: real-world programs
+2026-11-17T12:08:31Z pool analysis
+2026-11-17T12:17:01Z instruction counts
+2026-11-17T12:20:30Z coverage analysis
+2026-11-17T12:20:44Z report
+2026-11-17T12:20:45Z done

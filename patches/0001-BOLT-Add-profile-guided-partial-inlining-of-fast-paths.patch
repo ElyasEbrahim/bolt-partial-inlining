@@ -1,4 +1,4 @@
-From 114045251fcc23c531b6183e3b34ffa25cf1ab09 Mon Sep 17 00:00:00 2001
+From e1392e36ed66f516cddbcab207856e59fc79a699 Mon Sep 17 00:00:00 2001
 From: ElyasEbrahim <klaymarshmello51@gmail.com>
 Date: Fri, 6 Nov 2026 21:12:51 +0800
 Subject: [PATCH] [BOLT] Add profile-guided partial inlining of fast paths
@@ -22,18 +22,24 @@ acyclic fast region of a callee into its hot direct call sites:
 * Returns fall through to the code after the call (or remain returns at
   tail call sites).
 * Every edge leaving the region branches to the original call. The region
-  is required to be free of side effects and register hazards on every
-  path to such a slow exit, so the callee re-executes from its entry with
-  the state of the original call and is not modified.
+  is required to be free of side effects on every path to such a slow
+  exit, and a register whose entry value is read and overwritten there is
+  saved in a scratch register and restored in front of the call. The
+  callee therefore re-executes from its entry with the state of the
+  original call and is not modified.
+* Of a loop on the fast path the region contains the first iteration: the
+  back edges are slow exits. This covers lookups that usually succeed at
+  the first node of a hash chain or list.
 
 Call sites are selected with a conservative worst-case model for the
 context-insensitive profile and transformed hottest first. Block and edge
 counts of the caller copies, the slow-path call and the callee are updated.
 
 New MCPlusBuilder hooks: analyzeFrameInstruction() (frame instruction
-classification), getCallSiteScratchRegs() and getFullyDefinedReg(). Frame
-elision is implemented for AArch64; on X86 only fast paths that do not
-touch the stack are copied.
+classification), getCallSiteScratchRegs(), getFullyDefinedReg() and
+createRegisterCopy(). Frame elision and register saving are implemented
+for AArch64; on X86 only fast paths that do not touch the stack and do not
+overwrite such a register are copied.
 
 On an Apple M3 Max running Linux/AArch64 the pass speeds up fast-path heavy
 microbenchmarks by up to 2.7x over the BOLT baseline, and does not change
@@ -41,30 +47,34 @@ the run time of workloads without the pattern.
 ---
  bolt/docs/BOLTAArch64OptimizationStatus.md    |    7 +
  bolt/docs/CommandLineArgumentReference.md     |   43 +
- bolt/docs/PartialInlining.md                  |   92 ++
+ bolt/docs/PartialInlining.md                  |  112 ++
  bolt/docs/index.md                            |    1 +
- bolt/include/bolt/Core/MCPlusBuilder.h        |   53 +
- bolt/include/bolt/Passes/PartialInlining.h    |  196 +++
+ bolt/include/bolt/Core/MCPlusBuilder.h        |   62 +
+ bolt/include/bolt/Passes/PartialInlining.h    |  222 +++
  bolt/lib/Passes/CMakeLists.txt                |    1 +
- bolt/lib/Passes/PartialInlining.cpp           | 1416 +++++++++++++++++
+ bolt/lib/Passes/PartialInlining.cpp           | 1531 +++++++++++++++++
  bolt/lib/Rewrite/BinaryPassManager.cpp        |   13 +
- .../Target/AArch64/AArch64MCPlusBuilder.cpp   |  189 +++
+ .../Target/AArch64/AArch64MCPlusBuilder.cpp   |  206 +++
  bolt/lib/Target/X86/X86MCPlusBuilder.cpp      |   20 +
  .../AArch64/partial-inline-frame-elision.s    |  121 ++
  bolt/test/AArch64/partial-inline-frameless.s  |  116 ++
+ bolt/test/AArch64/partial-inline-loop.s       |  172 ++
  bolt/test/AArch64/partial-inline-pauth.s      |  195 +++
- bolt/test/AArch64/partial-inline-reject.s     |  252 +++
+ bolt/test/AArch64/partial-inline-reject.s     |  260 +++
+ bolt/test/AArch64/partial-inline-save-regs.s  |  166 ++
  bolt/test/AArch64/partial-inline-sites.s      |  130 ++
  bolt/test/X86/partial-inline.s                |  107 ++
- bolt/test/runtime/AArch64/partial-inline.c    |  185 +++
- 18 files changed, 3137 insertions(+)
+ bolt/test/runtime/AArch64/partial-inline.c    |  240 +++
+ 20 files changed, 3725 insertions(+)
  create mode 100644 bolt/docs/PartialInlining.md
  create mode 100644 bolt/include/bolt/Passes/PartialInlining.h
  create mode 100644 bolt/lib/Passes/PartialInlining.cpp
  create mode 100644 bolt/test/AArch64/partial-inline-frame-elision.s
  create mode 100644 bolt/test/AArch64/partial-inline-frameless.s
+ create mode 100644 bolt/test/AArch64/partial-inline-loop.s
  create mode 100644 bolt/test/AArch64/partial-inline-pauth.s
  create mode 100644 bolt/test/AArch64/partial-inline-reject.s
+ create mode 100644 bolt/test/AArch64/partial-inline-save-regs.s
  create mode 100644 bolt/test/AArch64/partial-inline-sites.s
  create mode 100644 bolt/test/X86/partial-inline.s
  create mode 100644 bolt/test/runtime/AArch64/partial-inline.c
@@ -143,10 +153,10 @@ index f41b23ec5..034aed0c2 100644
    Enable peephole optimizations
 diff --git a/bolt/docs/PartialInlining.md b/bolt/docs/PartialInlining.md
 new file mode 100644
-index 000000000..8eadf5de6
+index 000000000..be8d37b6b
 --- /dev/null
 +++ b/bolt/docs/PartialInlining.md
-@@ -0,0 +1,92 @@
+@@ -0,0 +1,112 @@
 +# Partial Inlining of Callee Fast Paths
 +
 +`--partial-inline` copies the hot *fast path* of a callee into its hot call
@@ -162,7 +172,11 @@ index 000000000..8eadf5de6
 +For a direct call (or tail call) of function `F` at a hot call site the pass
 +computes the *fast region* of `F`: the acyclic set of profile-warm blocks that
 +starts at the entry, contains no calls or indirect branches, and ends in
-+returns. The region is copied into the caller:
++returns. If the fast path runs through a loop, the region contains its first
++iteration: the back edges of the loop leave the region. A lookup that walks a
++hash chain and usually finds the key in the first node is copied up to the
++point where it would move on to the second node. The region is copied into
++the caller:
 +
 +* instructions that only build or tear down `F`'s stack frame are not copied
 +  (stack pointer updates, spills and reloads of callee-saved registers, frame
@@ -174,7 +188,12 @@ index 000000000..8eadf5de6
 +* returns become fall-throughs to the code after the call (they remain returns
 +  at tail call sites);
 +* every edge that leaves the region (a *slow exit*) is redirected to a block
-+  that performs the original call.
++  that performs the original call;
++* a register that the callee reads again when it re-executes, and that the
++  region overwrites on a path to a slow exit (an argument register that is
++  advanced along a list: `ldr x0, [x0]`), is copied to a scratch register at
++  the start of the region and copied back in front of the original call
++  (AArch64 general purpose registers).
 +
 +```
 +  caller:                         caller after partial inlining:
@@ -189,11 +208,13 @@ index 000000000..8eadf5de6
 +
 +1. no instruction has memory or other side effects (stores, atomics, barriers,
 +   system instructions);
-+2. no register is written after being read (or read without being defined
-+   first) - the re-executed callee therefore observes exactly the state of the
++2. every register that is read before it is defined, that is, whose value at
++   the entry of `F` matters, has this value again when the original call
++   executes: it is not written, or it is saved and restored as described
++   above - the re-executed callee therefore observes exactly the state of the
 +   original call and takes the same path;
-+3. the scratch registers introduced by renaming are not read by `F` before
-+   they are written.
++3. the scratch registers introduced for renaming and saving are not read by
++   `F` before they are written.
 +
 +Instructions on paths that can no longer reach a slow exit (after the
 +fast/slow decision) may store to memory. Code that accesses the stack, the
@@ -211,6 +232,13 @@ index 000000000..8eadf5de6
 +call sites that only exercise the slow path from paying for the duplicated
 +region check. `--partial-inline-profile-model=average` uses the callee-wide
 +probability instead.
++
++The callee-wide probability follows the profile through the region and
++assumes that a block branches the same way whenever it executes. For the
++header of a loop this mixes the first iteration with the later ones. The
++worst-case model therefore also bounds the slow-path invocations from above
++by the profile counts of the edges that leave the region: every invocation
++that leaves the region takes one of them.
 +
 +Only call sites executed at least `--partial-inline-min-count` times (default:
 +BOLT's hot threshold) are considered. They are transformed hottest first until
@@ -232,10 +260,12 @@ index 000000000..8eadf5de6
 +## Limitations
 +
 +* Fast paths that store to memory *before* the fast/slow decision (for
-+  example reference count decrements) or that overwrite an argument register
-+  before it (`ldr x0, [x0]`) cannot use the re-execution fallback.
-+* Fast paths with calls, loops, jump tables, stack accesses (spills, locals,
-+  stack arguments) or reads of callee-saved entry values are not copied.
++  example reference count decrements) cannot use the re-execution fallback.
++  Neither can fast paths that overwrite a floating-point or vector argument
++  register before the decision, or any argument register on x86-64.
++* Fast paths with calls, jump tables, stack accesses (spills, locals, stack
++  arguments) or reads of callee-saved entry values are not copied. Of a loop
++  only the first iteration is.
 +* The copied instructions lose their debug line information, and the callee
 +  no longer appears in stack traces taken on its fast path.
 +* Volatile loads on the path to a slow exit are executed twice on that path.
@@ -251,10 +281,10 @@ index 714c27802..b8b5897fd 100644
  ORC-Based Linker <RuntimeLibrary>
  ```
 diff --git a/bolt/include/bolt/Core/MCPlusBuilder.h b/bolt/include/bolt/Core/MCPlusBuilder.h
-index 04621e8fa..a4a1de6cd 100644
+index 04621e8fa..a87276202 100644
 --- a/bolt/include/bolt/Core/MCPlusBuilder.h
 +++ b/bolt/include/bolt/Core/MCPlusBuilder.h
-@@ -847,6 +847,59 @@ public:
+@@ -847,6 +847,68 @@ public:
  
    virtual bool isLeave(const MCInst &Inst) const { return false; }
  
@@ -311,15 +341,24 @@ index 04621e8fa..a4a1de6cd 100644
 +  /// \p Reg itself, which is always correct but may be imprecise.
 +  virtual MCPhysReg getFullyDefinedReg(MCPhysReg Reg) const { return Reg; }
 +
++  /// Create in \p Inst a copy of the register \p Src to the register \p Dst
++  /// of the same class. The instruction must have no other effect; in
++  /// particular it must not modify the flags. Return false if the target
++  /// cannot copy registers of this class in this way.
++  virtual bool createRegisterCopy(MCInst &Inst, MCPhysReg Dst,
++                                  MCPhysReg Src) const {
++    return false;
++  }
++
    virtual bool isADRP(const MCInst &Inst) const {
      llvm_unreachable("not implemented");
      return false;
 diff --git a/bolt/include/bolt/Passes/PartialInlining.h b/bolt/include/bolt/Passes/PartialInlining.h
 new file mode 100644
-index 000000000..29212fc74
+index 000000000..985190e5e
 --- /dev/null
 +++ b/bolt/include/bolt/Passes/PartialInlining.h
-@@ -0,0 +1,196 @@
+@@ -0,0 +1,222 @@
 +//===- bolt/Passes/PartialInlining.h - Fast-path partial inlining -*- C++ -*-=//
 +//
 +// Part of the LLVM Project, under the Apache License v2.0 with LLVM Exceptions.
@@ -341,7 +380,10 @@ index 000000000..29212fc74
 +//
 +// For a hot direct call site of such a function F, this pass copies the
 +// profile-hot, acyclic "fast region" of F that starts at its entry and ends
-+// in returns into the caller:
++// in returns into the caller. If the fast path runs through a loop (a hash
++// chain that is usually hit at its first node, a list that usually has one
++// element), the region contains the first iteration only: the back edges of
++// the loop leave the region.
 +//
 +//   * Instructions that only build or tear down F's stack frame (stack
 +//     pointer adjustments, callee-saved register spills and reloads, frame
@@ -353,8 +395,9 @@ index 000000000..29212fc74
 +//     returns at tail-call sites).
 +//   * Every edge leaving the region ("slow exit") is redirected to a block
 +//     that performs the original call. The copied region is free of memory
-+//     side effects on every path to a slow exit and never overwrites a
-+//     register before reading it there, so the callee re-executes from its
++//     side effects on every path to a slow exit, and a register whose entry
++//     value it reads and overwrites there is saved in a scratch register and
++//     restored before the call. The callee therefore re-executes from its
 +//     entry with exactly the architectural state of the original call
 +//     ("re-execution fallback"). F itself is not modified.
 +//
@@ -369,6 +412,7 @@ index 000000000..29212fc74
 +#include "llvm/ADT/DenseSet.h"
 +#include "llvm/ADT/SmallVector.h"
 +#include <memory>
++#include <utility>
 +
 +namespace llvm {
 +namespace bolt {
@@ -401,6 +445,16 @@ index 000000000..29212fc74
 +    /// Region blocks in a topological order; Blocks.front() is the entry.
 +    SmallVector<BinaryBasicBlock *, 8> Blocks;
 +    DenseSet<const BinaryBasicBlock *> InRegion;
++    /// Back edges of loops through region blocks. They leave the region like
++    /// edges to blocks outside of it, which keeps the region acyclic.
++    using Edge = std::pair<const BinaryBasicBlock *, const BinaryBasicBlock *>;
++    DenseSet<Edge> CutEdges;
++    /// Return true if the CFG edge \p From -> \p To stays inside the region.
++    /// Every other edge that leaves a region block is a slow exit.
++    bool isRegionEdge(const BinaryBasicBlock *From,
++                      const BinaryBasicBlock *To) const {
++      return InRegion.count(To) && !CutEdges.count({From, To});
++    }
 +    /// Instructions that are not copied (frame setup/teardown, CFI, ...).
 +    DenseSet<const MCInst *> Dropped;
 +    /// Callee-saved registers that the region uses as temporaries. Each one
@@ -409,6 +463,12 @@ index 000000000..29212fc74
 +    /// For each renamed register, scratch candidates that satisfy all
 +    /// callee-side constraints, in order of preference.
 +    SmallVector<SmallVector<MCPhysReg, 8>, 4> ScratchCandidates;
++    /// Registers that the region overwrites on a path to a slow exit although
++    /// their entry value is read on such a path. The copy saves each of them
++    /// in a scratch register first and restores it before the original call.
++    SmallVector<MCPhysReg, 2> SavedRegs;
++    /// Scratch candidates for each saved register, like ScratchCandidates.
++    SmallVector<SmallVector<MCPhysReg, 8>, 2> SaveCandidates;
 +    /// Registers that a call to the callee may clobber.
 +    BitVector CalleeClobbers;
 +    /// Region flow: estimated number of callee invocations that reach each
@@ -423,7 +483,9 @@ index 000000000..29212fc74
 +    double EntryFlow = 0.0;
 +    /// Probability that an invocation leaves through a fast exit.
 +    double FastProb = 0.0;
-+    /// Estimated number of invocations that take a slow exit.
++    /// Estimated number of invocations that take a slow exit: the larger of
++    /// the region flow that reaches slow exits and the profile count of the
++    /// slow-exit edges (see buildRegion).
 +    double SlowCount = 0.0;
 +    /// Number of instructions copied to each call site.
 +    unsigned NumCopiedInsts = 0;
@@ -468,13 +530,15 @@ index 000000000..29212fc74
 +  using RenameList = SmallVector<std::pair<MCPhysReg, MCPhysReg>, 4>;
 +
 +  /// Compute callee-side scratch register candidates for the registers in
-+  /// \p Region.RenamedRegs.
++  /// \p Region.RenamedRegs and \p Region.SavedRegs.
 +  bool computeScratchCandidates(BinaryFunction &BF, FastRegion &Region);
 +
-+  /// Choose scratch registers for \p Site. A candidate is usable if the call
-+  /// already clobbers it, or if it is dead after the call in the caller.
++  /// Choose scratch registers for \p Site: one for every renamed register
++  /// (\p Renames) and one for every saved register (\p Saves). A candidate is
++  /// usable if the call already clobbers it, or if it is dead after the call
++  /// in the caller.
 +  bool chooseScratchRegisters(const CallSite &Site, const FastRegion &Region,
-+                              RenameList &Renames);
++                              RenameList &Renames, RenameList &Saves);
 +
 +  /// Return true if no code of \p Site.Caller (or, through its exits, of its
 +  /// callers) can observe the value of \p Reg after the call at \p Site.
@@ -482,7 +546,7 @@ index 000000000..29212fc74
 +
 +  /// Copy the fast region of \p Site.Callee into the caller.
 +  bool inlineFastPath(const CallSite &Site, const FastRegion &Region,
-+                      const RenameList &Renames);
++                      const RenameList &Renames, const RenameList &Saves);
 +
 +  /// Remove the fast-path flow handled by the inlined copy from the callee
 +  /// profile.
@@ -505,6 +569,7 @@ index 000000000..29212fc74
 +  uint64_t NumInlinedFramedSites = 0;
 +  uint64_t NumTailCallSites = 0;
 +  uint64_t NumRenamedRegs = 0;
++  uint64_t NumSavedRegs = 0;
 +  uint64_t NumSitesNoScratch = 0;
 +  uint64_t NumCopiedInsts = 0;
 +  double DynFastCalls = 0;
@@ -530,10 +595,10 @@ index a7514d4be..c9382aa5a 100644
    PettisAndHansen.cpp
 diff --git a/bolt/lib/Passes/PartialInlining.cpp b/bolt/lib/Passes/PartialInlining.cpp
 new file mode 100644
-index 000000000..4e71d75d2
+index 000000000..3228d3b7c
 --- /dev/null
 +++ b/bolt/lib/Passes/PartialInlining.cpp
-@@ -0,0 +1,1416 @@
+@@ -0,0 +1,1531 @@
 +//===- bolt/Passes/PartialInlining.cpp - Fast-path partial inlining -------===//
 +//
 +// Part of the LLVM Project, under the Apache License v2.0 with LLVM Exceptions.
@@ -560,12 +625,18 @@ index 000000000..4e71d75d2
 +// the original call. It must observe the state of the original call, so:
 +//   (1) no instruction on a path from the entry to a slow exit may have memory
 +//       side effects (stores, atomics, barriers, system instructions, ...);
-+//   (2) no register may be written on such a path and also read there before
-+//       it is (must-)defined: then F's re-execution recomputes identical
-+//       values and takes the same path to the same slow exit;
-+//   (3) scratch registers introduced by renaming must not be read by F before
-+//       they are written (they are caller-saved, non-argument registers that
-+//       F's own code never reads first).
++//   (2) a register that is read on such a path before it is (must-)defined,
++//       i.e. whose value at the entry of F matters, must hold that value
++//       again when the call executes. Either no such path writes it, or R'
++//       copies it to a scratch register first and the slow-path block copies
++//       it back. Then F's re-execution recomputes identical values and takes
++//       the same path to the same slow exit;
++//   (3) scratch registers introduced by renaming or for saving must not be
++//       read by F before they are written (they are caller-saved,
++//       non-argument registers that F's own code never reads first).
++//
++// A loop in F does not change the argument: R only contains the first
++// iteration, and the back edges are slow exits.
 +// Under (1)-(3) the re-executed call is indistinguishable from the original
 +// one, so F does not need to be modified and other callers are unaffected.
 +//
@@ -658,6 +729,21 @@ index 000000000..4e71d75d2
 +    cl::desc("allow eliding the callee stack frame on partially inlined fast "
 +             "paths"),
 +    cl::init(true), cl::cat(BoltOptCategory));
++
++static cl::opt<bool> PartialInlineLoops(
++    "partial-inline-loops",
++    cl::desc("allow partially inlined fast paths that run through the first "
++             "iteration of a loop; the back edges of the loop fall back to "
++             "the original call"),
++    cl::init(true), cl::Hidden, cl::cat(BoltOptCategory));
++
++static cl::opt<bool> PartialInlineSaveRegs(
++    "partial-inline-save-regs",
++    cl::desc("allow a partially inlined fast path to overwrite a register "
++             "whose value the callee needs when it re-executes, by saving it "
++             "in a scratch register and restoring it before the original "
++             "call"),
++    cl::init(true), cl::Hidden, cl::cat(BoltOptCategory));
 +
 +static cl::opt<unsigned> PartialInlineMaxSites(
 +    "partial-inline-max-sites",
@@ -980,51 +1066,61 @@ index 000000000..4e71d75d2
 +  if (!Candidates.count(Entry))
 +    return RR_EntryNotSafe;
 +
-+  // Step 2: drop blocks that are part of a cycle within the candidate
-+  // subgraph (Tarjan's SCC algorithm on the small subgraph).
++  // Step 2: cut the loops among the candidates. The region has to be acyclic,
++  // but a loop does not rule out a fast path: a lookup that walks a hash
++  // chain or a list usually returns in its first iteration. Every cycle
++  // contains a back edge of a depth-first search (an edge to a block on the
++  // search stack), so cutting these edges leaves an acyclic graph. A cut edge
++  // is a slow exit like an edge to a block outside the region: the copy
++  // executes the first iteration, and an invocation that iterates calls the
++  // callee, which starts over. Blocks that reach a return only through a cut
++  // edge (the latch of a loop without another exit) are dropped in step 3.
 +  {
-+    DenseMap<const BinaryBasicBlock *, unsigned> Index, LowLink;
-+    DenseSet<const BinaryBasicBlock *> OnStack, InCycle;
-+    SmallVector<const BinaryBasicBlock *, 16> Stack;
-+    unsigned NextIndex = 0;
-+    std::function<void(const BinaryBasicBlock *)> StrongConnect =
++    enum : unsigned { NotVisited = 0, OnStack, Finished };
++    DenseMap<const BinaryBasicBlock *, unsigned> Visit;
++    std::function<void(const BinaryBasicBlock *)> DFS =
 +        [&](const BinaryBasicBlock *BB) {
-+          Index[BB] = LowLink[BB] = NextIndex++;
-+          Stack.push_back(BB);
-+          OnStack.insert(BB);
++          Visit[BB] = OnStack;
 +          for (const BinaryBasicBlock *Succ : BB->successors()) {
 +            if (!Candidates.count(Succ))
 +              continue;
-+            if (Succ == BB)
-+              InCycle.insert(BB);
-+            if (!Index.count(Succ)) {
-+              StrongConnect(Succ);
-+              LowLink[BB] = std::min(LowLink[BB], LowLink[Succ]);
-+            } else if (OnStack.count(Succ)) {
-+              LowLink[BB] = std::min(LowLink[BB], Index[Succ]);
-+            }
++            const unsigned State = Visit.lookup(Succ);
++            if (State == OnStack)
++              Region.CutEdges.insert({BB, Succ});
++            else if (State == NotVisited)
++              DFS(Succ);
 +          }
-+          if (LowLink[BB] != Index[BB])
-+            return;
-+          SmallVector<const BinaryBasicBlock *, 4> SCC;
-+          const BinaryBasicBlock *Member;
-+          do {
-+            Member = Stack.pop_back_val();
-+            OnStack.erase(Member);
-+            SCC.push_back(Member);
-+          } while (Member != BB);
-+          if (SCC.size() > 1)
-+            InCycle.insert(SCC.begin(), SCC.end());
++          Visit[BB] = Finished;
 +        };
-+    StrongConnect(Entry);
-+    if (InCycle.count(Entry))
-+      return RR_NoFastExit;
-+    for (const BinaryBasicBlock *BB : InCycle)
-+      Candidates.erase(BB);
++    DFS(Entry);
++    if (!opts::PartialInlineLoops && !Region.CutEdges.empty()) {
++      // Without loop support, drop every block that lies on a cycle: a block
++      // that is reachable from one of its successors.
++      DenseSet<const BinaryBasicBlock *> InCycle;
++      for (const BinaryBasicBlock *BB : Candidates) {
++        SmallVector<const BinaryBasicBlock *, 16> Worklist(BB->succ_begin(),
++                                                           BB->succ_end());
++        DenseSet<const BinaryBasicBlock *> Seen;
++        while (!Worklist.empty()) {
++          const BinaryBasicBlock *Next = Worklist.pop_back_val();
++          if (!Candidates.count(Next) || !Seen.insert(Next).second)
++            continue;
++          Worklist.append(Next->succ_begin(), Next->succ_end());
++        }
++        if (Seen.count(BB))
++          InCycle.insert(BB);
++      }
++      if (InCycle.count(Entry))
++        return RR_NoFastExit;
++      for (const BinaryBasicBlock *BB : InCycle)
++        Candidates.erase(BB);
++      Region.CutEdges.clear();
++    }
 +  }
 +
 +  // Step 3: keep blocks that are reachable from the entry and from which a
-+  // return is reachable (both within the candidate subgraph).
++  // return is reachable (both within the candidate subgraph, without the cut
++  // edges).
 +  DenseSet<const BinaryBasicBlock *> Reachable;
 +  {
 +    SmallVector<const BinaryBasicBlock *, 16> Worklist{Entry};
@@ -1033,7 +1129,8 @@ index 000000000..4e71d75d2
 +      if (!Candidates.count(BB) || !Reachable.insert(BB).second)
 +        continue;
 +      for (const BinaryBasicBlock *Succ : BB->successors())
-+        Worklist.push_back(Succ);
++        if (!Region.CutEdges.count({BB, Succ}))
++          Worklist.push_back(Succ);
 +    }
 +  }
 +  {
@@ -1048,7 +1145,8 @@ index 000000000..4e71d75d2
 +      if (!Reachable.count(BB) || !Region.InRegion.insert(BB).second)
 +        continue;
 +      for (const BinaryBasicBlock *Pred : BB->predecessors())
-+        Worklist.push_back(Pred);
++        if (!Region.CutEdges.count({Pred, BB}))
++          Worklist.push_back(Pred);
 +    }
 +  }
 +  if (!Region.InRegion.count(Entry))
@@ -1061,7 +1159,7 @@ index 000000000..4e71d75d2
 +    std::function<void(BinaryBasicBlock *)> DFS = [&](BinaryBasicBlock *BB) {
 +      Visited.insert(BB);
 +      for (BinaryBasicBlock *Succ : BB->successors())
-+        if (Region.InRegion.count(Succ) && !Visited.count(Succ))
++        if (Region.isRegionEdge(BB, Succ) && !Visited.count(Succ))
 +          DFS(Succ);
 +      PostOrder.push_back(BB);
 +    };
@@ -1082,7 +1180,7 @@ index 000000000..4e71d75d2
 +    const SmallVector<double, 2> &Probs = Region.SuccProb[BB];
 +    unsigned I = 0;
 +    for (BinaryBasicBlock *Succ : BB->successors()) {
-+      if (Region.InRegion.count(Succ))
++      if (Region.isRegionEdge(BB, Succ))
 +        Region.Flow[Succ] += Flow * Probs[I];
 +      ++I;
 +    }
@@ -1097,7 +1195,7 @@ index 000000000..4e71d75d2
 +    const SmallVector<double, 2> &Probs = Region.SuccProb[BB];
 +    unsigned I = 0;
 +    for (const BinaryBasicBlock *Succ : BB->successors()) {
-+      if (Region.InRegion.count(Succ))
++      if (Region.isRegionEdge(BB, Succ))
 +        P += Probs[I] * Region.PFast[Succ];
 +      ++I;
 +    }
@@ -1106,6 +1204,29 @@ index 000000000..4e71d75d2
 +  Region.EntryFlow = Region.Flow[Entry];
 +  Region.FastProb = Region.PFast[Entry];
 +  Region.SlowCount = Region.EntryFlow * (1.0 - Region.FastProb);
++  // The flow above assumes that a block branches the same way whenever it is
++  // executed. A region block that is also entered from outside the region (a
++  // loop header through a cut back edge, a block where the slow path joins)
++  // has branch counts that mix both kinds of executions: the later
++  // iterations of a loop may well leave it differently than the first one.
++  // Whatever the correlation, an invocation that leaves the region takes a
++  // slow-exit edge at least once, so the profile counts of these edges bound
++  // the number of slow invocations. The bound is used for the worst-case
++  // estimate of a call site; without flow from outside it equals the flow.
++  {
++    double SlowEdgeCount = 0.0;
++    for (const BinaryBasicBlock *BB : Region.Blocks) {
++      auto BI = BB->branch_info_begin();
++      for (const BinaryBasicBlock *Succ : BB->successors()) {
++        if (!Region.isRegionEdge(BB, Succ) &&
++            BI->Count != BinaryBasicBlock::COUNT_NO_PROFILE)
++          SlowEdgeCount += BI->Count;
++        ++BI;
++      }
++    }
++    Region.SlowCount =
++        std::min(Region.EntryFlow, std::max(Region.SlowCount, SlowEdgeCount));
++  }
 +
 +  // Step 6: drop cold blocks. They do not contribute to the fast path but
 +  // add size and may introduce side effects or register hazards. The pruned
@@ -1302,7 +1423,7 @@ index 000000000..4e71d75d2
 +
 +    // Propagate the state to region successors.
 +    for (BinaryBasicBlock *Succ : BB->successors()) {
-+      if (!Region.InRegion.count(Succ))
++      if (!Region.isRegionEdge(BB, Succ))
 +        continue;
 +      RegionState &SuccState = StateIn[Succ];
 +      if (!SuccState.Valid) {
@@ -1323,7 +1444,7 @@ index 000000000..4e71d75d2
 +  for (BinaryBasicBlock *BB : llvm::reverse(Region.Blocks)) {
 +    bool Slow = false;
 +    for (const BinaryBasicBlock *Succ : BB->successors())
-+      Slow |= !Region.InRegion.count(Succ) || CanReachSlow[Succ];
++      Slow |= !Region.isRegionEdge(BB, Succ) || CanReachSlow[Succ];
 +    CanReachSlow[BB] = Slow;
 +  }
 +
@@ -1336,9 +1457,12 @@ index 000000000..4e71d75d2
 +    }
 +  }
 +
-+  // Step 10: registers written on a path to a slow exit must not be read
-+  // before being defined on such a path. If the conflict involves non-entry
-+  // blocks, prune the coldest of them and let the caller retry.
++  // Step 10: a register that is read before it is defined on a path to a
++  // slow exit carries a value from the callee's entry, and the callee reads
++  // it again when it re-executes. If such a path also writes the register,
++  // the copy saves it in a scratch register and the slow-path block restores
++  // it. Where that is not possible, prune the coldest non-entry block that is
++  // involved and let the caller retry.
 +  {
 +    BitVector SlowUE(NumRegs, false), SlowDefs(NumRegs, false);
 +    for (BinaryBasicBlock *BB : Region.Blocks) {
@@ -1349,28 +1473,48 @@ index 000000000..4e71d75d2
 +    }
 +    const BitVector SlowDefAliases = getAliasClosure(BC, SlowDefs);
 +    if (SlowDefAliases.anyCommon(SlowUE)) {
++      BitVector Conflict = SlowDefAliases;
++      Conflict &= SlowUE;
 +      LLVM_DEBUG({
-+        BitVector Conflict = SlowDefAliases;
-+        Conflict &= SlowUE;
 +        dbgs() << "BOLT-DEBUG: partial inlining: " << BF
 +               << ": registers read and overwritten before a slow exit:";
 +        for (int R = Conflict.find_first(); R != -1; R = Conflict.find_next(R))
 +          dbgs() << ' ' << BC.MRI->getName(R);
 +        dbgs() << '\n';
 +      });
-+      const BinaryBasicBlock *Coldest = nullptr;
-+      for (const BinaryBasicBlock *BB : llvm::drop_begin(Region.Blocks)) {
-+        if (!CanReachSlow[BB])
-+          continue;
-+        const bool Involved =
-+            BlockUE[BB].anyCommon(SlowDefAliases) ||
-+            getAliasClosure(BC, BlockDefs[BB]).anyCommon(SlowUE);
-+        if (Involved && (!Coldest || Region.Flow[BB] < Region.Flow[Coldest]))
-+          Coldest = BB;
++      // The complete registers that contain the conflicting ones, as far as
++      // the target can copy them.
++      BitVector NotSaved = Conflict;
++      if (opts::PartialInlineSaveRegs) {
++        for (int R = Conflict.find_first(); R != -1;
++             R = Conflict.find_next(R)) {
++          const MCPhysReg Full = MIB.getFullyDefinedReg(R);
++          MCInst Copy;
++          if (llvm::is_contained(Region.SavedRegs, Full) ||
++              !MIB.createRegisterCopy(Copy, Full, Full))
++            continue;
++          Region.SavedRegs.push_back(Full);
++        }
++        for (MCPhysReg Full : Region.SavedRegs)
++          NotSaved.reset(MIB.getAliases(Full, /*OnlySmaller=*/false));
 +      }
-+      if (Coldest)
-+        Prune.push_back(Coldest);
-+      return RR_RegClobber;
++      if (NotSaved.any()) {
++        const BinaryBasicBlock *Coldest = nullptr;
++        for (const BinaryBasicBlock *BB : llvm::drop_begin(Region.Blocks)) {
++          if (!CanReachSlow[BB])
++            continue;
++          const bool Involved =
++              BlockUE[BB].anyCommon(SlowDefAliases) ||
++              getAliasClosure(BC, BlockDefs[BB]).anyCommon(SlowUE);
++          if (Involved && (!Coldest || Region.Flow[BB] < Region.Flow[Coldest]))
++            Coldest = BB;
++        }
++        if (Coldest)
++          Prune.push_back(Coldest);
++        return RR_RegClobber;
++      }
++      // One more instruction on the fast path for every saved register.
++      Region.NumCopiedInsts += Region.SavedRegs.size();
 +    }
 +  }
 +
@@ -1398,7 +1542,8 @@ index 000000000..4e71d75d2
 +  const unsigned NumRegs = BC.MRI->getNumRegs();
 +  Region.CalleeClobbers = BitVector(NumRegs, false);
 +  Region.ScratchCandidates.clear();
-+  if (Region.RenamedRegs.empty())
++  Region.SaveCandidates.clear();
++  if (Region.RenamedRegs.empty() && Region.SavedRegs.empty())
 +    return true;
 +
 +  // Registers referenced by the copied instructions cannot be reused.
@@ -1413,22 +1558,23 @@ index 000000000..4e71d75d2
 +  }
 +  Region.CalleeClobbers = getRegAnalysis(BC).getFunctionClobberList(&BF);
 +
-+  for (MCPhysReg From : Region.RenamedRegs) {
++  // The scratch register must be free in the copied code, and the callee
++  // must not depend on its value at entry when it re-executes.
++  auto collect = [&](MCPhysReg From, SmallVectorImpl<MCPhysReg> &Candidates) {
 +    SmallVector<MCPhysReg, 16> All;
 +    MIB.getCallSiteScratchRegs(From, All);
-+    SmallVector<MCPhysReg, 8> &Candidates =
-+        Region.ScratchCandidates.emplace_back();
-+    for (MCPhysReg Cand : All) {
-+      // The scratch register must be free in the copied code, and the callee
-+      // must not depend on its value at entry when it re-executes.
-+      if (getRegStorage(BC, Cand).anyCommon(RegionRegs) ||
-+          isUpwardExposed(BC, BF, Cand))
-+        continue;
-+      Candidates.push_back(Cand);
-+    }
-+    if (Candidates.size() < 1)
++    for (MCPhysReg Cand : All)
++      if (!getRegStorage(BC, Cand).anyCommon(RegionRegs) &&
++          !isUpwardExposed(BC, BF, Cand))
++        Candidates.push_back(Cand);
++    return !Candidates.empty();
++  };
++  for (MCPhysReg From : Region.RenamedRegs)
++    if (!collect(From, Region.ScratchCandidates.emplace_back()))
 +      return false;
-+  }
++  for (MCPhysReg From : Region.SavedRegs)
++    if (!collect(From, Region.SaveCandidates.emplace_back()))
++      return false;
 +
 +  // Verify that every copied instruction can be renamed (using the first
 +  // candidate; all candidates of a register belong to the same class).
@@ -1535,13 +1681,14 @@ index 000000000..4e71d75d2
 +
 +bool PartialInlining::chooseScratchRegisters(const CallSite &Site,
 +                                             const FastRegion &Region,
-+                                             RenameList &Renames) {
++                                             RenameList &Renames,
++                                             RenameList &Saves) {
 +  BinaryContext &BC = Site.Caller->getBinaryContext();
 +  Renames.clear();
++  Saves.clear();
 +  BitVector Assigned(BC.MRI->getNumRegs(), false);
-+  for (unsigned I = 0; I < Region.RenamedRegs.size(); ++I) {
-+    MCPhysReg Chosen = 0;
-+    for (MCPhysReg Cand : Region.ScratchCandidates[I]) {
++  auto choose = [&](ArrayRef<MCPhysReg> Candidates) -> MCPhysReg {
++    for (MCPhysReg Cand : Candidates) {
 +      const BitVector &Storage = getRegStorage(BC, Cand);
 +      if (Storage.anyCommon(Assigned))
 +        continue;
@@ -1549,13 +1696,22 @@ index 000000000..4e71d75d2
 +      // caller. Otherwise check the caller.
 +      if (!Region.CalleeClobbers.test(Cand) && !isDeadAfterCall(Site, Cand))
 +        continue;
-+      Chosen = Cand;
 +      Assigned |= Storage;
-+      break;
++      return Cand;
 +    }
++    return 0;
++  };
++  for (unsigned I = 0; I < Region.RenamedRegs.size(); ++I) {
++    const MCPhysReg Chosen = choose(Region.ScratchCandidates[I]);
 +    if (!Chosen)
 +      return false;
 +    Renames.emplace_back(Region.RenamedRegs[I], Chosen);
++  }
++  for (unsigned I = 0; I < Region.SavedRegs.size(); ++I) {
++    const MCPhysReg Chosen = choose(Region.SaveCandidates[I]);
++    if (!Chosen)
++      return false;
++    Saves.emplace_back(Region.SavedRegs[I], Chosen);
 +  }
 +  return true;
 +}
@@ -1600,7 +1756,8 @@ index 000000000..4e71d75d2
 +
 +bool PartialInlining::inlineFastPath(const CallSite &Site,
 +                                     const FastRegion &Region,
-+                                     const RenameList &Renames) {
++                                     const RenameList &Renames,
++                                     const RenameList &Saves) {
 +  BinaryFunction &Caller = *Site.Caller;
 +  BinaryFunction &Callee = *Site.Callee;
 +  BinaryContext &BC = Caller.getBinaryContext();
@@ -1640,20 +1797,35 @@ index 000000000..4e71d75d2
 +    BB->removeSuccessor(Cont);
 +  }
 +
-+  // Move the original call into the slow-path block.
++  // Create the copies of the region blocks.
 +  MCInst Call = *CallIt;
 +  BB->eraseInstruction(CallIt);
 +  BinaryBasicBlock *Slow = Caller.addBasicBlock();
 +  Slow->setCFIState(CFIState);
-+  Slow->addInstruction(std::move(Call));
-+
-+  // Create the copies of the region blocks.
 +  DenseMap<const BinaryBasicBlock *, BinaryBasicBlock *> Clones;
 +  for (const BinaryBasicBlock *RB : Region.Blocks) {
 +    BinaryBasicBlock *NB = Caller.addBasicBlock();
 +    NB->setCFIState(CFIState);
 +    Clones[RB] = NB;
 +  }
++
++  // The copy starts by saving the registers that it overwrites although the
++  // callee needs their values when it re-executes. The slow-path block
++  // restores them and performs the original call, its last instruction.
++  for (const auto &[Reg, Scratch] : Saves) {
++    MCInst Save, Restore;
++    const bool Created = MIB.createRegisterCopy(Save, Scratch, Reg) &&
++                         MIB.createRegisterCopy(Restore, Reg, Scratch);
++    (void)Created;
++    assert(Created && "register copies were verified during analysis");
++    if (RAState) {
++      MIB.setRAState(Save, *RAState);
++      MIB.setRAState(Restore, *RAState);
++    }
++    Clones[Region.Blocks.front()]->addInstruction(std::move(Save));
++    Slow->addInstruction(std::move(Restore));
++  }
++  Slow->addInstruction(std::move(Call));
 +
 +  double SlowFlow = 0;
 +  for (const BinaryBasicBlock *RB : Region.Blocks) {
@@ -1687,8 +1859,8 @@ index 000000000..4e71d75d2
 +        const MCSymbol *Target = MIB.getTargetSymbol(NewInst);
 +        const BinaryBasicBlock *TargetBB = Callee.getBasicBlockForLabel(Target);
 +        BinaryBasicBlock *NewTarget =
-+            TargetBB && Region.InRegion.count(TargetBB) ? Clones[TargetBB]
-+                                                        : Slow;
++            TargetBB && Region.isRegionEdge(RB, TargetBB) ? Clones[TargetBB]
++                                                          : Slow;
 +        MIB.replaceBranchTarget(NewInst, NewTarget->getLabel(), BC.Ctx.get());
 +      }
 +      if (RAState)
@@ -1702,7 +1874,7 @@ index 000000000..4e71d75d2
 +    for (const BinaryBasicBlock *Succ : RB->successors()) {
 +      const double EdgeFlow = Flow * Probs[I++];
 +      BinaryBasicBlock *Target = nullptr;
-+      if (Region.InRegion.count(Succ)) {
++      if (Region.isRegionEdge(RB, Succ)) {
 +        Target = Clones[Succ];
 +      } else {
 +        Target = Slow;
@@ -1719,7 +1891,7 @@ index 000000000..4e71d75d2
 +  // The call graph uses the call count annotation, if present, as the edge
 +  // weight. Only slow-path invocations still call the callee.
 +  if (ErrorOr<uint64_t &> CallCount =
-+          MIB.tryGetAnnotationAs<uint64_t>(Slow->front(), "Count"))
++          MIB.tryGetAnnotationAs<uint64_t>(Slow->back(), "Count"))
 +    *CallCount = Slow->getKnownExecutionCount();
 +  if (!IsTailCall)
 +    Slow->addSuccessor(Cont, Slow->getKnownExecutionCount(), 0);
@@ -1727,7 +1899,7 @@ index 000000000..4e71d75d2
 +
 +  // splitAt() does not move landing pad information, and the invoke (if any)
 +  // moved to the slow-path block.
-+  if (Caller.hasEHRanges() || MIB.isInvoke(Slow->front()))
++  if (Caller.hasEHRanges() || MIB.isInvoke(Slow->back()))
 +    Caller.recomputeLandingPads();
 +  return true;
 +}
@@ -1752,7 +1924,7 @@ index 000000000..4e71d75d2
 +    auto BI = BB->branch_info_begin();
 +    for (const BinaryBasicBlock *Succ : BB->successors()) {
 +      const double PFastSucc =
-+          Region.InRegion.count(Succ) ? Region.PFast.lookup(Succ) : 0.0;
++          Region.isRegionEdge(BB, Succ) ? Region.PFast.lookup(Succ) : 0.0;
 +      if (BI->Count != BinaryBasicBlock::COUNT_NO_PROFILE)
 +        BI->Count = subtract(BI->Count, Flow * Probs[I] * PFastSucc);
 +      ++I;
@@ -1800,7 +1972,8 @@ index 000000000..4e71d75d2
 +                      << *Callee << ": " << Region->Blocks.size() << " blocks, "
 +                      << Region->NumCopiedInsts
 +                      << " instructions, p(fast) = " << Region->FastProb
-+                      << ", renamed " << Region->RenamedRegs.size() << '\n');
++                      << ", renamed " << Region->RenamedRegs.size()
++                      << ", saved " << Region->SavedRegs.size() << '\n');
 +    It->second = std::move(Region);
 +    return It->second.get();
 +  };
@@ -1887,12 +2060,12 @@ index 000000000..4e71d75d2
 +    const FastRegion &Region = *Regions[Site.Callee];
 +    const bool IsTailCall =
 +        MIB.isTailCall(Site.BB->getInstructionAtIndex(Site.InstIdx));
-+    RenameList Renames;
-+    if (!chooseScratchRegisters(Site, Region, Renames)) {
++    RenameList Renames, Saves;
++    if (!chooseScratchRegisters(Site, Region, Renames, Saves)) {
 +      ++NumSitesNoScratch;
 +      continue;
 +    }
-+    if (!inlineFastPath(Site, Region, Renames))
++    if (!inlineFastPath(Site, Region, Renames, Saves))
 +      continue;
 +    updateCalleeProfile(*Site.Callee, Region, Site.Count);
 +    Modified.insert(Site.Caller);
@@ -1900,17 +2073,24 @@ index 000000000..4e71d75d2
 +    NumInlinedFramedSites += Region.HasFrame;
 +    NumTailCallSites += IsTailCall;
 +    NumRenamedRegs += Renames.size();
++    NumSavedRegs += Saves.size();
 +    NumCopiedInsts += Region.NumCopiedInsts;
 +    DynFastCalls += Site.Count * Region.FastProb;
 +    DynSlowCalls += Site.Count * (1.0 - Region.FastProb);
-+    if (opts::Verbosity >= 1)
++    if (opts::Verbosity >= 1) {
 +      BC.outs() << "BOLT-INFO: partial inlining: " << *Site.Callee << " into "
 +                << *Site.Caller << " (count " << Site.Count << ", p(fast) "
 +                << format("%.3f", Region.FastProb) << " callee, "
 +                << format("%.3f", Site.FastProb) << " site, "
 +                << Region.NumCopiedInsts << " insns, " << Renames.size()
-+                << " renamed regs" << (Region.HasFrame ? ", frame elided" : "")
++                << " renamed regs";
++      if (!Saves.empty())
++        BC.outs() << ", " << Saves.size() << " saved regs";
++      if (!Region.CutEdges.empty())
++        BC.outs() << ", first iteration of a loop";
++      BC.outs() << (Region.HasFrame ? ", frame elided" : "")
 +                << (IsTailCall ? ", tail call" : "") << ")\n";
++    }
 +  }
 +
 +  BC.outs() << "BOLT-INFO: partial inlining: " << NumCandidates
@@ -1919,7 +2099,7 @@ index 000000000..4e71d75d2
 +            << " call sites (" << NumInlinedFramedSites
 +            << " with frame elision, " << NumTailCallSites << " tail calls), "
 +            << NumCopiedInsts << " instructions copied, " << NumRenamedRegs
-+            << " registers renamed\n";
++            << " registers renamed, " << NumSavedRegs << " registers saved\n";
 +  if (NumSitesNoScratch)
 +    BC.outs() << "BOLT-INFO: partial inlining: skipped " << NumSitesNoScratch
 +              << " call sites without free scratch registers\n";
@@ -1996,10 +2176,10 @@ index 3d77ff10e..efa52b2ac 100644
  
    Manager.registerPass(std::make_unique<ThreeWayBranch>(),
 diff --git a/bolt/lib/Target/AArch64/AArch64MCPlusBuilder.cpp b/bolt/lib/Target/AArch64/AArch64MCPlusBuilder.cpp
-index d6940b0cb..d4125a3a1 100644
+index d6940b0cb..274bbb152 100644
 --- a/bolt/lib/Target/AArch64/AArch64MCPlusBuilder.cpp
 +++ b/bolt/lib/Target/AArch64/AArch64MCPlusBuilder.cpp
-@@ -230,6 +230,195 @@ public:
+@@ -230,6 +230,212 @@ public:
      return isLoadFromStack(Inst);
    }
  
@@ -2164,6 +2344,23 @@ index d6940b0cb..d4125a3a1 100644
 +      Regs.append(std::begin(DTemps), std::end(DTemps));
 +    else if (FPR128.contains(Reg))
 +      Regs.append(std::begin(QTemps), std::end(QTemps));
++  }
++
++  bool createRegisterCopy(MCInst &Inst, MCPhysReg Dst,
++                          MCPhysReg Src) const override {
++    // mov Xd, Xm, an alias of orr Xd, xzr, Xm. GPR64 does not contain SP.
++    const MCRegisterClass &GPR64 =
++        RegInfo->getRegClass(AArch64::GPR64RegClassID);
++    if (!GPR64.contains(Dst) || !GPR64.contains(Src) || Dst == AArch64::XZR ||
++        Src == AArch64::XZR)
++      return false;
++    Inst.clear();
++    Inst.setOpcode(AArch64::ORRXrs);
++    Inst.addOperand(MCOperand::createReg(Dst));
++    Inst.addOperand(MCOperand::createReg(AArch64::XZR));
++    Inst.addOperand(MCOperand::createReg(Src));
++    Inst.addOperand(MCOperand::createImm(0));
++    return true;
 +  }
 +
 +  MCPhysReg getFullyDefinedReg(MCPhysReg Reg) const override {
@@ -2475,6 +2672,184 @@ index 000000000..e6e853dd7
 +  ldp x29, x30, [sp], #16
 +  ret
 +  .size main, .-main
+diff --git a/bolt/test/AArch64/partial-inline-loop.s b/bolt/test/AArch64/partial-inline-loop.s
+new file mode 100644
+index 000000000..88fcea5ab
+--- /dev/null
++++ b/bolt/test/AArch64/partial-inline-loop.s
+@@ -0,0 +1,172 @@
++## Check that partial inlining copies a fast path that runs through a loop:
++## the region contains the first iteration, and the back edge of the loop
++## falls back to the original call like any other slow exit.
++
++# RUN: llvm-mc -filetype=obj -triple aarch64-unknown-unknown %s -o %t.o
++# RUN: link_fdata %s %t.o %t.fdata
++# RUN: %clang %cflags %t.o -o %t.exe -Wl,-q
++# RUN: llvm-strip --strip-unneeded %t.exe
++# RUN: llvm-bolt %t.exe -o %t.bolt --data %t.fdata --partial-inline -v=2 \
++# RUN:   --print-partial-inline --print-only=main 2>&1 | FileCheck %s
++# RUN: llvm-objdump -d --no-show-raw-insn --disassemble-symbols=lookup \
++# RUN:   %t.bolt | FileCheck %s --check-prefix=CHECK-CALLEE
++
++## With the average profile model the loop that iterates more often is
++## transformed as well.
++# RUN: llvm-bolt %t.exe -o %t.avg --data %t.fdata --partial-inline -v=1 \
++# RUN:   --partial-inline-profile-model=average 2>&1 \
++# RUN:   | FileCheck %s --check-prefix=CHECK-AVG
++
++## Without loop support both callees are rejected.
++# RUN: llvm-bolt %t.exe -o %t.noloop --data %t.fdata --partial-inline -v=2 \
++# RUN:   --partial-inline-loops=false 2>&1 \
++# RUN:   | FileCheck %s --check-prefix=CHECK-NOLOOP
++
++## A loop that stores before its back edge has no fast region: the back edge
++## is a slow exit, and the callee would store again when it re-executes.
++# CHECK-DAG: no fast region in fill: side-effect
++# CHECK-DAG: BOLT-INFO: partial inlining: lookup into main (count 1000, p(fast) 0.971 callee, 0.970 site, 8 insns, 0 renamed regs, first iteration of a loop)
++## The chain of 'walk' is longer: 500 of the 1500 executions of its loop
++## header come from the back edge. The flow through the region predicts that
++## 67% of the calls return from the copy, but if every traversal of the back
++## edge belongs to another call, only 50% do. The worst-case model uses this
++## bound, and 50% is below the threshold.
++# CHECK-NOT: partial inlining: walk into main
++# CHECK-NOT: partial inlining: fill into main
++# CHECK: BOLT-INFO: partial inlining: 2 callees with a fast region (0 with frame elision); inlined 1 call sites
++# CHECK: BOLT-INFO: partial inlining: estimated 971 calls avoided on fast paths (32.36% of profiled direct calls), 29 slow-path calls re-execute the copied region
++
++# CHECK:      Binary Function "main" after partial-inlining
++## The slow exit performs the original call. It is reached from the latch.
++# CHECK:      [[SLOW:.LBB[0-9]+]] (1 instructions
++# CHECK-NEXT:   Exec Count : 29
++# CHECK-NEXT:   Predecessors: [[LATCH:.LBB[0-9]+]]
++# CHECK-NEXT:   bl lookup # Count: 29
++## Entry block of the callee and, after it, the loop header.
++# CHECK:      [[ENTRY:.LBB[0-9]+]] (1 instructions
++# CHECK-NEXT:   Exec Count : 1000
++# CHECK-NEXT:   Predecessors:
++# CHECK-NEXT:   ldr x8, [x0]
++# CHECK-NEXT:   Successors: [[HEADER:.LBB[0-9]+]] (mispreds: 0, count: 1000)
++# CHECK:      [[HEADER]] (3 instructions
++# CHECK-NEXT:   Exec Count : 1000
++## The header of the copy has no predecessor but the entry: the back edge
++## does not return to it.
++# CHECK-NEXT:   Predecessors: [[ENTRY]]
++# CHECK-NEXT:   ldr x9, [x8]
++# CHECK-NEXT:   cmp x9, x1
++# CHECK-NEXT:   b.ne [[LATCH]]
++# CHECK-NEXT:   Successors: [[LATCH]] (mispreds: 0, count: 58), [[FOUND:.LBB[0-9]+]] (mispreds: 0, count: 942)
++# CHECK:      [[FOUND]] (1 instructions
++# CHECK-NEXT:   Exec Count : 942
++# CHECK-NEXT:   Predecessors: [[HEADER]]
++# CHECK-NEXT:   ldr x0, [x8, #0x8]
++## The latch: the end of the chain is a second fast exit, the next node is
++## the slow exit.
++# CHECK:      [[LATCH]] (2 instructions
++# CHECK-NEXT:   Exec Count : 58
++# CHECK-NEXT:   Predecessors: [[HEADER]]
++# CHECK-NEXT:   ldr x8, [x8, #0x10]
++# CHECK-NEXT:   cbnz x8, [[SLOW]]
++# CHECK-NEXT:   Successors: [[SLOW]] (mispreds: 0, count: 29), [[MISS:.LBB[0-9]+]] (mispreds: 0, count: 29)
++# CHECK:      [[MISS]] (1 instructions
++# CHECK-NEXT:   Exec Count : 29
++# CHECK-NEXT:   Predecessors: [[LATCH]]
++# CHECK-NEXT:   mov x0, xzr
++
++## The callee keeps its loop.
++# CHECK-CALLEE:      <lookup>:
++# CHECK-CALLEE-NEXT:   ldr x8, [x0]
++# CHECK-CALLEE-NEXT:   ldr x9, [x8]
++# CHECK-CALLEE-NEXT:   cmp x9, x1
++# CHECK-CALLEE-NEXT:   b.ne
++# CHECK-CALLEE-NEXT:   ldr x0, [x8, #0x8]
++# CHECK-CALLEE-NEXT:   ret
++# CHECK-CALLEE-NEXT:   ldr x8, [x8, #0x10]
++# CHECK-CALLEE-NEXT:   cbnz x8,
++# CHECK-CALLEE-NEXT:   mov x0, xzr
++# CHECK-CALLEE-NEXT:   ret
++
++# CHECK-AVG-DAG: partial inlining: lookup into main
++# CHECK-AVG-DAG: partial inlining: walk into main (count 1000, p(fast) 0.667 callee, 0.667 site, 8 insns, 0 renamed regs, first iteration of a loop)
++
++# CHECK-NOLOOP-DAG: no fast region in lookup: no-fast-exit
++# CHECK-NOLOOP-DAG: no fast region in walk: no-fast-exit
++# CHECK-NOLOOP-DAG: no fast region in fill: no-fast-exit
++# CHECK-NOLOOP: inlined 0 call sites
++
++  .text
++## lookup(bucket, key): walk a chain whose first node usually has the key.
++##   for (n = *bucket; ; ) { if (n->key == key) return n->val;
++##                           n = n->next; if (!n) return 0; }
++  .macro CHAIN name
++  .globl \name
++  .type \name,@function
++  .p2align 2
++\name:
++  ldr x8, [x0]
++\name\()_loop:
++  ldr x9, [x8]
++  cmp x9, x1
++\name\()_br:
++  b.ne \name\()_next
++\name\()_found:
++  ldr x0, [x8, #8]
++  ret
++\name\()_next:
++  ldr x8, [x8, #16]
++\name\()_latch:
++  cbnz x8, \name\()_loop
++\name\()_miss:
++  mov x0, xzr
++  ret
++  .size \name, .-\name
++  .endm
++
++  CHAIN lookup
++# FDATA: 1 lookup #lookup_br# 1 lookup #lookup_next# 0 60
++# FDATA: 1 lookup #lookup_br# 1 lookup #lookup_found# 0 970
++# FDATA: 1 lookup #lookup_latch# 1 lookup #lookup_loop# 0 30
++# FDATA: 1 lookup #lookup_latch# 1 lookup #lookup_miss# 0 30
++
++  CHAIN walk
++# FDATA: 1 walk #walk_br# 1 walk #walk_next# 0 550
++# FDATA: 1 walk #walk_br# 1 walk #walk_found# 0 950
++# FDATA: 1 walk #walk_latch# 1 walk #walk_loop# 0 500
++# FDATA: 1 walk #walk_latch# 1 walk #walk_miss# 0 50
++
++## fill(p, n): do { *p++ = 0; } while (--n); usually with n = 1.
++  .globl fill
++  .type fill,@function
++  .p2align 2
++fill:
++  str xzr, [x0], #8
++  subs x1, x1, #1
++fill_br:
++  b.ne fill
++# FDATA: 1 fill #fill_br# 1 fill 0 0 50
++# FDATA: 1 fill #fill_br# 1 fill #fill_ret# 0 1000
++fill_ret:
++  ret
++  .size fill, .-fill
++
++  .globl main
++  .type main,@function
++  .p2align 2
++main:
++# FDATA: 0 [unknown] 0 1 main 0 0 1000
++  stp x29, x30, [sp, #-16]!
++  mov x29, sp
++call_fill:
++  bl fill
++# FDATA: 1 main #call_fill# 1 fill 0 0 1000
++call_lookup:
++  bl lookup
++# FDATA: 1 main #call_lookup# 1 lookup 0 0 1000
++call_walk:
++  bl walk
++# FDATA: 1 main #call_walk# 1 walk 0 0 1000
++  mov w0, wzr
++  ldp x29, x30, [sp], #16
++  ret
++  .size main, .-main
 diff --git a/bolt/test/AArch64/partial-inline-pauth.s b/bolt/test/AArch64/partial-inline-pauth.s
 new file mode 100644
 index 000000000..91a3e883f
@@ -2678,10 +3053,10 @@ index 000000000..91a3e883f
 +  .xword 0
 diff --git a/bolt/test/AArch64/partial-inline-reject.s b/bolt/test/AArch64/partial-inline-reject.s
 new file mode 100644
-index 000000000..1705772dc
+index 000000000..15cde4152
 --- /dev/null
 +++ b/bolt/test/AArch64/partial-inline-reject.s
-@@ -0,0 +1,252 @@
+@@ -0,0 +1,260 @@
 +## Check that partial inlining rejects hot fast paths that cannot be copied
 +## safely, and that the calls to them are left unchanged.
 +
@@ -2694,13 +3069,21 @@ index 000000000..1705772dc
 +# RUN: llvm-objdump -d --no-show-raw-insn --disassemble-symbols=main %t.bolt \
 +# RUN:   | FileCheck %s --check-prefix=CHECK-MAIN
 +
++## Without loop support, a callee whose entry block is a loop header has no
++## fast region at all.
++# RUN: llvm-bolt %t.exe -o %t.noloop --data %t.fdata --partial-inline -v=2 \
++# RUN:   --partial-inline-loops=false 2>&1 \
++# RUN:   | FileCheck %s --check-prefix=CHECK-NOLOOP
++# CHECK-NOLOOP: no fast region in looping: no-fast-exit
++
 +## A store before the fast/slow decision would be repeated on the slow path.
 +# CHECK-DAG: no fast region in rc_release: side-effect
 +## So would a barrier.
 +# CHECK-DAG: no fast region in fenced: side-effect
-+## The argument register is overwritten before the decision, so the callee
-+## would re-execute with a different argument.
-+# CHECK-DAG: no fast region in chain: reg-clobber
++## A floating-point argument register is overwritten before the decision, so
++## the callee would re-execute with a different argument. Only general
++## purpose registers are saved and restored (see partial-inline-save-regs.s).
++# CHECK-DAG: no fast region in fpscale: reg-clobber
 +## The stack pointer and the return address differ between caller and callee.
 +# CHECK-DAG: no fast region in stackaddr: stack-access
 +# CHECK-DAG: no fast region in retaddr: stack-access
@@ -2713,15 +3096,16 @@ index 000000000..1705772dc
 +# CHECK-DAG: no fast region in halfdirty: frame-mismatch
 +## The fast path is taken by only 10% of the calls.
 +# CHECK-DAG: no fast region in rarely: cold-fast-path
-+## The entry block is a loop header.
-+# CHECK-DAG: no fast region in looping: no-fast-exit
++## The entry block is the header of a loop that iterates 9 times per call:
++## the first iteration is the fast path of only 10% of the calls.
++# CHECK-DAG: no fast region in looping: cold-fast-path
 +
 +# CHECK: BOLT-INFO: partial inlining: 0 callees with a fast region (0 with frame elision); inlined 0 call sites
-+# CHECK: callees without a usable fast region:{{.*}} no-fast-exit=1 stack-access=2 frame-mismatch=3 side-effect=2 reg-clobber=1 {{.*}}cold-fast-path=1
++# CHECK: callees without a usable fast region:{{.*}} stack-access=2 frame-mismatch=3 side-effect=2 reg-clobber=1 {{.*}}cold-fast-path=2
 +
 +# CHECK-MAIN: bl {{.*}} <rc_release>
 +# CHECK-MAIN: bl {{.*}} <fenced>
-+# CHECK-MAIN: bl {{.*}} <chain>
++# CHECK-MAIN: bl {{.*}} <fpscale>
 +# CHECK-MAIN: bl {{.*}} <stackaddr>
 +# CHECK-MAIN: bl {{.*}} <retaddr>
 +# CHECK-MAIN: bl {{.*}} <stackarg>
@@ -2774,18 +3158,17 @@ index 000000000..1705772dc
 +  SLOWPATH fenced
 +  .size fenced, .-fenced
 +
-+FUNC chain
-+  ldr x0, [x0, #8]
-+  ldr x8, [x0]
-+chain_br:
-+  cbz x8, chain_slow
-+# FDATA: 1 chain #chain_br# 1 chain #chain_slow# 0 10
-+# FDATA: 1 chain #chain_br# 1 chain #chain_fast# 0 990
-+chain_fast:
-+  mov x0, x8
++FUNC fpscale
++  fadd d0, d0, d0
++  fcmp d0, #0.0
++fpscale_br:
++  b.mi fpscale_slow
++# FDATA: 1 fpscale #fpscale_br# 1 fpscale #fpscale_slow# 0 10
++# FDATA: 1 fpscale #fpscale_br# 1 fpscale #fpscale_fast# 0 990
++fpscale_fast:
 +  ret
-+  SLOWPATH chain
-+  .size chain, .-chain
++  SLOWPATH fpscale
++  .size fpscale, .-fpscale
 +
 +FUNC stackaddr
 +  mov x8, sp
@@ -2907,9 +3290,9 @@ index 000000000..1705772dc
 +call_fenced:
 +  bl fenced
 +# FDATA: 1 main #call_fenced# 1 fenced 0 0 1000
-+call_chain:
-+  bl chain
-+# FDATA: 1 main #call_chain# 1 chain 0 0 1000
++call_fpscale:
++  bl fpscale
++# FDATA: 1 main #call_fpscale# 1 fpscale 0 0 1000
 +call_stackaddr:
 +  bl stackaddr
 +# FDATA: 1 main #call_stackaddr# 1 stackaddr 0 0 1000
@@ -2931,6 +3314,178 @@ index 000000000..1705772dc
 +call_looping:
 +  bl looping
 +# FDATA: 1 main #call_looping# 1 looping 0 0 1000
++  ldp x29, x30, [sp], #16
++  ret
++  .size main, .-main
+diff --git a/bolt/test/AArch64/partial-inline-save-regs.s b/bolt/test/AArch64/partial-inline-save-regs.s
+new file mode 100644
+index 000000000..6106c8486
+--- /dev/null
++++ b/bolt/test/AArch64/partial-inline-save-regs.s
+@@ -0,0 +1,166 @@
++## Check that partial inlining copies a fast path that overwrites a register
++## whose entry value the callee needs when it re-executes: the copy first
++## saves the register in a scratch register, and the slow exit restores it in
++## front of the original call.
++
++# RUN: llvm-mc -filetype=obj -triple aarch64-unknown-unknown %s -o %t.o
++# RUN: link_fdata %s %t.o %t.fdata
++# RUN: %clang %cflags %t.o -o %t.exe -Wl,-q
++# RUN: llvm-strip --strip-unneeded %t.exe
++# RUN: llvm-bolt %t.exe -o %t.bolt --data %t.fdata --partial-inline -v=1 \
++# RUN:   --print-partial-inline --print-only=main 2>&1 | FileCheck %s
++# RUN: llvm-objdump -d --no-show-raw-insn --disassemble-symbols=tail %t.bolt \
++# RUN:   | FileCheck %s --check-prefix=CHECK-TAIL
++
++## Without saving, both callees are rejected.
++# RUN: llvm-bolt %t.exe -o %t.nosave --data %t.fdata --partial-inline -v=2 \
++# RUN:   --partial-inline-save-regs=false 2>&1 \
++# RUN:   | FileCheck %s --check-prefix=CHECK-NOSAVE
++# CHECK-NOSAVE-DAG: no fast region in chain: reg-clobber
++# CHECK-NOSAVE-DAG: no fast region in framed: reg-clobber
++# CHECK-NOSAVE: inlined 0 call sites
++
++# CHECK-DAG: BOLT-INFO: partial inlining: chain into main (count 1000, p(fast) 0.990 callee, 0.980 site, 5 insns, 0 renamed regs, 1 saved regs)
++# CHECK-DAG: BOLT-INFO: partial inlining: chain into tail (count 1000, p(fast) 0.990 callee, 0.980 site, 5 insns, 0 renamed regs, 1 saved regs, tail call)
++# CHECK-DAG: BOLT-INFO: partial inlining: framed into main (count 1000, p(fast) 0.990 callee, 0.990 site, 6 insns, 1 renamed regs, 1 saved regs, frame elided)
++# CHECK: BOLT-INFO: partial inlining: 2 callees with a fast region (1 with frame elision); inlined 3 call sites (1 with frame elision, 1 tail calls), 16 instructions copied, 1 registers renamed, 3 registers saved
++
++# CHECK:      Binary Function "main" after partial-inlining
++## The code after the two calls.
++# CHECK:        mov w0, wzr
++## framed: x19 is renamed to x10 (the region itself uses x9), and x0 is saved
++## in x11. The slow exit restores x0 and performs the original call.
++# CHECK:      [[SLOW2:.LBB[0-9]+]] (2 instructions
++# CHECK-NEXT:   Exec Count : 10
++# CHECK-NEXT:   Predecessors: [[COPY2:.LBB[0-9]+]]
++# CHECK-NEXT:   mov x0, x11
++# CHECK-NEXT:   bl framed # Count: 10
++# CHECK:      [[COPY2]] (5 instructions
++# CHECK-NEXT:   Exec Count : 1000
++# CHECK-NEXT:   Predecessors:
++# CHECK-NEXT:   mov x11, x0
++# CHECK-NEXT:   mov x10, x0
++# CHECK-NEXT:   ldr x0, [x10, #0x8]
++# CHECK-NEXT:   ldr x9, [x0]
++# CHECK-NEXT:   cbz x9, [[SLOW2]]
++# CHECK:        add x0, x9, x10
++## chain: x0 is saved in x9 before it is overwritten.
++# CHECK:      [[SLOW1:.LBB[0-9]+]] (2 instructions
++# CHECK-NEXT:   Exec Count : 10
++# CHECK-NEXT:   Predecessors: [[COPY1:.LBB[0-9]+]]
++# CHECK-NEXT:   mov x0, x9
++# CHECK-NEXT:   bl chain # Count: 10
++# CHECK:      [[COPY1]] (4 instructions
++# CHECK-NEXT:   Exec Count : 1000
++# CHECK-NEXT:   Predecessors:
++# CHECK-NEXT:   mov x9, x0
++# CHECK-NEXT:   ldr x0, [x0, #0x8]
++# CHECK-NEXT:   ldr x8, [x0]
++# CHECK-NEXT:   cbz x8, [[SLOW1]]
++# CHECK:        mov x0, x8
++
++## At a tail-call site the register is restored in front of the tail call.
++# CHECK-TAIL:      <tail>:
++# CHECK-TAIL-NEXT:   add x0, x0, #0x10
++# CHECK-TAIL:        mov x0, x9
++# CHECK-TAIL-NEXT:   b {{.*}} <chain>
++# CHECK-TAIL-NEXT:   mov x9, x0
++# CHECK-TAIL-NEXT:   ldr x0, [x0, #0x8]
++# CHECK-TAIL-NEXT:   ldr x8, [x0]
++# CHECK-TAIL-NEXT:   cbz x8, {{.*}}
++# CHECK-TAIL-NEXT:   mov x0, x8
++# CHECK-TAIL-NEXT:   ret
++
++  .text
++## long chain(struct node *p) { p = p->next; if (p->val) return p->val; ... }
++## The argument register is overwritten before the decision.
++  .globl chain
++  .type chain,@function
++  .p2align 2
++chain:
++  ldr x0, [x0, #8]
++  ldr x8, [x0]
++chain_br:
++  cbz x8, chain_slow
++# FDATA: 1 chain #chain_br# 1 chain #chain_slow# 0 20
++# FDATA: 1 chain #chain_br# 1 chain #chain_fast# 0 1980
++chain_fast:
++  mov x0, x8
++  ret
++chain_slow:
++  stp x29, x30, [sp, #-16]!
++  mov x29, sp
++  bl helper
++  ldp x29, x30, [sp], #16
++  ret
++  .size chain, .-chain
++
++## The same with a frame: the argument is first copied to a callee-saved
++## register, which the slow path reads, and then overwritten.
++  .globl framed
++  .type framed,@function
++  .p2align 2
++framed:
++  stp x29, x30, [sp, #-32]!
++  str x19, [sp, #16]
++  mov x29, sp
++  mov x19, x0
++  ldr x0, [x19, #8]
++  ldr x9, [x0]
++framed_br:
++  cbz x9, framed_slow
++# FDATA: 1 framed #framed_br# 1 framed #framed_slow# 0 10
++# FDATA: 1 framed #framed_br# 1 framed #framed_fast# 0 990
++framed_fast:
++  add x0, x9, x19
++  ldr x19, [sp, #16]
++  ldp x29, x30, [sp], #32
++  ret
++framed_slow:
++  mov x0, x19
++  bl helper
++  ldr x19, [sp, #16]
++  ldp x29, x30, [sp], #32
++  ret
++  .size framed, .-framed
++
++## Clobbers x9-x11, so calls to chain and framed clobber them as well.
++  .globl helper
++  .type helper,@function
++  .p2align 2
++helper:
++  eor x9, x0, x0, lsr #3
++  mul x10, x9, x9
++  add x11, x10, x9
++  mov x0, x11
++  ret
++  .size helper, .-helper
++
++  .globl tail
++  .type tail,@function
++  .p2align 2
++tail:
++# FDATA: 0 [unknown] 0 1 tail 0 0 1000
++  add x0, x0, #16
++tail_call:
++  b chain
++# FDATA: 1 tail #tail_call# 1 chain 0 0 1000
++  .size tail, .-tail
++
++  .globl main
++  .type main,@function
++  .p2align 2
++main:
++# FDATA: 0 [unknown] 0 1 main 0 0 1000
++  stp x29, x30, [sp, #-16]!
++  mov x29, sp
++call_chain:
++  bl chain
++# FDATA: 1 main #call_chain# 1 chain 0 0 1000
++call_framed:
++  bl framed
++# FDATA: 1 main #call_framed# 1 framed 0 0 1000
++  mov w0, wzr
 +  ldp x29, x30, [sp], #16
 +  ret
 +  .size main, .-main
@@ -3185,17 +3740,19 @@ index 000000000..263688f05
 +  .quad 0
 diff --git a/bolt/test/runtime/AArch64/partial-inline.c b/bolt/test/runtime/AArch64/partial-inline.c
 new file mode 100644
-index 000000000..38c989107
+index 000000000..63c80d093
 --- /dev/null
 +++ b/bolt/test/runtime/AArch64/partial-inline.c
-@@ -0,0 +1,185 @@
+@@ -0,0 +1,240 @@
 +// Check that partial inlining preserves program behavior end to end: compile
 +// at -O2, collect an instrumentation profile, optimize with partial inlining
 +// and compare the output with the original binary. The program contains fast
 +// paths with and without stack frames, with stores after the fast/slow
-+// decision and with callee-saved temporaries, and also callees that must be
-+// rejected. Repeat with return address signing and BTI enabled, which on
-+// hardware with FEAT_PAuth makes a wrong frame elision fault.
++// decision, with callee-saved temporaries, through the first iteration of a
++// loop and with an argument register that is overwritten before the
++// decision, and also callees that must be rejected. Repeat with return
++// address signing and BTI enabled, which on hardware with FEAT_PAuth makes a
++// wrong frame elision fault.
 +
 +// REQUIRES: system-linux,bolt-runtime
 +
@@ -3226,6 +3783,8 @@ index 000000000..38c989107
 +// CHECK-DAG: partial inlining: memo_get into
 +// CHECK-DAG: partial inlining: buf_putc into
 +// CHECK-DAG: partial inlining: pool_free into
++// CHECK-DAG: partial inlining: chain_get into {{.*}}first iteration of a loop
++// CHECK-DAG: partial inlining: next_value into {{.*}}1 saved regs
 +// CHECK-NOT: partial inlining: obj_release into
 +// CHECK: BOLT-INFO: partial inlining: {{[0-9]+}} callees with a fast region
 +
@@ -3339,6 +3898,41 @@ index 000000000..38c989107
 +  return 1;
 +}
 +
++// A loop on the fast path: the first node of a chain usually has the key.
++// Longer walks and misses leave the copy through the back edge of the loop.
++struct hnode {
++  uint64_t key, val;
++  struct hnode *next;
++};
++static struct hnode hnodes[128];
++static struct hnode *buckets[64];
++NOINLINE uint64_t chain_get(struct hnode **bucket, uint64_t key) {
++  for (struct hnode *n = *bucket; n; n = n->next)
++    if (n->key == key)
++      return n->val;
++  return 0;
++}
++
++// The argument register is overwritten before the decision. The slow path
++// starts again from the argument, so it computes a different result if the
++// fallback call does not receive the original value.
++struct lnode {
++  struct lnode *next;
++  long val;
++};
++static struct lnode ring[64];
++long slow_walks;
++NOINLINE long next_value(struct lnode *p) {
++  p = p->next;
++  if (p->val >= 0)
++    return p->val;
++  long sum = 0;
++  for (int i = 0; i < 8; i++, p = p->next)
++    sum = sum * 31 + p->val;
++  slow_walks++;
++  return sum;
++}
++
 +static uint64_t rng(uint64_t *s) {
 +  *s ^= *s << 13;
 +  *s ^= *s >> 7;
@@ -3353,6 +3947,15 @@ index 000000000..38c989107
 +  struct pool p = {0, 0, 0};
 +  void *window[64] = {0};
 +  struct obj o = {100, 0};
++  // Two nodes per bucket; the second one is rarely looked up.
++  for (int i = 0; i < 64; i++) {
++    hnodes[2 * i] = (struct hnode){i, 3 * i + 1, &hnodes[2 * i + 1]};
++    hnodes[2 * i + 1] = (struct hnode){i + 64, 5 * i + 2, 0};
++    buckets[i] = &hnodes[2 * i];
++  }
++  // A ring in which every 16th value is negative.
++  for (int i = 0; i < 64; i++)
++    ring[i] = (struct lnode){&ring[(i + 1) & 63], (i & 15) == 7 ? -i : i};
 +  for (long i = 0; i < n; i++) {
 +    uint64_t r = rng(&s);
 +    trace_event(2, (long)r);
@@ -3365,15 +3968,22 @@ index 000000000..38c989107
 +      pool_free(&p, window[slot]);
 +    window[slot] = pool_alloc(&p);
 +    acc += obj_release(&o);
++    // 1 of 16 lookups needs the second node, 1 of 64 finds nothing.
++    unsigned b = (unsigned)(r >> 8) & 63;
++    uint64_t key = b;
++    if (((r >> 16) & 15) == 0)
++      key += ((r >> 20) & 3) ? 64 : 128;
++    acc += chain_get(&buckets[b], key);
++    acc += (uint64_t)next_value(&ring[(r >> 24) & 63]);
 +  }
 +  flush(&b);
 +  printf("acc=%016llx misses=%llu hash=%016llx live=%zu slabs=%zu "
-+         "trace=%lu destroyed=%ld\n",
++         "trace=%lu destroyed=%ld walks=%ld\n",
 +         (unsigned long long)acc, (unsigned long long)misses,
 +         (unsigned long long)b.hash, p.live, p.slabs, trace_bytes,
-+         o.destroyed);
++         o.destroyed, slow_walks);
 +  return 0;
 +}
 -- 
-2.56.0
+2.56.1
 

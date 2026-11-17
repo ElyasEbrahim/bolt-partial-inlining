@@ -9,6 +9,12 @@ OUT=${OUT:-/work/rw}
 JOBS=${JOBS:-$(nproc)}
 CC=${CC:-clang}
 LDRELOC="-fuse-ld=lld -Wl,--emit-relocs"
+# A fixed build date (2026-01-01). CPython embeds __DATE__ and __TIME__
+# (Modules/getbuildinfo.c); the linker merges that string with all other
+# constant strings, so a different build time changed about 45,000 bytes of
+# the binary, including code. clang takes both macros from SOURCE_DATE_EPOCH,
+# which makes repeated builds byte-identical.
+export SOURCE_DATE_EPOCH=${SOURCE_DATE_EPOCH:-1767225600}
 mkdir -p "$SRC" "$OUT"
 
 fetch() { # url sha256

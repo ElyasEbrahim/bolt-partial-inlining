@@ -6,6 +6,63 @@ project uses [Semantic Versioning](https://semver.org/).
 
 ## [Unreleased]
 
+### Added
+
+- Fast paths through the first iteration of a loop: the back edges of a loop
+  in the fast region leave the region like any other slow exit, so a lookup
+  that usually succeeds at the first node of a hash chain is copied up to the
+  point where it would move on. The worst-case profile model now also bounds
+  the slow-path calls by the profile counts of the slow-exit edges, because
+  the counts of a loop header mix the first iteration with later ones.
+  Hidden option `--partial-inline-loops` (on).
+- Saved registers: a register that the fast path overwrites before its
+  decision although the callee reads its entry value again when it
+  re-executes (`p = p->next`) is copied to a scratch register at the start of
+  the copy and restored in front of the fallback call. AArch64 general
+  purpose registers; new MCPlusBuilder hook `createRegisterCopy()`. Hidden
+  option `--partial-inline-save-regs` (on).
+- Lit tests `AArch64/partial-inline-loop.s` and
+  `AArch64/partial-inline-save-regs.s`; the end-to-end runtime test covers
+  both cases.
+- Microbenchmarks `lookup` (hash chain lookup, mostly hits the first node),
+  `lookup-deep` (the same binary with most lookups beyond the first node) and
+  `chain` (argument overwritten before the decision).
+- Variant `bolt-pi-noext`: the pass without both extensions, which writes the
+  same binaries as version 1.2.0; a report table compares it with `bolt-pi`.
+- `scripts/coverage.py` and report tables: which calls of the real programs
+  the pass reaches, the rejected callees by reason, and the effect of the
+  region size limits (design document, Section 5.6).
+
+### Changed
+
+- `unsafe` contains only the case of a store before the decision. Its second
+  function, which overwrites its argument before the decision, is the new
+  `chain` microbenchmark, since the pass now transforms it.
+- `AArch64/partial-inline-reject.s` checks a clobbered floating-point
+  argument instead of a general purpose one, and a loop at the entry that
+  usually iterates is now rejected as a cold fast path.
+- The Dockerfile builds the baseline BOLT and the real-world workloads before
+  it copies the patch and the scripts, so changing either does not rebuild
+  them.
+- All results are from a new continuous run of `make experiments`. In it,
+  libxml2's confidence interval excludes 1.0 for the first time (1.014x
+  [1.005, 1.031]); the same binaries measured 1.000x and 1.009x in the two
+  previous runs, and the design document does not count it as a gain.
+
+### Fixed
+
+- Version 1.2.0 presented partial inlining on top of `-inline-all` on jq as a
+  resolved 2.4% gain (1.024x [1.015, 1.028]) and the non-significant result
+  of 1.1.0 as superseded. The new run measured 1.011x [1.000, 1.022], p = 0.10,
+  for the same binaries: the effect is about 1-2% and significant in one of
+  three runs.
+- The real-world workloads build reproducibly. CPython embeds its build time,
+  and an image built from the Dockerfile of an earlier version at a later
+  time contains a different CPython binary (about 45,000 bytes differ,
+  including code). `benchmarks/realworld/build.sh` sets `SOURCE_DATE_EPOCH`;
+  a second build in a fresh container now gives byte-identical binaries for
+  all six programs.
+
 ## [1.2.0] - 2026-11-13
 
 ### Added

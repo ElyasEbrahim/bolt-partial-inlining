@@ -1,4 +1,4 @@
-/* unsafe: hot calls to functions whose fast paths are unsafe to duplicate.
+/* unsafe: hot calls to a function whose fast path is unsafe to duplicate.
  * usage: unsafe [N=100000000] */
 #include "../common.h"
 #include "obj.h"
@@ -17,7 +17,6 @@ int main(int argc, char **argv) {
   for (long i = 0; i < n; i++) {
     struct obj *o = &objs[i & (K - 1)];
     acc += obj_release(o);
-    acc += (uint64_t)chain_value(o);
   }
   printf("unsafe n=%ld destroyed=%ld acc=%llu\n", n, objs_destroyed,
          (unsigned long long)acc);
