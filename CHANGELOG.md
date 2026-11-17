@@ -6,6 +6,8 @@ project uses [Semantic Versioning](https://semver.org/).
 
 ## [Unreleased]
 
+## [1.3.0] - 2026-11-17
+
 ### Added
 
 - Fast paths through the first iteration of a loop: the back edges of a loop
@@ -159,7 +161,8 @@ repository whose results had been collected in several separate runs.
 - The BOLT test-suite comparison (`make check-bolt`) is extracted from the
   final image and fails if the result of any existing test changes.
 
-[Unreleased]: https://github.com/ElyasEbrahim/bolt-partial-inlining/compare/v1.2.0...HEAD
+[Unreleased]: https://github.com/ElyasEbrahim/bolt-partial-inlining/compare/v1.3.0...HEAD
+[1.3.0]: https://github.com/ElyasEbrahim/bolt-partial-inlining/compare/v1.2.0...v1.3.0
 [1.2.0]: https://github.com/ElyasEbrahim/bolt-partial-inlining/compare/v1.1.0...v1.2.0
 [1.1.0]: https://github.com/ElyasEbrahim/bolt-partial-inlining/compare/v1.0.0...v1.1.0
 [1.0.0]: https://github.com/ElyasEbrahim/bolt-partial-inlining/releases/tag/v1.0.0
