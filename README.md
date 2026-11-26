@@ -64,7 +64,11 @@ together with `--partial-inline`). On the other real programs the saved
 instructions (at most 1.5%) are at or below the resolution of the
 measurement (about +-1%, see the A/A control). libxml2 measured 1.014x
 [1.005, 1.031] in this run, but 1.000x and 1.009x for the same binaries in
-the two previous runs, so it is not counted as a measurable gain. jq and
+the two previous runs and 1.002x in a second run of this version, so it is
+not counted as a measurable gain. That second run, from a fresh clone with
+the release image, reproduced all profiles and BOLT outputs byte for byte and
+every headline result within 1%
+([Section 5.7](docs/design.md#57-measurement-validity)). jq and
 libxml2 were chosen by a screening of six candidate programs whose procedure
 and results are in the design document. Without `--partial-inline`, the
 patched `llvm-bolt` writes byte-identical binaries to upstream, and no
@@ -196,13 +200,14 @@ the fast/slow decision are not inlined; of a loop only the first iteration is.
 Stack frame elision and saving overwritten registers are implemented for
 AArch64 only (general purpose registers). BOLT profiles are context-insensitive,
 which the default worst-case model compensates for conservatively. Call sites
-in functions that BOLT cannot rewrite, such as interpreter loops with computed
-gotos, are out of reach. See [`docs/design.md`](docs/design.md#7-limitations-and-future-work)
+in functions that BOLT cannot rewrite, such as the interpreter loops of Lua,
+CPython, jq and SQLite, are out of reach. See [`docs/design.md`](docs/design.md#7-limitations-and-future-work)
 for details and future work.
 
 ## Contributing
 
-See [CONTRIBUTING.md](CONTRIBUTING.md). Changes are listed in
+See [CONTRIBUTING.md](CONTRIBUTING.md); the project follows the
+[LLVM Community Code of Conduct](CODE_OF_CONDUCT.md). Changes are listed in
 [CHANGELOG.md](CHANGELOG.md).
 
 ## License

@@ -6,6 +6,33 @@ project uses [Semantic Versioning](https://semver.org/).
 
 ## [Unreleased]
 
+### Added
+
+- `CODE_OF_CONDUCT.md` (the LLVM Community Code of Conduct), issue templates
+  for miscompilations and performance results, and a pull-request template.
+- Design document, Section 5.7: a second complete run of version 1.3.0 from a
+  fresh clone with the release image reproduced all profiles and BOLT outputs
+  byte for byte and every headline result within 1%; the nominal libxml2
+  gain did not reproduce (1.002x), and jq on top of `-inline-all` measured
+  1.006x.
+
+### Fixed
+
+- Design document: `mixed`, `trace` and `memo` execute 13-16% fewer
+  instructions (not 13-25%); clang left 3 of the 8 fast-path functions of the
+  microbenchmarks without shrink-wrapping (not 3 of 6); the confidence
+  interval of `bufwrite` excludes 1.0 as well as that of libxml2; `too-large`
+  rejects 0-7 callees per program (not 1-7); the `bolt-pi-skip` analysis is
+  in Section 5.3; Section 5 marks the numbers that do not come from the
+  published run.
+- Design document, Sections 5.6, 5.7 and 7: BOLT does not rewrite Lua's
+  interpreter loop with `switch` dispatch either (an exploratory build, which
+  is also 12.8% slower), and Lua's training profile depends on the path and
+  the environment of the training run, both of which `make experiments`
+  fixes.
+- CONTRIBUTING: export the patch to its existing file name; `git format-patch
+  -o` shortens it, and `make check-patch` would then find two patch files.
+
 ## [1.3.0] - 2026-11-17
 
 ### Added

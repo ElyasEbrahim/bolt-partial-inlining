@@ -8,7 +8,7 @@ toolchain and BOLT revisions.
 
 | File | Content |
 |---|---|
-| [`REPORT.md`](REPORT.md) | all tables: speedups, instruction counts, `pool` analysis, transformation statistics, dyno stats, code size, rejection reasons |
+| [`REPORT.md`](REPORT.md) | all tables: speedups, the effect of the extensions, instruction counts, `pool` analysis, coverage on the real programs, transformation statistics, dyno stats, code size, rejection reasons |
 | `speedup.png`, `dynostats.png` | plots of the speedups and of the profile-estimated dynamic effect |
 | `report.json` | machine-readable version of the report |
 | `micro/`, `realworld/` | `raw.csv` (one row per run: wall, user and system time, max RSS), `summary.json`/`.md` (statistics) and `bench.log` |

@@ -37,9 +37,13 @@ patch. To work on it:
 git clone https://github.com/llvm/llvm-project.git && cd llvm-project
 git checkout -b partial-inlining "$(cat ../bolt-partial-inlining/patches/LLVM_COMMIT)"
 git am ../bolt-partial-inlining/patches/0001-*.patch
-# ... edit, build, test ...
-git format-patch -1 -o ../bolt-partial-inlining/patches/
+# ... edit, build, test, then amend the commit ...
+git format-patch -1 --stdout \
+  > ../bolt-partial-inlining/patches/0001-BOLT-Add-profile-guided-partial-inlining-of-fast-paths.patch
 ```
+
+Write the patch to its existing file name as above: `git format-patch -o`
+shortens the name, and `make check-patch` would then find two patch files.
 
 `docker/dev.Dockerfile` provides the toolchain used for development (clang and
 lld 23, ninja, valgrind, clang-format). Build and test with
