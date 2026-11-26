@@ -162,7 +162,11 @@ The base image is pinned by digest, but the packages installed into it (the
 Ubuntu archive and clang from apt.llvm.org) are not: an image built at a later
 date can contain a newer compiler than the one behind `results/`. The release
 image is the exact environment of the published results; its ID is recorded in
-`results/environment.txt`.
+`results/environment.txt`. A rebuild from the same sources can show a
+different image ID even when nothing changed, because Docker writes a new
+image index for every build; to compare a rebuild with the release image, use
+the platform manifest (`docker image ls --tree`) or the layers
+(`docker image inspect --format '{{.RootFS.Layers}}'`).
 
 `make experiments` runs [`scripts/run_experiments.sh`](scripts/run_experiments.sh)
 in the image: it builds all BOLT variants from instrumentation profiles,

@@ -6,6 +6,8 @@ project uses [Semantic Versioning](https://semver.org/).
 
 ## [Unreleased]
 
+## [1.3.1] - 2026-11-26
+
 ### Added
 
 - `CODE_OF_CONDUCT.md` (the LLVM Community Code of Conduct), issue templates
@@ -15,6 +17,10 @@ project uses [Semantic Versioning](https://semver.org/).
   byte for byte and every headline result within 1%; the nominal libxml2
   gain did not reproduce (1.002x), and jq on top of `-inline-all` measured
   1.006x.
+
+- README: how to compare a rebuilt image with the release image; a rebuild
+  from the same sources can show another image ID, because Docker writes a
+  new image index for every build.
 
 ### Fixed
 
@@ -188,7 +194,8 @@ repository whose results had been collected in several separate runs.
 - The BOLT test-suite comparison (`make check-bolt`) is extracted from the
   final image and fails if the result of any existing test changes.
 
-[Unreleased]: https://github.com/ElyasEbrahim/bolt-partial-inlining/compare/v1.3.0...HEAD
+[Unreleased]: https://github.com/ElyasEbrahim/bolt-partial-inlining/compare/v1.3.1...HEAD
+[1.3.1]: https://github.com/ElyasEbrahim/bolt-partial-inlining/compare/v1.3.0...v1.3.1
 [1.3.0]: https://github.com/ElyasEbrahim/bolt-partial-inlining/compare/v1.2.0...v1.3.0
 [1.2.0]: https://github.com/ElyasEbrahim/bolt-partial-inlining/compare/v1.1.0...v1.2.0
 [1.1.0]: https://github.com/ElyasEbrahim/bolt-partial-inlining/compare/v1.0.0...v1.1.0
