@@ -1,7 +1,7 @@
 BOLT-WARNING: specifying numeric value "1" for option -icf is deprecated
 BOLT-INFO: shared object or position-independent executable detected
 BOLT-INFO: Target architecture: aarch64
-BOLT-INFO: BOLT version: 0a0e65b2e8ff6043d85ab07c4d23ea18bf0b9b7d
+BOLT-INFO: BOLT version: 1be60cbf47e9b102a653f9cb54fc965fe71a1ec4
 BOLT-INFO: first alloc address is 0x0
 BOLT-INFO: creating new program header table at address 0x800000, offset 0x800000
 BOLT-WARNING: debug info will be stripped from the binary. Use -update-debug-sections to keep it.
@@ -14,50 +14,50 @@ BOLT-INFO: 2301 out of 7601 functions in the binary (30.3%) have non-empty execu
 BOLT-INFO: 43 functions with profile could not be optimized
 BOLT-INFO: profile for 1 objects was ignored
 BOLT-INFO: profile quality metrics for the hottest 1000 functions (reporting top 5% values): function CFG discontinuity 0.00%; call graph flow conservation gap 0.00%; CFG flow conservation gap 0.00% (weighted) 0.00% (worst); exception handling usage 0.00% (of total BBEC) 0.00% (of total InvokeEC)
-BOLT-INFO: ICF folded 88 out of 7991 functions in 4 passes. 0 functions had jump tables.
+BOLT-INFO: ICF folded 88 out of 7991 functions in 3 passes. 0 functions had jump tables.
 BOLT-INFO: Removing all identical functions will save 5.95 KB of code space. Folded functions were called 3655791 times based on profile.
 BOLT-INFO: basic block reordering modified layout of 1592 functions (69.19% of profiled, 19.92% of total)
 BOLT-INFO: 2 Functions were reordered by LoopInversionPass
 BOLT-INFO: program-wide dynostats after all optimizations before SCTC and FOP:
 
-           259012342 : executed forward branches
-           113844334 : taken forward branches
-            33533214 : executed backward branches
-            17382225 : taken backward branches
-            20595306 : executed unconditional branches
-            74736494 : all function calls
-            16637524 : indirect calls
-             3878289 : PLT calls
-          2303791926 : executed instructions
-           594680133 : executed load instructions
-           338003301 : executed store instructions
+           258739851 : executed forward branches
+           113669672 : taken forward branches
+            33439979 : executed backward branches
+            17330089 : taken backward branches
+            20564373 : executed unconditional branches
+            74684822 : all function calls
+            16637525 : indirect calls
+             3878292 : PLT calls
+          2301093012 : executed instructions
+           593907504 : executed load instructions
+           337308435 : executed store instructions
                    0 : taken jump table branches
                    0 : taken unknown indirect branches
-           313140862 : total branches
-           151821865 : taken branches
-           161318997 : non-taken conditional branches
-           131226559 : taken conditional branches
-           292545556 : all conditional branches
+           312744203 : total branches
+           151564134 : taken branches
+           161180069 : non-taken conditional branches
+           130999761 : taken conditional branches
+           292179830 : all conditional branches
                    0 : linker-inserted veneer calls
 
-           272430159 : executed forward branches (+5.2%)
-            22947313 : taken forward branches (-79.8%)
-            20115397 : executed backward branches (-40.0%)
-             8799590 : taken backward branches (-49.4%)
-             3583399 : executed unconditional branches (-82.6%)
-            74736494 : all function calls (=)
-            16637524 : indirect calls (=)
-             3878289 : PLT calls (=)
-          2286189774 : executed instructions (-0.8%)
-           594680133 : executed load instructions (=)
-           338003301 : executed store instructions (=)
+           272113604 : executed forward branches (+5.2%)
+            22809746 : taken forward branches (-79.9%)
+            20066226 : executed backward branches (-40.0%)
+             8751261 : taken backward branches (-49.5%)
+             3583667 : executed unconditional branches (-82.6%)
+            74684822 : all function calls (=)
+            16637525 : indirect calls (=)
+             3878292 : PLT calls (=)
+          2283509481 : executed instructions (-0.8%)
+           593907504 : executed load instructions (=)
+           337308435 : executed store instructions (=)
                    0 : taken jump table branches (=)
                    0 : taken unknown indirect branches (=)
-           296128955 : total branches (-5.4%)
-            35330302 : taken branches (-76.7%)
-           260798653 : non-taken conditional branches (+61.7%)
-            31746903 : taken conditional branches (-75.8%)
-           292545556 : all conditional branches (=)
+           295763497 : total branches (-5.4%)
+            35144674 : taken branches (-76.8%)
+           260618823 : non-taken conditional branches (+61.7%)
+            31561007 : taken conditional branches (-75.9%)
+           292179830 : all conditional branches (=)
                    0 : linker-inserted veneer calls (=)
 
 BOLT-WARNING: failed to patch entries in _PyToken_Init/1(*2). The function will not be optimized
@@ -86,10 +86,18 @@ BOLT-WARNING: failed to patch entries in _PyThreadState_New. The function will n
 BOLT-WARNING: failed to patch entries in PyThread_tss_get. The function will not be optimized
 BOLT-WARNING: failed to patch entries in PyThread_tss_is_created. The function will not be optimized
 BOLT-WARNING: failed to patch entries in _Py_fstat_noraise. The function will not be optimized
-BOLT-INFO: Starting stub-insertion pass
-BOLT-INFO: Inserted 1448 stubs in the hot area and 976 stubs in the cold area. Shared 0 times, iterated 3 times.
+BOLT-INFO: relaxing branches for compact code model (<128MB)
+BOLT-INFO: starting clustered relaxation pass
+BOLT-INFO: built 1 function fragment cluster(s)
+BOLT-INFO: cluster: 0
+BOLT-INFO:   4026 fragment(s)
+BOLT-INFO:   1345428 estimated bytes without thunks
+BOLT-INFO:   8652 thunk bytes
+BOLT-INFO: relaxed 3464 calls with long thunks
+BOLT-INFO: 721 long thunks created
+BOLT-INFO: 2743 long thunks reused
 BOLT-INFO: rewritten pac-ret DWARF info in 2 out of 7991 functions (0.03%).
 BOLT-INFO: padding code to 0xc00000 to accommodate hot text
 BOLT-INFO: patched build-id (flipped first and last bits)
 BOLT-INFO: setting __hot_start to 0xa00000
-BOLT-INFO: setting __hot_end to 0xaa8bd4
+BOLT-INFO: setting __hot_end to 0xab032c

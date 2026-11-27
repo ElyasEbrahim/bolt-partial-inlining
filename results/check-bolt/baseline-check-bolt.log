@@ -1,9 +1,11 @@
--- Testing: 780 tests, 12 workers --
-FAIL: BOLT :: AArch64/icp-inline.c (59 of 780)
+-- Testing: 805 tests, 12 workers --
+FAIL: BOLT :: AArch64/dwarf5-duplicate-file-names.s (29 of 805)
+FAIL: BOLT :: AArch64/icp-inline.c (60 of 805)
 ********************
-Failed Tests (1):
+Failed Tests (2):
+  BOLT :: AArch64/dwarf5-duplicate-file-names.s
   BOLT :: AArch64/icp-inline.c
 
 
-Total Discovered Tests: 860
-  Failed: 1 (0.12%)
+Total Discovered Tests: 885
+  Failed: 2 (0.23%)

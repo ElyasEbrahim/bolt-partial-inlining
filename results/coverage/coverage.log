@@ -1,6 +1,7 @@
-sqlite {"sites": 9, "avoided": 1000630, "avoided_pct": 4.2, "insns_pct": -0.16104570313793928, "text_pct": 0.03797660641045116}
-lua {"sites": 18, "avoided": 8437234, "avoided_pct": 15.45, "insns_pct": -1.270153506396779, "text_pct": 0.6802098584675451}
-cpython {"sites": 17, "avoided": 2576849, "avoided_pct": 4.69, "insns_pct": -0.6308619767275715, "text_pct": 0.10959905014156544}
-zstd {"sites": 5, "avoided": 819, "avoided_pct": 1.24, "insns_pct": -0.0010785561002066323, "text_pct": 0.24339783375927954}
-jq {"sites": 21, "avoided": 52156991, "avoided_pct": 26.4, "insns_pct": -2.969623252243451, "text_pct": 0.23986567522187574}
-libxml2 {"sites": 7, "avoided": 4866953, "avoided_pct": 25.72, "insns_pct": -2.3939266578887133, "text_pct": 0.5607771897954348}
+sqlite {"sites": 9, "avoided": 1000630, "avoided_pct": 4.2, "insns_pct": -0.16104570313793928, "text_pct": 0.08615967850131394}
+lua {"sites": 18, "avoided": 8437234, "avoided_pct": 15.45, "insns_pct": -1.270153506396779, "text_pct": 0.5624796471180319}
+cpython {"sites": 17, "avoided": 2576854, "avoided_pct": 4.69, "insns_pct": -0.6316083694858984, "text_pct": 0.0504743006943371}
+zstd {"sites": 1, "avoided": 462476, "avoided_pct": 46.07, "insns_pct": 0.29661814156793054, "text_pct": -0.04211080405316489}
+jq {"sites": 21, "avoided": 52156991, "avoided_pct": 26.4, "insns_pct": -2.969623252243451, "text_pct": 0.18535144371397955}
+libxml2 {"sites": 7, "avoided": 4866953, "avoided_pct": 25.72, "insns_pct": -2.3939266578887133, "text_pct": 0.45467987579476565}
+clang {"sites": 2080, "avoided": 900947512, "avoided_pct": 22.01, "insns_pct": -1.932842340994507, "text_pct": 0.39627375977275925}

@@ -1,7 +1,7 @@
 BOLT-WARNING: specifying numeric value "1" for option -icf is deprecated
 BOLT-INFO: shared object or position-independent executable detected
 BOLT-INFO: Target architecture: aarch64
-BOLT-INFO: BOLT version: 0a0e65b2e8ff6043d85ab07c4d23ea18bf0b9b7d
+BOLT-INFO: BOLT version: 1be60cbf47e9b102a653f9cb54fc965fe71a1ec4
 BOLT-INFO: first alloc address is 0x0
 BOLT-INFO: creating new program header table at address 0x200000, offset 0x200000
 BOLT-INFO: marking .fini_array as GNU_RELRO
@@ -477,8 +477,8 @@ BOLT-WARNING: failed to post-process indirect branches for subexpr/1(*2)
 BOLT-WARNING: failed to post-process indirect branches for luaK_dischargevars/1(*2)
 BOLT-WARNING: failed to post-process indirect branches for luaE_warning/1(*2)
 BOLT-WARNING: failed to post-process indirect branches for statement/1(*2)
-BOLT-WARNING: failed to post-process indirect branches for llex/1(*2)
 BOLT-WARNING: failed to post-process indirect branches for luaV_equalobj/1(*2)
+BOLT-WARNING: failed to post-process indirect branches for llex/1(*2)
 BOLT-WARNING: failed to post-process indirect branches for match_class/1(*2)
 BOLT-WARNING: failed to post-process indirect branches for luaV_execute/1(*2)
 BOLT-INFO: Starting pass: pointer-auth-cfi-analyzer
@@ -1336,8 +1336,16 @@ BOLT-INFO: Finished pass: assign-sections
 BOLT-INFO: Starting pass: aarch64-relaxation
 BOLT-INFO: Finished pass: aarch64-relaxation
 BOLT-INFO: Starting pass: long-jmp
-BOLT-INFO: Starting stub-insertion pass
-BOLT-INFO: Inserted 43 stubs in the hot area and 18 stubs in the cold area. Shared 0 times, iterated 3 times.
+BOLT-INFO: relaxing branches for compact code model (<128MB)
+BOLT-INFO: starting clustered relaxation pass
+BOLT-INFO: built 1 function fragment cluster(s)
+BOLT-INFO: cluster: 0
+BOLT-INFO:   557 fragment(s)
+BOLT-INFO:   146452 estimated bytes without thunks
+BOLT-INFO:   1608 thunk bytes
+BOLT-INFO: relaxed 417 calls with long thunks
+BOLT-INFO: 134 long thunks created
+BOLT-INFO: 283 long thunks reused
 BOLT-INFO: Finished pass: long-jmp
 BOLT-INFO: Starting pass: pointer-auth-cfi-fixup
 BOLT-INFO: rewritten pac-ret DWARF info in 1 out of 785 functions (0.13%).
@@ -1359,33 +1367,33 @@ BOLT-INFO: Finished pass: clean-mc-state
 BOLT-INFO: padding code to 0x600000 to accommodate hot text
 BOLT-INFO: patched build-id (flipped first and last bits)
 BOLT: writing new section .fini_array
- data at 0xaaaadc80f350
+ data at 0xaaaaeeb92460
  of size 8
  at offset 291984 with content size 8
 BOLT: writing new section .init_array
- data at 0xaaaadc424a90
+ data at 0xaaaaeed6b0d0
  of size 8
  at offset 291992 with content size 8
 BOLT: writing new section .data.rel.ro
- data at 0xaaaadc69a0c0
+ data at 0xaaaaeeaca850
  of size 4376
  at offset 292000 with content size 4376
 BOLT: writing new section .text
- data at 0xffff84200000
- of size 94940
- at offset 4194304 with content size 94940
+ data at 0xffffb0400000
+ of size 96924
+ at offset 4194304 with content size 96924
 BOLT: writing new section .text.cold
- data at 0xaaaadcd24c40
- of size 37088
- at offset 4289280 with content size 37088
+ data at 0xaaaaeeaac9c0
+ of size 38952
+ at offset 4291264 with content size 38952
 BOLT: writing new section .bolt.new.eh_frame
- data at 0xaaaadcd7cfe0
- of size 32816
- at offset 6291456 with content size 32816
+ data at 0xaaaaee983250
+ of size 35496
+ at offset 6291456 with content size 35496
 BOLT: writing new section .relocated.eh_frame
- data at 0xaaaadcd74e70
+ data at 0xaaaaee975e80
  of size 33116
- at offset 6324272 with content size 33116
+ at offset 6326952 with content size 33116
 BOLT-INFO: not writing section header for section .fini_array
 BOLT-INFO: not writing section header for section .init_array
 BOLT-INFO: not writing section header for section .data.rel.ro
@@ -1394,7 +1402,7 @@ BOLT-INFO: writing section header for .text.cold
 BOLT-INFO: writing section header for .eh_frame
 BOLT-INFO: writing section header for .eh_frame_hdr
 BOLT-INFO: setting __hot_start to 0x400000
-BOLT-INFO: setting __hot_end to 0x4172dc
+BOLT-INFO: setting __hot_end to 0x417a9c
 BOLT-INFO: not writing section header for section .fini_array
 BOLT-INFO: not writing section header for section .init_array
 BOLT-INFO: not writing section header for section .data.rel.ro

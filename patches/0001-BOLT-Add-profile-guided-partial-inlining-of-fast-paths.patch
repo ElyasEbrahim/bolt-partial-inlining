@@ -1,49 +1,55 @@
-From e1392e36ed66f516cddbcab207856e59fc79a699 Mon Sep 17 00:00:00 2001
+From ded3e7ddf121c2ee07e7e202b2a4e23eb338c12c Mon Sep 17 00:00:00 2001
 From: ElyasEbrahim <klaymarshmello51@gmail.com>
 Date: Fri, 6 Nov 2026 21:12:51 +0800
 Subject: [PATCH] [BOLT] Add profile-guided partial inlining of fast paths
 
-Hot functions often consist of a short fast path that returns early (cache
-hit, buffer with free space, disabled tracing level, non-empty free list)
-and a large slow path. They are too big to be inlined as a whole, cannot be
-inlined across translation units without LTO, and are frequently not
-shrink-wrapped, so every call also executes the full prologue and epilogue.
+Hot functions often consist of a short fast path that returns early
+(cache hit, buffer with free space, disabled trace level, non-empty free
+list) and a large slow path. They are too big to be inlined as a whole,
+cannot be inlined across translation units without LTO, and are often
+not shrink-wrapped, so every call also executes the full prologue and
+epilogue.
 
-Add a new pass, enabled with --partial-inline, that copies the profile-hot,
-acyclic fast region of a callee into its hot direct call sites:
+Add a pass, enabled with --partial-inline (off by default), that copies
+the profile-hot fast region of a callee into its hot direct call sites:
 
-* Instructions that only build or tear down the callee's stack frame are
-  not copied (SP adjustments, callee-saved register spills and reloads, FP
-  setup, return address signing/authentication, CFI, BTI landing pads).
-* Callee-saved registers used as temporaries by the fast path are renamed
-  to scratch registers that are clobbered by the call or provably dead
-  after it (using RegAnalysis, so that callers relying on interprocedural
-  register allocation stay correct).
-* Returns fall through to the code after the call (or remain returns at
-  tail call sites).
-* Every edge leaving the region branches to the original call. The region
-  is required to be free of side effects on every path to such a slow
-  exit, and a register whose entry value is read and overwritten there is
-  saved in a scratch register and restored in front of the call. The
+* Instructions that only build or tear down the callee's stack frame
+  are not copied (SP adjustments, callee-saved register spills and
+  reloads, FP setup, return address signing and authentication, CFI,
+  BTI landing pads).
+* Callee-saved registers that the fast path uses as temporaries are
+  renamed to scratch registers that are clobbered by the call or
+  provably dead after it (using RegAnalysis, so that callers relying on
+  interprocedural register allocation stay correct).
+* Returns fall through to the code after the call, or remain returns at
+  tail call sites.
+* Every edge leaving the region branches to the original call. The
+  region must be free of side effects on every path to such a slow
+  exit, and a register whose entry value is read and overwritten there
+  is saved in a scratch register and restored in front of the call. The
   callee therefore re-executes from its entry with the state of the
-  original call and is not modified.
-* Of a loop on the fast path the region contains the first iteration: the
-  back edges are slow exits. This covers lookups that usually succeed at
-  the first node of a hash chain or list.
+  original call. The callee itself is not modified.
+* Of a loop on the fast path, the region contains the first iteration
+  and the back edges are slow exits. This covers lookups that usually
+  succeed at the first node of a hash chain or list.
 
 Call sites are selected with a conservative worst-case model for the
-context-insensitive profile and transformed hottest first. Block and edge
-counts of the caller copies, the slow-path call and the callee are updated.
+context-insensitive profile and transformed hottest first. Block and
+edge counts of the copies, the slow-path call and the callee are
+updated.
 
-New MCPlusBuilder hooks: analyzeFrameInstruction() (frame instruction
-classification), getCallSiteScratchRegs(), getFullyDefinedReg() and
-createRegisterCopy(). Frame elision and register saving are implemented
-for AArch64; on X86 only fast paths that do not touch the stack and do not
-overwrite such a register are copied.
+New MCPlusBuilder hooks: analyzeFrameInstruction(),
+getCallSiteScratchRegs(), getFullyDefinedReg() and createRegisterCopy().
+Frame elision and register saving are implemented for AArch64. On X86,
+only fast paths that neither touch the stack nor need a saved register
+are copied.
 
-On an Apple M3 Max running Linux/AArch64 the pass speeds up fast-path heavy
-microbenchmarks by up to 2.7x over the BOLT baseline, and does not change
-the run time of workloads without the pattern.
+Without --partial-inline, llvm-bolt writes byte-identical binaries. The
+evaluation (microbenchmarks; SQLite, Lua, CPython, zstd, jq, libxml2,
+and clang built with the in-tree Clang-BOLT rules) is in
+https://github.com/ElyasEbrahim/bolt-partial-inlining.
+
+Assisted-by: Claude Code
 ---
  bolt/docs/BOLTAArch64OptimizationStatus.md    |    7 +
  bolt/docs/CommandLineArgumentReference.md     |   43 +
@@ -98,7 +104,7 @@ index 8567e48af..1cedd0d1e 100644
  
  ## Supported Flags With Limitations
 diff --git a/bolt/docs/CommandLineArgumentReference.md b/bolt/docs/CommandLineArgumentReference.md
-index f41b23ec5..034aed0c2 100644
+index c45c42c1d..5b41aed72 100644
 --- a/bolt/docs/CommandLineArgumentReference.md
 +++ b/bolt/docs/CommandLineArgumentReference.md
 @@ -718,6 +718,49 @@
@@ -2131,7 +2137,7 @@ index 000000000..3228d3b7c
 +} // namespace bolt
 +} // namespace llvm
 diff --git a/bolt/lib/Rewrite/BinaryPassManager.cpp b/bolt/lib/Rewrite/BinaryPassManager.cpp
-index 3d77ff10e..efa52b2ac 100644
+index 18c84468b..0e034735c 100644
 --- a/bolt/lib/Rewrite/BinaryPassManager.cpp
 +++ b/bolt/lib/Rewrite/BinaryPassManager.cpp
 @@ -25,6 +25,7 @@
@@ -2150,7 +2156,7 @@ index 3d77ff10e..efa52b2ac 100644
  extern cl::opt<bolt::IdenticalCodeFolding::ICFLevel, false,
                 llvm::bolt::DeprecatedICFNumericOptionParser>
      ICF;
-@@ -158,6 +160,11 @@ static cl::opt<bool> PrintOptimizeBodyless(
+@@ -159,6 +161,11 @@ static cl::opt<bool> PrintOptimizeBodyless(
      cl::desc("print functions after bodyless optimization"), cl::Hidden,
      cl::cat(BoltOptCategory));
  
@@ -2162,7 +2168,7 @@ index 3d77ff10e..efa52b2ac 100644
  static cl::opt<bool>
      PrintPeepholes("print-peepholes",
                     cl::desc("print functions after peephole optimization"),
-@@ -457,6 +464,12 @@ Error BinaryFunctionPassManager::runAllPasses(BinaryContext &BC) {
+@@ -458,6 +465,12 @@ Error BinaryFunctionPassManager::runAllPasses(BinaryContext &BC) {
    Manager.registerPass(std::make_unique<IdenticalCodeFolding>(PrintICF),
                         opts::ICF != IdenticalCodeFolding::ICFLevel::None);
  
@@ -3740,7 +3746,7 @@ index 000000000..263688f05
 +  .quad 0
 diff --git a/bolt/test/runtime/AArch64/partial-inline.c b/bolt/test/runtime/AArch64/partial-inline.c
 new file mode 100644
-index 000000000..63c80d093
+index 000000000..cee7313a1
 --- /dev/null
 +++ b/bolt/test/runtime/AArch64/partial-inline.c
 @@ -0,0 +1,240 @@
@@ -3980,8 +3986,8 @@ index 000000000..63c80d093
 +  printf("acc=%016llx misses=%llu hash=%016llx live=%zu slabs=%zu "
 +         "trace=%lu destroyed=%ld walks=%ld\n",
 +         (unsigned long long)acc, (unsigned long long)misses,
-+         (unsigned long long)b.hash, p.live, p.slabs, trace_bytes,
-+         o.destroyed, slow_walks);
++         (unsigned long long)b.hash, p.live, p.slabs, trace_bytes, o.destroyed,
++         slow_walks);
 +  return 0;
 +}
 -- 

@@ -2,11 +2,11 @@
 
 | Result | upstream | patched |
 |---|---:|---:|
-| FAIL | 1 | 1 |
-| PASS | 689 | 698 |
-| UNSUPPORTED | 138 | 138 |
+| FAIL | 2 | 2 |
+| PASS | 710 | 719 |
+| UNSUPPORTED | 141 | 141 |
 | XFAIL | 1 | 1 |
-| total | 829 | 838 |
+| total | 854 | 863 |
 
 Tests whose result changed: 0
 
@@ -23,6 +23,6 @@ Tests added by the patch: 9
 
 Tests removed: 0
 
-Failing in the patched build: BOLT :: AArch64/icp-inline.c
+Failing in the patched build: BOLT :: AArch64/dwarf5-duplicate-file-names.s, BOLT :: AArch64/icp-inline.c
 
-Failing in the upstream build: BOLT :: AArch64/icp-inline.c
+Failing in the upstream build: BOLT :: AArch64/dwarf5-duplicate-file-names.s, BOLT :: AArch64/icp-inline.c

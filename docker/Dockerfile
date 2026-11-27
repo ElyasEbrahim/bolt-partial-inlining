@@ -6,9 +6,11 @@
 #
 # Stage "builder" checks out LLVM at the commit in patches/LLVM_COMMIT, builds
 # an unmodified ("baseline") BOLT and a patched BOLT with the same toolchain,
-# and runs the BOLT lit test suite for both. Stage "runtime" contains both
-# BOLT builds and their test results, the evaluation workloads (built from
-# pinned, SHA-256 verified sources) and the experiment scripts.
+# and runs the BOLT lit test suite for both. From the same, unpatched sources
+# it also builds the clang workload (benchmarks/realworld/clang). Stage
+# "runtime" contains both BOLT builds and their test results, the evaluation
+# workloads (built from pinned, SHA-256 verified sources) and the experiment
+# scripts.
 
 ARG LLVM_APT_VERSION=23
 # The base image is pinned by digest. The tag ubuntu:24.04 moves, and a moved
@@ -22,8 +24,8 @@ FROM ${UBUNTU_IMAGE} AS base
 ARG LLVM_APT_VERSION
 ARG DEBIAN_FRONTEND=noninteractive
 RUN apt-get update && apt-get install -y --no-install-recommends \
-      build-essential cmake ninja-build python3 python3-psutil git ca-certificates \
-      gnupg curl zlib1g-dev libzstd-dev xz-utils time \
+      build-essential cmake ninja-build python3 python3-psutil python3-pip git \
+      ca-certificates gnupg curl zlib1g-dev libzstd-dev xz-utils time \
       python3-numpy python3-scipy python3-matplotlib \
  && curl -fsSL https://apt.llvm.org/llvm-snapshot.gpg.key \
       | gpg --dearmor -o /usr/share/keyrings/llvm.gpg \
@@ -35,6 +37,10 @@ RUN apt-get update && apt-get install -y --no-install-recommends \
              llvm-readelf llvm-size llvm-strip; do \
       ln -sf /usr/bin/$t-${LLVM_APT_VERSION} /usr/local/bin/$t; done \
  && rm -rf /var/lib/apt/lists/*
+# LLVM requires CMake 3.31 (Ubuntu 24.04 has 3.28). It installs to
+# /usr/local/bin, ahead of the system CMake in PATH.
+RUN python3 -m pip install --no-cache-dir --break-system-packages cmake==3.31.10 \
+ && cmake --version | grep -q 3.31.10
 
 ############################################################################
 FROM base AS builder
@@ -45,7 +51,7 @@ COPY patches/LLVM_COMMIT /llvm/patches/LLVM_COMMIT
 # Shallow, sparse checkout of exactly the pinned commit.
 RUN git init -q src && cd src \
  && git remote add origin https://github.com/llvm/llvm-project.git \
- && git sparse-checkout set bolt llvm cmake third-party libc \
+ && git sparse-checkout set bolt llvm cmake third-party libc clang \
  && git fetch -q --depth 1 --filter=blob:none origin "$(cat /llvm/patches/LLVM_COMMIT)" \
  && git checkout -q FETCH_HEAD \
  && test "$(git rev-parse HEAD)" = "$(cat /llvm/patches/LLVM_COMMIT)" \
@@ -65,6 +71,14 @@ RUN printf '%s\n' '#!/bin/bash' 'set -e' \
 
 # Baseline: unmodified upstream.
 RUN build-bolt /llvm/build-baseline
+# The clang workload, from the same unpatched sources: clang built with the
+# settings of the in-tree Clang-BOLT rules, the sources its training compiles
+# and its timing inputs.
+COPY benchmarks/realworld/clang/ /llvm/clang-workload/
+RUN (SRC=/llvm/src OUT=/opt/clang-workload BUILD=/llvm/build-clang \
+      /llvm/clang-workload/build.sh > /llvm/build-clang.log 2>&1 \
+      || (tail -n 60 /llvm/build-clang.log; exit 1)) \
+ && rm -rf /llvm/build-clang
 # Patched: the patch applied on top of the same commit.
 COPY patches/ /llvm/patches/
 RUN cd /llvm/src && git apply --index /llvm/patches/0001-*.patch \
@@ -91,6 +105,7 @@ COPY benchmarks/realworld/ /workspace/benchmarks/realworld/
 RUN mkdir -p /work && (SRC=/work/src OUT=/work/rw /workspace/benchmarks/realworld/build.sh \
       > /work/build-workloads.log 2>&1 || (tail -n 60 /work/build-workloads.log; exit 1)) \
  && find /work/rw -name '*.o' -delete
+COPY --from=builder /opt/clang-workload /work/rw/clang
 COPY --from=builder /opt/bolt-baseline /opt/bolt-baseline
 COPY --from=builder /opt/bolt-patched /opt/bolt-patched
 COPY --from=builder /llvm/COMMIT /opt/LLVM_COMMIT

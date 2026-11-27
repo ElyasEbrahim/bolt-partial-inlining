@@ -1,0 +1,260 @@
+BOLT-INFO: shared object or position-independent executable detected
+BOLT-INFO: Target architecture: aarch64
+BOLT-INFO: BOLT version: 1be60cbf47e9b102a653f9cb54fc965fe71a1ec4
+BOLT-INFO: first alloc address is 0x0
+BOLT-INFO: enabling relocation mode
+BOLT-INFO: enabling lite mode
+BOLT-INFO: pre-processing profile using branch profile reader
+BOLT-INFO: PointerAuthCFIAnalyzer ran on 2 functions. Ignored 0 functions (0.00%) because of CFI inconsistencies
+BOLT-INFO: number of removed linker-inserted veneers: 0
+BOLT-INFO: 31126 out of 156496 functions in the binary (19.9%) have non-empty execution profile
+BOLT-INFO: 545 functions with profile could not be optimized
+BOLT-INFO: profile for 1 objects was ignored
+BOLT-INFO: profile quality metrics for the hottest 1000 functions (reporting top 5% values): function CFG discontinuity 0.00%; call graph flow conservation gap 0.00%; CFG flow conservation gap 0.00% (weighted) 0.00% (worst); exception handling usage 0.00% (of total BBEC) 0.00% (of total InvokeEC)
+BOLT-INFO: inlined 1066205849 calls at 47040 call sites in 3 iteration(s). Change in binary size: 3848324 bytes.
+BOLT-INFO: basic block reordering modified layout of 21683 functions (69.66% of profiled, 13.83% of total)
+BOLT-INFO: UCE removed 277 blocks and 0 bytes of code
+BOLT-INFO: 27 Functions were reordered by LoopInversionPass
+BOLT-INFO: program-wide dynostats after all optimizations before SCTC and FOP:
+
+         18276872345 : executed forward branches
+          8108809031 : taken forward branches
+          4073090404 : executed backward branches
+          1947031630 : taken backward branches
+          1878893744 : executed unconditional branches
+          4622692085 : all function calls
+           518976797 : indirect calls
+           223019254 : PLT calls
+        161991036483 : executed instructions
+         39260551228 : executed load instructions
+         19504864975 : executed store instructions
+                   0 : taken jump table branches
+                   0 : taken unknown indirect branches
+         24228856493 : total branches
+         11934734405 : taken branches
+         12294122088 : non-taken conditional branches
+         10055840661 : taken conditional branches
+         22349962749 : all conditional branches
+                   0 : linker-inserted veneer calls
+
+         18417148843 : executed forward branches (+0.8%)
+          1646899245 : taken forward branches (-79.7%)
+          3922233227 : executed backward branches (-3.7%)
+          1780603422 : taken backward branches (-8.5%)
+           622527809 : executed unconditional branches (-66.9%)
+          3636950584 : all function calls (-21.3%)
+           517006475 : indirect calls (-0.4%)
+           216699105 : PLT calls (-2.8%)
+        158586227112 : executed instructions (-2.1%)
+         39242935155 : executed load instructions (-0.0%)
+         19503736710 : executed store instructions (-0.0%)
+                   0 : taken jump table branches (=)
+                   0 : taken unknown indirect branches (=)
+         22961909879 : total branches (-5.2%)
+          4050030476 : taken branches (-66.1%)
+         18911879403 : non-taken conditional branches (+53.8%)
+          3427502667 : taken conditional branches (-65.9%)
+         22339382070 : all conditional branches (-0.0%)
+                   0 : linker-inserted veneer calls (=)
+
+BOLT-WARNING: failed to patch entries in _ZL21isMergePassthruOpcodej/1(*2). The function will not be optimized
+BOLT-WARNING: failed to patch entries in _ZN4llvm10AArch64_MC27verifyInstructionPredicatesEjRKNS_13FeatureBitsetE/1(*2). The function will not be optimized
+BOLT-WARNING: failed to patch entries in _ZN4llvm15CaptureAnalysisD2Ev(*2). The function will not be optimized
+BOLT-WARNING: failed to patch entries in _ZN4llvm18BlockFrequencyInfo12setBlockFreqEPKNS_10BasicBlockENS_14BlockFrequencyE. The function will not be optimized
+BOLT-WARNING: failed to patch entries in _ZN4llvm14CaptureTrackerD2Ev(*2). The function will not be optimized
+BOLT-WARNING: failed to patch entries in _ZN4llvm26ConstantFoldUnaryOpOperandEjPNS_8ConstantERKNS_10DataLayoutE. The function will not be optimized
+BOLT-WARNING: failed to patch entries in _ZN4llvm16simplifyICmpInstENS_12CmpPredicateEPNS_5ValueES2_RKNS_13SimplifyQueryE. The function will not be optimized
+BOLT-WARNING: failed to patch entries in _ZN4llvm15simplifyGEPInstEPNS_4TypeEPNS_5ValueENS_8ArrayRefIS3_EENS_14GEPNoWrapFlagsERKNS_13SimplifyQueryE. The function will not be optimized
+BOLT-WARNING: failed to patch entries in _ZN4llvm16simplifyCastInstEjPNS_5ValueEPNS_4TypeERKNS_13SimplifyQueryE. The function will not be optimized
+BOLT-WARNING: failed to patch entries in _ZN4llvm13simplifyBinOpEjPNS_5ValueES1_RKNS_13SimplifyQueryE. The function will not be optimized
+BOLT-WARNING: failed to patch entries in _ZN4llvm31simplifyInstructionWithOperandsEPNS_11InstructionENS_8ArrayRefIPNS_5ValueEEERKNS_13SimplifyQueryE. The function will not be optimized
+BOLT-WARNING: failed to patch entries in _ZNK4llvm8LoopBaseINS_10BasicBlockENS_4LoopEE10verifyLoopEv. The function will not be optimized
+BOLT-WARNING: failed to patch entries in _ZN4llvm16isRemovableAllocEPKNS_8CallBaseEPKNS_17TargetLibraryInfoE. The function will not be optimized
+BOLT-WARNING: failed to patch entries in _ZN4llvm15ScalarEvolution18getCouldNotComputeEv. The function will not be optimized
+BOLT-WARNING: failed to patch entries in _ZN4llvm15ScalarEvolution25getMonotonicPredicateTypeEPKNS_14SCEVAddRecExprENS_7CmpInst9PredicateE. The function will not be optimized
+BOLT-WARNING: failed to patch entries in _ZNK4llvm25PredicatedScalarEvolution12getPredicateEv. The function will not be optimized
+BOLT-WARNING: failed to patch entries in _ZN4llvm27TargetTransformInfoImplBaseD2Ev(*2). The function will not be optimized
+BOLT-WARNING: failed to patch entries in _ZN4llvm24isGuaranteedNotToBeUndefEPKNS_5ValueEPNS_15AssumptionCacheEPKNS_11InstructionEPKNS_13DominatorTreeEj. The function will not be optimized
+BOLT-WARNING: failed to patch entries in _ZN4llvm32isGuaranteedNotToBeUndefOrPoisonEPKNS_5ValueEPNS_15AssumptionCacheEPKNS_11InstructionEPKNS_13DominatorTreeEj. The function will not be optimized
+BOLT-WARNING: failed to patch entries in _ZN4llvm25isGuaranteedNotToBePoisonEPKNS_5ValueEPNS_15AssumptionCacheEPKNS_11InstructionEPKNS_13DominatorTreeEj. The function will not be optimized
+BOLT-WARNING: failed to patch entries in _ZN4llvm24programUndefinedIfPoisonEPKNS_11InstructionE. The function will not be optimized
+BOLT-WARNING: failed to patch entries in _ZN4llvm15getFCmpCondCodeENS_7CmpInst9PredicateE. The function will not be optimized
+BOLT-WARNING: failed to patch entries in _ZN4llvm9LiveRange13createDeadDefENS_9SlotIndexERNS_20BumpPtrAllocatorImplINS_15MallocAllocatorELm4096ELm4096ELm8ELm8EEE. The function will not be optimized
+BOLT-WARNING: failed to patch entries in _ZNK4llvm17MachineBasicBlock12livein_beginEv. The function will not be optimized
+BOLT-WARNING: failed to patch entries in _ZN4llvm25MachineBlockFrequencyInfoC1Ev(*2). The function will not be optimized
+BOLT-WARNING: failed to patch entries in _ZN4llvm15DomTreeNodeBaseINS_17MachineBasicBlockEE14const_iteratorC2EPS2_(*2). The function will not be optimized
+BOLT-WARNING: failed to patch entries in _ZN4llvm19MachineFunctionInfoD2Ev(*2). The function will not be optimized
+BOLT-WARNING: failed to patch entries in _ZNK4llvm15MachineFunction13getDataLayoutEv. The function will not be optimized
+BOLT-WARNING: failed to patch entries in _ZNK4llvm15MachineFunction15getDenormalModeERKNS_12fltSemanticsE. The function will not be optimized
+BOLT-WARNING: failed to patch entries in _ZN4llvm15MachineFunction17createMIExtraInfoENS_8ArrayRefIPNS_17MachineMemOperandEEEPNS_8MCSymbolES6_PNS_6MDNodeES8_jS8_PNS_5ValueE. The function will not be optimized
+BOLT-WARNING: failed to patch entries in _ZNK4llvm15MachineFunction7getNameEv. The function will not be optimized
+BOLT-WARNING: failed to patch entries in _ZNK4llvm15MachineFunction16useDebugInstrRefEv. The function will not be optimized
+BOLT-WARNING: failed to patch entries in _ZN4llvm15MachineFunction19setUseDebugInstrRefEb. The function will not be optimized
+BOLT-WARNING: failed to patch entries in _ZN4llvm23MemoryDependenceResults28invalidateCachedPredecessorsEv. The function will not be optimized
+BOLT-WARNING: failed to patch entries in _ZN4llvm21MachineModuleInfoImplD2Ev(*2). The function will not be optimized
+BOLT-WARNING: failed to patch entries in _ZNK4llvm18MachinePointerInfo12getAddrSpaceEv. The function will not be optimized
+BOLT-WARNING: failed to patch entries in _ZN4llvm17PseudoSourceValueD1Ev(*2). The function will not be optimized
+BOLT-WARNING: failed to patch entries in _ZN4llvm26ScheduleDAGTopologicalSort10RemovePredEPNS_5SUnitES2_. The function will not be optimized
+BOLT-WARNING: failed to patch entries in _ZN4llvm24ScheduleHazardRecognizerD2Ev(*2). The function will not be optimized
+BOLT-WARNING: failed to patch entries in _ZN4llvm17ScheduleDAGInstrs10startBlockEPNS_17MachineBasicBlockE. The function will not be optimized
+BOLT-WARNING: failed to patch entries in _ZN4llvm17ScheduleDAGInstrs11finishBlockEv. The function will not be optimized
+BOLT-WARNING: failed to patch entries in _ZN4llvm17ScheduleDAGInstrs10exitRegionEv. The function will not be optimized
+BOLT-WARNING: failed to patch entries in _ZN4llvm18LiveDebugVariablesC2Ev(*2). The function will not be optimized
+BOLT-WARNING: failed to patch entries in _ZN4llvm10TensorSpec11getDataTypeIfEENS_10TensorTypeEv. The function will not be optimized
+BOLT-WARNING: failed to patch entries in _ZN4llvm10TensorSpec11getDataTypeIlEENS_10TensorTypeEv. The function will not be optimized
+BOLT-WARNING: failed to patch entries in _ZN4llvm24AssemblyAnnotationWriterD2Ev(*2). The function will not be optimized
+BOLT-WARNING: failed to patch entries in _ZN4llvm29ConstantFoldBinaryInstructionEjPNS_8ConstantES1_. The function will not be optimized
+BOLT-WARNING: failed to patch entries in _ZN4llvm19ConstantPointerNull3getEPNS_11PointerTypeE. The function will not be optimized
+BOLT-WARNING: failed to patch entries in _ZNK4llvm10DataLayout15getABITypeAlignEPNS_4TypeE. The function will not be optimized
+BOLT-WARNING: failed to patch entries in _ZNK4llvm10DataLayout16getPrefTypeAlignEPNS_4TypeE. The function will not be optimized
+BOLT-WARNING: failed to patch entries in _ZN4llvm30DiagnosticInfoOptimizationBase6insertENS0_8ArgumentE. The function will not be optimized
+BOLT-WARNING: failed to patch entries in _ZN4llvm15DomTreeNodeBaseINS_10BasicBlockEE14const_iteratorC2EPS2_(*2). The function will not be optimized
+BOLT-WARNING: failed to patch entries in _ZNK4llvm8Function14hasFnAttributeENS_9StringRefE. The function will not be optimized
+BOLT-WARNING: failed to patch entries in _ZNK4llvm13IRBuilderBase23getCurrentDebugLocationEv. The function will not be optimized
+BOLT-WARNING: failed to patch entries in _ZN4llvm13IRBuilderBase17CreateVectorSplatEjPNS_5ValueERKNS_5TwineE. The function will not be optimized
+BOLT-WARNING: failed to patch entries in _ZN4llvm13IRBuilderBase25CreateAlignmentAssumptionERKNS_10DataLayoutEPNS_5ValueES5_S5_. The function will not be optimized
+BOLT-WARNING: failed to patch entries in _ZNK4llvm9InlineAsm15getFunctionTypeEv. The function will not be optimized
+BOLT-WARNING: failed to patch entries in _ZNK4llvm11Instruction9getModuleEv. The function will not be optimized
+BOLT-WARNING: failed to patch entries in _ZN4llvm11Instruction10moveBeforeERNS_10BasicBlockENS_21ilist_iterator_w_bitsINS_12ilist_detail12node_optionsIS0_Lb0ELb0EvLb1ES1_EELb0ELb0EEE. The function will not be optimized
+BOLT-WARNING: failed to patch entries in _ZNK4llvm11Instruction24hasPoisonGeneratingFlagsEv. The function will not be optimized
+BOLT-WARNING: failed to patch entries in _ZNK4llvm17GetElementPtrInst13collectOffsetERKNS_10DataLayoutEjRNS_14SmallMapVectorIPNS_5ValueENS_5APIntELj4EEERS7_. The function will not be optimized
+BOLT-WARNING: failed to patch entries in _ZN4llvm11VPIntrinsic13isVPIntrinsicEj. The function will not be optimized
+BOLT-WARNING: failed to patch entries in _ZNK4llvm11LLVMContext14getOptPassGateEv. The function will not be optimized
+BOLT-WARNING: failed to patch entries in _ZN4llvm13PMDataManager23verifyPreservedAnalysisEPNS_4PassE. The function will not be optimized
+BOLT-WARNING: failed to patch entries in _ZN4llvm9MDBuilder14createConstantEPNS_8ConstantE. The function will not be optimized
+BOLT-WARNING: failed to patch entries in _ZNK4llvm11Instruction22extractProfTotalWeightERm. The function will not be optimized
+BOLT-WARNING: failed to patch entries in _ZN4llvm6Module19getOrInsertFunctionENS_9StringRefEPNS_12FunctionTypeE. The function will not be optimized
+BOLT-WARNING: failed to patch entries in _ZNK4llvm4Pass16getAnalysisUsageERNS_13AnalysisUsageE. The function will not be optimized
+BOLT-WARNING: failed to patch entries in _ZN4llvm4Pass11setResolverEPNS_16AnalysisResolverE. The function will not be optimized
+BOLT-WARNING: failed to patch entries in _ZN4llvm4Type9getIntNTyERNS_11LLVMContextEj. The function will not be optimized
+BOLT-WARNING: failed to patch entries in _ZN4llvm4UserdlEPv. The function will not be optimized
+BOLT-WARNING: failed to patch entries in _ZN4llvm4UserdlEPvNS0_26HungOffOperandsAllocMarkerE. The function will not be optimized
+BOLT-WARNING: failed to patch entries in _ZN4llvm5Value18replaceAllUsesWithEPS0_. The function will not be optimized
+BOLT-WARNING: failed to patch entries in _ZN4llvm16ValueSymbolTable15removeValueNameEPNS_14StringMapEntryIPNS_5ValueEEE. The function will not be optimized
+BOLT-WARNING: failed to patch entries in _ZN4llvm12MCAsmBackendD2Ev(*2). The function will not be optimized
+BOLT-WARNING: failed to patch entries in _ZNK4llvm6MCExpr21evaluateAsRelocatableERNS_7MCValueEPKNS_11MCAssemblerE. The function will not be optimized
+BOLT-WARNING: failed to patch entries in _ZN4llvm16MCTargetStreamerD2Ev(*2). The function will not be optimized
+BOLT-WARNING: failed to patch entries in _ZN4llvm18StringTableBuilder8finalizeEv. The function will not be optimized
+BOLT-WARNING: failed to patch entries in _ZNK4llvm8AsmToken6getLocEv. The function will not be optimized
+BOLT-WARNING: failed to patch entries in _ZNK4llvm11MCAsmParser6getTokEv. The function will not be optimized
+BOLT-WARNING: failed to patch entries in _ZN4llvm20MCAsmParserExtensionD2Ev(*2). The function will not be optimized
+BOLT-WARNING: failed to patch entries in _ZN4llvm20MCAsmParserExtension10InitializeERNS_11MCAsmParserE. The function will not be optimized
+BOLT-WARNING: failed to patch entries in _ZN4llvm17MCTargetAsmParserD2Ev(*2). The function will not be optimized
+BOLT-WARNING: failed to patch entries in _ZNK4llvm17MCTargetAsmParser6getSTIEv. The function will not be optimized
+BOLT-WARNING: failed to patch entries in _ZN4llvm3opt6OptionC2EPKNS0_8OptTable4InfoEPKS2_(*2). The function will not be optimized
+BOLT-WARNING: failed to patch entries in _ZNK4llvm20SimpleLoopSafetyInfo16anyBlockMayThrowEv. The function will not be optimized
+BOLT-WARNING: failed to patch entries in _ZN4llvm8SROAPassC2ENS_11SROAOptionsE(*2). The function will not be optimized
+BOLT-WARNING: failed to patch entries in _ZN4llvm11APFloatBase18semanticsPrecisionERKNS_12fltSemanticsE. The function will not be optimized
+BOLT-WARNING: failed to patch entries in _ZN4llvm11APFloatBase20semanticsMaxExponentERKNS_12fltSemanticsE. The function will not be optimized
+BOLT-WARNING: failed to patch entries in _ZN4llvm11APFloatBase20semanticsMinExponentERKNS_12fltSemanticsE. The function will not be optimized
+BOLT-WARNING: failed to patch entries in _ZN4llvm11APFloatBase15hasSignBitInMSBERKNS_12fltSemanticsE. The function will not be optimized
+BOLT-WARNING: failed to patch entries in _ZN4llvm11APFloatBase13getSizeInBitsERKNS_12fltSemanticsE. The function will not be optimized
+BOLT-WARNING: failed to patch entries in _ZN4llvm6detail9IEEEFloatC1ERKNS_12fltSemanticsENS_11APFloatBase16uninitializedTagE(*2). The function will not be optimized
+BOLT-WARNING: failed to patch entries in _ZN4llvm11compression4zstd11isAvailableEv. The function will not be optimized
+BOLT-WARNING: failed to patch entries in _ZN4llvm18ConvertUTF8toUTF32EPPKhS1_PPjS3_NS_15ConversionFlagsE. The function will not be optimized
+BOLT-WARNING: failed to patch entries in _ZN4llvm27CrashRecoveryContextCleanupD2Ev(*2). The function will not be optimized
+BOLT-WARNING: failed to patch entries in _ZN4llvm4dbgsEv. The function will not be optimized
+BOLT-WARNING: failed to patch entries in _ZN4llvm14FoldingSetBaseD2Ev(*2). The function will not be optimized
+BOLT-WARNING: failed to patch entries in _ZNK4llvm14SuffixTreeNode12getConcatLenEv. The function will not be optimized
+BOLT-WARNING: failed to patch entries in _ZNK4llvm3sys2fs18mapped_file_region10const_dataEv. The function will not be optimized
+BOLT-WARNING: failed to patch entries in _ZN4llvm3sys7Process20StandardErrHasColorsEv. The function will not be optimized
+BOLT-WARNING: failed to patch entries in _ZN4llvm3sys7Process15ColorNeedsFlushEv. The function will not be optimized
+BOLT-WARNING: failed to patch entries in _ZN4llvm3sys7Process15GetRandomNumberEv. The function will not be optimized
+BOLT-WARNING: failed to patch entries in _ZN4llvm21combineMetadataForCSEEPNS_11InstructionEPKS0_b. The function will not be optimized
+BOLT-WARNING: failed to patch entries in _ZN4llvm21appendLoopsToWorklistERNS_8LoopInfoERNS_21SmallPriorityWorklistIPNS_4LoopELj4EEE. The function will not be optimized
+BOLT-WARNING: failed to patch entries in _ZNK4llvm25LoopVectorizationLegality11isInvariantEPNS_5ValueE. The function will not be optimized
+BOLT-WARNING: failed to patch entries in _ZNK4llvm7VPValue16getLiveInIRValueEv. The function will not be optimized
+BOLT-WARNING: failed to patch entries in _ZN5clang18DiagnosticConsumerD1Ev(*4). The function will not be optimized
+BOLT-WARNING: failed to patch entries in _ZN5clang7CodeGen13CodeGenModule14GetGlobalValueEN4llvm9StringRefE. The function will not be optimized
+BOLT-WARNING: failed to patch entries in _ZN5clang7CodeGen13CodeGenModule19UpdateCompletedTypeEPKNS_7TagDeclE. The function will not be optimized
+BOLT-WARNING: failed to patch entries in _ZN5clang7CodeGen13CodeGenModule12getIntrinsicEjN4llvm8ArrayRefIPNS2_4TypeEEE. The function will not be optimized
+BOLT-WARNING: failed to patch entries in _ZN5clang7CodeGen8CGCXXABI18setCXXABIThisValueERNS0_15CodeGenFunctionEPN4llvm5ValueE. The function will not be optimized
+BOLT-WARNING: failed to patch entries in _ZN5clang7CodeGen15CodeGenFunction24EmitLValueForLambdaFieldEPKNS_9FieldDeclE. The function will not be optimized
+BOLT-WARNING: failed to patch entries in _ZN4llvm8RegistryIN5clang14ParsedAttrInfoEJEE8iteratorC2EPKNS3_4nodeE(*2). The function will not be optimized
+BOLT-WARNING: failed to patch entries in _ZN5clang7CodeGen7ABIInfoD2Ev(*2). The function will not be optimized
+BOLT-WARNING: failed to patch entries in _ZNK5clang7CodeGen7ABIInfo9getCXXABIEv. The function will not be optimized
+BOLT-WARNING: failed to patch entries in _ZNK5clang7CodeGen7ABIInfo27classifyArgForArm64ECVarArgENS_8QualTypeEb(*3). The function will not be optimized
+BOLT-WARNING: failed to patch entries in _ZN4llvm38updateCGAndAnalysisManagerForCGSCCPassERNS_13LazyCallGraphERNS0_3SCCERNS0_4NodeERNS_15AnalysisManagerIS2_JS1_EEERNS_17CGSCCUpdateResultERNS6_INS_8FunctionEJEEE. The function will not be optimized
+BOLT-WARNING: failed to patch entries in _ZN5clang13CodeGenerator9GetModuleEv. The function will not be optimized
+BOLT-WARNING: failed to patch entries in _ZNK4llvm10SCCPSolver17getConstantOrNullEPNS_5ValueE. The function will not be optimized
+BOLT-WARNING: failed to patch entries in _ZN4llvm10SCCPSolver18addTrackedFunctionEPNS_8FunctionE. The function will not be optimized
+BOLT-WARNING: failed to patch entries in _ZNK5clang6driver9ToolChain22addClangWarningOptionsERN4llvm11SmallVectorIPKcLj16EEE. The function will not be optimized
+BOLT-WARNING: failed to patch entries in _ZN5clang6driver4ToolD2Ev(*2). The function will not be optimized
+BOLT-WARNING: failed to patch entries in _ZNK5clang6driver10toolchains5Linux12isPIEDefaultERKN4llvm3opt7ArgListE/1(*2). The function will not be optimized
+BOLT-WARNING: failed to patch entries in _ZN4llvm8RegistryIN5clang15PluginASTActionEJEE8iteratorC2EPKNS3_4nodeE(*2). The function will not be optimized
+BOLT-WARNING: failed to patch entries in _ZN5clang18DiagnosticRendererD2Ev(*4). The function will not be optimized
+BOLT-WARNING: failed to patch entries in _ZN4llvm3sys6locale7isPrintEi. The function will not be optimized
+BOLT-WARNING: failed to patch entries in _ZN5clang26ASTDeserializationListenerD2Ev(*2). The function will not be optimized
+BOLT-WARNING: failed to patch entries in _ZN5clang14TypeLocVisitorINS_13TypeLocReaderEvE5VisitENS_7TypeLocE/1(*2). The function will not be optimized
+BOLT-WARNING: failed to patch entries in _ZN5clang17ASTReaderListenerD2Ev(*2). The function will not be optimized
+BOLT-WARNING: failed to patch entries in _ZN5clang9ASTWriter14getSubmoduleIDEPNS_6ModuleE. The function will not be optimized
+BOLT-WARNING: failed to patch entries in _ZN5clang14TypeLocVisitorIN12_GLOBAL__N_113TypeLocWriterEvE5VisitENS_7TypeLocE/1(*2). The function will not be optimized
+BOLT-WARNING: failed to patch entries in _ZN4llvm13HashRecognizeC1ERKNS_4LoopERNS_15ScalarEvolutionE(*2). The function will not be optimized
+BOLT-WARNING: failed to patch entries in _ZNK4llvm10AsmPrinter25getFunctionCFISectionTypeERKNS_15MachineFunctionE. The function will not be optimized
+BOLT-WARNING: failed to patch entries in _ZN4llvm17AsmPrinterHandlerD2Ev(*2). The function will not be optimized
+BOLT-WARNING: failed to patch entries in _ZN4llvm10EHStreamerD2Ev/1(*4). The function will not be optimized
+BOLT-WARNING: failed to patch entries in _ZN4llvm3ISD20isBuildVectorAllOnesENS_7SDValueE. The function will not be optimized
+BOLT-WARNING: failed to patch entries in _ZN4llvm3ISD21isBuildVectorAllZerosENS_7SDValueE. The function will not be optimized
+BOLT-WARNING: failed to patch entries in _ZN4llvm14checkForCyclesEPKNS_6SDNodeEPKNS_12SelectionDAGEb. The function will not be optimized
+BOLT-WARNING: failed to patch entries in _ZN4llvm14checkForCyclesEPKNS_12SelectionDAGEb. The function will not be optimized
+BOLT-WARNING: failed to patch entries in _ZNK4llvm13TargetMachine18getRelocationModelEv. The function will not be optimized
+BOLT-WARNING: failed to patch entries in _ZN5clang6Parser24takeTemplateIdAnnotationERKNS_5TokenE. The function will not be optimized
+BOLT-WARNING: failed to patch entries in _ZNK5clang4Sema13isDeclInScopeEPNS_9NamedDeclEPNS_11DeclContextEPNS_5ScopeEb. The function will not be optimized
+BOLT-WARNING: failed to patch entries in _ZN5clang4Sema20GetNameForDeclaratorERNS_10DeclaratorE. The function will not be optimized
+BOLT-WARNING: failed to patch entries in _ZN5clang4Sema10IsOverloadEPNS_12FunctionDeclES2_bb. The function will not be optimized
+BOLT-WARNING: failed to patch entries in _ZN5clang4Sema24ActOnStartOfCompoundStmtEb. The function will not be optimized
+BOLT-WARNING: failed to patch entries in _ZN5clang4Sema25ActOnFinishOfCompoundStmtEv. The function will not be optimized
+BOLT-WARNING: failed to patch entries in _ZN5clang4Sema31getTemplateArgumentBindingsTextB5cxx11EPKNS_21TemplateParameterListERKNS_20TemplateArgumentListE. The function will not be optimized
+BOLT-WARNING: failed to patch entries in _ZN12_GLOBAL__N_127UnnamedLocalNoLinkageFinder5VisitEN5clang8QualTypeE/1(*2). The function will not be optimized
+BOLT-WARNING: failed to patch entries in _ZN5clang13TreeTransformIN12_GLOBAL__N_129CurrentInstantiationRebuilderEE29TransformUnresolvedLookupExprEPNS_20UnresolvedLookupExprE/1(*2). The function will not be optimized
+BOLT-WARNING: failed to patch entries in _ZN5clang4Sema16InstantiateClassENS_14SourceLocationEPNS_13CXXRecordDeclES3_RKNS_30MultiLevelTemplateArgumentListENS_26TemplateSpecializationKindEb. The function will not be optimized
+BOLT-WARNING: failed to patch entries in _ZN5clang13TreeTransformIN12_GLOBAL__N_120TemplateInstantiatorEE29TransformUnresolvedLookupExprEPNS_20UnresolvedLookupExprE/1(*2). The function will not be optimized
+BOLT-WARNING: failed to patch entries in _ZN5clang13TreeTransformIN12_GLOBAL__N_120TemplateInstantiatorEE21TransformCompoundStmtEPNS_12CompoundStmtE/1(*2). The function will not be optimized
+BOLT-WARNING: failed to patch entries in _ZN5clang4Sema14BuildParenTypeENS_8QualTypeE. The function will not be optimized
+BOLT-WARNING: failed to patch entries in _ZN5clang15ManagedAnalysisD2Ev(*2). The function will not be optimized
+BOLT-WARNING: failed to patch entries in _ZN5clang12threadSafety19ThreadSafetyHandlerD2Ev(*2). The function will not be optimized
+BOLT-WARNING: failed to patch entries in _ZN5clang22UninitVariablesHandlerD2Ev(*2). The function will not be optimized
+BOLT-WARNING: failed to patch entries in _ZN5clang7APValue15getLValueOffsetEv. The function will not be optimized
+BOLT-WARNING: failed to patch entries in _ZNK5clang10ASTContext18getPointerDiffTypeEv. The function will not be optimized
+BOLT-WARNING: failed to patch entries in _ZNK5clang10ASTContext11getSizeTypeEv. The function will not be optimized
+BOLT-WARNING: failed to patch entries in _ZN5clang19ASTMutationListenerD2Ev(*2). The function will not be optimized
+BOLT-WARNING: failed to patch entries in _ZNK5clang9NamedDecl21getExplicitVisibilityENS0_22ExplicitVisibilityKindE. The function will not be optimized
+BOLT-WARNING: failed to patch entries in _ZNK5clang9NamedDecl9printNameERN4llvm11raw_ostreamERKNS_14PrintingPolicyE. The function will not be optimized
+BOLT-WARNING: failed to patch entries in _ZN5clang12FunctionDecl16getCanonicalDeclEv. The function will not be optimized
+BOLT-WARNING: failed to patch entries in _ZN5clang12FunctionDecl28setDescribedFunctionTemplateEPNS_20FunctionTemplateDeclE. The function will not be optimized
+BOLT-WARNING: failed to patch entries in _ZNK5clang12FunctionDecl10getODRHashEv. The function will not be optimized
+BOLT-WARNING: failed to patch entries in _ZN5clang7TagDecl25setTypedefNameForAnonDeclEPNS_15TypedefNameDeclE. The function will not be optimized
+BOLT-WARNING: failed to patch entries in _ZN5clang4Decl14setDeclContextEPNS_11DeclContextE. The function will not be optimized
+BOLT-WARNING: failed to patch entries in _ZNK5clang4Decl8getAttrsEv. The function will not be optimized
+BOLT-WARNING: failed to patch entries in _ZN5clang11DeclContext21getNonClosureAncestorEv. The function will not be optimized
+BOLT-WARNING: failed to patch entries in _ZNK5clang10DeclIDBase17getLocalDeclIndexEv. The function will not be optimized
+BOLT-WARNING: failed to patch entries in _ZN5clang13CXXRecordDecl25setDescribedClassTemplateEPNS_17ClassTemplateDeclE. The function will not be optimized
+BOLT-WARNING: failed to patch entries in _ZN5clang30DynamicRecursiveASTVisitorBaseILb0EE12TraverseStmtEPNS_4StmtE. The function will not be optimized
+BOLT-WARNING: failed to patch entries in _ZN5clang21analyze_format_string19FormatStringHandlerD2Ev(*2). The function will not be optimized
+BOLT-WARNING: failed to patch entries in _ZN5clang6interp5StateD2Ev(*2). The function will not be optimized
+BOLT-WARNING: failed to patch entries in _ZN5clang7ODRHash22isSubDeclToBeProcessedEPKNS_4DeclEPKNS_11DeclContextE. The function will not be optimized
+BOLT-WARNING: failed to patch entries in _ZN5clang13PrinterHelperD2Ev(*2). The function will not be optimized
+BOLT-WARNING: failed to patch entries in _ZN5clang30IdentifierOrOverloadedOperatorC1EPKNS_14IdentifierInfoE(*2). The function will not be optimized
+BOLT-WARNING: failed to patch entries in _ZN5clang12TemplateNameC1EPv(*2). The function will not be optimized
+BOLT-WARNING: failed to patch entries in _ZN5clang12TemplateNameC1EPNS_12TemplateDeclE(*2). The function will not be optimized
+BOLT-WARNING: failed to patch entries in _ZN5clang12TemplateNameC1EPNS_15UsingShadowDeclE(*2). The function will not be optimized
+BOLT-WARNING: failed to patch entries in _ZNK5clang8QualType38isNonTrivialToPrimitiveDestructiveMoveEv. The function will not be optimized
+BOLT-WARNING: failed to patch entries in _ZN5clang14KeywordHelpers24getKeywordForTagTypeKindENS_11TagTypeKindE. The function will not be optimized
+BOLT-WARNING: failed to patch entries in _ZN5clang7TypeLoc18getNextTypeLocImplES0_. The function will not be optimized
+BOLT-WARNING: failed to patch entries in _ZN5clang14TypeLocVisitorIN12_GLOBAL__N_130GetContainedAutoTypeLocVisitorENS_7TypeLocEE5VisitES3_/1(*2). The function will not be optimized
+BOLT-WARNING: failed to patch entries in _ZN5clang14CommentHandlerD2Ev(*2). The function will not be optimized
+BOLT-WARNING: failed to patch entries in _ZN5clang21CodeCompletionHandlerD2Ev(*2). The function will not be optimized
+BOLT-INFO: relaxing branches for compact code model (<128MB)
+BOLT-INFO: starting clustered relaxation pass
+BOLT-INFO: built 1 function fragment cluster(s)
+BOLT-INFO: cluster: 0
+BOLT-INFO:   52344 fragment(s)
+BOLT-INFO:   28332180 estimated bytes without thunks
+BOLT-INFO:   173964 thunk bytes
+BOLT-INFO: relaxed 93679 calls with long thunks
+BOLT-INFO: 14497 long thunks created
+BOLT-INFO: 79182 long thunks reused
+BOLT-INFO: rewritten pac-ret DWARF info in 2 out of 156835 functions (0.00%).
+BOLT-INFO: patched build-id (flipped first and last bits)
+BOLT-INFO: setting __hot_start to 0x6600000
+BOLT-INFO: setting __hot_end to 0x75015ac

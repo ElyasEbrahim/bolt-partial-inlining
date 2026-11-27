@@ -318,6 +318,35 @@ def main():
                 ["bolt-pi", "bolt-pi-skip", "bolt-inl", "bolt-inl-pi"]) +
                 f" | {e['pi'].get('bolt-pi', {}).get('fast_calls_pct', 0):.2f}% | "
                 f"{ps.get('fast_calls_pct', 0):.2f}% | {p:.2g} |")
+    nocl = [(n, e) for n, e in report.items() if "bolt-pi-nocl" in e["timing"]]
+    if nocl:
+        L.append("\n## Branch relaxation\n")
+        L.append("Upstream BOLT relaxes AArch64 branches with clusters by default "
+                 "since 2026-11-23 (`-relax-with-clusters`); all other variants use "
+                 "this default. `bolt-nocl` and `bolt-pi-nocl` are `bolt` and `bolt-pi` "
+                 "with the previous stub insertion (`-relax-with-clusters=false`). "
+                 "The fourth column compares `bolt-pi-nocl` with `bolt-nocl` (paired, "
+                 "same run); the instruction counts are relative to the baseline with "
+                 "the same relaxation.\n")
+        L.append("| workload | bolt-nocl vs bolt | bolt-pi vs bolt | bolt-pi-nocl vs "
+                 "bolt-nocl | p | instructions bolt-nocl vs bolt | instructions "
+                 "bolt-pi vs bolt | instructions bolt-pi-nocl vs bolt-nocl |")
+        L.append("|---|---|---|---|---:|---:|---:|---:|")
+        for name, e in nocl:
+            t, c = e["timing"], icounts.get(name, {})
+            pn = t["bolt-pi-nocl"]
+            sp, ci = pn.get("speedup_vs_nocl"), pn.get("speedup_vs_nocl_ci95")
+            cell = f"{sp:.3f} [{ci[0]:.3f}, {ci[1]:.3f}]" if sp else "-"
+            p = pn.get("wilcoxon_p_vs_nocl")
+
+            def pct(a, b):
+                return (f"{100.0 * (c[a] - c[b]) / c[b]:+.2f}%"
+                        if a in c and c.get(b) else "-")
+            L.append(f"| {name} | {fmt_speedup(t.get('bolt-nocl', {}))} | "
+                     f"{fmt_speedup(t.get('bolt-pi', {}))} | {cell} | "
+                     f"{'-' if p is None else format(p, '.2g')} | "
+                     f"{pct('bolt-nocl', 'bolt')} | {pct('bolt-pi', 'bolt')} | "
+                     f"{pct('bolt-pi-nocl', 'bolt-nocl')} |")
     ext = [(n, e) for n, e in report.items() if e.get("noext") == "differs"]
     if ext:
         L.append("\n## Effect of the extensions\n")

@@ -6,6 +6,68 @@ project uses [Semantic Versioning](https://semver.org/).
 
 ## [Unreleased]
 
+### Added
+
+- **clang workload** (`benchmarks/realworld/clang`), built with the in-tree
+  Clang-BOLT rules:
+  - clang at the pinned LLVM commit, built with the settings of
+    `clang/cmake/caches/BOLT.cmake` (ClangIR off);
+  - the training of `clang/utils/perf-training` (hello world, then
+    configure LLVM and build LLVMSupport);
+  - the BOLT options of `perf-helper.py bolt-optimize`;
+  - timed on compiling the SQLite amalgamation (`-O2`) and LLVM's
+    `Verifier.cpp` and `GVN.cpp` (`-O3`), with the object files checked in
+    every run;
+  - also included in the instruction counts and the coverage analysis.
+- **Branch relaxation variants** for the real programs: `bolt-nocl` and
+  `bolt-pi-nocl` use the AArch64 branch relaxation that upstream BOLT used
+  before 2026-11-23 (`-relax-with-clusters=false`). Upstream's new default,
+  clustered relaxation, changes the baseline substantially for jq. The report
+  has a new section "Branch relaxation".
+- `scripts/bolt_variants.sh`: optional settings `INSTR`, `APPEND_PID`,
+  `BOLT_LAYOUT` and `RELAX_LEGACY`.
+
+### Changed
+
+- The patch is rebased onto llvm-project `1be60cbf47e9` (2026-11-25), the
+  base of the upstream proposal. The cherry-pick had no conflicts and the code
+  is unchanged. One line of the runtime test is reformatted (clang-format).
+  The commit message no longer quotes results.
+- The image installs CMake 3.31.10, which LLVM requires since 2026-11-19.
+- `make check-patch` and `make x86-validate` check out the pinned commit
+  again when `patches/LLVM_COMMIT` changes.
+- All results come from a new complete run (2026-11-27, image
+  `0fd6b39579d8`, 2 h 33 min). Main changes:
+  - **clang:** 1.015x [1.013, 1.017] over Clang-BOLT; 2,115 call sites; 22%
+    of the profiled direct calls and 2.1% of the executed instructions
+    avoided; +0.39% hot code.
+  - **jq:** 1.124x. With the previous branch relaxation the pass gives
+    1.068x, as in 1.3.1 (1.069x); the difference compensates for overhead
+    that the new relaxation adds to jq's baseline.
+  - **Lua:** 1.008x, which disappears with the previous relaxation.
+  - **zstd** with the complete profile: one compression call site, +0.59%
+    executed instructions, no measurable change in run time.
+  - **Microbenchmarks** as before within 1.1%, except `memo` 1.067x and
+    `bufwrite` 1.024x. With the same binaries, the first, unpublished run of
+    this version measured 1.020x and 1.003x: loops bound by store-to-load
+    chains vary between runs.
+- Design document and README rewritten for these results.
+  - New in the design document: the clang workload (Section 5.2), branch
+    relaxation, between-run variation (Section 5.3), and the zstd profile and
+    upstream's baseline change (Section 5.7).
+  - Two new limitations in Section 7: no cost model for re-execution, and the
+    dependence on the branch relaxation.
+
+### Fixed
+
+- **zstd's training profile now contains compression.** The training runs
+  two processes (compress, then decompress), and both wrote the same profile
+  file. BOLT's runtime truncates that file, so the decompression run
+  overwrote the compression profile. In versions 1.0.0-1.3.1, BOLT therefore
+  optimized only zstd's decompression code, and the zstd-compress results of
+  those versions do not test BOLT or the pass on compression. Each training
+  process now writes its own profile, and the profiles are merged.
+
 ## [1.3.1] - 2026-11-26
 
 ### Added

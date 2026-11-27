@@ -14,6 +14,7 @@ Paths: @WL@ is the benchmarks/realworld directory of this repository and the
 real-world programs and corpora are expected in $RW (default /work/rw, see
 benchmarks/realworld/build.sh and scripts/prepare_realworld.sh).
 """
+import json
 import os
 import re
 
@@ -57,6 +58,9 @@ WORKLOADS = {
     "libxml2": {"class": "real",
                 "eval": ["@BIN@", "--noout", "--xpath", "count(//item[@kind='b'])",
                          "@RW@/corpus/data-eval.xml"]},
+    # Compiles three translation units that are not part of clang's training
+    # and prints the SHA-256 of the object files (benchmarks/realworld/clang).
+    "clang": {"class": "real", "eval": ["sh", "@RW@/clang/compile.sh", "@BIN@"]},
 }
 
 # Smaller inputs for the instruction counts measured with valgrind (icount.py).
@@ -81,6 +85,12 @@ ICOUNT = {
     "libxml2": ["@BIN@", "--noout", "--xpath", "count(//item[@kind='b'])",
                 "@RW@/corpus/data-icount.xml"],
 }
+# clang: compiling a smaller LLVM file. The command line is written when the
+# image is built (benchmarks/realworld/clang/prepare_inputs.py).
+_CLANG_ICOUNT = os.path.join(RW, "clang", "icount-cmd.json")
+if os.path.exists(_CLANG_ICOUNT):
+    with open(_CLANG_ICOUNT) as f:
+        ICOUNT["clang"] = json.load(f)
 
 
 def expand(args, binary, wdir=""):

@@ -1,0 +1,86 @@
+BOLT-WARNING: specifying numeric value "1" for option -icf is deprecated
+BOLT-INFO: shared object or position-independent executable detected
+BOLT-INFO: Target architecture: aarch64
+BOLT-INFO: BOLT version: 1be60cbf47e9b102a653f9cb54fc965fe71a1ec4
+BOLT-INFO: first alloc address is 0x0
+BOLT-INFO: creating new program header table at address 0x200000, offset 0x200000
+BOLT-INFO: enabling relocation mode
+BOLT-INFO: enabling lite mode
+BOLT-INFO: pre-processing profile using branch profile reader
+BOLT-INFO: PointerAuthCFIAnalyzer ran on 1 functions. Ignored 0 functions (0.00%) because of CFI inconsistencies
+BOLT-INFO: number of removed linker-inserted veneers: 0
+BOLT-INFO: 205 out of 956 functions in the binary (21.4%) have non-empty execution profile
+BOLT-INFO: 4 functions with profile could not be optimized
+BOLT-INFO: profile for 1 objects was ignored
+BOLT-INFO: profile quality metrics for the hottest 205 functions (reporting top 5% values): function CFG discontinuity 0.00%; call graph flow conservation gap 0.00%; CFG flow conservation gap 0.00% (weighted) 0.00% (worst); exception handling usage 0.00% (of total BBEC) 0.00% (of total InvokeEC)
+BOLT-INFO: ICF folded 6 out of 1028 functions in 3 passes. 0 functions had jump tables.
+BOLT-INFO: Removing all identical functions will save 0.21 KB of code space. Folded functions were called 150 times based on profile.
+BOLT-INFO: basic block reordering modified layout of 123 functions (60.00% of profiled, 11.96% of total)
+BOLT-INFO: 0 Functions were reordered by LoopInversionPass
+BOLT-INFO: program-wide dynostats after all optimizations before SCTC and FOP:
+
+            47913131 : executed forward branches
+            21129690 : taken forward branches
+            14554848 : executed backward branches
+             9113377 : taken backward branches
+             6768004 : executed unconditional branches
+             1069763 : all function calls
+               65722 : indirect calls
+               65166 : PLT calls
+           585763991 : executed instructions
+           123045976 : executed load instructions
+            51481451 : executed store instructions
+                   0 : taken jump table branches
+                   0 : taken unknown indirect branches
+            69235983 : total branches
+            37011071 : taken branches
+            32224912 : non-taken conditional branches
+            30243067 : taken conditional branches
+            62467979 : all conditional branches
+                   0 : linker-inserted veneer calls
+
+            44419604 : executed forward branches (-7.3%)
+             1278760 : taken forward branches (-93.9%)
+            18048375 : executed backward branches (+24.0%)
+             8878434 : taken backward branches (-2.6%)
+             1451453 : executed unconditional branches (-78.6%)
+             1069763 : all function calls (=)
+               65722 : indirect calls (=)
+               65166 : PLT calls (=)
+           580537991 : executed instructions (-0.9%)
+           123045976 : executed load instructions (=)
+            51481451 : executed store instructions (=)
+                   0 : taken jump table branches (=)
+                   0 : taken unknown indirect branches (=)
+            63919432 : total branches (-7.7%)
+            11608647 : taken branches (-68.6%)
+            52310785 : non-taken conditional branches (+62.3%)
+            10157194 : taken conditional branches (-66.4%)
+            62467979 : all conditional branches (=)
+                   0 : linker-inserted veneer calls (=)
+
+BOLT-WARNING: failed to patch entries in FSE_readNCount. The function will not be optimized
+BOLT-WARNING: failed to patch entries in ZSTD_minCLevel. The function will not be optimized
+BOLT-WARNING: failed to patch entries in ZSTD_maxCLevel. The function will not be optimized
+BOLT-WARNING: failed to patch entries in FIO_freePreferences(*2). The function will not be optimized
+BOLT-WARNING: failed to patch entries in FIO_setCompressionType(*2). The function will not be optimized
+BOLT-WARNING: failed to patch entries in FIO_setSparseWrite. The function will not be optimized
+BOLT-WARNING: failed to patch entries in FIO_setMemLimit. The function will not be optimized
+BOLT-WARNING: failed to patch entries in FIO_setAllowBlockDevices. The function will not be optimized
+BOLT-WARNING: failed to patch entries in FIO_setUseRowMatchFinder. The function will not be optimized
+BOLT-WARNING: failed to patch entries in FIO_setStreamSrcSize. The function will not be optimized
+BOLT-WARNING: failed to patch entries in FIO_setTargetCBlockSize. The function will not be optimized
+BOLT-WARNING: failed to patch entries in FIO_setLiteralCompressionMode. The function will not be optimized
+BOLT-WARNING: failed to patch entries in FIO_setAdaptMax. The function will not be optimized
+BOLT-WARNING: failed to patch entries in FIO_setLdmHashLog. The function will not be optimized
+BOLT-WARNING: failed to patch entries in FIO_setLdmMinMatch. The function will not be optimized
+BOLT-WARNING: failed to patch entries in FIO_setMMapDict. The function will not be optimized
+BOLT-WARNING: failed to patch entries in FIO_setHasStdoutOutput. The function will not be optimized
+BOLT-WARNING: failed to patch entries in AIO_supported. The function will not be optimized
+BOLT-INFO: Starting stub-insertion pass
+BOLT-INFO: Inserted 21 stubs in the hot area and 12 stubs in the cold area. Shared 0 times, iterated 3 times.
+BOLT-INFO: rewritten pac-ret DWARF info in 1 out of 1028 functions (0.10%).
+BOLT-INFO: padding code to 0x600000 to accommodate hot text
+BOLT-INFO: patched build-id (flipped first and last bits)
+BOLT-INFO: setting __hot_start to 0x400000
+BOLT-INFO: setting __hot_end to 0x41056c

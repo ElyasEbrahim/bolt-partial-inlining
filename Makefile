@@ -47,9 +47,11 @@ llvm-src:
 	test -d $(WORK)/llvm-project || ( \
 	  git init -q $(WORK)/llvm-project && cd $(WORK)/llvm-project && \
 	  git remote add origin https://github.com/llvm/llvm-project.git && \
-	  git sparse-checkout set bolt && \
-	  git fetch -q --depth 1 --filter=blob:none origin $(LLVM_COMMIT) && \
-	  git checkout -q FETCH_HEAD )
+	  git sparse-checkout set bolt )
+	cd $(WORK)/llvm-project && \
+	  if [ "$$(git rev-parse -q --verify HEAD)" != "$(LLVM_COMMIT)" ]; then \
+	    git fetch -q --depth 1 --filter=blob:none origin $(LLVM_COMMIT) && \
+	    git checkout -q FETCH_HEAD; fi
 
 check-patch: llvm-src
 	cd $(WORK)/llvm-project && git apply --check $(CURDIR)/$(PATCH) && \
@@ -65,8 +67,10 @@ lint:
 	docker run --rm -v $(CURDIR):/r -w /r ubuntu:24.04 bash -c '\
 	  apt-get update -qq >/dev/null && \
 	  apt-get install -y -qq shellcheck python3-pyflakes >/dev/null && \
-	  shellcheck -S warning scripts/*.sh benchmarks/realworld/build.sh && \
-	  python3 -m pyflakes scripts/*.py benchmarks/realworld/python/bench.py benchmarks/realworld/datagen.py'
+	  shellcheck -S warning scripts/*.sh benchmarks/realworld/build.sh \
+	    benchmarks/realworld/clang/*.sh && \
+	  python3 -m pyflakes scripts/*.py benchmarks/realworld/python/bench.py \
+	    benchmarks/realworld/datagen.py benchmarks/realworld/clang/prepare_inputs.py'
 
 clean:
 	rm -rf $(CURDIR)/.work

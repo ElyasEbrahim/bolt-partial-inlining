@@ -5,8 +5,10 @@ BOLT-INFO: partial inlining: 16 callees with a fast region (5 with frame elision
 == cpython
 BOLT-INFO: partial inlining: 18 callees with a fast region (10 with frame elision); inlined 17 call sites (7 with frame elision, 2 tail calls), 200 instructions copied, 3 registers renamed, 3 registers saved
 == zstd
-BOLT-INFO: partial inlining: 5 callees with a fast region (0 with frame elision); inlined 5 call sites (0 with frame elision, 0 tail calls), 29 instructions copied, 0 registers renamed, 0 registers saved
+BOLT-INFO: partial inlining: 1 callees with a fast region (0 with frame elision); inlined 1 call sites (0 with frame elision, 0 tail calls), 22 instructions copied, 0 registers renamed, 1 registers saved
 == jq
 BOLT-INFO: partial inlining: 9 callees with a fast region (4 with frame elision); inlined 21 call sites (5 with frame elision, 1 tail calls), 99 instructions copied, 4 registers renamed, 0 registers saved
 == libxml2
 BOLT-INFO: partial inlining: 8 callees with a fast region (4 with frame elision); inlined 7 call sites (5 with frame elision, 0 tail calls), 95 instructions copied, 0 registers renamed, 0 registers saved
+== clang
+BOLT-INFO: partial inlining: 1144 callees with a fast region (470 with frame elision); inlined 2115 call sites (606 with frame elision, 60 tail calls), 20087 instructions copied, 606 registers renamed, 235 registers saved

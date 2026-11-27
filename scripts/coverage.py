@@ -32,7 +32,7 @@ import tempfile
 sys.path.insert(0, os.path.dirname(os.path.abspath(__file__)))
 from report import dynostats, text_size  # noqa: E402
 
-PROGRAMS = ["sqlite", "lua", "cpython", "zstd", "jq", "libxml2"]
+PROGRAMS = ["sqlite", "lua", "cpython", "zstd", "jq", "libxml2", "clang"]
 LAYOUT = ["-reorder-blocks=ext-tsp", "-reorder-functions=cdsort", "-split-functions",
           "-split-all-cold", "-split-eh", "-icf=1", "-dyno-stats"]
 NOEXT = ["-partial-inline-loops=false", "-partial-inline-save-regs=false"]

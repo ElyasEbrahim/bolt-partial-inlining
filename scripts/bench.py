@@ -138,6 +138,11 @@ def summarize(samples, metric):
         if "orig" in samples and v != "orig":
             st["speedup_vs_orig"], st["speedup_vs_orig_ci95"] = paired_ratio_ci(
                 samples["orig"][metric], vals)
+        # The pass against the baseline with the same branch relaxation.
+        if v == "bolt-pi-nocl" and "bolt-nocl" in samples:
+            nocl = samples["bolt-nocl"][metric]
+            st["speedup_vs_nocl"], st["speedup_vs_nocl_ci95"] = paired_ratio_ci(nocl, vals)
+            st["wilcoxon_p_vs_nocl"] = wilcoxon_p(nocl, vals)
         res["variants"][v] = st
     return res
 
@@ -184,7 +189,8 @@ def main():
     ap.add_argument("--only", nargs="*", help="subset of workloads")
     ap.add_argument("--variants",
                     default="orig,bolt,bolt-copy,bolt-pi,bolt-pi-avg,bolt-pi-nofe,"
-                            "bolt-pi-noext,bolt-inl,bolt-inl-pi,bolt-pi-skip")
+                            "bolt-pi-noext,bolt-inl,bolt-inl-pi,bolt-pi-skip,"
+                            "bolt-nocl,bolt-pi-nocl")
     ap.add_argument("--rounds", type=int, default=15)
     ap.add_argument("--warmup", type=int, default=1)
     ap.add_argument("--stage-dir",

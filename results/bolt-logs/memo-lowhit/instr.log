@@ -1,6 +1,6 @@
 BOLT-INFO: shared object or position-independent executable detected
 BOLT-INFO: Target architecture: aarch64
-BOLT-INFO: BOLT version: 0a0e65b2e8ff6043d85ab07c4d23ea18bf0b9b7d
+BOLT-INFO: BOLT version: 1be60cbf47e9b102a653f9cb54fc965fe71a1ec4
 BOLT-INFO: first alloc address is 0x0
 BOLT-INFO: creating new program header table at address 0x200000, offset 0x200000
 BOLT-INFO: enabling relocation mode
@@ -20,8 +20,16 @@ BOLT-INSTRUMENTER: Total size of counters: 184 bytes (static alloc memory)
 BOLT-INSTRUMENTER: Total size of string table emitted: 236 bytes in file
 BOLT-INSTRUMENTER: Total size of descriptors: 1712 bytes in file
 BOLT-INSTRUMENTER: Profile will be saved to file /work/out/memo-lowhit/prof.fdata
-BOLT-INFO: Starting stub-insertion pass
-BOLT-INFO: Inserted 0 stubs in the hot area and 0 stubs in the cold area. Shared 0 times, iterated 1 times.
+BOLT-INFO: relaxing branches for compact code model (<128MB)
+BOLT-INFO: starting clustered relaxation pass
+BOLT-INFO: built 1 function fragment cluster(s)
+BOLT-INFO: cluster: 0
+BOLT-INFO:   21 fragment(s)
+BOLT-INFO:   1496 estimated bytes without thunks
+BOLT-INFO:   72 thunk bytes
+BOLT-INFO: relaxed 7 calls with long thunks
+BOLT-INFO: 6 long thunks created
+BOLT-INFO: 1 long thunks reused
 BOLT-INFO: rewritten pac-ret DWARF info in 1 out of 18 functions (5.56%).
 BOLT-INFO: padding code to 0x600000 to accommodate hot text
 BOLT-INFO: output linked against instrumentation runtime library, lib entry point is 0x633668

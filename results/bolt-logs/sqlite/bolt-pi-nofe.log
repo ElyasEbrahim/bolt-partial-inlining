@@ -1,7 +1,7 @@
 BOLT-WARNING: specifying numeric value "1" for option -icf is deprecated
 BOLT-INFO: shared object or position-independent executable detected
 BOLT-INFO: Target architecture: aarch64
-BOLT-INFO: BOLT version: 0a0e65b2e8ff6043d85ab07c4d23ea18bf0b9b7d
+BOLT-INFO: BOLT version: 1be60cbf47e9b102a653f9cb54fc965fe71a1ec4
 BOLT-INFO: first alloc address is 0x0
 BOLT-INFO: creating new program header table at address 0x200000, offset 0x200000
 BOLT-INFO: marking .fini_array as GNU_RELRO
@@ -874,16 +874,16 @@ BOLT-WARNING: failed to post-process indirect branches for sqlite3GetToken/1(*2)
 BOLT-WARNING: failed to post-process indirect branches for sqlite3PcacheRelease/1(*2)
 BOLT-WARNING: failed to post-process indirect branches for sqlite3_step
 BOLT-WARNING: failed to post-process indirect branches for sqlite3_config
-BOLT-WARNING: failed to post-process indirect branches for getCellInfo/1(*2)
 BOLT-WARNING: failed to post-process indirect branches for releasePageNotNull/1(*2)
 BOLT-WARNING: failed to post-process indirect branches for sqlite3DbNNFreeNN/1(*2)
+BOLT-WARNING: failed to post-process indirect branches for getCellInfo/1(*2)
 BOLT-WARNING: failed to post-process indirect branches for sqlite3_test_control
 BOLT-WARNING: failed to post-process indirect branches for vdbeCompareMemString/1(*2)
 BOLT-WARNING: failed to post-process indirect branches for sqlite3VdbeSerialGet/1(*2)
 BOLT-WARNING: failed to post-process indirect branches for sqlite3_str_vappendf
 BOLT-WARNING: failed to post-process indirect branches for jsonUnescapeOneChar/1(*2)
-BOLT-WARNING: failed to post-process indirect branches for jsonTranslateTextToBlob/1(*2)
 BOLT-WARNING: failed to post-process indirect branches for jsonTranslateBlobToText/1(*2)
+BOLT-WARNING: failed to post-process indirect branches for jsonTranslateTextToBlob/1(*2)
 BOLT-WARNING: failed to post-process indirect branches for yy_reduce/1(*2)
 BOLT-WARNING: failed to post-process indirect branches for sqlite3ExprCodeTarget/1(*2)
 BOLT-WARNING: failed to post-process indirect branches for sqlite3ExprDataType/1(*2)
@@ -1727,8 +1727,16 @@ BOLT-INFO: Finished pass: assign-sections
 BOLT-INFO: Starting pass: aarch64-relaxation
 BOLT-INFO: Finished pass: aarch64-relaxation
 BOLT-INFO: Starting pass: long-jmp
-BOLT-INFO: Starting stub-insertion pass
-BOLT-INFO: Inserted 512 stubs in the hot area and 239 stubs in the cold area. Shared 0 times, iterated 3 times.
+BOLT-INFO: relaxing branches for compact code model (<128MB)
+BOLT-INFO: starting clustered relaxation pass
+BOLT-INFO: built 1 function fragment cluster(s)
+BOLT-INFO: cluster: 0
+BOLT-INFO:   1475 fragment(s)
+BOLT-INFO:   679920 estimated bytes without thunks
+BOLT-INFO:   3012 thunk bytes
+BOLT-INFO: relaxed 1371 calls with long thunks
+BOLT-INFO: 251 long thunks created
+BOLT-INFO: 1120 long thunks reused
 BOLT-INFO: Finished pass: long-jmp
 BOLT-INFO: Starting pass: pointer-auth-cfi-fixup
 BOLT-INFO: rewritten pac-ret DWARF info in 1 out of 1632 functions (0.06%).
@@ -1750,37 +1758,37 @@ BOLT-INFO: Finished pass: clean-mc-state
 BOLT-INFO: padding code to 0x600000 to accommodate hot text
 BOLT-INFO: patched build-id (flipped first and last bits)
 BOLT: writing new section .fini_array
- data at 0xaaab20e29de0
+ data at 0xaaab0f776440
  of size 8
  at offset 1208160 with content size 8
 BOLT: writing new section .init_array
- data at 0xaaab20e79e40
+ data at 0xaaab0f77ae40
  of size 8
  at offset 1208168 with content size 8
 BOLT: writing new section .data.rel.ro
- data at 0xaaab1fe455e0
+ data at 0xaaab0f73d590
  of size 5736
  at offset 1208176 with content size 5736
 BOLT: writing new section .data
- data at 0xaaab2085d100
+ data at 0xaaab11224d50
  of size 12525
  at offset 1214400 with content size 12525
 BOLT: writing new section .text
- data at 0xffffa4200000
- of size 366448
- at offset 4194304 with content size 366448
+ data at 0xffff9c200000
+ of size 379440
+ at offset 4194304 with content size 379440
 BOLT: writing new section .text.cold
- data at 0xaaab21859c80
- of size 265532
- at offset 4560768 with content size 265532
+ data at 0xaaab0fa35a40
+ of size 270848
+ at offset 4573760 with content size 270848
 BOLT: writing new section .bolt.new.eh_frame
- data at 0xaaab2189a9d0
- of size 97192
- at offset 6291456 with content size 97192
+ data at 0xaaab0f82fae0
+ of size 102216
+ at offset 6291456 with content size 102216
 BOLT: writing new section .relocated.eh_frame
- data at 0xaaab216bd600
+ data at 0xaaab0fbf44a0
  of size 83612
- at offset 6388648 with content size 83612
+ at offset 6393672 with content size 83612
 BOLT-INFO: not writing section header for section .fini_array
 BOLT-INFO: not writing section header for section .init_array
 BOLT-INFO: not writing section header for section .data.rel.ro
@@ -1790,7 +1798,7 @@ BOLT-INFO: writing section header for .text.cold
 BOLT-INFO: writing section header for .eh_frame
 BOLT-INFO: writing section header for .eh_frame_hdr
 BOLT-INFO: setting __hot_start to 0x400000
-BOLT-INFO: setting __hot_end to 0x459770
+BOLT-INFO: setting __hot_end to 0x45ca30
 BOLT-INFO: not writing section header for section .fini_array
 BOLT-INFO: not writing section header for section .init_array
 BOLT-INFO: not writing section header for section .data.rel.ro

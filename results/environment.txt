@@ -1,16 +1,16 @@
-date:        2026-11-17T11:23:01Z
+date:        2026-11-27T05:18:48Z
 host:        Linux 7.0.14-linuxkit aarch64
 cpu:          0x61 implementer, 12 online CPUs
 features:     fp asimd evtstrm aes pmull sha1 sha2 crc32 atomics fphp asimdhp cpuid asimdrdm jscvt fcma lrcpc dcpop sha3 asimddp sha512 asimdfhm dit uscat ilrcpc flagm sb paca pacg dcpodp flagm2 frint bf16 afp
 memory:      32810676 kB
-image:       sha256:bf8d2ea7c97a19c6027cedd616f52d475e5586f82b6b26ca9200cb3db8a85449
-llvm commit: 0a0e65b2e8ff6043d85ab07c4d23ea18bf0b9b7d Fri Nov 6 11:44:36 2026 +0100 [clang][bytecode] Add `LocalInlineDesc` for local variables (#239505)
-clang:       Ubuntu clang version 23.1.6 (++20261103094202+2875c6073a7e-1~exp1~20261103214217.95)
+image:       sha256:0fd6b39579d866327c9197c0eb81d647af7f7337e596a297bc6f5d097dc254b3
+llvm commit: 1be60cbf47e9b102a653f9cb54fc965fe71a1ec4 Wed Nov 25 23:16:12 2026 -0600 [Clang] [Driver] Normalize target features forwarded to external tools (#245200)
+clang:       Ubuntu clang version 23.1.6 (++20261116013850+5b10d2d74929-1~exp1~20261116133903.98)
 lld:         Ubuntu LLD 23.1.6 (compatible with GNU linkers)
 python:      Python 3.12.3
 valgrind:    valgrind-3.22.0
-llvm-bolt (patched):  BOLT revision 0a0e65b2e8ff6043d85ab07c4d23ea18bf0b9b7d
-llvm-bolt (baseline): BOLT revision 0a0e65b2e8ff6043d85ab07c4d23ea18bf0b9b7d
+llvm-bolt (patched):  BOLT revision 1be60cbf47e9b102a653f9cb54fc965fe71a1ec4
+llvm-bolt (baseline): BOLT revision 1be60cbf47e9b102a653f9cb54fc965fe71a1ec4
 rounds:      micro=15 real-world=30
 staging:     /stage (tmpfs)
 aslr:        disabled for training runs (setarch -R), enabled for timing runs (randomize_va_space=2)

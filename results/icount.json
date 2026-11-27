@@ -1,152 +1,179 @@
 {
  "bufwrite": {
   "orig": 141316458,
-  "bolt": 138318069,
-  "bolt-pi": 105329050,
-  "bolt-pi-nofe": 138318069,
-  "bolt-inl": 138316601,
-  "bolt-inl-pi": 105327582
+  "bolt": 138320280,
+  "bolt-pi": 105331261,
+  "bolt-pi-nofe": 138320280,
+  "bolt-inl": 138318812,
+  "bolt-inl-pi": 105329793
  },
  "memo": {
   "orig": 82909274,
-  "bolt": 81011309,
-  "bolt-pi": 67826398,
-  "bolt-pi-nofe": 81011309,
-  "bolt-inl": 80909421,
-  "bolt-inl-pi": 67724510
+  "bolt": 81011324,
+  "bolt-pi": 67826413,
+  "bolt-pi-nofe": 81011324,
+  "bolt-inl": 80909436,
+  "bolt-inl-pi": 67724525
  },
  "trace": {
   "orig": 75098455,
-  "bolt": 75098604,
-  "bolt-pi": 63098604,
-  "bolt-pi-nofe": 63098604,
-  "bolt-inl": 75098602,
-  "bolt-inl-pi": 63098602
+  "bolt": 75098616,
+  "bolt-pi": 63098616,
+  "bolt-pi-nofe": 63098616,
+  "bolt-inl": 75098614,
+  "bolt-inl-pi": 63098614
  },
  "pool": {
   "orig": 90102072,
-  "bolt": 88102221,
-  "bolt-pi": 66102745,
-  "bolt-pi-nofe": 84102733,
-  "bolt-inl": 84102731,
-  "bolt-inl-pi": 66102743
+  "bolt": 88102239,
+  "bolt-pi": 66102763,
+  "bolt-pi-nofe": 84102751,
+  "bolt-inl": 84102749,
+  "bolt-inl-pi": 66102761
  },
  "lookup": {
   "orig": 43134233,
-  "bolt": 43134381,
-  "bolt-pi": 40134381,
-  "bolt-pi-nofe": 40134381,
-  "bolt-pi-noext": 43134381,
-  "bolt-inl": 39146871,
-  "bolt-inl-pi": 39146871
+  "bolt": 43134393,
+  "bolt-pi": 40134393,
+  "bolt-pi-nofe": 40134393,
+  "bolt-pi-noext": 43134393,
+  "bolt-inl": 39146883,
+  "bolt-inl-pi": 39146883
  },
  "chain": {
   "orig": 22536747,
-  "bolt": 22536894,
-  "bolt-pi": 20755645,
-  "bolt-pi-nofe": 20755645,
-  "bolt-pi-noext": 22536894,
-  "bolt-inl": 18568143,
-  "bolt-inl-pi": 18568143
+  "bolt": 22536906,
+  "bolt-pi": 20755657,
+  "bolt-pi-nofe": 20755657,
+  "bolt-pi-noext": 22536906,
+  "bolt-inl": 18568155,
+  "bolt-inl-pi": 18568155
  },
  "mixed": {
   "orig": 46900490,
-  "bolt": 46300637,
-  "bolt-pi": 40300638,
-  "bolt-pi-nofe": 40300638,
-  "bolt-inl": 43900635,
-  "bolt-inl-pi": 36700636
+  "bolt": 46300649,
+  "bolt-pi": 40300650,
+  "bolt-pi-nofe": 40300650,
+  "bolt-inl": 43900647,
+  "bolt-inl-pi": 36700648
  },
  "memo-lowhit": {
   "orig": 180335834,
-  "bolt": 180335983,
-  "bolt-pi": 180335983,
-  "bolt-pi-nofe": 180335983,
-  "bolt-inl": 179363631,
-  "bolt-inl-pi": 179363631
+  "bolt": 180335998,
+  "bolt-pi": 180335998,
+  "bolt-pi-nofe": 180335998,
+  "bolt-inl": 179363646,
+  "bolt-inl-pi": 179363646
  },
  "lookup-deep": {
   "orig": 17014388,
-  "bolt": 17014537,
-  "bolt-pi": 17014537,
-  "bolt-pi-nofe": 17014537,
-  "bolt-inl": 15447039,
-  "bolt-inl-pi": 15447039
+  "bolt": 17014552,
+  "bolt-pi": 17014552,
+  "bolt-pi-nofe": 17014552,
+  "bolt-inl": 15447054,
+  "bolt-inl-pi": 15447054
  },
  "unsafe": {
   "orig": 26129090,
-  "bolt": 26129237,
-  "bolt-pi": 26129237,
-  "bolt-pi-nofe": 26129237,
-  "bolt-inl": 26125211,
-  "bolt-inl-pi": 26125211
+  "bolt": 26129249,
+  "bolt-pi": 26129249,
+  "bolt-pi-nofe": 26129249,
+  "bolt-inl": 26125223,
+  "bolt-inl-pi": 26125223
  },
  "compute": {
   "orig": 79632151,
-  "bolt": 79632300,
-  "bolt-pi": 79632298,
-  "bolt-pi-nofe": 79632298,
-  "bolt-inl": 79632495,
-  "bolt-inl-pi": 79632495
+  "bolt": 79632328,
+  "bolt-pi": 79632326,
+  "bolt-pi-nofe": 79632326,
+  "bolt-inl": 79632523,
+  "bolt-inl-pi": 79632523
  },
  "sqlite": {
   "orig": 1185600834,
-  "bolt": 1175824476,
-  "bolt-pi": 1175079539,
-  "bolt-pi-nofe": 1175470316,
-  "bolt-pi-noext": 1175156772,
-  "bolt-inl": 1175022639,
-  "bolt-inl-pi": 1174604324
+  "bolt": 1186146225,
+  "bolt-pi": 1185401294,
+  "bolt-pi-nofe": 1185792077,
+  "bolt-pi-noext": 1185478574,
+  "bolt-inl": 1185255367,
+  "bolt-inl-pi": 1184837135,
+  "bolt-nocl": 1175824476,
+  "bolt-pi-nocl": 1175079533
  },
  "lua": {
   "orig": 3170891877,
-  "bolt": 3127950744,
-  "bolt-pi": 3111477657,
-  "bolt-pi-nofe": 3123114775,
-  "bolt-pi-noext": 3115209601,
-  "bolt-inl": 3119942598,
-  "bolt-inl-pi": 3105084897
+  "bolt": 3144449225,
+  "bolt-pi": 3128096142,
+  "bolt-pi-nofe": 3139613256,
+  "bolt-pi-noext": 3131828086,
+  "bolt-inl": 3136441269,
+  "bolt-inl-pi": 3121583568,
+  "bolt-nocl": 3127950744,
+  "bolt-pi-nocl": 3111477657
  },
  "cpython": {
-  "orig": 2639412413,
-  "bolt": 2630679571,
-  "bolt-pi": 2623291202,
-  "bolt-pi-nofe": 2628979235,
-  "bolt-pi-noext": 2623447727,
-  "bolt-inl": 2628011268,
-  "bolt-inl-pi": 2618759865
+  "orig": 2639413401,
+  "bolt": 2635385363,
+  "bolt-pi": 2627996994,
+  "bolt-pi-nofe": 2633687643,
+  "bolt-pi-noext": 2628153883,
+  "bolt-inl": 2632676973,
+  "bolt-inl-pi": 2623425388,
+  "bolt-nocl": 2630680553,
+  "bolt-pi-nocl": 2623292002
  },
  "zstd-compress": {
   "orig": 945884031,
-  "bolt": 945884181,
-  "bolt-pi": 945884181,
-  "bolt-pi-nofe": 945884181,
-  "bolt-inl": 945884177,
-  "bolt-inl-pi": 945884177
+  "bolt": 934164906,
+  "bolt-pi": 939710532,
+  "bolt-pi-nofe": 939710532,
+  "bolt-pi-noext": 934164906,
+  "bolt-inl": 930074739,
+  "bolt-inl-pi": 930074739,
+  "bolt-nocl": 934138299,
+  "bolt-pi-nocl": 939683925
  },
  "zstd-decompress": {
   "orig": 330964337,
-  "bolt": 331355307,
-  "bolt-pi": 331351789,
-  "bolt-pi-nofe": 331351789,
-  "bolt-inl": 331345962,
-  "bolt-inl-pi": 331345260
+  "bolt": 331637246,
+  "bolt-pi": 331637246,
+  "bolt-pi-nofe": 331637246,
+  "bolt-pi-noext": 331637246,
+  "bolt-inl": 331624977,
+  "bolt-inl-pi": 331624977,
+  "bolt-nocl": 331355307,
+  "bolt-pi-nocl": 331355307
  },
  "jq": {
   "orig": 1693270044,
-  "bolt": 1681099979,
-  "bolt-pi": 1648017574,
-  "bolt-pi-nofe": 1659948580,
-  "bolt-inl": 1646293644,
-  "bolt-inl-pi": 1632997246,
-  "bolt-pi-skip": 1665489296
+  "bolt": 1773215087,
+  "bolt-pi": 1713925099,
+  "bolt-pi-nofe": 1725464653,
+  "bolt-inl": 1705211971,
+  "bolt-inl-pi": 1691915573,
+  "bolt-pi-skip": 1757604404,
+  "bolt-nocl": 1681099979,
+  "bolt-pi-nocl": 1648017574
  },
  "libxml2": {
   "orig": 491080498,
-  "bolt": 485579990,
-  "bolt-pi": 478253989,
-  "bolt-pi-nofe": 484889990,
-  "bolt-inl": 484202447,
-  "bolt-inl-pi": 477461278
+  "bolt": 486276807,
+  "bolt-pi": 479070806,
+  "bolt-pi-nofe": 485586807,
+  "bolt-inl": 484899260,
+  "bolt-inl-pi": 478278091,
+  "bolt-nocl": 485579990,
+  "bolt-pi-nocl": 478253989
+ },
+ "clang": {
+  "orig": 6810189935,
+  "bolt": 6795475883,
+  "bolt-pi": 6650453525,
+  "bolt-pi-nofe": 6743783805,
+  "bolt-pi-noext": 6673142794,
+  "bolt-inl": 6727856441,
+  "bolt-inl-pi": 6627344930,
+  "bolt-nocl": 6758369433,
+  "bolt-pi-nocl": 6621678829
  }
 }

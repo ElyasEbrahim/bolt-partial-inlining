@@ -1,7 +1,7 @@
 BOLT-WARNING: specifying numeric value "1" for option -icf is deprecated
 BOLT-INFO: shared object or position-independent executable detected
 BOLT-INFO: Target architecture: aarch64
-BOLT-INFO: BOLT version: 0a0e65b2e8ff6043d85ab07c4d23ea18bf0b9b7d
+BOLT-INFO: BOLT version: 1be60cbf47e9b102a653f9cb54fc965fe71a1ec4
 BOLT-INFO: first alloc address is 0x0
 BOLT-INFO: creating new program header table at address 0x200000, offset 0x200000
 BOLT-INFO: marking .fini_array as GNU_RELRO
@@ -751,8 +751,16 @@ BOLT-INFO: Finished pass: assign-sections
 BOLT-INFO: Starting pass: aarch64-relaxation
 BOLT-INFO: Finished pass: aarch64-relaxation
 BOLT-INFO: Starting pass: long-jmp
-BOLT-INFO: Starting stub-insertion pass
-BOLT-INFO: Inserted 0 stubs in the hot area and 0 stubs in the cold area. Shared 0 times, iterated 1 times.
+BOLT-INFO: relaxing branches for compact code model (<128MB)
+BOLT-INFO: starting clustered relaxation pass
+BOLT-INFO: built 1 function fragment cluster(s)
+BOLT-INFO: cluster: 0
+BOLT-INFO:   14 fragment(s)
+BOLT-INFO:   1312 estimated bytes without thunks
+BOLT-INFO:   96 thunk bytes
+BOLT-INFO: relaxed 9 calls with long thunks
+BOLT-INFO: 8 long thunks created
+BOLT-INFO: 1 long thunks reused
 BOLT-INFO: Finished pass: long-jmp
 BOLT-INFO: Starting pass: pointer-auth-cfi-fixup
 BOLT-INFO: rewritten pac-ret DWARF info in 1 out of 20 functions (5.00%).
@@ -774,29 +782,29 @@ BOLT-INFO: Finished pass: clean-mc-state
 BOLT-INFO: padding code to 0x600000 to accommodate hot text
 BOLT-INFO: patched build-id (flipped first and last bits)
 BOLT: writing new section .fini_array
- data at 0xaaaae60b6050
+ data at 0xaaaae38fe680
  of size 8
  at offset 3280 with content size 8
 BOLT: writing new section .init_array
- data at 0xaaaae60b6ed0
+ data at 0xaaaae38fe660
  of size 8
  at offset 3288 with content size 8
 BOLT: writing new section .text
- data at 0xffff98600000
- of size 896
- at offset 4194304 with content size 896
+ data at 0xffffa0600000
+ of size 960
+ at offset 4194304 with content size 960
 BOLT: writing new section .text.cold
- data at 0xaaaae60ad9c0
- of size 88
- at offset 4195200 with content size 88
+ data at 0xaaaae390fbc0
+ of size 184
+ at offset 4195264 with content size 184
 BOLT: writing new section .bolt.new.eh_frame
- data at 0xaaaae60ec4e0
- of size 368
- at offset 6291456 with content size 368
+ data at 0xaaaae3923d40
+ of size 528
+ at offset 6291456 with content size 528
 BOLT: writing new section .relocated.eh_frame
- data at 0xaaaae60c22f0
+ data at 0xaaaae390fc80
  of size 308
- at offset 6291824 with content size 308
+ at offset 6291984 with content size 308
 BOLT-INFO: not writing section header for section .fini_array
 BOLT-INFO: not writing section header for section .init_array
 BOLT-INFO: writing section header for .text
@@ -804,7 +812,7 @@ BOLT-INFO: writing section header for .text.cold
 BOLT-INFO: writing section header for .eh_frame
 BOLT-INFO: writing section header for .eh_frame_hdr
 BOLT-INFO: setting __hot_start to 0x400000
-BOLT-INFO: setting __hot_end to 0x400380
+BOLT-INFO: setting __hot_end to 0x4003c0
 BOLT-INFO: not writing section header for section .fini_array
 BOLT-INFO: not writing section header for section .init_array
 BOLT-INFO: writing section header for .text

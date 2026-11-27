@@ -8,7 +8,7 @@ toolchain and BOLT revisions.
 
 | File | Content |
 |---|---|
-| [`REPORT.md`](REPORT.md) | all tables: speedups, the effect of the extensions, instruction counts, `pool` analysis, coverage on the real programs, transformation statistics, dyno stats, code size, rejection reasons |
+| [`REPORT.md`](REPORT.md) | all tables: speedups, the effect of the extensions, branch relaxation (`bolt-nocl`, `bolt-pi-nocl`), instruction counts, `pool` analysis, coverage on the real programs, transformation statistics, dyno stats, code size, rejection reasons |
 | `speedup.png`, `dynostats.png` | plots of the speedups and of the profile-estimated dynamic effect |
 | `report.json` | machine-readable version of the report |
 | `micro/`, `realworld/` | `raw.csv` (one row per run: wall, user and system time, max RSS), `summary.json`/`.md` (statistics) and `bench.log` |
@@ -28,4 +28,5 @@ copy of its binary at the same path; `bolt-copy`, a byte-identical copy of
 variant is the median over rounds of `t(bolt) / t(variant)` (paired), with a
 95% bootstrap confidence interval; p-values are from a two-sided Wilcoxon
 signed-rank test against `bolt` and are not corrected for multiple
-comparisons. `summary.json` also contains unpaired statistics.
+comparisons. `summary.json` also contains unpaired statistics, and for
+`bolt-pi-nocl` its speedup over `bolt-nocl` (`speedup_vs_nocl`).

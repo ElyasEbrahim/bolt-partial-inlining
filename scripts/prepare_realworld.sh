@@ -8,6 +8,9 @@ RW=${RW:-/work/rw}
 ROOT=${ROOT:-/work/out}
 WL=${WL:-$HERE/../benchmarks/realworld}
 V="$HERE/bolt_variants.sh"
+# Also the baseline and the pass with the previous AArch64 branch relaxation
+# (bolt-nocl, bolt-pi-nocl; see bolt_variants.sh).
+export RELAX_LEGACY=1
 # Same environment as the evaluation runs in workloads.py.
 export PYTHONHOME=$RW/cpython/inst PYTHONHASHSEED=0
 
@@ -30,14 +33,18 @@ for k in "json train 60000" "json eval 160000" "json icount 15000" \
   python3 -I "$WL/datagen.py" "$fmt" "$n" > "$RW/corpus/data-$use.$fmt"
 done
 
-sel=("$@"); [ ${#sel[@]} -gt 0 ] || sel=(sqlite lua cpython zstd jq libxml2)
+sel=("$@"); [ ${#sel[@]} -gt 0 ] || sel=(sqlite lua cpython zstd jq libxml2 clang)
 for w in "${sel[@]}"; do
   echo "== $w"
   case $w in
   sqlite)  "$V" "$RW/sqlite/speedtest1" "$ROOT/sqlite" @BIN@ --size 20 --memdb ;;
   lua)     "$V" "$RW/lua/lua" "$ROOT/lua" @BIN@ "$WL/lua/bench.lua" 2 ;;
   cpython) "$V" "$RW/cpython/python" "$ROOT/cpython" @BIN@ -S "$WL/python/bench.py" 2 ;;
-  zstd)    "$V" "$RW/zstd/zstd" "$ROOT/zstd" sh -c \
+  # Two training processes (compression, decompression). Each writes its own
+  # profile, and the profiles are merged: with a single profile file the
+  # decompression run would overwrite the profile of the compression run
+  # (versions up to 1.3.1 had this bug; compression had no profile).
+  zstd)    APPEND_PID=1 "$V" "$RW/zstd/zstd" "$ROOT/zstd" sh -c \
              "@BIN@ -q -3 -c $RW/corpus/train.txt > /dev/null && @BIN@ -q -d -c $RW/corpus/train.txt.zst > /dev/null" ;;
   # bolt-pi-skip: partial inlining without the trivial callee jv_get_kind (one
   # instruction), which BOLT's existing -inline-all also inlines.
@@ -45,5 +52,18 @@ for w in "${sel[@]}"; do
              "$RW/corpus/data-train.json" ;;
   libxml2) "$V" "$RW/libxml2/xmllint" "$ROOT/libxml2" @BIN@ --noout \
              --xpath "count(//item[@kind='b'])" "$RW/corpus/data-train.xml" ;;
+  clang)
+    # Timing input (see benchmarks/realworld/clang): the SQLite amalgamation,
+    # preprocessed by the original clang.
+    "$RW/clang/bin/clang" -E "$RW/sqlite/build/sqlite-amalgamation-3540100/sqlite3.c" \
+      -o "$RW/clang/inputs/sqlite3.i"
+    # The in-tree Clang-BOLT rules: the instrumented clang next to clang (it
+    # finds its resource headers there), one profile per process, and the
+    # options of perf-helper.py bolt-optimize (clang/utils/perf-training).
+    layout="-reorder-blocks=ext-tsp -reorder-functions=cdsort -split-functions"
+    layout+=" -split-all-cold -split-eh -dyno-stats -use-gnu-stack -update-debug-sections"
+    INSTR="$RW/clang/bin/clang-bolt.inst" APPEND_PID=1 BOLT_LAYOUT="$layout" \
+      "$V" "$(readlink -f "$RW/clang/bin/clang")" "$ROOT/clang" \
+      bash "$WL/clang/train.sh" @BIN@ ;;
   esac
 done

@@ -28,69 +28,96 @@ fast path into the caller,
   callee itself is left unchanged.
 
 The patch applies to llvm-project
-[`0a0e65b2e8ff`](https://github.com/llvm/llvm-project/commit/0a0e65b2e8ff6043d85ab07c4d23ea18bf0b9b7d)
-(2026-11-06). AArch64 is fully supported; on x86-64 only fast paths that do
+[`1be60cbf47e9`](https://github.com/llvm/llvm-project/commit/1be60cbf47e9b102a653f9cb54fc965fe71a1ec4)
+(2026-11-25). AArch64 is fully supported; on x86-64 only fast paths that do
 not touch the stack are inlined.
 
 ## Results
 
 Apple M3 Max, Linux/AArch64 VM, clang 23 `-O2`/`-O3` without LTO, speedup of
 `--partial-inline` over the BOLT baseline (`-reorder-blocks=ext-tsp
--reorder-functions=cdsort -split-functions ...`), median of paired rounds with
-95% confidence interval. All numbers come from one run of `make experiments`;
-see [`results/REPORT.md`](results/REPORT.md) and
+-reorder-functions=cdsort -split-functions ...`; for clang the options of the
+in-tree Clang-BOLT rules), median of paired rounds with 95% confidence
+interval. All numbers come from one run of `make experiments`; see
+[`results/REPORT.md`](results/REPORT.md) and
 [Section 5 of the design document](docs/design.md#5-experimental-evaluation).
 
 | Workload | Pattern | Speedup | Executed instructions |
 |---|---|---|---:|
-| `mixed` | always-fast and always-slow call sites of one callee | **2.722x** [2.707, 2.728] | -13.0% |
-| `chain` | callee overwrites its argument before it decides (saved register) | **2.565x** [2.561, 2.571] | -7.9% |
-| `trace` | disabled tracing hook | **1.671x** [1.666, 1.674] | -16.0% |
-| `lookup` | hash chain lookup, usually at the first node (first iteration of a loop) | **1.450x** [1.442, 1.454] | -7.0% |
-| `memo` | memoization cache hit, callee not shrink-wrapped | **1.018x** [1.008, 1.020] | -16.3% |
-| `bufwrite` | buffered writer, bound by a store-to-load chain | 1.003x [1.001, 1.004] | -23.9% |
-| `pool` | free-list allocator, bound by store-to-load chains between the two inlined fast paths | 0.959x [0.955, 0.960] | -25.0% |
-| `unsafe`, `memo-lowhit`, `lookup-deep`, `compute` | unsafe, too cold, or no calls | 0.998-1.002x | 0.00% |
-| jq 1.8 | JSON processor, 26% of direct calls avoided | **1.069x** [1.060, 1.079] | -2.0% |
-| jq 1.8, without the trivial callee `jv_get_kind` | share no existing BOLT pass achieves | **1.016x** [1.006, 1.031] | -0.9% |
-| SQLite 3.54, Lua 5.5, CPython 3.14, zstd 1.5, libxml2 2.15 | real programs | 1.004-1.014x, no reliable change | -1.5% to 0.0% |
-| A/A control | byte-identical copy of the baseline | 0.994-1.008x | - |
+| `mixed` | always-fast and always-slow call sites of one callee | **2.734x** [2.730, 2.751] | -13.0% |
+| `chain` | callee overwrites its argument before it decides (saved register) | **2.569x** [2.563, 2.580] | -7.9% |
+| `trace` | disabled tracing hook | **1.660x** [1.655, 1.666] | -16.0% |
+| `lookup` | hash chain lookup, usually at the first node (first iteration of a loop) | **1.466x** [1.458, 1.471] | -7.0% |
+| `memo` | memoization cache hit, callee not shrink-wrapped | **1.067x** [1.056, 1.078] | -16.3% |
+| `bufwrite` | buffered writer, bound by a store-to-load chain | 1.024x [1.014, 1.033] | -23.9% |
+| `pool` | free-list allocator, bound by store-to-load chains between the two inlined fast paths | 0.951x [0.948, 0.955] | -25.0% |
+| `unsafe`, `memo-lowhit`, `lookup-deep`, `compute` | unsafe, too cold, or no calls | 0.999-1.001x | 0.00% |
+| **clang** (Clang-BOLT, compiling SQLite and two LLVM files) | accessors of the AST and IR; 2,115 call sites, 606 with frame elision | **1.015x** [1.013, 1.017] | -2.1% |
+| jq 1.8 | JSON processor, 26% of direct calls avoided | **1.124x** [1.119, 1.128] | -3.3% |
+| jq 1.8, with the previous branch relaxation | the same, against the baseline with stub insertion | **1.068x** [1.064, 1.072] | -2.0% |
+| jq 1.8, without the trivial callee `jv_get_kind` | share no existing BOLT pass achieves | **1.017x** [1.009, 1.022] | -0.9% |
+| SQLite 3.54, Lua 5.5, CPython 3.14, zstd 1.5, libxml2 2.15 | real programs | 0.996-1.008x | +0.6% to -1.5% |
+| A/A control | byte-identical copy of the baseline | 0.996-1.006x | - |
 
-The pass removes the call, return and frame overhead of hot fast paths and is
-effective where such calls dominate the run time. Among six real programs it
-speeds up jq by 6.9%. Most of that comes from a one-instruction callee that
-BOLT's existing `-inline-all` inlines as well (1.101x on its own, 1.110x
-together with `--partial-inline`). On the other real programs the saved
-instructions (at most 1.5%) are at or below the resolution of the
-measurement (about +-1%, see the A/A control). libxml2 measured 1.014x
-[1.005, 1.031] in this run, but 1.000x and 1.009x for the same binaries in
-the two previous runs and 1.002x in a second run of this version, so it is
-not counted as a measurable gain. That second run, from a fresh clone with
-the release image, reproduced all profiles and BOLT outputs byte for byte and
-every headline result within 1%
-([Section 5.7](docs/design.md#57-measurement-validity)). jq and
-libxml2 were chosen by a screening of six candidate programs whose procedure
-and results are in the design document. Without `--partial-inline`, the
-patched `llvm-bolt` writes byte-identical binaries to upstream, and no
-existing BOLT test changes its result.
+**clang** is the largest real program and the one BOLT itself is usually
+evaluated on.
+- **Setup:** clang is built and trained with the in-tree Clang-BOLT rules
+  and timed on compiling three translation units that are not part of its
+  training. In every run, the object files are byte-identical to those of
+  the original clang.
+- **What the pass does:** it removes an estimated 22% of clang's profiled
+  direct calls, for 0.39% more hot code and 7% more BOLT processing time.
+- **Compared with `-inline-all`:** BOLT's existing whole-function inliner
+  gives 1.006x and grows the hot code by 20%. On top of it, the pass adds
+  1.010x [1.008, 1.012].
 
-For `lookup` and `chain`, whose callees are small leaf functions without a
-stack frame, BOLT's existing `-inline-all` is as fast or faster (1.598x and
-2.577x): it inlines them as a whole. The support for loops and overwritten
-registers matters for callees that `-inline-all` cannot inline, such as those
-with a stack frame. In the real programs it adds 7 call sites, 5 of them with
-frame elision, without a measurable change in run time. Many of the hottest
-calls of the interpreters (Lua, CPython, jq, SQLite) come from their
-interpreter loops, which BOLT does not rewrite at all
+**jq** gains most among the real programs, but mostly because upstream BOLT
+changed its baseline.
+- **The change:** on 2026-11-23, upstream BOLT made clustered branch
+  relaxation its AArch64 default. jq's BOLT binary now executes 5.5% more
+  instructions and runs 11% slower than with the previous stub insertion, and
+  the pass removes part of that overhead.
+- **With the previous relaxation,** the pass gives 1.068x, the same as
+  version 1.3.1 measured (1.069x). Most of that comes from a one-instruction
+  callee that `-inline-all` inlines as well.
+- **clang** does not depend on the relaxation: 1.014x with the previous one.
+  Lua's small gain (1.008x) does: 0.999x with the previous one.
+
+The other real programs show no reliable change. Their hottest calls come
+from interpreter loops that BOLT does not rewrite at all
 ([Section 5.6](docs/design.md#56-what-limits-the-pass-on-real-programs)).
 
-The pass can also lose: `pool` is 4% slower although it executes 25% fewer
-instructions. Its two inlined fast paths store and reload the same fields in
-every loop iteration, and on this core the run time of such a loop depends on
-the exact number of instructions between a store and its reload (0.82x to
-1.09x when single instructions are added or removed). The pass has no cost
-model for this; see
-[Section 5.5 of the design document](docs/design.md#55-analysis).
+Versions up to 1.3.1 measured zstd with an incomplete profile: the
+decompression run of its training overwrote the profile of the compression
+run, so BOLT optimized only decompression
+([Section 5.7](docs/design.md#57-measurement-validity)). With the fixed
+profile, the pass transforms one call site on the compression path that
+costs more instructions than it saves (+0.6%), without a measurable change
+in run time.
+
+Without `--partial-inline`, the patched `llvm-bolt` writes byte-identical
+binaries to upstream (36 of 36 comparisons, clang included), and no existing
+BOLT test changes its result.
+
+For `lookup` and `chain`, whose callees are small leaf functions without a
+stack frame, BOLT's existing `-inline-all` is as fast or faster (1.613x and
+2.593x): it inlines them as a whole. The support for loops and overwritten
+registers matters for callees that `-inline-all` cannot inline, such as those
+with a stack frame. In clang, 59 call sites run through the first iteration
+of a loop and 220 save a register. Without the two extensions, the pass gives
+1.012x instead of 1.015x there.
+
+The pass can also lose: `pool` is 5% slower although it executes 25% fewer
+instructions.
+- **Why:** its two inlined fast paths store and reload the same fields in
+  every loop iteration. On this core the run time of such a loop depends on
+  the exact number of instructions between a store and its reload: 0.82x to
+  1.08x when single instructions are added or removed.
+- **The same kind of loop** also makes `memo` and `bufwrite` vary between
+  runs. The same binaries measured 1.020x and 1.003x in the first,
+  unpublished run of this version.
+- The pass has no cost model for this; see
+  [Section 5.5 of the design document](docs/design.md#55-analysis).
 
 ## Repository layout
 
@@ -109,12 +136,14 @@ model for this; see
 
 ```bash
 git clone https://github.com/llvm/llvm-project.git && cd llvm-project
-git checkout 0a0e65b2e8ff6043d85ab07c4d23ea18bf0b9b7d
+git checkout 1be60cbf47e9b102a653f9cb54fc965fe71a1ec4
 git am /path/to/bolt-partial-inlining/patches/0001-*.patch
 cmake -G Ninja -S llvm -B build -DCMAKE_BUILD_TYPE=Release \
   -DLLVM_ENABLE_PROJECTS=bolt -DLLVM_TARGETS_TO_BUILD="AArch64;X86"
 ninja -C build bolt        # llvm-bolt, perf2bolt, merge-fdata, instrumentation runtime
 ```
+
+LLVM at this commit needs CMake 3.31 or later.
 
 ### Use it
 
@@ -154,7 +183,7 @@ and `docker load` it, or build it:
 ```bash
 make image          # upstream and patched BOLT, BOLT test suite for both, workloads
 make check-bolt     # results/check-bolt/: test results of both builds, compared
-make experiments    # complete evaluation in one run (about 60 min), updates results/
+make experiments    # complete evaluation in one run (about 2.5 hours), updates results/
 make x86-validate   # functional validation on x86-64 under emulation
 ```
 

@@ -1,0 +1,51 @@
+BOLT-INFO: shared object or position-independent executable detected
+BOLT-INFO: Target architecture: aarch64
+BOLT-INFO: BOLT version: 1be60cbf47e9b102a653f9cb54fc965fe71a1ec4
+BOLT-INFO: first alloc address is 0x0
+BOLT-INFO: creating new program header table at address 0x6600000, offset 0x6600000
+BOLT-INFO: enabling relocation mode
+BOLT-INFO: forcing -jump-tables=move for instrumentation
+BOLT-INFO: enabling lite mode
+BOLT-INFO: PointerAuthCFIAnalyzer ran on 2 functions. Ignored 0 functions (0.00%) because of CFI inconsistencies
+BOLT-INFO: number of removed linker-inserted veneers: 0
+BOLT-INFO: 0 out of 156496 functions in the binary (0.0%) have non-empty execution profile
+BOLT-INSTRUMENTER: Number of indirect call site descriptors: 68449
+BOLT-INSTRUMENTER: Number of indirect call target descriptors: 154353
+BOLT-INSTRUMENTER: Number of function descriptors: 154353
+BOLT-INSTRUMENTER: Number of branch counters: 1689074
+BOLT-INSTRUMENTER: Number of ST leaf node counters: 735883
+BOLT-INSTRUMENTER: Number of direct call counters: 0
+BOLT-INSTRUMENTER: Total number of counters: 2424957
+BOLT-INSTRUMENTER: Total size of counters: 19399656 bytes (static alloc memory)
+BOLT-INSTRUMENTER: Total size of string table emitted: 18188800 bytes in file
+BOLT-INSTRUMENTER: Total size of descriptors: 169873444 bytes in file
+BOLT-INSTRUMENTER: Profile will be saved to file /work/out/clang/prof.fdata
+BOLT-INFO: UCE removed 2 blocks and 120 bytes of code
+BOLT-INFO: relaxing branches for compact code model (<128MB)
+BOLT-INFO: starting clustered relaxation pass
+BOLT-INFO: built 2 function fragment cluster(s)
+BOLT-INFO: cluster: 0
+BOLT-INFO:   148301 fragment(s)
+BOLT-INFO:   130021708 estimated bytes without thunks
+BOLT-INFO:   3844 thunk bytes
+BOLT-INFO: cluster: 1
+BOLT-INFO:   8204 fragment(s)
+BOLT-INFO:   7109784 estimated bytes without thunks
+BOLT-INFO:   476 thunk bytes
+BOLT-INFO: relaxed 1752 calls with short thunks
+BOLT-INFO: relaxed 220766 calls with long thunks
+BOLT-INFO: 63 short thunks created
+BOLT-INFO: 339 long thunks created
+BOLT-INFO: 1689 short thunks reused
+BOLT-INFO: 220427 long thunks reused
+BOLT-INFO: rewritten pac-ret DWARF info in 2 out of 156835 functions (0.00%).
+BOLT-INFO: padding code to 0xec00000 to accommodate hot text
+BOLT-INFO: output linked against instrumentation runtime library, lib entry point is 0x11143668
+BOLT-INFO: clear procedure is 0x111400f0
+BOLT-INFO: patched build-id (flipped first and last bits)
+BOLT-INFO: setting __bolt_runtime_start to 0x11143668
+BOLT-INFO: setting __bolt_runtime_fini to 0x11143700
+BOLT-INFO: setting __hot_start to 0x6800000
+BOLT-INFO: setting __hot_end to 0xeac8534
+BOLT-INFO: runtime library finalization was hooked via DT_FINI, set to 0x11143700
+BOLT-INFO: runtime library initialization was hooked via ELF Header Entry Point, set to 0x11143668

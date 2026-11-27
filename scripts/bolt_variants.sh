@@ -19,7 +19,20 @@
 #   bolt-inl-pi  bolt-inl + -partial-inline
 #   bolt-pi-skip only if PI_SKIP is set: bolt-pi with
 #                -partial-inline-skip=$PI_SKIP (analysis of single callees)
+#   bolt-nocl, bolt-pi-nocl  only if RELAX_LEGACY=1: bolt and bolt-pi with
+#                the AArch64 branch relaxation that upstream BOLT used before
+#                2026-11-23, stub insertion (-relax-with-clusters=false),
+#                instead of the clustered relaxation that is now the default
 # Logs (including -dyno-stats) are written next to each variant.
+#
+# Optional settings (environment):
+#   INSTR        path of the instrumented binary (default: <out-dir>/instr).
+#                clang is instrumented next to itself, where it finds its
+#                resource headers, as in the in-tree Clang-BOLT rules.
+#   APPEND_PID=1 the training runs many processes: each writes its own
+#                profile (--instrumentation-file-append-pid), and the profiles
+#                are merged with merge-fdata.
+#   BOLT_LAYOUT  layout options instead of the default ones below.
 set -euo pipefail
 BOLT_BIN=${BOLT_BIN:-/opt/bolt/bin}
 orig=$1; out=$2; shift 2
@@ -39,18 +52,25 @@ else
   echo "warning: cannot disable ASLR (in Docker: --security-opt seccomp=unconfined)," \
        "the profile of $out may not be reproducible" >&2
 fi
-"$BOLT_BIN/llvm-bolt" "$out/orig" -instrument -o "$out/instr" \
-  --instrumentation-file="$out/prof.fdata" --instrumentation-file-append-pid=0 \
-  > "$out/instr.log" 2>&1
-rm -f "$out/prof.fdata"
+instr=${INSTR:-$out/instr}
+pid=(--instrumentation-file-append-pid=0)
+[ "${APPEND_PID:-0}" = 1 ] && pid=(--instrumentation-file-append-pid)
+"$BOLT_BIN/llvm-bolt" "$out/orig" -instrument -o "$instr" \
+  --instrumentation-file="$out/prof.fdata" "${pid[@]}" > "$out/instr.log" 2>&1
+rm -f "$out/prof.fdata" "$out"/prof.fdata.*.fdata
 train=()
-for a in "$@"; do train+=("${a//@BIN@/$out/instr}"); done
+for a in "$@"; do train+=("${a//@BIN@/$instr}"); done
 ( "${norand[@]}" "${train[@]}" ) > "$out/train.stdout" 2> "$out/train.stderr"
+if [ "${APPEND_PID:-0}" = 1 ]; then
+  "$BOLT_BIN/merge-fdata" "$out"/prof.fdata.*.fdata > "$out/prof.fdata" 2> "$out/merge.log"
+  rm -f "$out"/prof.fdata.*.fdata
+fi
 test -s "$out/prof.fdata"
 
 # 2. Optimize. The layout options follow the BOLT documentation.
 LAYOUT=(-reorder-blocks=ext-tsp -reorder-functions=cdsort -split-functions
         -split-all-cold -split-eh -icf=1 -dyno-stats)
+[ -n "${BOLT_LAYOUT:-}" ] && read -r -a LAYOUT <<< "$BOLT_LAYOUT"
 PI=(-partial-inline -v=1)
 INL=(-inline-all -inline-ap)
 opt() { local name=$1; shift
@@ -79,5 +99,9 @@ opt bolt-inl-pi "${LAYOUT[@]}" "${INL[@]}" "${PI[@]}"
 if [ -n "${PI_SKIP:-}" ]; then
   opt bolt-pi-skip "${LAYOUT[@]}" "${PI[@]}" -partial-inline-skip="$PI_SKIP"
   echo "$PI_SKIP" > "$out/bolt-pi-skip.skipped"
+fi
+if [ "${RELAX_LEGACY:-0}" = 1 ]; then
+  opt bolt-nocl    "${LAYOUT[@]}" -relax-with-clusters=false
+  opt bolt-pi-nocl "${LAYOUT[@]}" "${PI[@]}" -relax-with-clusters=false
 fi
 grep -h "BOLT-INFO: partial inlining: [0-9]" "$out/bolt-pi.log" || true

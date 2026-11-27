@@ -47,7 +47,7 @@ def main():
     ap.add_argument("--out", required=True)
     ap.add_argument("--variants",
                     default="orig,bolt,bolt-pi,bolt-pi-nofe,bolt-pi-noext,bolt-inl,"
-                            "bolt-inl-pi,bolt-pi-skip")
+                            "bolt-inl-pi,bolt-pi-skip,bolt-nocl,bolt-pi-nocl")
     ap.add_argument("--only", nargs="*")
     ap.add_argument("--stage-dir", help="directory for the copy that is executed "
                                         "(default: a temporary directory)")
